@@ -34,7 +34,7 @@ class App extends Component {
                 </header>
                 {
                 this.user ? 
-                <Home></Home> : <Login user={user}></Login>
+                <Home></Home> : <Login user={this.user}></Login>
                 }
             </div>
         );
