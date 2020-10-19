@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-
-export function Home(props) {
+function Home(props) {
 	return (
 		<div>
 			
