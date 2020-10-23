@@ -8,4 +8,4 @@ function ForgotPassword(props) {
 	);
 }
 
-export default About;
+export default ForgotPassword;
