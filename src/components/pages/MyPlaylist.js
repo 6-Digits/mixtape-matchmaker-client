@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-function Login(props) {
+function MyPlaylist(props) {
 	return (
 		<div>
-			this is the login page
+			this is the my playlist page
 		</div>
 	);
 }
 
-export default Login;
+export default MyPlaylist;

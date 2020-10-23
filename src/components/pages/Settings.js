@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-function Login(props) {
+function Settings(props) {
 	return (
 		<div>
-			this is the login page
+			this is the settings page
 		</div>
 	);
 }
 
-export default Login;
+export default Settings;
