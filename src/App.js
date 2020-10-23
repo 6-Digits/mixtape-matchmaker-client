@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import "./App.css";
 import Login from "./components/pages/Login"
 import Home from "./components/pages/Home"
-import SignUp from "./components/pages/SignUp"
 import About from "./components/pages/About"
 import ForgotPassword from "./components/pages/ForgotPassword"
 import MyPlaylist from "./components/pages/MyPlaylist"
@@ -47,10 +46,6 @@ class App extends Component {
                 <Redirect exact from="/" to={{ pathname: "/home" }} /> : <Redirect exact from="/" to={{ pathname: "/login" }} />} */}
 				<Route path="/login" name="Login" render={(props) =>
 					<Login/>}
-				/>
-				<Route />
-				<Route path="/register" name="Register" render={(props) =>
-					<SignUp/>}
 				/>
 				<Route />
 				<Route path="/home" name="Home" render={(props) =>
