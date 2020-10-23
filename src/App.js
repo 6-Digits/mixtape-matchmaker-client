@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Redirect } from 'react-router-dom'
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import Login from "./components/pages/Login"
 import Home from "./components/pages/Home"
@@ -45,17 +45,39 @@ class App extends Component {
             <BrowserRouter>
                 {/* {user ? 
                 <Redirect exact from="/" to={{ pathname: "/home" }} /> : <Redirect exact from="/" to={{ pathname: "/login" }} />} */}
-				<Route path="/login" name="login" render={(props) =>
+				<Route path="/login" name="Login" render={(props) =>
 					<Login/>}
 				/>
 				<Route />
-				<Route path="/register" name="register" render={(props) =>
+				<Route path="/register" name="Register" render={(props) =>
 					<SignUp/>}
 				/>
 				<Route />
-
-				<Route path="/home" name="home" render={(props) =>
-					<Homescreen/>}
+				<Route path="/home" name="Home" render={(props) =>
+					<Home/>}
+				/>
+				<Route path="/about" name="About" render={(props) =>
+					<About/>}
+				/>
+				<Route />
+				<Route path="/forgotpassword" name="Forgot Password" render={(props) =>
+					<ForgotPassword/>}
+				/>
+				<Route />
+				<Route path="/myplaylist" name="My Playlists" render={(props) =>
+					<MyPlaylist/>}
+				/>
+				<Route />
+				<Route path="/matches" name="My Matches" render={(props) =>
+					<Matches/>}
+				/>
+				<Route />
+				<Route path="/settings" name="My Settings" render={(props) =>
+					<Settings/>}
+				/>
+				<Route />
+				<Route path="/notifications" name="My Notifications" render={(props) =>
+					<Notifications/>}
 				/>
 				<Route />
             </BrowserRouter>
