@@ -6,6 +6,7 @@ import Login from "./components/pages/Login"
 import Home from "./components/pages/Home"
 import About from "./components/pages/About"
 import ForgotPassword from "./components/pages/ForgotPassword"
+import SignUp from "./components/pages/SignUp"
 import MyPlaylist from "./components/pages/MyPlaylist"
 import Matches from "./components/pages/Matches"
 import Settings from "./components/pages/Settings"
@@ -46,6 +47,10 @@ class App extends Component {
                 <Redirect exact from="/" to={{ pathname: "/home" }} /> : <Redirect exact from="/" to={{ pathname: "/login" }} />} */}
 				<Route path="/login" name="Login" render={(props) =>
 					<Login/>}
+				/>
+				<Route />
+                <Route path="/signup" name="SignUp" render={(props) =>
+					<SignUp/>}
 				/>
 				<Route />
 				<Route path="/home" name="Home" render={(props) =>
