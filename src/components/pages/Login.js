@@ -10,8 +10,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from "../../assets/logo.png";
+import { Redirect } from 'react-router-dom'
+import forgotpassword from "../modals/ForgotPassword"
+import ForgotPassword from "../modals/ForgotPassword";
 
-function Login(props) {
+function Login({user, setUser}) {
 	const useStyles = makeStyles((theme) => ({
 		form: {
 		  width: '100%'
@@ -41,6 +44,12 @@ function Login(props) {
 			width: "25vh"
 		}
 	  }));
+	let loginUser = () => {
+		setUser({
+			user: true
+		});
+		return <Redirect exact from="/login" to={{ pathname: "/home" }} />;
+	};
 	const classes = useStyles();
 	return (
 		<Container component="main" maxWidth="lg" className={classes.container}>
@@ -80,6 +89,7 @@ function Login(props) {
 				variant="contained"
 				color="primary"
 				className={classes.submit}
+				onClick={loginUser}
 				>
 				Log In
 				</Button>
@@ -88,9 +98,7 @@ function Login(props) {
 				direction="row"
 				justify="space-between"
 				alignItems="center">
-					<Link href="forgotpassword" variant="body2">
-					Forgot password?
-					</Link>
+					<ForgotPassword/>
 					<Link href="/signup" variant="body2">
 					{"Don't have an account? Sign Up"}
 					</Link>
