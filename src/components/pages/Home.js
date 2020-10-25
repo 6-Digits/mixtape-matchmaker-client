@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import Sidebar from '../navbar/Sidebar';
 
 function Home(props) {
 	return (
 		<div>
-			this is the home page
+			<Sidebar pageName='Home'></Sidebar>
 		</div>
 	);
 }
