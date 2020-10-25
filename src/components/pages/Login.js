@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -11,47 +9,38 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import logo from "../../assets/logo.png";
 
 function Login(props) {
 	const useStyles = makeStyles((theme) => ({
-		avatar: {
-		  margin: theme.spacing(1),
-		  backgroundColor: theme.palette.secondary.main,
-		},
 		form: {
-		  width: '100%', // Fix IE 11 issue.
-		  marginTop: theme.spacing(1),
+		  width: '100%'
 		},
 		submit: {
 		  margin: theme.spacing(3, 0, 2),
 		},
 		headerButton: {
-			fontSize: 2.5	 + 'rem',
+			fontSize: 2.5	 + 'rem'
 		},
 		container: {
-			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'center',
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			height: "100vh" ,
+			
+		},
+		logo: {
+			display: "flex",
+			margin: "auto",
+			height: "25vh",
+			width: "25vh"
 		}
 	  }));
 	const classes = useStyles();
 	return (
 		<Container component="main" maxWidth="lg" className={classes.container}>
-		<CssBaseline />
 		<div>
-			<Grid
-			container
-			direction="row"
-			alignItems="center"
-			justify="space-between"
-			>
-				<Button className={classes.headerButton}>
-					Sign In
-				</Button>
-				<Button className={classes.headerButton}>
-					Sign Up
-				</Button>
-		  	</Grid>
+			<img src={logo} className={classes.logo}/>
 		  <form className={classes.form} noValidate>
 			<TextField
 			  variant="outlined"
