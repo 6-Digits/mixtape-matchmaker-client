@@ -25,7 +25,7 @@ function App(props) {
 	useEffect(() => {
 		// Update the document title using the browser API
 		if (!didLoad) {
-			setUser(getUser());
+			setUser({user:getUser()});
 			setDidLoad(true);
 		  }
 	  }, [didLoad]);
