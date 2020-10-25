@@ -25,7 +25,7 @@ function App(props) {
 	useEffect(() => {
 		// Update the document title using the browser API
 		if (!didLoad) {
-			setUser({user:getUser()});
+			// setUser({user:getUser()});
 			setDidLoad(true);
 		  }
 	  }, [didLoad]);
@@ -35,7 +35,7 @@ function App(props) {
 	};
 
 	const storeUser = (user) => {
-		cookies.set('user', user);
+		cookies.set('user', user, { expires: 0 });
 		setUser({user:user});
 	};
 
