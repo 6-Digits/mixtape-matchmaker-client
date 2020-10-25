@@ -11,7 +11,7 @@ import MyPlaylist from "./components/pages/MyPlaylist"
 import Matches from "./components/pages/Matches"
 import Settings from "./components/pages/Settings"
 import Notifications from "./components/pages/Notifications"
-import {CssBaseline, Paper} from '@material-ui/core';
+import {Paper} from '@material-ui/core';
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles"
 
 let checkUserStatus = () => {
@@ -36,7 +36,7 @@ class App extends Component {
             apiResponse: "app not working" 
         };
         // this.user = checkUserStatus();
-        // this.user = False;
+        this.user = null;
     }
     
     callAPI() {
@@ -58,41 +58,92 @@ class App extends Component {
 			<ThemeProvider theme={theme}>
 				<Paper>
 				<BrowserRouter>
-					{/* {user ? 
-					<Redirect exact from="/" to={{ pathname: "/home" }} /> : <Redirect exact from="/" to={{ pathname: "/login" }} />} */}
+					<Route
+						exact
+						path="/"
+						render={(props) => {
+							return (
+							this.user ?
+							<Redirect to="/home" /> :
+							<Redirect to="/login" /> 
+							)
+						}}
+					/>
 					<Route path="/login" name="Login" render={(props) =>
 						<Login/>}
 					/>
 					<Route />
-					<Route path="/signup" name="SignUp" render={(props) =>
-						<SignUp/>}
+					<Route path="/signup" name="SignUp" render={(props) => 
+						{
+							return (
+							this.user ?
+							<Redirect to="/home"/> :
+							<SignUp/> 
+							)
+						}}
 					/>
 					<Route />
 					<Route path="/home" name="Home" render={(props) =>
-						<Home/>}
+						{
+							return (
+							this.user ?
+							<Home/> :
+							<Redirect to="/login"/> 
+							)
+						}}
 					/>
 					<Route path="/about" name="About" render={(props) =>
 						<About/>}
 					/>
 					<Route />
 					<Route path="/forgotpassword" name="Forgot Password" render={(props) =>
-						<ForgotPassword/>}
+						{
+							return (
+							this.user ?
+							<Redirect to="/home"/> :
+							<ForgotPassword/> 
+							)
+						}}
 					/>
 					<Route />
 					<Route path="/myplaylist" name="My Playlists" render={(props) =>
-						<MyPlaylist/>}
+						{
+							return (
+							this.user ?
+							<MyPlaylist/> :
+							<Redirect to="/login"/> 
+							)
+						}}
 					/>
 					<Route />
 					<Route path="/matches" name="My Matches" render={(props) =>
-						<Matches/>}
+						{
+							return (
+							this.user ?
+							<Matches/> :
+							<Redirect to="/login"/> 
+							)
+						}}
 					/>
 					<Route />
 					<Route path="/settings" name="My Settings" render={(props) =>
-						<Settings/>}
+						{
+							return (
+							this.user ?
+							<Settings/> :
+							<Redirect to="/login"/> 
+							)
+						}}
 					/>
 					<Route />
 					<Route path="/notifications" name="My Notifications" render={(props) =>
-						<Notifications/>}
+						{
+							return (
+							this.user ?
+							<Notifications/> :
+							<Redirect to="/login"/> 
+							)
+						}}
 					/>
 					<Route />
 				</BrowserRouter>

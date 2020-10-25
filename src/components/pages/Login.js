@@ -88,10 +88,10 @@ function Login(props) {
 				direction="row"
 				justify="space-between"
 				alignItems="center">
-					<Link href="#" variant="body2">
+					<Link href="forgotpassword" variant="body2">
 					Forgot password?
 					</Link>
-					<Link href="#" variant="body2">
+					<Link href="/signup" variant="body2">
 					{"Don't have an account? Sign Up"}
 					</Link>
 				</Grid>
