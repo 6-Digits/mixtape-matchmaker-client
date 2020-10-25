@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import {Dialog, DialogActions, Button, Link, DialogContent, DialogContentText, DialogTitle, TextField, Grid} from '@material-ui/core';
+import {Dialog, DialogActions, Button, Link, DialogContent, DialogContentText, DialogTitle, TextField} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	// modal: {
@@ -55,7 +55,7 @@ function ForgotPassword(props) {
 				/>
 				</DialogContent>
 				<DialogActions>
-				<Button onClick={handleClose} color="primary" className={classes.button}>
+				<Button onClick={handleClose} color="secondary" className={classes.button}>
 					Cancel
 				</Button>
 				<Button onClick={handleClose} color="primary" className={classes.button}>

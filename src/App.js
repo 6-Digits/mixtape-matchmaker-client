@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect} from 'react-router-dom'
 // import logo from "./logo.svg";
 import "./App.css";
 import Login from "./components/pages/Login"
@@ -10,8 +10,8 @@ import MyPlaylist from "./components/pages/MyPlaylist"
 import Matches from "./components/pages/Matches"
 import Settings from "./components/pages/Settings"
 import Notifications from "./components/pages/Notifications"
-import {Paper} from '@material-ui/core';
-import {createMuiTheme, ThemeProvider, responsiveFontSizes} from "@material-ui/core/styles"
+import {Paper, BottomNavigation, Grid, Button, Link} from '@material-ui/core';
+import {createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles} from "@material-ui/core/styles"
 
 let checkUserStatus = () => {
     return null;
@@ -19,6 +19,7 @@ let checkUserStatus = () => {
 
 
 function App(props) {
+	const [darkMode, setDarkMode] = useState(false);
 	const [user, setUser] = useState({
 		user: null
 	});
@@ -28,9 +29,9 @@ function App(props) {
 				main: "#6aabc4",
 			},
 			secondary: {
-				main: "#6aabc4",
+				main: "#de614b",
 			},
-			type: "dark"
+			type: darkMode ? "light" : "dark"
 		}
 	});
 	theme = responsiveFontSizes(theme);
@@ -57,10 +58,17 @@ function App(props) {
 
     // componentDidMount() {
     //     this.callAPI();
-    // }
+	// }
+	const useStyles = makeStyles((theme) => ({
+		fullScreen: {
+			height: "100vh" ,
+			width: "100%"
+		}
+	}));
+	const classes = makeStyles();
 	return (
 		<ThemeProvider theme={theme}>
-			<Paper>
+			<Paper className={classes.fullScreen}>
 			<BrowserRouter>
 				<Route
 					exact

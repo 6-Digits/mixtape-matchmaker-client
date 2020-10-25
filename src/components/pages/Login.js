@@ -5,14 +5,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from "../../assets/logo.png";
-import { Redirect } from 'react-router-dom'
-import forgotpassword from "../modals/ForgotPassword"
+import { Redirect } from 'react-router-dom';
+import forgotpassword from "../modals/ForgotPassword";
 import ForgotPassword from "../modals/ForgotPassword";
+import Footer from "../navbar/Footer"
 
 function Login({user, setUser}) {
 	const useStyles = makeStyles((theme) => ({
@@ -28,8 +27,7 @@ function Login({user, setUser}) {
 			fontSize: 2.5	 + 'rem'
 		},
 		container: {
-			height: "100vh" ,
-			
+			height: "100vh"
 		},
 		content: {
 			display: "flex",
@@ -52,7 +50,7 @@ function Login({user, setUser}) {
 	};
 	const classes = useStyles();
 	return (
-		<Container component="main" maxWidth="lg" className={classes.container}>
+	   <Container component="main" maxWidth="lg" className={classes.container}>
 		<div className={classes.content}>
 			<container>
 				<img src={logo} className={classes.logo}/>
@@ -106,6 +104,7 @@ function Login({user, setUser}) {
 			</form>
 		  </container>
 		</div>
+		<Footer></Footer>
 	  </Container>
 	);
 }
