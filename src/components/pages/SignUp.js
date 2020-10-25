@@ -46,7 +46,6 @@ function SignUp({user, setUser}) {
 	});
 	let loginUser = () => {
 		setUser(true);
-		return <Redirect exact from="/signup" to={{ pathname: "/home" }} />;
 	};
 	const classes = useStyles();	
 	return (

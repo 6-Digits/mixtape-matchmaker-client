@@ -18,7 +18,6 @@ function Footer(props) {
     const classes = useStyles();
     const logoutDebug = () => {
         props.setUser(false);
-        return <Redirect exact to={{ pathname: "/login" }} />;
     };
 	return (
 		<Box
