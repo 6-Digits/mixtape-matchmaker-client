@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {Box, Link, Grid, makeStyles} from "@material-ui/core"
+import React, { useState, useEffect, Redirect} from "react";
+import {Box, Link, Grid, makeStyles, Button} from "@material-ui/core"
 
 const useStyles = makeStyles((theme)=>({
     footer: {
@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme)=>({
 }));
 function Footer(props) {
     const classes = useStyles();
+    const logoutDebug = () => {
+        props.setUser(false);
+        return <Redirect exact to={{ pathname: "/login" }} />;
+    };
 	return (
 		<Box
             bgcolor="text.disabled"
@@ -30,6 +34,7 @@ function Footer(props) {
                     © 2020 6 Digits, Inc.  
                 </div>
                 <Link href="/about" color="text.primary" className={classes.bold}>About</Link>
+                <Button onClick={logoutDebug} color="text.primary">logout</Button>
             </Grid>
         </Box>
 	);

@@ -1,28 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Redirect} from 'react-router-dom'
+import { BrowserRouter, Route, Redirect} from 'react-router-dom';
 // import logo from "./logo.svg";
 import "./App.css";
-import Login from "./components/pages/Login"
-import Home from "./components/pages/Home"
-import About from "./components/pages/About"
-import SignUp from "./components/pages/SignUp"
-import MyPlaylist from "./components/pages/MyPlaylist"
-import Matches from "./components/pages/Matches"
-import Settings from "./components/pages/Settings"
-import Notifications from "./components/pages/Notifications"
+import Login from "./components/pages/Login";
+import Home from "./components/pages/Home";
+import About from "./components/pages/About";
+import SignUp from "./components/pages/SignUp";
+import MyPlaylist from "./components/pages/MyPlaylist";
+import Matches from "./components/pages/Matches";
+import Settings from "./components/pages/Settings";
+import Notifications from "./components/pages/Notifications";
 import {Paper, BottomNavigation, Grid, Button, Link} from '@material-ui/core';
-import {createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles} from "@material-ui/core/styles"
+import {createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles} from "@material-ui/core/styles";
+import Cookies from 'universal-cookie';
+import Footer from "./components/navbar/Footer";
 
-let checkUserStatus = () => {
-    return null;
-};
+const cookies = new Cookies();
 
 
 function App(props) {
 	const [darkMode, setDarkMode] = useState(false);
-	const [user, setUser] = useState({
-		user: null
-	});
+	const [user, setUser] = useState({user:false});
+	const [didLoad, setDidLoad] = useState(false);
+	useEffect(() => {
+		// Update the document title using the browser API
+		if (!didLoad) {
+			setUser(getUser());
+			setDidLoad(true);
+		  }
+	  }, [didLoad]);
+	
+	const getUser = () => {
+		return cookies.get('user');
+	};
+
+	const storeUser = (user) => {
+		cookies.set('user', user);
+		setUser({user:user});
+	};
+
 	let theme = createMuiTheme({
 		palette: {
 			primary: {
@@ -35,17 +51,6 @@ function App(props) {
 		}
 	});
 	theme = responsiveFontSizes(theme);
-    // constructor(props) {
-    //     super(props);
-    //     this.state = { 
-	// 		apiResponse: "app not working",
-	// 		user: null
-    //     };
-    //     // this.user = checkUserStatus();
-    //     this.user = null;
-    // }
-	
-
     // callAPI() {
     //     fetch("http://localhost:42069", { mode: 'no-cors' })
     //         .then(response => response.text())
@@ -55,17 +60,13 @@ function App(props) {
     //         })
     //         .catch(error => error);
     // }
-
-    // componentDidMount() {
-    //     this.callAPI();
-	// }
 	const useStyles = makeStyles((theme) => ({
 		fullScreen: {
 			height: "100vh" ,
 			width: "100%"
 		}
 	}));
-	const classes = makeStyles();
+	const classes = useStyles();
 	return (
 		<ThemeProvider theme={theme}>
 			<Paper className={classes.fullScreen}>
@@ -75,7 +76,7 @@ function App(props) {
 					path="/"
 					render={(props) => {
 						return (
-						user['user'] ?
+						user['user']  ?
 						<Redirect to="/home" /> :
 						<Redirect to="/login" /> 
 						)
@@ -86,7 +87,7 @@ function App(props) {
 						return (
 						user['user'] ?
 						<Redirect to="/home"/> :
-						<Login user = {user} setUser= {setUser}/> 
+						<Login user = {user['user']} setUser= {storeUser}/> 
 						)
 					}}
 				/>
@@ -94,9 +95,9 @@ function App(props) {
 				<Route path="/signup" name="SignUp" render={(props) => 
 					{
 						return (
-						user['user']  ?
+							user['user']  ?
 						<Redirect to="/home"/> :
-						<SignUp user = {user} setUser= {setUser} /> 
+						<SignUp user = {user['user']} setUser= {storeUser} /> 
 						)
 					}}
 				/>
@@ -104,8 +105,8 @@ function App(props) {
 				<Route path="/home" name="Home" render={(props) =>
 					{
 						return (
-						user['user'] ?
-						<Home user = {user} setUser= {setUser}/> :
+							user['user']  ?
+						<Home user = {user['user']} setUser= {storeUser}/> :
 						<Redirect to="/login"/> 
 						)
 					}}
@@ -117,8 +118,8 @@ function App(props) {
 				<Route path="/myplaylist" name="My Playlists" render={(props) =>
 					{
 						return (
-						user['user'] ?
-						<MyPlaylist user = {user} setUser= {setUser}/> :
+							user['user']  ?
+						<MyPlaylist user = {user['user']} setUser= {storeUser}/> :
 						<Redirect to="/login"/> 
 						)
 					}}
@@ -127,8 +128,8 @@ function App(props) {
 				<Route path="/matches" name="My Matches" render={(props) =>
 					{
 						return (
-						user['user'] ?
-						<Matches user = {user} setUser= {setUser}/> :
+							user['user']  ?
+						<Matches user = {user['user']} setUser= {storeUser}/> :
 						<Redirect to="/login"/> 
 						)
 					}}
@@ -137,8 +138,8 @@ function App(props) {
 				<Route path="/settings" name="My Settings" render={(props) =>
 					{
 						return (
-						user['user'] ?
-						<Settings user = {user} setUser= {setUser}/> :
+							user['user']  ?
+						<Settings user = {user['user']} setUser= {storeUser}/> :
 						<Redirect to="/login"/> 
 						)
 					}}
@@ -147,14 +148,15 @@ function App(props) {
 				<Route path="/notifications" name="My Notifications" render={(props) =>
 					{
 						return (
-						user['user'] ?
-						<Notifications user = {user} setUser= {setUser}/> :
+							user['user']  ?
+						<Notifications user = {user['user']} setUser= {storeUser}/> :
 						<Redirect to="/login"/> 
 						)
 					}}
 				/>
 				<Route />
 			</BrowserRouter>
+			<Footer setUser={storeUser}></Footer>
 			</Paper>
 		</ThemeProvider>
 	);

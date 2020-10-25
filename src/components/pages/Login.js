@@ -26,9 +26,6 @@ function Login({user, setUser}) {
 		headerButton: {
 			fontSize: 2.5	 + 'rem'
 		},
-		container: {
-			height: "100vh"
-		},
 		content: {
 			display: "flex",
 			justifyContent: "center",
@@ -43,16 +40,14 @@ function Login({user, setUser}) {
 		}
 	  }));
 	let loginUser = () => {
-		setUser({
-			user: true
-		});
+		setUser(true);
 		return <Redirect exact from="/login" to={{ pathname: "/home" }} />;
 	};
 	const classes = useStyles();
 	return (
-	   <Container component="main" maxWidth="lg" className={classes.container}>
+	   <Container component="main" maxWidth="lg" >
 		<div className={classes.content}>
-			<container>
+			<Container>
 				<img src={logo} className={classes.logo}/>
 				<form className={classes.form} noValidate>
 				<TextField
@@ -102,9 +97,8 @@ function Login({user, setUser}) {
 					</Link>
 				</Grid>
 			</form>
-		  </container>
+		  </Container>
 		</div>
-		<Footer></Footer>
 	  </Container>
 	);
 }
