@@ -16,16 +16,13 @@ const useStyles = makeStyles((theme)=>({
 }));
 function Footer(props) {
     const classes = useStyles();
-    const logoutDebug = () => {
-        props.setUser(false);
-    };
 	return (
 		<Box
             bgcolor="text.disabled"
             className={classes.footer}
             >
             <Grid
-            container
+            container   
             direction="row"
             justify="space-evenly"
             alignItems="flex-start">
@@ -33,7 +30,8 @@ function Footer(props) {
                     © 2020 6 Digits, Inc.  
                 </div>
                 <Link href="/about" color="text.primary" className={classes.bold}>About</Link>
-                <Button onClick={logoutDebug} color="text.primary">logout</Button>
+                <Link href="/matches" color="text.primary" className={classes.bold}>Matches</Link>
+                <Button href="/login" color="text.primary">logout</Button>
             </Grid>
         </Box>
 	);

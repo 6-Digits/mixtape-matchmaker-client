@@ -39,10 +39,6 @@ function Login({user, setUser}) {
 			width: "25vh"
 		}
 	  }));
-	let loginUser = () => {
-		setUser(true);
-		return <Redirect exact from="/login" to={{ pathname: "/home" }} />;
-	};
 	const classes = useStyles();
 	return (
 	   <Container component="main" maxWidth="lg" >
@@ -82,7 +78,7 @@ function Login({user, setUser}) {
 				variant="contained"
 				color="primary"
 				className={classes.submit}
-				onClick={loginUser}
+				href="/home"
 				>
 				Log In
 				</Button>

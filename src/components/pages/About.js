@@ -1,10 +1,67 @@
+import { Container, Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import {Box, Link, Grid, makeStyles, Button} from "@material-ui/core"
+import logo from "../../assets/logo.png";
+
+const useStyles = makeStyles((theme)=>({
+    footer: {
+        position: 'fixed',
+        borderRadius: "10px 10px 0px 0px",
+        left: "10%",
+        bottom: "0px",
+        width: "80%",
+        padding: theme.spacing(2, 2, 2)
+    },
+    bold: {
+        fontWeight: "bold"
+	},
+	content: {
+		display: "flex",
+		alignItems: "center",
+		height: "60vh" ,
+	},
+	button: {
+		fontWeight: "bold",
+		marginTop: "30px"
+	},
+	center: {
+		display: "flex",
+		alignItems: "center"
+	},
+	logo: {
+		display: "block",
+		margin: "auto",
+		height: "40vh",
+		width: "40vh"
+	}
+}));
 
 function About(props) {
+	const classes = useStyles();
 	return (
-		<div>
-			this is the about page
-		</div>
+		<Container component="main" maxWidth="lg">
+			<Box className={classes.content}>
+				<div>
+					<Typography variant="h2">
+						About
+					</Typography>
+					<Typography variant="h5">
+						You are a normal human-being trying to either make some new friends or get yourself known to the world. You want to meet that special person that shares the same musical interest as you, but you have no way of doing that other than to go on SoundCloud / Youtube / Spotify / Pandora, find a playlist and try to go through the arduous process of finding out the person’s social media profiles so you could contact them privately. This process is tedious and time consuming, thus, our Mixtape Matchmaker provides a platform that allows people to connect with each other in this exact way. 
+					</Typography>
+					<div className={classes.center}>
+						<Button 
+							onClick={useHistory().goBack} 
+							className={classes.button}
+							variant="contained"
+							size="large"
+							color="primary"
+							>Back</Button>
+					</div>
+				</div>
+				<img src={logo} className={classes.logo}/>
+			</Box>
+		</Container>
 	);
 }
 
