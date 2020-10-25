@@ -44,9 +44,6 @@ function SignUp({user, setUser}) {
 	const [signup, setSignUp] = useState({
 
 	});
-	let loginUser = () => {
-		setUser(true);
-	};
 	const classes = useStyles();	
 	return (
 		<Container component="main" maxWidth="lg">
@@ -155,7 +152,7 @@ function SignUp({user, setUser}) {
 						variant="contained"
 						color="primary"
 						className={classes.submit}
-						onClick= {loginUser}
+						href="/home"
 					>
 						Sign Up
 					</Button>

@@ -76,8 +76,8 @@ function App(props) {
 					path="/"
 					render={(props) => {
 						return (
-						user['user']  ?
-						<Redirect to="/home" /> :
+						// user['user']  ?
+						// <Redirect to="/home" /> :
 						<Redirect to="/login" /> 
 						)
 					}}
@@ -85,8 +85,9 @@ function App(props) {
 				<Route path="/login" name="Login" render={(props) =>
 					{
 						return (
-						user['user'] ?
-						<Redirect to="/home"/> :
+						// user['user'] ?
+						// <Redirect to="/home"/> 
+						// :
 						<Login user = {user['user']} setUser= {storeUser}/> 
 						)
 					}}
@@ -95,9 +96,9 @@ function App(props) {
 				<Route path="/signup" name="SignUp" render={(props) => 
 					{
 						return (
-							user['user']  ?
-						<Redirect to="/home"/> :
-						<SignUp user = {user['user']} setUser= {storeUser} /> 
+							// user['user']  ?
+						// <Redirect to="/home"/> :
+						 <SignUp user = {user['user']} setUser= {storeUser} /> 
 						)
 					}}
 				/>
@@ -105,9 +106,10 @@ function App(props) {
 				<Route path="/home" name="Home" render={(props) =>
 					{
 						return (
-							user['user']  ?
-						<Home user = {user['user']} setUser= {storeUser}/> :
-						<Redirect to="/login"/> 
+							// user['user']  ?
+						<Home user = {user['user']} setUser= {storeUser}/> 
+						// :
+						// <Redirect to="/login"/> 
 						)
 					}}
 				/>
@@ -118,9 +120,9 @@ function App(props) {
 				<Route path="/myplaylist" name="My Playlists" render={(props) =>
 					{
 						return (
-							user['user']  ?
-						<MyPlaylist user = {user['user']} setUser= {storeUser}/> :
-						<Redirect to="/login"/> 
+							// user['user']  ?
+						<MyPlaylist user = {user['user']} setUser= {storeUser}/> 
+						// <Redirect to="/login"/> 
 						)
 					}}
 				/>
@@ -128,9 +130,9 @@ function App(props) {
 				<Route path="/matches" name="My Matches" render={(props) =>
 					{
 						return (
-							user['user']  ?
-						<Matches user = {user['user']} setUser= {storeUser}/> :
-						<Redirect to="/login"/> 
+							// user['user']  ?
+						<Matches user = {user['user']} setUser= {storeUser}/> 
+						// :<Redirect to="/login"/> 
 						)
 					}}
 				/>
@@ -138,9 +140,9 @@ function App(props) {
 				<Route path="/settings" name="My Settings" render={(props) =>
 					{
 						return (
-							user['user']  ?
-						<Settings user = {user['user']} setUser= {storeUser}/> :
-						<Redirect to="/login"/> 
+							// user['user']  ?
+						<Settings user = {user['user']} setUser= {storeUser}/> 
+						// : <Redirect to="/login"/> 
 						)
 					}}
 				/>
@@ -148,9 +150,9 @@ function App(props) {
 				<Route path="/notifications" name="My Notifications" render={(props) =>
 					{
 						return (
-							user['user']  ?
-						<Notifications user = {user['user']} setUser= {storeUser}/> :
-						<Redirect to="/login"/> 
+							// user['user']  ?
+						<Notifications user = {user['user']} setUser= {storeUser}/> 
+						// <Redirect to="/login"/> 
 						)
 					}}
 				/>
