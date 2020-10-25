@@ -19,6 +19,12 @@ let checkUserStatus = () => {
 };
 const theme = createMuiTheme({
 	palette: {
+		primary: {
+			main: "#6aabc4",
+		},
+		secondary: {
+			main: "#6aabc4",
+		},
 		type: "dark"
 	}
 });
