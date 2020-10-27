@@ -25,13 +25,11 @@ function Footer(props) {
             container   
             direction="row"
             justify="space-evenly"
-            alignItems="flex-start">
+            alignItems="center">
                 <div>
                     © 2020 6 Digits, Inc.  
                 </div>
                 <Link href="/about" color="text.primary" className={classes.bold}>About</Link>
-                <Link href="/matches" color="text.primary" className={classes.bold}>Matches</Link>
-                <Button href="/login" color="text.primary">logout</Button>
             </Grid>
         </Box>
 	);

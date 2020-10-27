@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {Box, Container, Grid, Typography, InputBase, IconButton, Card} from '@material-ui/core';
+import {Box, Container, Grid, Typography, InputBase, IconButton, Card, Button} from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import ReactPlayer from 'react-player/youtube';
 import Sidebar from '../navbar/Sidebar';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { Group } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
 	form: {
 	  width: '100%'
 	},
-	submit: {
-	  margin: theme.spacing(3, 0, 2),
+	button: {
 	  fontWeight: "bold",
 	  fontFamily: "Arial Black"
 	},
@@ -120,19 +120,52 @@ function Playlist({title, importable, editable}) {
           <Typography variant="h2">
               {title}
           </Typography> : <Typography/>}
-      <div className={classes.search}>
-          <div className={classes.searchIcon}>
-              <SearchIcon />
-          </div>
-          <InputBase
-              placeholder={editable ? "Songs to add..." : "Search playlist song..."}
-              classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-          />
-      </div>
+      {
+        importable ? 
+        <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+        >
+          <Grid item xs={12} sm={6}>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                  <SearchIcon />
+              </div>
+                <InputBase
+                  placeholder={editable ? "Songs to add..." : "Search playlist song..."}
+                  classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+             variant="contained"
+             color="primary"
+             className={classes.button}>
+              {"Import"}
+            </Button>
+          </Grid>
+        </Grid> :
+        <div className={classes.search}>
+            <div className={classes.searchIcon}>
+                <SearchIcon />
+            </div>
+              <InputBase
+                placeholder={editable ? "Songs to add..." : "Search playlist song..."}
+                classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+        </div>
+      }
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <div className={classes.dragBox}>
           <Droppable droppableId="playlist" className={classes.dragContainer}>

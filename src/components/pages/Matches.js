@@ -75,7 +75,7 @@ function Matches(props) {
 					</Grid>
 				</Grid>
 				<Grid container item xs={12} sm={7}>
-					<Playlist title="My Match Playlist" editable={true}/>
+					<Playlist title="My Match Playlist" importable={true} editable={true}/>
 					<Grid
 						container
 						direction="column"
