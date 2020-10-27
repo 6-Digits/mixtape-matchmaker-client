@@ -17,26 +17,27 @@ function Matches(props) {
 		updateWidth();
 		return () => window.removeEventListener('resize', updateWidth);
 	  }, []);
-	let useStyles = makeStyles((theme) => ({
+	const useStyles = makeStyles((theme) => ({
 		form: {
 		  width: '100%'
 		},
 		submit: {
 		  margin: theme.spacing(3, 0, 2),
 		  fontWeight: "bold",
-		  fontFamily: "Arial Black"
-		},
-		headerButton: {
-			fontSize: 2.5	 + 'rem'
+		  fontFamily: "Arial Black",
+		  fontSize: "1.5rem"
 		},
 		content: {
 			marginTop: "1rem"
 		},
 		fullHeight: {
 			height: "100%"
+		},
+		playlistEdit: {
+			marginTop: "1rem"
 		}
 	}));
-	let classes = useStyles();
+	const classes = useStyles();
 	return (
 		<div style={{height: width > 598 ? "100vh" : "100%"}}>
 			<Sidebar pageName='My Matches'></Sidebar>
@@ -52,15 +53,15 @@ function Matches(props) {
 					direction="column"
 					justify="space-evenly"
 					alignItems="center"
-					item xs={12} sm={5}
+					item xs={12} sm={4}
 					spacing={1}
 					className={classes.content}>
 					<Grid container item xs={12} sm={11}>	
 						<ReactPlayer className={classes.player} url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
 					</Grid>
-					<Grid container item xs={12} sm={11} spacing={1}
+					<Grid container item xs={12} sm={11}
 						direction="column"
-						justify="space-evenly"
+						justify="center"
 						alignItems="center">	
 						<Grid container item xs={12} fullWidth>
 							<Button className={classes.submit} variant="contained" fullWidth color="inherit">{"Match Settings"}</Button>
@@ -73,7 +74,7 @@ function Matches(props) {
 						</Grid>
 					</Grid>
 				</Grid>
-				<Grid container item xs={12} sm={5}>
+				<Grid container item xs={12} sm={7}>
 					<Playlist title="My Match Playlist" editable={true}/>
 					<Grid
 						container
@@ -81,6 +82,7 @@ function Matches(props) {
 						justify="space-evenly"
 						alignItems="center"
 						spacing={4}
+						className={classes.playlistEdit}
 						>
 							
 						<Grid container item xs={12} spacing={3}>	  

@@ -15,21 +15,13 @@ const useStyles = makeStyles((theme) => ({
 	  fontWeight: "bold",
 	  fontFamily: "Arial Black"
 	},
-	headerButton: {
-		fontSize: 2.5	 + 'rem'
-	},
 	input: {
 		height: "80vh" ,
 	},
 	playlist: {
 		display: "block",
-		height: "40vh" ,
-	},
-	logo: {
-		display: "flex",
-		margin: "auto",
-		height: "25vh",
-		width: "25vh"
+    justifyContent: "center",
+    width: "100%"
 	},
 	search: {
 		position: 'relative',
@@ -38,13 +30,7 @@ const useStyles = makeStyles((theme) => ({
 		'&:hover': {
 			backgroundColor: fade(theme.palette.common.white, 0.25),
 		},
-		// marginRight: theme.spacing(2),
-		marginLeft: 0,
-		width: '100%',
-		[theme.breakpoints.up('sm')]: {
-			marginLeft: theme.spacing(3),
-			width: 'auto',
-		}
+		width: '100%'
 	},
 	searchIcon: {
 		padding: theme.spacing(0, 2),
@@ -60,21 +46,37 @@ const useStyles = makeStyles((theme) => ({
 	},
 	inputInput: {
 		padding: theme.spacing(2, 2, 2, 0),
-		// vertical padding + font size from searchIcon
 		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
 		transition: theme.transitions.create('width'),
 		width: '100%',
-		[theme.breakpoints.up('md')]: {
-		width: '20ch',
-		},
-    },
-    card: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.primary.contrastText,
-        marginTop: "1rem",
-        textAlign: "center",
-        fontWeight: "bold"
-    }
+  },
+  card: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    marginTop: "1rem",
+    textAlign: "center",
+    fontWeight: "bold",
+    width: "90%",
+    margin: "auto"
+  },
+  dragBox: {
+    marginTop: "1rem",
+		padding: theme.spacing(1, 0, 1, 0),
+    borderRadius: "0.25rem",
+    backgroundColor: theme.palette.text.secondary,
+    overflowY: "auto",
+    height: "20vh",
+    scrollbarWidth: "thin",
+    scrollbarColor: `${theme.palette.primary.main} ${theme.palette.primary.contrastText}`,
+  },
+  dragContainer: {
+    textAlign: "center"
+  },
+  list: {
+    listStyleType: "none",
+    paddingInlineStart: 0,
+    justifyContent: "center"
+  }
 }));
 const playlist = [
     {
@@ -88,46 +90,55 @@ const playlist = [
     {
       id: 'igf',
       name: 'I Gotta Feeling'
+    },
+    {
+      id: 'dsd',
+      name: 'Party Rock Anthem 2'
+    },
+    {
+      id: 'fsf',
+      name: 'I Gotta Feeling 2'
     }
   ]
 function Playlist({title, importable, editable}) {
-    const [characters, updateCharacters] = useState(playlist);
+    const [playlistItems, updatePlaylistItems] = useState(playlist);
 
     function handleOnDragEnd(result) {
       if (!result.destination) return;
   
-      const items = Array.from(characters);
+      const items = Array.from(playlistItems);
       const [reorderedItem] = items.splice(result.source.index, 1);
       items.splice(result.destination.index, 0, reorderedItem);
   
-      updateCharacters(items);
+      updatePlaylistItems(items);
     }
 
 	const classes = useStyles();
 	return (
 		<div className={classes.playlist}>
-            {title ? 
-            <Typography variant="h2">
-                {title}
-            </Typography> : <Typography/>}
-            <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                    <SearchIcon />
-                </div>
-                <InputBase
-                    placeholder={editable ? "Songs to add..." : "Search playlist song..."}
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    inputProps={{ 'aria-label': 'search' }}
-                />
-            </div>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="characters">
+        {title ? 
+          <Typography variant="h2">
+              {title}
+          </Typography> : <Typography/>}
+      <div className={classes.search}>
+          <div className={classes.searchIcon}>
+              <SearchIcon />
+          </div>
+          <InputBase
+              placeholder={editable ? "Songs to add..." : "Search playlist song..."}
+              classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+          />
+      </div>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <div className={classes.dragBox}>
+          <Droppable droppableId="playlist" className={classes.dragContainer}>
             {(provided) => (
-              <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                {characters.map(({id, name}, index) => {
+              <ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
+                {playlistItems.map(({id, name}, index) => {
                   return (
                     <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
@@ -144,8 +155,9 @@ function Playlist({title, importable, editable}) {
               </ul>
             )}
           </Droppable>
-        </DragDropContext>
         </div>
+      </DragDropContext>
+    </div>
 	);
 }
 

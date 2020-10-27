@@ -50,6 +50,23 @@ function App(props) {
 	});
 	theme = responsiveFontSizes(theme);
 	const useStyles = makeStyles((theme) => ({
+		'@global': {
+			// '*': {
+			//   'scrollbar-width': 'thin',
+			// },
+			'*::-webkit-scrollbar': {
+			  width: '8px',
+			  height: '4px',
+			},
+			'*:hover::-webkit-scrollbar-thumb': {
+				visibility: 'visible'
+			},
+			'*::-webkit-scrollbar-thumb': {
+				background: theme.palette.text.secondary,
+				visibility: 'hidden',
+				cornerRadius: '1px'
+			}
+		},
 		fullScreen: {
 			height: "100%" ,
 			width: "100%"
