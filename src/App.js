@@ -12,7 +12,6 @@ import Notifications from "./components/pages/Notifications";
 import {Paper, BottomNavigation, Grid, Button, Link} from '@material-ui/core';
 import {createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles} from "@material-ui/core/styles";
 import Cookies from 'universal-cookie';
-import Footer from "./components/navbar/Footer";
 
 const cookies = new Cookies();
 
@@ -54,6 +53,8 @@ function App(props) {
 		fullScreen: {
 			height: "100%" ,
 			width: "100%"
+		},
+		encompassScreen: {
 		}
 	}));
 	const classes = useStyles();
@@ -61,7 +62,7 @@ function App(props) {
 	return (
 		<ThemeProvider theme={theme}>
 			<Paper className={classes.fullScreen}>
-			<BrowserRouter>
+			<BrowserRouter className={classes}>
 				<Route
 					exact
 					path="/"
@@ -148,8 +149,7 @@ function App(props) {
 					}}
 				/>
 				<Route />
-			</BrowserRouter>
-			<Footer setUser={storeUser}></Footer>
+				</BrowserRouter>
 			</Paper>
 		</ThemeProvider>
 	);

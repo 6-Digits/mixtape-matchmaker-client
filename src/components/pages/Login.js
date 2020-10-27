@@ -37,11 +37,14 @@ function Login({user, setUser}) {
 			margin: "auto",
 			height: "25vh",
 			width: "25vh"
+		},
+		container: {
+			height: "100vh"
 		}
 	  }));
 	const classes = useStyles();
 	return (
-	   <Container component="main" maxWidth="lg" >
+	   <Container component="main" maxWidth="lg" className={classes.container}>
 		<div className={classes.content}>
 			<Container>
 				<img src={logo} className={classes.logo}/>
@@ -95,6 +98,7 @@ function Login({user, setUser}) {
 			</form>
 		  </Container>
 		</div>
+		<Footer></Footer>
 	  </Container>
 	);
 }

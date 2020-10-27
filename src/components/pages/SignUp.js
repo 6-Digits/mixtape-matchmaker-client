@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(3, 0, 2),
 		fontWeight: "bold",
 		fontFamily: "Arial Black"
+	  },
+	  container: {
+		  height: "100vh"
 	  }
   }));
 
@@ -46,7 +49,7 @@ function SignUp({user, setUser}) {
 	});
 	const classes = useStyles();	
 	return (
-		<Container component="main" maxWidth="lg">
+		<Container component="main" maxWidth="lg" className={classes.container}>
 			<div className={classes.content}>
 				<Container>
 					<img src={logo} className={classes.logo}/>
@@ -166,6 +169,7 @@ function SignUp({user, setUser}) {
 					</form>
 				</Container>
 			</div>
+			<Footer></Footer>
 		</Container>
 	);
 }

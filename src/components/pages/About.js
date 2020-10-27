@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme)=>({
 		margin: "auto",
 		height: "40vh",
 		width: "40vh"
+	},
+	container: {
+		height: "100vh"
 	}
 }));
 
@@ -42,8 +45,8 @@ function About(props) {
 	const classes = useStyles();
 	return (
 		<div>
-			<Sidebar pageName='About'></Sidebar>
-			<Container component="main" maxWidth="lg">
+			{/* <Sidebar pageName='About'></Sidebar> */}
+			<Container component="main" maxWidth="lg" className={classes.container}>
 				<Box className={classes.content}>
 					<div>
 						<Typography variant="h2">
