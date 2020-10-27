@@ -52,7 +52,7 @@ function App(props) {
 	theme = responsiveFontSizes(theme);
 	const useStyles = makeStyles((theme) => ({
 		fullScreen: {
-			height: "100vh" ,
+			height: "100%" ,
 			width: "100%"
 		}
 	}));
