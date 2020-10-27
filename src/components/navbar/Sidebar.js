@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, Drawer, List, Divider, ListItem, ListItemText } from '@material-ui/core';
 import { Menu as MenuIcon, Search as SearchIcon, AccountCircle, Notifications as NotificationsIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
+import logo from "../../assets/logo.png";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		display: 'none',
 		[theme.breakpoints.up('sm')]: {
-		display: 'block',
+			display: 'block',
 		},
 	},
 	search: {
@@ -51,13 +52,13 @@ const useStyles = makeStyles((theme) => ({
 		transition: theme.transitions.create('width'),
 		width: '100%',
 		[theme.breakpoints.up('md')]: {
-		width: '20ch',
+			width: '50ch',
 		},
 	},
 	sectionDesktop: {
 		display: 'none',
 		[theme.breakpoints.up('md')]: {
-		display: 'flex',
+			display: 'flex',
 		},
 	},
 	root: {
@@ -65,16 +66,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	appBar: {
 		transition: theme.transitions.create(['margin', 'width'], {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-		}),
-	},
-	appBarShift: {
-		width: `calc(100% - ${drawerWidth}px)`,
-		marginLeft: drawerWidth,
-		transition: theme.transitions.create(['margin', 'width'], {
-		easing: theme.transitions.easing.easeOut,
-		duration: theme.transitions.duration.enteringScreen,
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen,
 		}),
 	},
 	hide: {
@@ -95,29 +88,24 @@ const useStyles = makeStyles((theme) => ({
 		...theme.mixins.toolbar,
 		justifyContent: 'flex-end',
 	},
-	content: {
-		flexGrow: 1,
-		padding: theme.spacing(3),
-		transition: theme.transitions.create('margin', {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-		}),
-		marginLeft: -drawerWidth,
+	logo: {
+		display: "block",
+		margin: 'auto',
+		padding: "2vh 0 2vh 0",
+		height: "10vh",
 	},
-	contentShift: {
-		transition: theme.transitions.create('margin', {
-		easing: theme.transitions.easing.easeOut,
-		duration: theme.transitions.duration.enteringScreen,
-		}),
-		marginLeft: 0,
-	},
+	home: {
+		display: "block",
+		margin: '0 3vh 0 2vh',
+		height: "5vh",
+	}
 }));
 
 
 function Sidebar(props) {
 	const classes = useStyles();
 	const theme = useTheme();
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -142,6 +130,11 @@ function Sidebar(props) {
 					>
 						<MenuIcon />
 					</IconButton>
+					
+					<a href='/home'>
+						<img src={logo} className={classes.home}/>
+					</a>
+						
 					<Typography className={classes.title} variant="h6" noWrap>
 						{props.pageName}
 					</Typography>
@@ -160,7 +153,7 @@ function Sidebar(props) {
 					</div>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
-						<IconButton aria-label="show 17 new notifications" color="inherit">
+						<IconButton aria-label="show 17 new notifications" color="inherit" href='/notifications'>
 							<Badge badgeContent={17} color="secondary">
 								<NotificationsIcon />
 							</Badge>
@@ -171,6 +164,7 @@ function Sidebar(props) {
 							aria-controls={menuId}
 							aria-haspopup="true"
 							color="inherit"
+							href='/settings'
 						>
 							<AccountCircle />
 						</IconButton>
@@ -180,33 +174,51 @@ function Sidebar(props) {
 			
 			<Drawer
 				className={classes.drawer}
-				variant="persistent"
 				anchor="left"
 				open={open}
 				classes={{
-				paper: classes.drawerPaper,
+					paper: classes.drawerPaper,
 				}}
+				ModalProps={{ onBackdropClick: handleDrawerClose }}
 			>
 				<div className={classes.drawerHeader}>
-				<IconButton onClick={handleDrawerClose}>
-					{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-				</IconButton>
+					<img src={logo} className={classes.logo}/>
+					<IconButton onClick={handleDrawerClose}>
+						{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+					</IconButton>
 				</div>
+				
 				<Divider />
 				<List>
-				{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-					<ListItem button key={text}>
-					<ListItemText primary={text} />
+					<ListItem button key='Home' component='a' href='/home'>
+						<ListItemText primary='Home' />
 					</ListItem>
-				))}
+					<ListItem button key='My Playlists' component='a' href='/myplaylists'>
+						<ListItemText primary='My Playlists' />
+					</ListItem>
+					<ListItem button key='Matches' component='a' href='/matches'>
+						<ListItemText primary='Matches' />
+					</ListItem>
 				</List>
+				
 				<Divider />
 				<List>
-				{['All mail', 'Trash', 'Spam'].map((text, index) => (
-					<ListItem button key={text}>
-					<ListItemText primary={text} />
+					<ListItem button key='Settings' component='a' href='/settings'>
+						<ListItemText primary='Settings' />
 					</ListItem>
-				))}
+					<ListItem button key='Notifications' component='a' href='/notifications'>
+						<ListItemText primary='Notifications' />
+					</ListItem>
+					<ListItem button key='About' component='a' href='/about'>
+						<ListItemText primary='About' />
+					</ListItem>
+				</List>
+				
+				<Divider />
+				<List>
+					<ListItem button key='Log Out' component='a' href='/login'>
+						<ListItemText primary='Log Out' />
+					</ListItem>
 				</List>
 			</Drawer>
 		</div>

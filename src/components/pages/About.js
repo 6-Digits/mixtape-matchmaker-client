@@ -1,7 +1,8 @@
 import { Container, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import {Box, Link, Grid, makeStyles, Button} from "@material-ui/core"
+import { Box, Link, Grid, makeStyles, Button } from "@material-ui/core"
+import Sidebar from '../navbar/Sidebar';
 import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme)=>({
@@ -40,28 +41,31 @@ const useStyles = makeStyles((theme)=>({
 function About(props) {
 	const classes = useStyles();
 	return (
-		<Container component="main" maxWidth="lg">
-			<Box className={classes.content}>
-				<div>
-					<Typography variant="h2">
-						About
-					</Typography>
-					<Typography variant="h5">
-						You are a normal human-being trying to either make some new friends or get yourself known to the world. You want to meet that special person that shares the same musical interest as you, but you have no way of doing that other than to go on SoundCloud / Youtube / Spotify / Pandora, find a playlist and try to go through the arduous process of finding out the person’s social media profiles so you could contact them privately. This process is tedious and time consuming, thus, our Mixtape Matchmaker provides a platform that allows people to connect with each other in this exact way. 
-					</Typography>
-					<div className={classes.center}>
-						<Button 
-							onClick={useHistory().goBack} 
-							className={classes.button}
-							variant="contained"
-							size="large"
-							color="primary"
-							>Back</Button>
+		<div>
+			<Sidebar pageName='About'></Sidebar>
+			<Container component="main" maxWidth="lg">
+				<Box className={classes.content}>
+					<div>
+						<Typography variant="h2">
+							About
+						</Typography>
+						<Typography variant="h5">
+							You are a normal human-being trying to either make some new friends or get yourself known to the world. You want to meet that special person that shares the same musical interest as you, but you have no way of doing that other than to go on SoundCloud / Youtube / Spotify / Pandora, find a playlist and try to go through the arduous process of finding out the person’s social media profiles so you could contact them privately. This process is tedious and time consuming, thus, our Mixtape Matchmaker provides a platform that allows people to connect with each other in this exact way. 
+						</Typography>
+						<div className={classes.center}>
+							<Button 
+								onClick={useHistory().goBack} 
+								className={classes.button}
+								variant="contained"
+								size="large"
+								color="primary"
+								>Back</Button>
+						</div>
 					</div>
-				</div>
-				<img src={logo} className={classes.logo}/>
-			</Box>
-		</Container>
+					<img src={logo} className={classes.logo}/>
+				</Box>
+			</Container>
+		</div>
 	);
 }
 

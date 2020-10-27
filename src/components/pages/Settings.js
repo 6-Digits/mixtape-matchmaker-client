@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import Sidebar from '../navbar/Sidebar';
 
 function Settings(props) {
 	return (
 		<div>
-			this is the settings page
+			<Sidebar pageName='Settings'></Sidebar>
 		</div>
 	);
 }

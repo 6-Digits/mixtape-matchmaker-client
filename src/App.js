@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Redirect} from 'react-router-dom';
-// import logo from "./logo.svg";
 import "./App.css";
 import Login from "./components/pages/Login";
 import Home from "./components/pages/Home";
 import About from "./components/pages/About";
 import SignUp from "./components/pages/SignUp";
-import MyPlaylist from "./components/pages/MyPlaylist";
+import MyPlaylist from "./components/pages/MyPlaylists";
 import Matches from "./components/pages/Matches";
 import Settings from "./components/pages/Settings";
 import Notifications from "./components/pages/Notifications";
@@ -51,15 +50,6 @@ function App(props) {
 		}
 	});
 	theme = responsiveFontSizes(theme);
-    // callAPI() {
-    //     fetch("http://localhost:42069", { mode: 'no-cors' })
-    //         .then(response => response.text())
-    //         .then(data => {
-    //             this.setState({ apiResponse: data });
-    //             console.log('data=' + data);
-    //         })
-    //         .catch(error => error);
-    // }
 	const useStyles = makeStyles((theme) => ({
 		fullScreen: {
 			height: "100vh" ,
@@ -67,6 +57,7 @@ function App(props) {
 		}
 	}));
 	const classes = useStyles();
+	
 	return (
 		<ThemeProvider theme={theme}>
 			<Paper className={classes.fullScreen}>
@@ -117,7 +108,7 @@ function App(props) {
 					<About/>}
 				/>
 				<Route />
-				<Route path="/myplaylist" name="My Playlists" render={(props) =>
+				<Route path="/myplaylists" name="My Playlists" render={(props) =>
 					{
 						return (
 							// user['user']  ?
