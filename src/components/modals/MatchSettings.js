@@ -126,10 +126,10 @@ function MatchSettings(props) {
                     </Grid>
 				</DialogContent>
 				<DialogActions>
-				<Button onClick={handleClose} color="secondary" className={classes.cancel}>
+				<Button variant="contained" onClick={handleClose} color="secondary" className={classes.cancel}>
 					Cancel
 				</Button>
-				<Button onClick={handleClose} color="primary" className={classes.save}>
+				<Button variant="contained" onClick={handleClose} color="primary" className={classes.save}>
 					Save Match Preferences
 				</Button>
 				</DialogActions>

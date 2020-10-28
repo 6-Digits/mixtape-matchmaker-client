@@ -7,7 +7,9 @@ import Sidebar from '../navbar/Sidebar';
 import Draggable from 'react-draggable';
 import Playlist from "../modules/Playlist";
 import MatchSettings from "../modals/MatchSettings";
+import GoMatch from "../modals/GoMatch";
 import { TurnedInNot } from "@material-ui/icons";
+import ViewMatch from "../modals/ViewMatch";
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -74,10 +76,10 @@ function Matches(props) {
 							<MatchSettings></MatchSettings>
 						</Grid>
 						<Grid container item xs={12} fullWidth>
-							<Button className={classes.submit} variant="contained" fullWidth color="secondary">{"Go Match"}</Button>
+							<GoMatch></GoMatch>
 						</Grid>
 						<Grid container item xs={12} fullWidth>
-							<Button className={classes.submit} variant="contained" fullWidth color="primary">{"View Matches"}</Button>
+							<ViewMatch></ViewMatch>
 						</Grid>
 					</Grid>
 				</Grid>
@@ -91,7 +93,6 @@ function Matches(props) {
 						spacing={4}
 						className={classes.playlistEdit}
 						>
-							
 						<Grid container item xs={12} spacing={3}>	  
 							<TextField 	
 							fullWidth

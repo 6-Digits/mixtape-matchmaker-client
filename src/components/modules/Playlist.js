@@ -146,7 +146,7 @@ function Playlist({title, importable, editable, draggable}) {
 			{title ? 
 				<Typography variant="h3" className={classes.title}>
 					{title}
-				</Typography> : <Typography/>}
+				</Typography> : null}
 			<Grid
 			container
 			direction="row"
