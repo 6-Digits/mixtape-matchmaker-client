@@ -4,8 +4,10 @@ import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import ReactPlayer from 'react-player/youtube';
 import Sidebar from '../navbar/Sidebar';
+import PlaylistCard from './PlaylistCard';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Group } from "@material-ui/icons";
+import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -13,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	button: {
 		fontWeight: "bold",
-		fontFamily: "Arial Black"
+		fontFamily: "Arial Black",
+		height: "100%"
 	},
 	input: {
 		height: "80vh" ,
@@ -52,16 +55,11 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 	},
 	card: {
-		backgroundColor: theme.palette.primary.main,
-		color: theme.palette.primary.contrastText,
 		marginTop: "1rem",
-		textAlign: "center",
-		fontWeight: "bold",
 		width: "90%",
 		margin: "auto"
 	},
 	dragBox: {
-		marginTop: "1rem",
 		padding: theme.spacing(1, 0, 1, 0),
 		borderRadius: "0.25rem",
 		backgroundColor: theme.palette.text.secondary,
@@ -75,35 +73,52 @@ const useStyles = makeStyles((theme) => ({
 		listStyleType: "none",
 		paddingInlineStart: 0,
 		justifyContent: "center"
+	},
+	importGrid: {
+		maxWidth: "100%"
 	}
 }));
 
 const playlist = [
 	{
 		id: 'utp',
-		name: 'Uptown Funk'
+		name: 'Uptown Funk',
+		author: 'Mark Ronson',
+		genre: 'Pop',
+		duration: 154
 	},
 	{
 		id: 'pra',
-		name: 'Party Rock Anthem'
+		name: 'Party Rock Anthem',
+		author: 'David Listenbee',
+		genre: 'Pop',
+		duration: 503
 	},
 	{
 		id: 'igf',
-		name: 'I Gotta Feeling'
+		name: 'I Gotta Feeling',
+		author: 'Black Eyed Peas',
+		genre: 'Pop',
+		duration: 123
 	},
 	{
 		id: 'dsd',
-		name: 'Party Rock Anthem 2'
+		name: 'Party Rock Anthem 2',
+		author: 'Hello there',
+		genre: 'Pop 2.0',
+		duration: 412
 	},
 	{
 		id: 'fsf',
-		name: 'I Gotta Feeling 2'
+		name: 'I Gotta Feeling 2',
+		author: 'General Kenobi',
+		genre: 'Pop 3.0',
+		duration: 323
 	}
 ]
 
 function Playlist({title, importable, editable}) {
 	const [playlistItems, updatePlaylistItems] = useState(playlist);
-
 	function handleOnDragEnd(result) {
 		if (!result.destination) return;
 
@@ -144,12 +159,13 @@ function Playlist({title, importable, editable}) {
 								/>
 						</div>
 					</Grid>
-					<Grid item xs={12} sm={1}>
+					<Grid item xs={12} sm={1} className={classes.importGrid}>
 						<Button
 						 variant="contained"
 						 color="primary"
 						 className={classes.button}>
-							{"Import"}
+							 <LibraryAddIcon fontSize='large'></LibraryAddIcon>
+							{" Import"}
 						</Button>
 					</Grid>
 				</Grid> :
@@ -172,15 +188,19 @@ function Playlist({title, importable, editable}) {
 					<Droppable droppableId="playlist" className={classes.dragContainer}>
 						{(provided) => (
 							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-								{playlistItems.map(({id, name}, index) => {
+								{playlistItems.map(({id, name, author, genre, duration}, index) => {
 									return (
 										<Draggable key={id} draggableId={id} index={index}>
 											{(provided) => (
-												<Card className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-													<p>
-														{ name }
-													</p>
-												</Card>
+												<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+													<PlaylistCard 
+													song={name} 
+													editable={true}
+													author={author}
+													genre={genre}
+													duration={duration}
+													/>
+												</div>
 											)}
 										</Draggable>
 									);

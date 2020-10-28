@@ -6,6 +6,7 @@ import ReactPlayer from 'react-player/youtube';
 import Sidebar from '../navbar/Sidebar';
 import Draggable from 'react-draggable';
 import Playlist from "../modules/Playlist";
+import MatchSettings from "../modals/MatchSettings";
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -44,7 +45,7 @@ function Matches(props) {
 	
 	
 	return (
-		<div style={{height: width > 598 ? "100vh" : "100%"}}>
+		<div style={{height: width > 599 ? "100vh" : "100%"}}>
 			<Sidebar pageName='My Matches'></Sidebar>
 			<Grid
 				container
@@ -60,7 +61,7 @@ function Matches(props) {
 					alignItems="center"
 					item xs={12} sm={4}
 					spacing={1}
-					style={{marginTop: width > 598 ? "4rem" : "0"}}>
+					style={{marginTop: width > 599 ? "4rem" : "0"}}>
 					<Grid container item xs={12} sm={11}>	
 						<ReactPlayer className={classes.player} url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
 					</Grid>
@@ -69,7 +70,7 @@ function Matches(props) {
 						justify="center"
 						alignItems="center">	
 						<Grid container item xs={12} fullWidth>
-							<Button className={classes.submit} variant="contained" fullWidth color="inherit">{"Match Settings"}</Button>
+							<MatchSettings></MatchSettings>
 						</Grid>
 						<Grid container item xs={12} fullWidth>
 							<Button className={classes.submit} variant="contained" fullWidth color="secondary">{"Go Match"}</Button>
