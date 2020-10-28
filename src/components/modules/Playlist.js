@@ -199,7 +199,7 @@ function Playlist({title, importable, editable, draggable}) {
 								<LibraryAddIcon fontSize='large'></LibraryAddIcon>
 								{" Import"}
 							</Button>
-						</Grid> : <Grid></Grid>
+						</Grid> : null
 				}
 			</Grid>
 			<DragDropContext onDragEnd={handleOnDragEnd}>
