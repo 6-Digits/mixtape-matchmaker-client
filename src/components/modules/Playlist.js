@@ -8,20 +8,23 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Group } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
+	title: {
+		padding: '5vh 0 0 0',
+	},
 	form: {
-	  width: '100%'
+		width: '100%'
 	},
 	button: {
-	  fontWeight: "bold",
-	  fontFamily: "Arial Black"
+		fontWeight: "bold",
+		fontFamily: "Arial Black"
 	},
 	input: {
 		height: "80vh" ,
 	},
 	playlist: {
 		display: "block",
-    justifyContent: "center",
-    width: "100%"
+		justifyContent: "center",
+		width: "100%"
 	},
 	search: {
 		position: 'relative',
@@ -30,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
 		'&:hover': {
 			backgroundColor: fade(theme.palette.common.white, 0.25),
 		},
-		width: '100%'
+		width: '100%',
+		margin: '2vh 0 2vh 0'
 	},
 	searchIcon: {
 		padding: theme.spacing(0, 2),
@@ -49,148 +53,150 @@ const useStyles = makeStyles((theme) => ({
 		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
 		transition: theme.transitions.create('width'),
 		width: '100%',
-  },
-  card: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-    marginTop: "1rem",
-    textAlign: "center",
-    fontWeight: "bold",
-    width: "90%",
-    margin: "auto"
-  },
-  dragBox: {
-    marginTop: "1rem",
+	},
+	card: {
+		backgroundColor: theme.palette.primary.main,
+		color: theme.palette.primary.contrastText,
+		marginTop: "1rem",
+		textAlign: "center",
+		fontWeight: "bold",
+		width: "90%",
+		margin: "auto"
+	},
+	dragBox: {
+		marginTop: "1rem",
 		padding: theme.spacing(1, 0, 1, 0),
-    borderRadius: "0.25rem",
-    backgroundColor: theme.palette.text.secondary,
-    overflowY: "auto",
-    height: "20vh",
-    scrollbarWidth: "thin",
-    scrollbarColor: `${theme.palette.primary.main} ${theme.palette.primary.contrastText}`,
-  },
-  dragContainer: {
-    textAlign: "center"
-  },
-  list: {
-    listStyleType: "none",
-    paddingInlineStart: 0,
-    justifyContent: "center"
-  }
+		borderRadius: "0.25rem",
+		backgroundColor: theme.palette.text.secondary,
+		overflowY: "auto",
+		height: "40vh",
+		scrollbarWidth: "thin",
+		scrollbarColor: `${theme.palette.primary.main} ${theme.palette.primary.contrastText}`,
+	},
+	dragContainer: {
+		textAlign: "center",
+	},
+	list: {
+		listStyleType: "none",
+		paddingInlineStart: 0,
+		justifyContent: "center"
+	}
 }));
-const playlist = [
-    {
-      id: 'utp',
-      name: 'Uptown Funk'
-    },
-    {
-      id: 'pra',
-      name: 'Party Rock Anthem'
-    },
-    {
-      id: 'igf',
-      name: 'I Gotta Feeling'
-    },
-    {
-      id: 'dsd',
-      name: 'Party Rock Anthem 2'
-    },
-    {
-      id: 'fsf',
-      name: 'I Gotta Feeling 2'
-    }
-  ]
-function Playlist({title, importable, editable}) {
-    const [playlistItems, updatePlaylistItems] = useState(playlist);
 
-    function handleOnDragEnd(result) {
-      if (!result.destination) return;
-  
-      const items = Array.from(playlistItems);
-      const [reorderedItem] = items.splice(result.source.index, 1);
-      items.splice(result.destination.index, 0, reorderedItem);
-  
-      updatePlaylistItems(items);
-    }
+const playlist = [
+	{
+		id: 'utp',
+		name: 'Uptown Funk'
+	},
+	{
+		id: 'pra',
+		name: 'Party Rock Anthem'
+	},
+	{
+		id: 'igf',
+		name: 'I Gotta Feeling'
+	},
+	{
+		id: 'dsd',
+		name: 'Party Rock Anthem 2'
+	},
+	{
+		id: 'fsf',
+		name: 'I Gotta Feeling 2'
+	}
+]
+
+function Playlist({title, importable, editable}) {
+	const [playlistItems, updatePlaylistItems] = useState(playlist);
+
+	function handleOnDragEnd(result) {
+		if (!result.destination) return;
+
+		const items = Array.from(playlistItems);
+		const [reorderedItem] = items.splice(result.source.index, 1);
+		items.splice(result.destination.index, 0, reorderedItem);
+
+		updatePlaylistItems(items);
+	}
 
 	const classes = useStyles();
 	return (
 		<div className={classes.playlist}>
-        {title ? 
-          <Typography variant="h2">
-              {title}
-          </Typography> : <Typography/>}
-      {
-        importable ? 
-        <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-        >
-          <Grid item xs={12} sm={6}>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                  <SearchIcon />
-              </div>
-                <InputBase
-                  placeholder={editable ? "Songs to add..." : "Search playlist song..."}
-                  classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                  }}
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={1}>
-            <Button
-             variant="contained"
-             color="primary"
-             className={classes.button}>
-              {"Import"}
-            </Button>
-          </Grid>
-        </Grid> :
-        <div className={classes.search}>
-            <div className={classes.searchIcon}>
-                <SearchIcon />
-            </div>
-              <InputBase
-                placeholder={editable ? "Songs to add..." : "Search playlist song..."}
-                classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-        </div>
-      }
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <div className={classes.dragBox}>
-          <Droppable droppableId="playlist" className={classes.dragContainer}>
-            {(provided) => (
-              <ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-                {playlistItems.map(({id, name}, index) => {
-                  return (
-                    <Draggable key={id} draggableId={id} index={index}>
-                      {(provided) => (
-                        <Card className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                          <p>
-                            { name }
-                          </p>
-                        </Card>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
-              </ul>
-            )}
-          </Droppable>
-        </div>
-      </DragDropContext>
-    </div>
+			{title ? 
+				<Typography variant="h3" className={classes.title}>
+					{title}
+				</Typography> : <Typography/>}
+			{
+				importable ? 
+				<Grid
+				container
+				direction="row"
+				justify="space-between"
+				alignItems="center"
+				>
+					<Grid item xs={12} sm={6}>
+						<div className={classes.search}>
+							<div className={classes.searchIcon}>
+									<SearchIcon />
+							</div>
+								<InputBase
+									placeholder={editable ? "Songs to add..." : "Search playlist song..."}
+									classes={{
+											root: classes.inputRoot,
+											input: classes.inputInput,
+									}}
+									inputProps={{ 'aria-label': 'search' }}
+								/>
+						</div>
+					</Grid>
+					<Grid item xs={12} sm={1}>
+						<Button
+						 variant="contained"
+						 color="primary"
+						 className={classes.button}>
+							{"Import"}
+						</Button>
+					</Grid>
+				</Grid> :
+				<div className={classes.search}>
+						<div className={classes.searchIcon}>
+								<SearchIcon />
+						</div>
+							<InputBase
+								placeholder={editable ? "Songs to add..." : "Search playlist song..."}
+								classes={{
+										root: classes.inputRoot,
+										input: classes.inputInput,
+								}}
+								inputProps={{ 'aria-label': 'search' }}
+							/>
+				</div>
+			}
+			<DragDropContext onDragEnd={handleOnDragEnd}>
+				<div className={classes.dragBox}>
+					<Droppable droppableId="playlist" className={classes.dragContainer}>
+						{(provided) => (
+							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
+								{playlistItems.map(({id, name}, index) => {
+									return (
+										<Draggable key={id} draggableId={id} index={index}>
+											{(provided) => (
+												<Card className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+													<p>
+														{ name }
+													</p>
+												</Card>
+											)}
+										</Draggable>
+									);
+								})}
+								{provided.placeholder}
+							</ul>
+						)}
+					</Droppable>
+				</div>
+			</DragDropContext>
+		</div>
 	);
 }
 

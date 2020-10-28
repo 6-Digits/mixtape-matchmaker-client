@@ -1,13 +1,17 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, Drawer, List, Divider, ListItem, ListItemText } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, Drawer, List, Divider, ListItem, ListItemText, Button } from '@material-ui/core';
 import { Menu as MenuIcon, Search as SearchIcon, AccountCircle, Notifications as NotificationsIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
 import logo from "../../assets/logo.png";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
 	grow: {
-		flexGrow: 1,
+		flexGrow: 2,
+	},
+	toolbar: {
+		margin: '1vh 0 1vh 0',
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
@@ -33,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
 			width: 'auto',
 		},
 	},
+	searchButton: {
+		padding: theme.spacing(1, 1.5, 1, 1.5),
+		transition: theme.transitions.create('width'),
+	},
 	searchIcon: {
 		padding: theme.spacing(0, 2),
 		height: '100%',
@@ -46,8 +54,7 @@ const useStyles = makeStyles((theme) => ({
 		color: 'inherit',
 	},
 	inputInput: {
-		padding: theme.spacing(1, 1, 1, 0),
-		// vertical padding + font size from searchIcon
+		padding: theme.spacing(1.5, 1.5, 1.5, 0),
 		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
 		transition: theme.transitions.create('width'),
 		width: '100%',
@@ -105,7 +112,9 @@ const useStyles = makeStyles((theme) => ({
 function Sidebar(props) {
 	const classes = useStyles();
 	const theme = useTheme();
+	const history = useHistory();
 	const [open, setOpen] = useState(false);
+	const [value, setValue] = useState('');
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -114,13 +123,20 @@ function Sidebar(props) {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
+	
+	const handleSearch = () => {
+		history.push({
+			pathname: '/search',
+			query: value
+		});
+	};
 
 	const menuId = 'primary-search-account-menu';
 
 	return (
 		<div className={classes.grow}>
 			<AppBar position="static">
-				<Toolbar>
+				<Toolbar className={classes.toolbar}>
 					<IconButton
 						edge="start"
 						className={classes.menuButton}
@@ -149,8 +165,12 @@ function Sidebar(props) {
 								input: classes.inputInput,
 							}}
 							inputProps={{ 'aria-label': 'search' }}
+							onChange={event => setValue(event.target.value)}
 						/>
 					</div>
+						<Button variant="contained" className={classes.searchButton} aria-label='search' onClick={handleSearch}>
+							Search
+						</Button>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
 						<IconButton aria-label="show 17 new notifications" color="inherit" href='/notifications'>

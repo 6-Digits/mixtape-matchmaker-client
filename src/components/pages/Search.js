@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, InputBase, IconButton, Paper, Button } from '@material-ui/core';
-import { Search as SearchIcon } from '@material-ui/icons';
+import { useLocation } from "react-router-dom";
+import { Grid, Typography, Paper, Button, Card, CardMedia, CardContent, CardActions, ButtonBase } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Sidebar from '../navbar/Sidebar';
 import PlaylistContainer from "../modules/PlaylistContainer";
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	button: {
 		fontWeight: "bold",
-		fontFamily: "Arial Black"
+		fontFamily: "Arial Black",
 	},
 	sectionContainer: {
 		paddingTop: '3vh',
@@ -69,38 +69,32 @@ const useStyles = makeStyles((theme) => ({
 		display: 'block',
 		textAlign: 'initial',
 		margin: '2px',
-	}
+	},
+	title: {
+		fontSize: '28pt',
+	},
+	query: {
+		fontSize: '16pt',
+	},
 }));
 
-function MyPlaylists(props) {
+function Search(props) {
 	const classes = useStyles();
+	const location = useLocation();
 	
 	return (
 		<div>
-			<Sidebar pageName='My Playlists'></Sidebar>
+			<Sidebar pageName='Search'></Sidebar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
-					<Typography variant="h2">
-						My Playlists
-					</Typography>
-					
 					<Grid container direction="row" justify="space-between" alignItems="center">
 						<Grid item xs={12} sm={6}>
-							<div className={classes.search}>
-								<div className={classes.searchIcon}>
-									<SearchIcon />
-								</div>
-									<InputBase
-										placeholder="Search for playlist..."
-										classes={{
-												root: classes.inputRoot,
-												input: classes.inputInput,
-										}}
-										inputProps={{ 'aria-label': 'search' }}
-									/>
-							</div>
+							<Typography variant="h3" className={classes.title}>
+								Search results for: 
+							</Typography>
 						</Grid>
-						<Grid item xs={3} sm={2}>
+						
+						<Grid item xs={3} sm={2} spacing={2}>
 							<Button variant="contained" color="primary" className={classes.button}>
 								{"Sort"}
 							</Button>
@@ -108,12 +102,19 @@ function MyPlaylists(props) {
 								{"Filter"}
 							</Button>
 						</Grid>
+						
+						<Grid item xs={12} sm={6}>
+							<Typography className={classes.query}> 
+								{location.query}
+							</Typography>
+						</Grid>
 					</Grid>
 					
-					<PlaylistContainer height={500} playlists={Array(100).fill('my playlist')} />
+					<PlaylistContainer height={500} playlists={Array(100).fill('search playlist')} />
+					
 			</Grid>
 		</div>
 	);
 }
 
-export default MyPlaylists;
+export default Search;

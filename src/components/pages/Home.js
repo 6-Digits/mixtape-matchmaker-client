@@ -1,23 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Paper, Grid, Button } from "@material-ui/core"
+import { Paper, Grid, Button, Typography } from "@material-ui/core"
 import Sidebar from '../navbar/Sidebar';
+import PlaylistContainer from "../modules/PlaylistContainer";
 
 const useStyles = makeStyles((theme)=>({
-	container: {
-		padding: '5vh 10vh 10vh 10vh',
+	mainContainer: {
+		padding: '5vh 20vh 10vh 20vh',
+		display: "block",
+		justifyContent: "center",
+		width: "100%",
 	},
-	popular: {
-		margin: '5vh 10vh 10vh 10vh',
+	title: {
+		fontSize: '28pt',
+	},
+	sectionContainer: {
+		paddingTop: '3vh',
+		margin: '5vh 0 10vh 0',
 		width: '100%',
-		border: '5px solid black',
 		padding: '3vh',
+		backgroundColor: '#999999',
 	},
-	mixtape: {
-		height: '15vh',
-		width: '20vh',
-		margin: '2vh 2vh 8vh 2vh',
-		border: '2px solid black',
+	playlistsContainer: {
+		padding: "20px 20px 20px 20px",
+	},
+	cardMedia: {
+		margin: "auto",
+		width: "120px", 
+		height: "100px",
+	},
+	cardContent: {
+		textAlign: "center",
+	},
+	cardAction: {
+		display: 'block',
+		textAlign: 'initial',
+		margin: '2px',
 	}
 }));
 
@@ -34,40 +52,20 @@ function Home(props) {
 				justify="center"
 				alignItems="center"
 				fullWidth
-				className={classes.container}
+				className={classes.mainContainer}
 			>
-			
-				Popular Playlists
-				<Paper style={{maxHeight: 300, overflow: 'auto'}} className={classes.popular}>
-					<Grid container spacing={0} alignItems="center" justify="center">
-						{Array(100).fill('sample mixtape').map((text, index) => (
-							<Grid item xs={3} alignItems="center" justify="center">
-								<Grid container alignItems="center" justify="center">
-									{text + ' ' + index}
-								</Grid>
-								<Grid container alignItems="center" justify="center">
-									<Button className={classes.mixtape}>playlist</Button>
-								</Grid>
-							</Grid>
-						))}
-					</Grid>	
-				</Paper>
 				
-				Liked Playlists
-				<Paper style={{maxHeight: 300, overflow: 'auto'}} className={classes.popular}>
-					<Grid container spacing={0} alignItems="center" justify="center">
-						{Array(100).fill('sample mixtape').map((text, index) => (
-							<Grid item xs={3} alignItems="center" justify="center">
-								<Grid container alignItems="center" justify="center">
-									{text + ' ' + index}
-								</Grid>
-								<Grid container alignItems="center" justify="center">
-									<Button className={classes.mixtape}>playlist</Button>
-								</Grid>
-							</Grid>
-						))}
-					</Grid>	
-				</Paper>
+				<Typography variant="h3" className={classes.title}>
+					Popular Playlists
+				</Typography>
+				
+				<PlaylistContainer height={500} playlists={Array(100).fill('popular playlist')} />
+				
+				<Typography variant="h3" className={classes.title}>
+					Liked Playlists
+				</Typography>
+				
+				<PlaylistContainer height={500} playlists={Array(100).fill('liked playlist')} />
 				
 			</Grid>
 		</div>

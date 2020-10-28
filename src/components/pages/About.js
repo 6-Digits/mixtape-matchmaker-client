@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme)=>({
 
 function About(props) {
 	const classes = useStyles();
+	const history = useHistory();
+	
 	return (
 		<div>
 			{/* <Sidebar pageName='About'></Sidebar> */}
@@ -57,7 +59,7 @@ function About(props) {
 						</Typography>
 						<div className={classes.center}>
 							<Button 
-								onClick={useHistory().goBack} 
+								onClick={history.goBack} 
 								className={classes.button}
 								variant="contained"
 								size="large"
