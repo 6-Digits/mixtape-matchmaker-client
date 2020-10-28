@@ -18,14 +18,14 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: "1.5rem"
 	},
 	content: {
-		marginTop: "1rem",
-		padding: '5vh 5vh 5vh 5vh',
+		marginTop: "5vh",
 	},
 	fullHeight: {
 		height: "100%"
 	},
 	playlistEdit: {
-		marginTop: "1rem"
+		marginTop: "1rem",
+		padding: "0 0 2vh 0"
 	}
 }));
 
@@ -44,14 +44,14 @@ function Matches(props) {
 	
 	
 	return (
-		<div style={{height: width > 598 ? "120vh" : "100%"}}>
+		<div style={{height: width > 598 ? "100vh" : "100%"}}>
 			<Sidebar pageName='My Matches'></Sidebar>
 			<Grid
 				container
 				direction="row"
 				justify="center"
 				alignItems="center"
-				fullWidth
+				className={classes.content}
 			>
 				<Grid 
 					container
@@ -60,7 +60,7 @@ function Matches(props) {
 					alignItems="center"
 					item xs={12} sm={4}
 					spacing={1}
-					className={classes.content}>
+					style={{marginTop: width > 598 ? "4rem" : "0"}}>
 					<Grid container item xs={12} sm={11}>	
 						<ReactPlayer className={classes.player} url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
 					</Grid>

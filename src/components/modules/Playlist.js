@@ -8,9 +8,6 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Group } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
-	title: {
-		padding: '5vh 0 0 0',
-	},
 	form: {
 		width: '100%'
 	},
@@ -69,9 +66,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: "0.25rem",
 		backgroundColor: theme.palette.text.secondary,
 		overflowY: "auto",
-		height: "40vh",
-		scrollbarWidth: "thin",
-		scrollbarColor: `${theme.palette.primary.main} ${theme.palette.primary.contrastText}`,
+		height: "30vh"
 	},
 	dragContainer: {
 		textAlign: "center",
