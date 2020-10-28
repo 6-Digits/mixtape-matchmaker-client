@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Box, Container, Grid, Typography, InputBase, IconButton, Card, Button} from '@material-ui/core';
+import {Box, Container, Grid, Typography, InputBase, IconButton, Card, Button, Menu, MenuItem} from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import ReactPlayer from 'react-player/youtube';
@@ -8,6 +8,7 @@ import PlaylistCard from './PlaylistCard';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Group } from "@material-ui/icons";
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
+import SortIcon from '@material-ui/icons/Sort';
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -119,6 +120,16 @@ const playlist = [
 
 function Playlist({title, importable, editable, draggable}) {
 	const [playlistItems, updatePlaylistItems] = useState(playlist);
+	const [sortAnchor, setSortAnchor] = React.useState(null);
+	
+	const handleSortClick = (event) => {
+		setSortAnchor(event.currentTarget);
+	  };
+	
+	const handleSortClose = () => {
+		setSortAnchor(null);
+	};
+
 	function handleOnDragEnd(result) {
 		if (!result.destination) return;
 
@@ -156,6 +167,27 @@ function Playlist({title, importable, editable, draggable}) {
 								inputProps={{ 'aria-label': 'search' }}
 							/>
 					</div>
+				</Grid>
+				<Grid item xs={12} sm={1} className={classes.importGrid}>
+					<Button
+					variant="contained"
+					color="secondary"
+					className={classes.button}
+					aria-controls="sort-menu" aria-haspopup="true" onClick={handleSortClick}>
+						<SortIcon fontSize='large'></SortIcon>
+						{" Sort"}
+					</Button>
+					<Menu
+						id="sort-menu"
+						anchorEl={sortAnchor}
+						keepMounted
+						open={Boolean(sortAnchor)}
+						onClose={handleSortClose}
+					>
+						<MenuItem onClick={handleSortClose}>By Title</MenuItem>
+						<MenuItem onClick={handleSortClose}>By Duration</MenuItem>
+						<MenuItem onClick={handleSortClose}>By Author</MenuItem>
+					</Menu>
 				</Grid>
 				{
 					importable ? 

@@ -7,6 +7,7 @@ import Sidebar from '../navbar/Sidebar';
 import Draggable from 'react-draggable';
 import Playlist from "../modules/Playlist";
 import MatchSettings from "../modals/MatchSettings";
+import { TurnedInNot } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -81,7 +82,7 @@ function Matches(props) {
 					</Grid>
 				</Grid>
 				<Grid container item xs={12} sm={7}>
-					<Playlist title="My Match Playlist" importable={true} editable={true}/>
+					<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}/>
 					<Grid
 						container
 						direction="column"
