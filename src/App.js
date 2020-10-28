@@ -8,7 +8,7 @@ import SignUp from "./components/pages/SignUp";
 import MyPlaylist from "./components/pages/MyPlaylists";
 import Matches from "./components/pages/Matches";
 import Settings from "./components/pages/Settings";
-import Notifications from "./components/pages/Notifications";
+import Notifications from "./components/modals/Notifications";
 import Search from "./components/pages/Search";
 import { Paper, BottomNavigation, Grid, Button, Link } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles } from "@material-ui/core/styles";

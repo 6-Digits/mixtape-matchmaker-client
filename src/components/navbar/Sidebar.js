@@ -4,7 +4,7 @@ import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, Drawer, List, Divider, ListItem, ListItemText, Button } from '@material-ui/core';
 import { Menu as MenuIcon, Search as SearchIcon, AccountCircle, Notifications as NotificationsIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
 import logo from "../../assets/logo.png";
-import Notifications from "../pages/Notifications.js";
+import Notifications from "../modals/Notifications.js";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
