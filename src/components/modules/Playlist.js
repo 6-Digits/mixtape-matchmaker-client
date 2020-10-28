@@ -117,7 +117,7 @@ const playlist = [
 	}
 ]
 
-function Playlist({title, importable, editable}) {
+function Playlist({title, importable, editable, draggable}) {
 	const [playlistItems, updatePlaylistItems] = useState(playlist);
 	function handleOnDragEnd(result) {
 		if (!result.destination) return;
@@ -136,40 +136,14 @@ function Playlist({title, importable, editable}) {
 				<Typography variant="h3" className={classes.title}>
 					{title}
 				</Typography> : <Typography/>}
-			{
-				importable ? 
-				<Grid
-				container
-				direction="row"
-				justify="space-between"
-				alignItems="center"
-				>
-					<Grid item xs={12} sm={6}>
-						<div className={classes.search}>
-							<div className={classes.searchIcon}>
-									<SearchIcon />
-							</div>
-								<InputBase
-									placeholder={editable ? "Songs to add..." : "Search playlist song..."}
-									classes={{
-											root: classes.inputRoot,
-											input: classes.inputInput,
-									}}
-									inputProps={{ 'aria-label': 'search' }}
-								/>
-						</div>
-					</Grid>
-					<Grid item xs={12} sm={1} className={classes.importGrid}>
-						<Button
-						 variant="contained"
-						 color="primary"
-						 className={classes.button}>
-							 <LibraryAddIcon fontSize='large'></LibraryAddIcon>
-							{" Import"}
-						</Button>
-					</Grid>
-				</Grid> :
-				<div className={classes.search}>
+			<Grid
+			container
+			direction="row"
+			justify="space-between"
+			alignItems="center"
+			>
+				<Grid item xs={12} sm={6}>
+					<div className={classes.search}>
 						<div className={classes.searchIcon}>
 								<SearchIcon />
 						</div>
@@ -181,8 +155,21 @@ function Playlist({title, importable, editable}) {
 								}}
 								inputProps={{ 'aria-label': 'search' }}
 							/>
-				</div>
-			}
+					</div>
+				</Grid>
+				{
+					importable ? 
+						<Grid item xs={12} sm={1} className={classes.importGrid}>
+							<Button
+							variant="contained"
+							color="primary"
+							className={classes.button}>
+								<LibraryAddIcon fontSize='large'></LibraryAddIcon>
+								{" Import"}
+							</Button>
+						</Grid> : <Grid></Grid>
+				}
+			</Grid>
 			<DragDropContext onDragEnd={handleOnDragEnd}>
 				<div className={classes.dragBox}>
 					<Droppable droppableId="playlist" className={classes.dragContainer}>
@@ -190,7 +177,7 @@ function Playlist({title, importable, editable}) {
 							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
 								{playlistItems.map(({id, name, author, genre, duration}, index) => {
 									return (
-										<Draggable key={id} draggableId={id} index={index}>
+										<Draggable key={id} draggableId={id} index={index} isDragDisabled={!draggable}>
 											{(provided) => (
 												<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 													<PlaylistCard 
