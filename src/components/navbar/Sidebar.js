@@ -4,6 +4,7 @@ import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, Drawer, List, Divider, ListItem, ListItemText, Button } from '@material-ui/core';
 import { Menu as MenuIcon, Search as SearchIcon, AccountCircle, Notifications as NotificationsIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
 import logo from "../../assets/logo.png";
+import Notifications from "../pages/Notifications.js";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -173,11 +174,7 @@ function Sidebar(props) {
 						</Button>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
-						<IconButton aria-label="show 17 new notifications" color="inherit" href='/notifications'>
-							<Badge badgeContent={17} color="secondary">
-								<NotificationsIcon />
-							</Badge>
-						</IconButton>
+						<Notifications/>
 						<IconButton
 							edge="end"
 							aria-label="account of current user"

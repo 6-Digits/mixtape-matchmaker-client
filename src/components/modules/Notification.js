@@ -20,6 +20,10 @@ export default function Notification(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+
   return (
     <div className={classes.root}>
       <Collapse in={open}>
