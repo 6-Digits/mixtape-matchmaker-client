@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(3, 0, 2),
 		fontWeight: "bold",
 		fontFamily: "Arial Black",
-		fontSize: "1.5rem"
+		fontSize: "1.5rem",
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary
     },
     input: {
         marginTop: 0
@@ -52,7 +54,7 @@ function MatchSettings(props) {
 	
 	return (
 		<div className={classes.container}>
-            <Button className={classes.button} onClick={handleOpen} variant="contained" fullWidth color="inherit">{"Match Settings"}</Button>
+            <Button className={classes.button} onClick={handleOpen} variant="contained" fullWidth>{"Match Settings"}</Button>
             <Dialog 
                 fullWidth={true}
                 maxWidth="lg" className={classes.modal} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -87,6 +89,7 @@ function MatchSettings(props) {
                         label="Oldest Age"
                         type="number"
                         className={classes.input}
+                        style={{marginLeft:"1rem"}}
                     />
                     <Typography variant="h6" className={classes.sectionHeader, classes.profileHeader}>My Profile</Typography>
                     <TextField

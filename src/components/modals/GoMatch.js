@@ -85,14 +85,27 @@ function GoMatch(props) {
                     >
                         <Grid container 
                             direction="column" item xs={12} sm={4}>
-                            <Typography variant="h3" className={classes.profileName}>Obi Wan Kenobi</Typography>
-                            <Avatar variant="rounded" className={classes.profileImg} src={"https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg"}></Avatar>
-						    <ReactPlayer className={classes.player}url='https://www.youtube.com/watch?v=rEq1Z0bjdwc' />
+                            <Grid item>
+                                <Typography variant="h3" className={classes.profileName}>Obi Wan Kenobi</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Avatar variant="rounded" className={classes.profileImg} src={"https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg"}></Avatar>
+                            </Grid>
+                            <Grid item>
+                                <ReactPlayer className={classes.player}url='https://www.youtube.com/watch?v=rEq1Z0bjdwc' />
+                            </Grid>
                         </Grid>
                         <Grid container item xs={12} sm={6}>
-                            <Typography variant="h3">History of Meme Songs</Typography>
-                            <Typography variant="h6">I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.</Typography>
-                            <Playlist ></Playlist>
+                            <Grid item>
+                                <Typography variant="h3">History of Meme Songs</Typography> 
+                            </Grid>
+                            
+                            <Grid item>
+                                <Typography variant="h6">I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Playlist ></Playlist>
+                            </Grid>
                             <Grid container direction="row" justify="space-evenly" alignItems="center">
                                 <Button variant="contained" className={classes.likeButton}><Avatar className={classes.likeImg} src={heart} variant="rounded"></Avatar></Button> 
                                 <Button variant="contained" className={classes.likeButton}><Avatar className={classes.likeImg} src={heartBreak} variant="rounded"></Avatar></Button>
