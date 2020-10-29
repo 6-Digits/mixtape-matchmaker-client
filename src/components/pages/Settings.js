@@ -84,14 +84,14 @@ export default function Settings(props) {
 					<Grid item xs={12}>
 						<Typography gutterBottom variant="h4">Public Profile</Typography>
 					</Grid>
-					<Grid item xs={12} sm={6}>
+					<Grid item xs={12} sm={3}>
 						<Paper className={classes.paper}>
 							<ButtonBase className={classes.image}>
 								<img src={logo} className={classes.image} alt="logo" />
 							</ButtonBase>
 						</Paper>
 					</Grid>
-					<Grid item xs={12} sm={6}>
+					<Grid item xs={12} sm={9}>
 						<Paper className={classes.paper}>
 							<TextField
 								variant="outlined"

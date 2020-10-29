@@ -8,9 +8,9 @@ import Notification from '../modules/Notification';
 
 
 const options = [
-	<Notification link='http://localhost:8080/matches' message='JSON has sent you a message!'></Notification>,
-	<Notification link='http://localhost:8080/settings' message='FARHAN has matched with you!'></Notification>,
-	<Notification link='http://localhost:8080/myplaylists' message='DARREN has commented on your playlist!'></Notification>
+  <Notification link='http://localhost:8080/matches' message='JSON has sent you a message!'></Notification>,
+  <Notification link='http://localhost:8080/settings' message='FARHAN has matched with you!'></Notification>,
+  <Notification link='http://localhost:8080/myplaylists' message='DARREN has commented on your playlist!'></Notification>
 ];
 
 const ITEM_HEIGHT = 48;
@@ -28,34 +28,34 @@ export default function Notifications() {
   };
 
   const StyledMenu = withStyles({
-	paper: {
-	  border: '1px solid #d3d4d5',
-	},
+    paper: {
+      border: '1px solid #d3d4d5',
+    },
   })((props) => (
-	<Menu
-	id="long-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: '25%',
-          },
-        }}
-	  elevation={0}
-	  getContentAnchorEl={null}
-	  anchorOrigin={{
-		vertical: 'bottom',
-		horizontal: 'center',
-	  }}
-	  transformOrigin={{
-		vertical: 'top',
-		horizontal: 'center',
-	  }}
-	  {...props}
-	/>
+    <Menu
+      id="long-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={open}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          maxHeight: ITEM_HEIGHT * 4.5,
+          width: '25%',
+        },
+      }}
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
+      {...props}
+    />
   ));
 
   return (
@@ -66,9 +66,9 @@ export default function Notifications() {
         aria-haspopup="true"
         onClick={handleClick}
       >
-		<Badge badgeContent={17} color="secondary">
-			<NotificationsIcon />
-		</Badge>
+        <Badge badgeContent={17} color="secondary">
+          <NotificationsIcon />
+        </Badge>
       </IconButton>
       <StyledMenu>
         {options.map((option) => (

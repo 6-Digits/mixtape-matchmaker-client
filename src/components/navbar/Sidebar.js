@@ -5,6 +5,7 @@ import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, Drawer, List
 import { Menu as MenuIcon, Search as SearchIcon, AccountCircle, Notifications as NotificationsIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
 import logo from "../../assets/logo.png";
 import Notifications from "../modals/Notifications.js";
+import AccountDropDown from "./AccountDropDown.js";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -124,7 +125,7 @@ function Sidebar(props) {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
-	
+
 	const handleSearch = () => {
 		history.push({
 			pathname: '/search',
@@ -147,11 +148,11 @@ function Sidebar(props) {
 					>
 						<MenuIcon />
 					</IconButton>
-					
+
 					<a href='/home'>
-						<img src={logo} className={classes.home}/>
+						<img src={logo} className={classes.home} />
 					</a>
-						
+
 					<Typography className={classes.title} variant="h6" noWrap>
 						{props.pageName}
 					</Typography>
@@ -169,26 +170,17 @@ function Sidebar(props) {
 							onChange={event => setValue(event.target.value)}
 						/>
 					</div>
-						<Button variant="contained" className={classes.searchButton} aria-label='search' onClick={handleSearch}>
-							Search
+					<Button variant="contained" className={classes.searchButton} aria-label='search' onClick={handleSearch}>
+						Search
 						</Button>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
-						<Notifications/>
-						<IconButton
-							edge="end"
-							aria-label="account of current user"
-							aria-controls={menuId}
-							aria-haspopup="true"
-							color="inherit"
-							href='/settings'
-						>
-							<AccountCircle />
-						</IconButton>
+						<Notifications />
+						<AccountDropDown />
 					</div>
 				</Toolbar>
 			</AppBar>
-			
+
 			<Drawer
 				className={classes.drawer}
 				anchor="left"
@@ -199,12 +191,12 @@ function Sidebar(props) {
 				ModalProps={{ onBackdropClick: handleDrawerClose }}
 			>
 				<div className={classes.drawerHeader}>
-					<img src={logo} className={classes.logo}/>
+					<img src={logo} className={classes.logo} />
 					<IconButton onClick={handleDrawerClose}>
 						{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
 					</IconButton>
 				</div>
-				
+
 				<Divider />
 				<List>
 					<ListItem button key='Home' component='a' href='/home'>
@@ -217,20 +209,17 @@ function Sidebar(props) {
 						<ListItemText primary='Matches' />
 					</ListItem>
 				</List>
-				
+
 				<Divider />
 				<List>
 					<ListItem button key='Settings' component='a' href='/settings'>
 						<ListItemText primary='Settings' />
 					</ListItem>
-					<ListItem button key='Notifications' component='a' href='/notifications'>
-						<ListItemText primary='Notifications' />
-					</ListItem>
 					<ListItem button key='About' component='a' href='/about'>
 						<ListItemText primary='About' />
 					</ListItem>
 				</List>
-				
+
 				<Divider />
 				<List>
 					<ListItem button key='Log Out' component='a' href='/login'>
