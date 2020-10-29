@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import {Avatar, Dialog, DialogActions, Button, Link, DialogContent, 
-        DialogContentText, DialogTitle, TextField, Typography, Grid, Box} from '@material-ui/core';
+import { Dialog, DialogActions, Button, DialogTitle, TextField, Typography, Grid, Box} from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import MatchChatCard from "../modules/MatchChatCard";

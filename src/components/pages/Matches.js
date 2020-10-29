@@ -1,9 +1,7 @@
 import React, { useState, useEffect} from "react";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Box, Container, Grid, Typography, InputBase, IconButton, TextField, GridList, Button } from '@material-ui/core';
-import { TurnedInNot, Search as SearchIcon } from "@material-ui/icons";
+import { Grid, TextField} from '@material-ui/core';
 import ReactPlayer from 'react-player/youtube';
-import Draggable from 'react-draggable';
 import NavigationBar from '../modules/NavigationBar';
 import Playlist from "../modules/Playlist";
 import MatchSettings from "../modals/MatchSettings";

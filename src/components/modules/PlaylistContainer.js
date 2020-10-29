@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Paper, Grid, Button, Typography, Card, CardMedia, CardContent, CardActions, ButtonBase } from "@material-ui/core"
+import { Paper, Grid, Typography, Card, CardMedia, CardContent, ButtonBase } from "@material-ui/core"
 import placeholder from "../../assets/placeholder.png";
 
 const useStyles = makeStyles((theme)=>({

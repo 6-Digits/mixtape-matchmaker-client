@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Paper, Grid, Button, Typography } from "@material-ui/core"
+import { Grid, Typography } from "@material-ui/core"
 import NavigationBar from '../modules/NavigationBar';
 import PlaylistContainer from "../modules/PlaylistContainer";
 

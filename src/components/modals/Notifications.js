@@ -1,9 +1,6 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { IconButton, Badge } from '@material-ui/core';
+import { IconButton, Badge, Menu, MenuItem, withStyles } from '@material-ui/core';
 import { Notifications as NotificationsIcon } from '@material-ui/icons';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import Notification from '../modules/Notification';
 
 

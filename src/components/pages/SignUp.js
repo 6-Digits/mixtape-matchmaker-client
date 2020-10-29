@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Button, TextField, FormControlLabel, Checkbox, Link, Grid, Container} from "@material-ui/core";
+import {Button, TextField, Link, Grid, Container} from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";

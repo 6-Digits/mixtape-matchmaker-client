@@ -10,7 +10,7 @@ import Matches from "./components/pages/Matches";
 import Settings from "./components/pages/Settings";
 import Notifications from "./components/modals/Notifications";
 import Search from "./components/pages/Search";
-import { Paper, BottomNavigation, Grid, Button, Link } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles } from "@material-ui/core/styles";
 import Cookies from 'universal-cookie';
 

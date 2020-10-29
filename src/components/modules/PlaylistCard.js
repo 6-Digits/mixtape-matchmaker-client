@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {Box, Container, Grid, Typography, InputBase, IconButton, Card, Button, Avatar} from '@material-ui/core';
+import {Grid, Typography, Card, Button, Avatar} from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import { PlayCircleOutline as PlayCircleOutlineIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     card: {

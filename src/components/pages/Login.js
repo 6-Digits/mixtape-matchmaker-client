@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
+import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import logo from "../../assets/logo.png";
 import { Redirect } from 'react-router-dom';
-import forgotpassword from "../modals/ForgotPassword";
 import ForgotPassword from "../modals/ForgotPassword";
 import Footer from "../modules/Footer"
 

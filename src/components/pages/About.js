@@ -1,7 +1,7 @@
 import { Container, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Box, Link, Grid, makeStyles, Button } from "@material-ui/core"
+import { Box, makeStyles, Button } from "@material-ui/core"
 import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme)=>({

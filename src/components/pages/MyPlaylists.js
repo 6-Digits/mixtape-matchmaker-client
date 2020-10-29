@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, InputBase, IconButton, Paper, Button } from '@material-ui/core';
+import { Grid, Typography, InputBase, Button } from '@material-ui/core';
 import { Search as SearchIcon } from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';

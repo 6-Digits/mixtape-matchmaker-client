@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Redirect} from "react";
-import {Box, Link, Grid, makeStyles, Button} from "@material-ui/core"
+import {Box, Link, Grid, makeStyles} from "@material-ui/core"
 
 const useStyles = makeStyles((theme)=>({
     footer: {

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {Box, Container, Grid, Typography, InputBase, IconButton, Card, Button, Menu, MenuItem} from '@material-ui/core';
+import {Grid, Typography, InputBase, Button, Menu, MenuItem} from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 import ReactPlayer from 'react-player/youtube';
 import PlaylistCard from './PlaylistCard';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Group } from "@material-ui/icons";
-import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
-import SortIcon from '@material-ui/icons/Sort';
+import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
 	form: {
