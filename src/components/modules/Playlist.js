@@ -169,27 +169,31 @@ function Playlist({title, importable, editable, draggable}) {
 							/>
 					</div>
 				</Grid>
-				<Grid item xs={12} sm={1} className={classes.importGrid}>
-					<Button
-					variant="contained"
-					color="secondary"
-					className={classes.button}
-					aria-controls="sort-menu" aria-haspopup="true" onClick={handleSortClick}>
-						<SortIcon fontSize='large'></SortIcon>
-						{" Sort"}
-					</Button>
-					<Menu
-						id="sort-menu"
-						anchorEl={sortAnchor}
-						keepMounted
-						open={Boolean(sortAnchor)}
-						onClose={handleSortClose}
-					>
-						<MenuItem onClick={handleSortClose}>By Title</MenuItem>
-						<MenuItem onClick={handleSortClose}>By Duration</MenuItem>
-						<MenuItem onClick={handleSortClose}>By Author</MenuItem>
-					</Menu>
-				</Grid>
+				
+				{	editable ? 
+					null :
+					<Grid item xs={12} sm={1} className={classes.importGrid}>
+						<Button
+						variant="contained"
+						color="secondary"
+						className={classes.button}
+						aria-controls="sort-menu" aria-haspopup="true" onClick={handleSortClick}>
+							<SortIcon fontSize='large'></SortIcon>
+							{" Sort"}
+						</Button>
+						<Menu
+							id="sort-menu"
+							anchorEl={sortAnchor}
+							keepMounted
+							open={Boolean(sortAnchor)}
+							onClose={handleSortClose}
+						>
+							<MenuItem onClick={handleSortClose}>By Title</MenuItem>
+							<MenuItem onClick={handleSortClose}>By Duration</MenuItem>
+							<MenuItem onClick={handleSortClose}>By Author</MenuItem>
+						</Menu>
+					</Grid> 
+				}
 				{
 					importable ? 
 						<Grid item xs={12} sm={1} className={classes.importGrid}>
@@ -214,6 +218,7 @@ function Playlist({title, importable, editable, draggable}) {
 											{(provided) => (
 												<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 													<PlaylistCard 
+													order={index}
 													song={name} 
 													editable={true}
 													author={author}
