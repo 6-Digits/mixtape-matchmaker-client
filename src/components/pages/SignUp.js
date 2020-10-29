@@ -4,7 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";
 import { Redirect } from 'react-router-dom'
-import Footer from "../navbar/Footer";
+import Footer from "../modules/Footer";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {

@@ -1,14 +1,13 @@
 import React, { useState, useEffect} from "react";
-import {Box, Container, Grid, Typography, InputBase, IconButton, TextField, GridList, Button} from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
+import { Box, Container, Grid, Typography, InputBase, IconButton, TextField, GridList, Button } from '@material-ui/core';
+import { TurnedInNot, Search as SearchIcon } from "@material-ui/icons";
 import ReactPlayer from 'react-player/youtube';
-import Sidebar from '../navbar/Sidebar';
 import Draggable from 'react-draggable';
+import NavigationBar from '../modules/NavigationBar';
 import Playlist from "../modules/Playlist";
 import MatchSettings from "../modals/MatchSettings";
 import GoMatch from "../modals/GoMatch";
-import { TurnedInNot } from "@material-ui/icons";
 import ViewMatch from "../modals/ViewMatch";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +48,7 @@ function Matches(props) {
 	
 	return (
 		<div style={{height: width > 599 ? "100vh" : "100%"}}>
-			<Sidebar pageName='My Matches'></Sidebar>
+			<NavigationBar pageName='My Matches'></NavigationBar>
 			<Grid
 				container
 				direction="row"

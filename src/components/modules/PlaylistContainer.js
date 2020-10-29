@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Paper, Grid, Button, Typography, Card, CardMedia, CardContent, CardActions, ButtonBase } from "@material-ui/core"
-import logo from "../../assets/logo.png";
+import placeholder from "../../assets/placeholder.png";
 
 const useStyles = makeStyles((theme)=>({
 	sectionContainer: {
@@ -40,7 +40,7 @@ function PlaylistContainer(props) {
 						<Grid item xs={3}>
 							<Card>
 								<ButtonBase className={classes.cardAction} onClick={event => {}}>
-									<CardMedia className={classes.cardMedia} image={logo} />
+									<CardMedia className={classes.cardMedia} image={placeholder} />
 									<CardContent className={classes.cardContent}>
 										<Typography>{`${text} ${index}`}</Typography>
 									</CardContent>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Grid, Typography, Paper, Button, Card, CardMedia, CardContent, CardActions, ButtonBase } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import Sidebar from '../navbar/Sidebar';
+import NavigationBar from '../modules/NavigationBar';
 import PlaylistContainer from "../modules/PlaylistContainer";
 
 const useStyles = makeStyles((theme) => ({
@@ -84,7 +84,7 @@ function Search(props) {
 	
 	return (
 		<div>
-			<Sidebar pageName='Search'></Sidebar>
+			<NavigationBar pageName='Search'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
 					<Grid container direction="row" justify="space-between" alignItems="center">

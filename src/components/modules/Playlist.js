@@ -3,7 +3,6 @@ import {Box, Container, Grid, Typography, InputBase, IconButton, Card, Button, M
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import ReactPlayer from 'react-player/youtube';
-import Sidebar from '../navbar/Sidebar';
 import PlaylistCard from './PlaylistCard';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Group } from "@material-ui/icons";

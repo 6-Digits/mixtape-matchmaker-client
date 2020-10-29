@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Sidebar from '../navbar/Sidebar';
-import TextField from '@material-ui/core/TextField';
-import logo from "../../assets/logo.png";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import Button from '@material-ui/core/Button';
+import { Grid, Paper, Typography, ButtonBase, TextField, List, ListItem, ListItemText, Menu, MenuItem, Switch, Button, FormControlLabel } from '@material-ui/core';
+import NavigationBar from '../modules/NavigationBar';
+import placeholder from "../../assets/placeholder.png";
 
 const options = [
 	'Female',
@@ -23,11 +11,37 @@ const options = [
 	'Apache Helicopter',
 ];
 
+const useStyles = makeStyles((theme) => ({
+	root: {
+		flexGrow: 1,
+	},
+	mainContainer: {
+		padding: '5vh 20vh 10vh 20vh',
+		display: "flex",
+		justifyContent: "auto",
+		width: "100%",
+	},
+	paper: {
+		padding: theme.spacing(2),
+		margin: 'auto',
+		maxWidth: '100%',
+	},
+	image: {
+		width: 256,
+		height: 256,
+	},
+	img: {
+		margin: 'auto',
+		display: 'block',
+		maxWidth: '100%',
+		maxHeight: '100%',
+	},
+}));
 
-export default function Settings(props) {
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	const [selectedIndex, setSelectedIndex] = React.useState(1);
-	const [state, setState] = React.useState({
+function Settings(props) {
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [selectedIndex, setSelectedIndex] = useState(1);
+	const [state, setState] = useState({
 		checkedNotifications: true,
 	});
 
@@ -48,37 +62,12 @@ export default function Settings(props) {
 		setAnchorEl(null);
 	};
 
-	const useStyles = makeStyles((theme) => ({
-		root: {
-			flexGrow: 1,
-		},
-		mainContainer: {
-			padding: '5vh 20vh 10vh 20vh',
-			display: "flex",
-			justifyContent: "auto",
-			width: "100%",
-		},
-		paper: {
-			padding: theme.spacing(2),
-			margin: 'auto',
-			maxWidth: '100%',
-		},
-		image: {
-			width: 256,
-			height: 256,
-		},
-		img: {
-			margin: 'auto',
-			display: 'block',
-			maxWidth: '100%',
-			maxHeight: '100%',
-		},
-	}));
-
 	const classes = useStyles();
+	
 	return (
 		<div className={classes.root}>
-			<Sidebar pageName='My Matches'></Sidebar>
+			<NavigationBar pageName='My Matches'></NavigationBar>
+			
 			<Paper className={classes.paper}>
 				<Grid container spacing={3} className={classes.mainContainer}>
 					<Grid item xs={12}>
@@ -87,7 +76,7 @@ export default function Settings(props) {
 					<Grid item xs={12} sm={3}>
 						<Paper className={classes.paper}>
 							<ButtonBase className={classes.image}>
-								<img src={logo} className={classes.image} alt="logo" />
+								<img src={placeholder} className={classes.image} alt="placeholder" />
 							</ButtonBase>
 						</Paper>
 					</Grid>
@@ -235,3 +224,5 @@ export default function Settings(props) {
 		</div>
 	);
 }
+
+export default Settings;

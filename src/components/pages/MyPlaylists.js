@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography, InputBase, IconButton, Paper, Button } from '@material-ui/core';
 import { Search as SearchIcon } from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import Sidebar from '../navbar/Sidebar';
+import NavigationBar from '../modules/NavigationBar';
 import PlaylistContainer from "../modules/PlaylistContainer";
 
 const useStyles = makeStyles((theme) => ({
@@ -77,7 +77,7 @@ function MyPlaylists(props) {
 	
 	return (
 		<div>
-			<Sidebar pageName='My Playlists'></Sidebar>
+			<NavigationBar pageName='My Playlists'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
 					<Typography variant="h2">

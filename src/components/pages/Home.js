@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Paper, Grid, Button, Typography } from "@material-ui/core"
-import Sidebar from '../navbar/Sidebar';
+import NavigationBar from '../modules/NavigationBar';
 import PlaylistContainer from "../modules/PlaylistContainer";
 
 const useStyles = makeStyles((theme)=>({
@@ -44,7 +44,7 @@ function Home(props) {
 	
 	return (
 		<div>
-			<Sidebar pageName='Home'></Sidebar>
+			<NavigationBar pageName='Home'></NavigationBar>
 			
 			<Grid
 				container

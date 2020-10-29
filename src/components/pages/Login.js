@@ -11,7 +11,7 @@ import logo from "../../assets/logo.png";
 import { Redirect } from 'react-router-dom';
 import forgotpassword from "../modals/ForgotPassword";
 import ForgotPassword from "../modals/ForgotPassword";
-import Footer from "../navbar/Footer"
+import Footer from "../modules/Footer"
 
 function Login({user, setUser}) {
 	const useStyles = makeStyles((theme) => ({

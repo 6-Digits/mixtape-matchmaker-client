@@ -2,7 +2,6 @@ import { Container, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Box, Link, Grid, makeStyles, Button } from "@material-ui/core"
-import Sidebar from '../navbar/Sidebar';
 import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme)=>({

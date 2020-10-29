@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {Box, Container, Grid, Typography, InputBase, IconButton, Card, Button, Avatar, CardActionArea} from '@material-ui/core';
+import { Box, Container, Grid, Typography, InputBase, IconButton, Card, Button, Avatar, CardActionArea } from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import heartBreak from "../../assets/heart_break.png";
 
 const useStyles = makeStyles((theme) => ({
