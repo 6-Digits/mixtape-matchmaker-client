@@ -74,23 +74,32 @@ function MatchSettings(props) {
                         autoComplete="sex"
                         renderInput={(params) => <TextField {...params} label="Gender Preference" variant="outlined" />}
                         />
-                    <TextField
-                        autoFocus
-                        margin="normal"
-                        id="age-lower"
-                        label="Youngest Age"
-                        type="number"
-                        className={classes.input}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="normal"
-                        id="age-upper"
-                        label="Oldest Age"
-                        type="number"
-                        className={classes.input}
-                        style={{marginLeft:"1rem"}}
-                    />
+                    <Grid container direction="row" justify="flex-start" alignItems="center" spacing={2}>
+                        <Grid item xs={12} sm={2}>
+                            <Typography variant="h6">Age Preference:</Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={2}>
+                            <TextField
+                                autoFocus
+                                margin="normal"
+                                id="age-lower"
+                                label="Youngest Age"
+                                type="number"
+                                className={classes.input}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={2}>
+                            <TextField
+                                autoFocus
+                                margin="normal"
+                                id="age-upper"
+                                label="Oldest Age"
+                                type="number"
+                                className={classes.input}
+                                style={{marginLeft:"1rem"}}
+                            />
+                        </Grid>
+                    </Grid>
                     <Typography variant="h6" className={classes.sectionHeader, classes.profileHeader}>My Profile</Typography>
                     <TextField
                         autoFocus
