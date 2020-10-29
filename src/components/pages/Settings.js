@@ -52,6 +52,12 @@ export default function Settings(props) {
 		root: {
 			flexGrow: 1,
 		},
+		mainContainer: {
+			padding: '5vh 20vh 10vh 20vh',
+			display: "flex",
+			justifyContent: "auto",
+			width: "100%",
+		},
 		paper: {
 			padding: theme.spacing(2),
 			margin: 'auto',
@@ -74,163 +80,157 @@ export default function Settings(props) {
 		<div className={classes.root}>
 			<Sidebar pageName='My Matches'></Sidebar>
 			<Paper className={classes.paper}>
-				<Grid container spacing={2}>
+				<Grid container spacing={3} className={classes.mainContainer}>
 					<Grid item xs={12}>
 						<Typography gutterBottom variant="h4">Public Profile</Typography>
 					</Grid>
-					<Grid item>
-						<ButtonBase className={classes.image}>
-							<img src={logo} className={classes.img} alt="logo" />
-						</ButtonBase>
+					<Grid item xs={12} sm={6}>
+						<Paper className={classes.paper}>
+							<ButtonBase className={classes.image}>
+								<img src={logo} className={classes.image} alt="logo" />
+							</ButtonBase>
+						</Paper>
 					</Grid>
-					<Grid item xs={12} sm container>
-						<Grid item xs container direction="column" spacing={2}>
-							<Grid item xs>
-								<TextField
-									variant="outlined"
-									margin="normal"
-									defaultValue="Username_"
-									required
-									fullWidth
-									id="username"
-									label="User Name"
-									name="username"
-									autoComplete="nickname"
-									autoFocus
-								/>
-								<TextField
-									variant="outlined"
-									margin="normal"
-									defaultValue="Actual Name"
-									required
-									fullWidth
-									id="name"
-									label="Name"
-									name="Name"
-									autoComplete="name"
-									autoFocus
-								/>
-								<Grid item>
-									<Typography gutterBottom variant="subtitle1">
-										<form className={classes.container} noValidate>
-											<TextField
-												id="date"
-												label="Birthday"
-												type="date"
-												defaultValue={Date.now()}
-												className={classes.textField}
-												InputLabelProps={{
-													shrink: true,
-												}}
-											/>
-										</form>
-									</Typography>
-									<List component="nav" aria-label="Gender Menu">
-										<ListItem
-											button
-											aria-haspopup="true"
-											aria-controls="gender-menu"
-											aria-label="gender"
-											onClick={handleClickListItem}
-										>
-											<ListItemText primary="Gender" secondary={options[selectedIndex]} />
-										</ListItem>
-									</List>
-									<Menu
-										id="gender-menu"
-										anchorEl={anchorEl}
-										keepMounted
-										open={Boolean(anchorEl)}
-										onClose={handleClose}
+					<Grid item xs={12} sm={6}>
+						<Paper className={classes.paper}>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								defaultValue="Username_"
+								required
+								fullWidth
+								id="username"
+								label="User Name"
+								name="username"
+								autoComplete="nickname"
+								autoFocus
+							/>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								defaultValue="Actual Name"
+								required
+								fullWidth
+								id="name"
+								label="Name"
+								name="Name"
+								autoComplete="name"
+								autoFocus
+							/>
+							<Typography gutterBottom variant="subtitle1">
+								<form className={classes.container} noValidate>
+									<TextField
+										id="date"
+										label="Birthday"
+										type="date"
+										defaultValue={Date.now()}
+										className={classes.textField}
+										InputLabelProps={{
+											shrink: true,
+										}}
+									/>
+								</form>
+							</Typography>
+							<List component="nav" aria-label="Gender Menu">
+								<ListItem
+									button
+									aria-haspopup="true"
+									aria-controls="gender-menu"
+									aria-label="gender"
+									onClick={handleClickListItem}
+								>
+									<ListItemText primary="Gender" secondary={options[selectedIndex]} />
+								</ListItem>
+							</List>
+							<Menu
+								id="gender-menu"
+								anchorEl={anchorEl}
+								keepMounted
+								open={Boolean(anchorEl)}
+								onClose={handleClose}
+							>
+								{options.map((option, index) => (
+									<MenuItem
+										key={option}
+										selected={index === selectedIndex}
+										onClick={(event) => handleMenuItemClick(event, index)}
 									>
-										{options.map((option, index) => (
-											<MenuItem
-												key={option}
-												selected={index === selectedIndex}
-												onClick={(event) => handleMenuItemClick(event, index)}
-											>
-												{option}
-											</MenuItem>
-										))}
-									</Menu>
-								</Grid>
-							</Grid>
-						</Grid>
+										{option}
+									</MenuItem>
+								))}
+							</Menu>
+						</Paper>
 					</Grid>
 					<Grid item xs={12}>
 						<Typography gutterBottom variant="h4">Account Settings</Typography>
 					</Grid>
-					<Grid item xs={12} sm container>
-						<Grid item xs container direction="column" spacing={2}>
-							<Grid item xs>
-								<TextField
-									variant="outlined"
-									margin="normal"
-									defaultValue="currentEmail@domain.com"
-									required
-									fullWidth
-									id="email"
-									label="Email"
-									name="email"
-									autoComplete="email"
-									autoFocus
-								/>
-								<TextField
-									variant="outlined"
-									margin="normal"
-									defaultValue="**********_ (empty if unchanged)"
-									required
-									fullWidth
-									id="password"
-									label="Password"
-									name="password"
-									autoComplete="password"
-									autoFocus
-								/>
-								<TextField
-									variant="outlined"
-									margin="normal"
-									defaultValue="**********_ (empty if unchanged)"
-									required
-									fullWidth
-									id="confirmPassword"
-									label="Confirm Password"
-									name="confirmPassword"
-									autoComplete="confirmPassword"
-									autoFocus
-								/>
-								<FormControlLabel
-									control={<Switch checked={state.checkedNotifications} onChange={handleChange} name="checkedNotifications" />}
-									label="Allow Notifications" labelPlacement="start"
-								/>
-							</Grid>
-						</Grid>
+					<Grid item xs>
+					<Paper className={classes.paper}>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							defaultValue="currentEmail@domain.com"
+							required
+							fullWidth
+							id="email"
+							label="Email"
+							name="email"
+							autoComplete="email"
+							autoFocus
+						/>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							defaultValue="**********_ (empty if unchanged)"
+							required
+							fullWidth
+							id="password"
+							label="Password"
+							name="password"
+							autoComplete="password"
+							autoFocus
+						/>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							defaultValue="**********_ (empty if unchanged)"
+							required
+							fullWidth
+							id="confirmPassword"
+							label="Confirm Password"
+							name="confirmPassword"
+							autoComplete="confirmPassword"
+							autoFocus
+						/>
+						<FormControlLabel
+							control={<Switch checked={state.checkedNotifications} onChange={handleChange} name="checkedNotifications" />}
+							label="Allow Notifications" labelPlacement="start"
+						/>
+					</Paper>
 					</Grid>
-					<Grid item xs={12}>
-						<Typography gutterBottom variant="h4">Confirm Changes</Typography>
-					</Grid>
-					<Grid item xs={12} sm container>
-						<Grid item xs container direction="column" spacing={2}>
-							<Grid item xs>
-								<TextField
-									variant="outlined"
-									margin="normal"
-									defaultValue="Enter Old Password_"
-									required
-									fullWidth
-									id="confirmOldPassword"
-									label="Confirm Old Password"
-									name="confirmOldPassword"
-									autoComplete="confirmOldPassword"
-									autoFocus
-								/>
-							</Grid>
-						</Grid>
-					</Grid>					
+				<Grid item xs={12}>
+					<Typography gutterBottom variant="h4">Confirm Changes</Typography>
 				</Grid>
-				<Grid>
+				<Grid item xs={12}>
+				<Paper className={classes.paper}>
+					<TextField
+						variant="outlined"
+						margin="normal"
+						defaultValue="Enter Old Password_"
+						required
+						fullWidth
+						id="confirmOldPassword"
+						label="Confirm Old Password"
+						name="confirmOldPassword"
+						autoComplete="confirmOldPassword"
+						autoFocus
+					/>
+					</Paper>
+				</Grid>
+				<Grid item xl={12}>
 					<Button size="large" color="primary" onClick={() => { alert('clicked') }}>Save Changes</Button>
-				</Grid>	
+				</Grid>
+				</Grid>
 			</Paper>
 		</div>
 	);
