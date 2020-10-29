@@ -5,8 +5,8 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 
 const useStyles = makeStyles((theme) => ({
     card: {
-		backgroundColor: theme.palette.primary.main,
-		color: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.background.paper,
+		color: theme.palette.text.primary,
 		textAlign: "center",
 		fontWeight: "bold",
     },

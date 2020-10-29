@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(3, 0, 2),
 		fontWeight: "bold",
 		fontFamily: "Arial Black",
-		fontSize: "1.5rem"
+		fontSize: "1.5rem",
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary
     },
     input: {
         marginTop: 0
@@ -52,7 +54,7 @@ function MatchSettings(props) {
 	
 	return (
 		<div className={classes.container}>
-            <Button className={classes.button} onClick={handleOpen} variant="contained" fullWidth color="inherit">{"Match Settings"}</Button>
+            <Button className={classes.button} onClick={handleOpen} variant="contained" fullWidth>{"Match Settings"}</Button>
             <Dialog 
                 fullWidth={true}
                 maxWidth="lg" className={classes.modal} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -72,22 +74,32 @@ function MatchSettings(props) {
                         autoComplete="sex"
                         renderInput={(params) => <TextField {...params} label="Gender Preference" variant="outlined" />}
                         />
-                    <TextField
-                        autoFocus
-                        margin="normal"
-                        id="age-lower"
-                        label="Youngest Age"
-                        type="number"
-                        className={classes.input}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="normal"
-                        id="age-upper"
-                        label="Oldest Age"
-                        type="number"
-                        className={classes.input}
-                    />
+                    <Grid container direction="row" justify="flex-start" alignItems="center" spacing={2}>
+                        <Grid item xs={12} sm={2}>
+                            <Typography variant="h6">Age Preference:</Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={2}>
+                            <TextField
+                                autoFocus
+                                margin="normal"
+                                id="age-lower"
+                                label="Youngest Age"
+                                type="number"
+                                className={classes.input}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={2}>
+                            <TextField
+                                autoFocus
+                                margin="normal"
+                                id="age-upper"
+                                label="Oldest Age"
+                                type="number"
+                                className={classes.input}
+                                style={{marginLeft:"1rem"}}
+                            />
+                        </Grid>
+                    </Grid>
                     <Typography variant="h6" className={classes.sectionHeader, classes.profileHeader}>My Profile</Typography>
                     <TextField
                         autoFocus

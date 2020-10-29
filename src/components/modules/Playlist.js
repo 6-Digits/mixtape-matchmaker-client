@@ -86,35 +86,40 @@ const playlist = [
 		name: 'Uptown Funk',
 		author: 'Mark Ronson',
 		genre: 'Pop',
-		duration: 154
+		duration: 154,
+		src: 'https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/30/14/13d6bc33-8faa-4d44-a549-1c5b88f8f9af-0.jpg?width=982&height=726'
 	},
 	{
 		id: 'pra',
 		name: 'Party Rock Anthem',
 		author: 'David Listenbee',
 		genre: 'Pop',
-		duration: 503
+		duration: 503,
+		src: 'https://pbs.twimg.com/profile_images/1048628720481841154/Mjt-D_hF.jpg'
 	},
 	{
 		id: 'igf',
 		name: 'I Gotta Feeling',
 		author: 'Black Eyed Peas',
 		genre: 'Pop',
-		duration: 123
+		duration: 123,
+		src: 'https://m.media-amazon.com/images/M/MV5BNGEyODc1ZTctZDk0YS00ODYyLTk2YmItZjg5Yzg0MzMzMjRjXkEyXkFqcGdeQXVyNDQ5MDYzMTk@._V1_.jpg'
 	},
 	{
 		id: 'dsd',
 		name: 'Party Rock Anthem 2',
 		author: 'Hello there',
 		genre: 'Pop 2.0',
-		duration: 412
+		duration: 412,
+		src: 'https://pbs.twimg.com/profile_images/1048628720481841154/Mjt-D_hF.jpg'
 	},
 	{
 		id: 'fsf',
 		name: 'I Gotta Feeling 2',
 		author: 'General Kenobi',
 		genre: 'Pop 3.0',
-		duration: 323
+		duration: 323,
+		src: 'https://m.media-amazon.com/images/M/MV5BNGEyODc1ZTctZDk0YS00ODYyLTk2YmItZjg5Yzg0MzMzMjRjXkEyXkFqcGdeQXVyNDQ5MDYzMTk@._V1_.jpg'
 	}
 ]
 
@@ -207,7 +212,7 @@ function Playlist({title, importable, editable, draggable}) {
 					<Droppable droppableId="playlist" className={classes.dragContainer}>
 						{(provided) => (
 							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-								{playlistItems.map(({id, name, author, genre, duration}, index) => {
+								{playlistItems.map(({id, name, author, genre, duration, src}, index) => {
 									return (
 										<Draggable key={id} draggableId={id} index={index} isDragDisabled={!draggable}>
 											{(provided) => (
@@ -218,6 +223,7 @@ function Playlist({title, importable, editable, draggable}) {
 													author={author}
 													genre={genre}
 													duration={duration}
+													src = {src}
 													/>
 												</div>
 											)}
