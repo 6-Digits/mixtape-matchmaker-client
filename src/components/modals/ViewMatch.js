@@ -6,6 +6,8 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import MatchChatCard from "../modules/MatchChatCard";
 import SendIcon from '@material-ui/icons/Send';
 
+//Need to adjust for mobile view in the future
+
 const useStyles = makeStyles((theme) => ({
 	container: {
         width:"100%",
