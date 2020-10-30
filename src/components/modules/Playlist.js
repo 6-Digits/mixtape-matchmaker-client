@@ -121,11 +121,11 @@ const playlist = [
 
 function Playlist({title, importable, editable, draggable}) {
 	const [playlistItems, updatePlaylistItems] = useState(playlist);
-	const [sortAnchor, setSortAnchor] = React.useState(null);
+	const [sortAnchor, setSortAnchor] = useState(null);
 	
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
-	  };
+	};
 	
 	const handleSortClose = () => {
 		setSortAnchor(null);

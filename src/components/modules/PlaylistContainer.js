@@ -1,51 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Paper, Grid, Typography, Card, CardMedia, CardContent, ButtonBase } from "@material-ui/core"
-import placeholder from "../../assets/placeholder.png";
+import { Paper, Grid } from "@material-ui/core"
+import ViewPlaylist from "../modals/ViewPlaylist";
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
 	sectionContainer: {
-		paddingTop: '3vh',
-		margin: '5vh 0 10vh 0',
+		padding: theme.spacing(1, 0, 1, 0),
+		margin: theme.spacing(3, 0, 3, 0),
+		borderRadius: "0.25rem",
+		backgroundColor: theme.palette.text.disabled,
+		overflowY: "auto",
 		width: '100%',
-		padding: '3vh',
-		backgroundColor: '#999999',
 	},
 	playlistsContainer: {
-		padding: "20px 20px 20px 20px",
+		padding: theme.spacing(2, 0, 2, 3),
 	},
-	cardMedia: {
-		margin: "auto",
-		width: "120px", 
-		height: "80px",
-	},
-	cardContent: {
-		textAlign: "center",
-	},
-	cardAction: {
-		display: 'block',
-		textAlign: 'initial',
-		margin: '2px',
-	}
 }));
 
 function PlaylistContainer(props) {
 	const classes = useStyles();
 	
+	const height = props.height ? props.height : 700;
+	const playlists = props.playlists ? props.playlists : [];
+	
 	return (
 		<div>
-			<Paper style={{maxHeight: props.height, overflow: 'auto'}} className={classes.sectionContainer}>
-				<Grid container spacing={2} className={classes.playlistsContainer}>
-					{props.playlists.map((text, index) => (
+			<Paper style={{maxHeight: height}} className={classes.sectionContainer}>
+				<Grid container spacing={3} className={classes.playlistsContainer}>
+					{playlists.map((text, index) => (
 						<Grid item xs={3}>
-							<Card>
-								<ButtonBase className={classes.cardAction} onClick={event => {}}>
-									<CardMedia className={classes.cardMedia} image={placeholder} />
-									<CardContent className={classes.cardContent}>
-										<Typography>{`${text} ${index}`}</Typography>
-									</CardContent>
-								</ButtonBase>
-							</Card>
+							<ViewPlaylist playlistName={`${text} ${index}`}></ViewPlaylist>
 						</Grid>
 					))}
 				</Grid>

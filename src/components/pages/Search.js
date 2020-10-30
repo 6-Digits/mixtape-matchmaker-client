@@ -1,51 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Grid, Typography, Button } from '@material-ui/core';
+import { Grid, Typography, Button, Menu, MenuItem } from '@material-ui/core';
+import { Search as SearchIcon, Sort as SortIcon } from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';
 import PlaylistContainer from "../modules/PlaylistContainer";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
-		padding: '5vh 15vh 10vh 15vh',
+		padding: '5vh 20vh 10vh 20vh',
 		display: "block",
 		justifyContent: "center",
 		width: "100%",
 	},
-	search: {
-		position: 'relative',
-		borderRadius: theme.shape.borderRadius,
-		backgroundColor: fade(theme.palette.common.white, 0.15),
-		'&:hover': {
-			backgroundColor: fade(theme.palette.common.white, 0.25),
-		},
-		width: '100%',
-		marginTop: '3vh',
-	},
-	searchIcon: {
-		padding: theme.spacing(0, 2),
-		height: '100%',
-		position: 'absolute',
-		pointerEvents: 'none',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	inputRoot: {
-		color: 'inherit',
-	},
-	inputInput: {
-		padding: theme.spacing(2, 2, 2, 0),
-		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-		transition: theme.transitions.create('width'),
-		width: '100%',
-		[theme.breakpoints.up('md')]: {
-			width: '50ch',
-		},
-	},
 	button: {
 		fontWeight: "bold",
 		fontFamily: "Arial Black",
+		height: "100%"
 	},
 	sectionContainer: {
 		paddingTop: '3vh',
@@ -54,63 +25,72 @@ const useStyles = makeStyles((theme) => ({
 		padding: '3vh',
 		backgroundColor: '#999999',
 	},
-	playlistsContainer: {
-		padding: "20px 20px 20px 20px",
-	},
-	cardMedia: {
-		margin: "auto",
-		width: "120px", 
-		height: "100px",
-	},
-	cardContent: {
-		textAlign: "center",
-	},
-	cardAction: {
-		display: 'block',
-		textAlign: 'initial',
-		margin: '2px',
-	},
 	title: {
 		fontSize: '28pt',
 	},
 	query: {
 		fontSize: '16pt',
 	},
+	importGrid: {
+		maxWidth: "100%"
+	}
 }));
 
 function Search(props) {
 	const classes = useStyles();
 	const location = useLocation();
+	const [sortAnchor, setSortAnchor] = useState(null);
+	
+	const handleSortClick = (event) => {
+		setSortAnchor(event.currentTarget);
+	};
+	
+	const handleSortClose = () => {
+		setSortAnchor(null);
+	};
 	
 	return (
 		<div>
 			<NavigationBar pageName='Search'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
-					<Grid container direction="row" justify="space-between" alignItems="center">
-						<Grid item xs={12} sm={6}>
-							<Typography variant="h3" className={classes.title}>
-								Search results for: 
-							</Typography>
-						</Grid>
-						
-						<Grid item xs={3} sm={2} spacing={2}>
-							<Button variant="contained" color="primary" className={classes.button}>
-								{"Sort"}
-							</Button>
-							<Button variant="contained" color="primary" className={classes.button}>
-								{"Filter"}
-							</Button>
-						</Grid>
-						
-						<Grid item xs={12} sm={6}>
-							<Typography className={classes.query}> 
-								{location.query}
-							</Typography>
-						</Grid>
+				<Grid container direction="row" justify="space-between" alignItems="center">
+					<Grid item xs={12} sm={6}>
+						<Typography variant="h3" className={classes.title}>
+							Search results for: 
+						</Typography>
 					</Grid>
 					
-					<PlaylistContainer height={500} playlists={Array(100).fill('search playlist')} />
+					<Grid item xs={12} sm={1} className={classes.importGrid}>
+						<Button
+						variant="contained"
+						color="secondary"
+						className={classes.button}
+						aria-controls="sort-menu" aria-haspopup="true" onClick={handleSortClick}>
+							<SortIcon fontSize='large'></SortIcon>
+							{" Sort"}
+						</Button>
+						<Menu
+							id="sort-menu"
+							anchorEl={sortAnchor}
+							keepMounted
+							open={Boolean(sortAnchor)}
+							onClose={handleSortClose}
+						>
+							<MenuItem onClick={handleSortClose}>By Title</MenuItem>
+							<MenuItem onClick={handleSortClose}>By Duration</MenuItem>
+							<MenuItem onClick={handleSortClose}>By Author</MenuItem>
+						</Menu>
+					</Grid> 
+					
+					<Grid item xs={12} sm={6}>
+						<Typography className={classes.query}> 
+							{location.query}
+						</Typography>
+					</Grid>
+				</Grid>
+				
+				<PlaylistContainer height={700} playlists={Array(20).fill('Result Playlist')} />
 					
 			</Grid>
 		</div>

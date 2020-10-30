@@ -42,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
 	searchButton: {
 		padding: theme.spacing(1, 1.5, 1, 1.5),
 		transition: theme.transitions.create('width'),
+		backgroundColor: fade(theme.palette.common.white, 0.15),
+		'&:hover': {
+			backgroundColor: fade(theme.palette.common.white, 0.25),
+		},
+		fontWeight: 'bold',
 	},
 	searchIcon: {
 		padding: theme.spacing(0, 2),
@@ -93,7 +98,6 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		alignItems: 'center',
 		padding: theme.spacing(0, 1),
-		// necessary for content to be below app bar
 		...theme.mixins.toolbar,
 		justifyContent: 'flex-end',
 	},
@@ -153,7 +157,7 @@ function NavigationBar(props) {
 						<img src={logo} className={classes.home} />
 					</a>
 
-					<Typography className={classes.title} variant="h6" noWrap>
+					<Typography className={classes.title} variant="h5" noWrap>
 						{props.pageName}
 					</Typography>
 					<div className={classes.search}>
@@ -172,7 +176,7 @@ function NavigationBar(props) {
 					</div>
 					<Button variant="contained" className={classes.searchButton} aria-label='search' onClick={handleSearch}>
 						Search
-						</Button>
+					</Button>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
 						<Notifications />
@@ -212,18 +216,8 @@ function NavigationBar(props) {
 
 				<Divider />
 				<List>
-					<ListItem button key='Settings' component='a' href='/settings'>
-						<ListItemText primary='Settings' />
-					</ListItem>
 					<ListItem button key='About' component='a' href='/about'>
 						<ListItemText primary='About' />
-					</ListItem>
-				</List>
-
-				<Divider />
-				<List>
-					<ListItem button key='Log Out' component='a' href='/login'>
-						<ListItemText primary='Log Out' />
 					</ListItem>
 				</List>
 			</Drawer>

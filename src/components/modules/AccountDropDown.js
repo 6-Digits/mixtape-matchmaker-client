@@ -1,8 +1,9 @@
 import React, { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Avatar } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { AccountCircle, Settings as SettingsIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
+import placeholder from '../../assets/placeholder.png'
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -14,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 function AccountDropDown() {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
+	const open = Boolean(anchorEl);
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -32,13 +34,13 @@ function AccountDropDown() {
 				color="inherit"
 				onClick={handleClick}
 			>
-				<AccountCircle />
+				<Avatar alt='avatar' src={placeholder} className={classes.avatar} />
 			</IconButton>
 			<Menu
 				id="customized-menu"
 				anchorEl={anchorEl}
 				keepMounted
-				open={Boolean(anchorEl)}
+				open={open}
 				onClose={handleClose}
 				elevation={0}
 				getContentAnchorEl={null}

@@ -11,8 +11,12 @@ const useStyles = makeStyles((theme)=>({
 		justifyContent: "center",
 		width: "100%",
 	},
-	title: {
+	popularTitle: {
 		fontSize: '28pt',
+	},
+	likedTitle: {
+		fontSize: '28pt',
+		marginTop: '7vh',
 	},
 	sectionContainer: {
 		paddingTop: '3vh',
@@ -46,26 +50,19 @@ function Home(props) {
 		<div>
 			<NavigationBar pageName='Home'></NavigationBar>
 			
-			<Grid
-				container
-				direction="row"
-				justify="center"
-				alignItems="center"
-				fullWidth
-				className={classes.mainContainer}
-			>
+			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.mainContainer}>
 				
-				<Typography variant="h3" className={classes.title}>
+				<Typography variant="h3" className={classes.popularTitle}>
 					Popular Playlists
 				</Typography>
 				
-				<PlaylistContainer height={500} playlists={Array(100).fill('popular playlist')} />
+				<PlaylistContainer height={700} playlists={Array(20).fill('Popular Playlist')} />
 				
-				<Typography variant="h3" className={classes.title}>
+				<Typography variant="h3" className={classes.likedTitle}>
 					Liked Playlists
 				</Typography>
 				
-				<PlaylistContainer height={500} playlists={Array(100).fill('liked playlist')} />
+				<PlaylistContainer height={700} playlists={Array(20).fill('Liked Playlist')} />
 				
 			</Grid>
 		</div>

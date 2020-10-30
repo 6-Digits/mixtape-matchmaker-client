@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Typography, ButtonBase, TextField, List, ListItem, ListItemText, Menu, MenuItem, Switch, Button, FormControlLabel } from '@material-ui/core';
+import { Grid, Paper, Typography, ButtonBase, TextField, List, ListItem, ListItemText, Menu, MenuItem, Switch, Button, FormControlLabel, Card, CardMedia } from '@material-ui/core';
 import NavigationBar from '../modules/NavigationBar';
 import placeholder from "../../assets/placeholder.png";
 
 const options = [
-	'Female',
 	'Male',
+	'Female',
+	'Machine',
 	'Other',
-	'Apache Helicopter',
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -26,21 +26,27 @@ const useStyles = makeStyles((theme) => ({
 		margin: 'auto',
 		maxWidth: '100%',
 	},
-	image: {
-		width: 256,
-		height: 256,
+	card: {
+		maxWidth: 300,
+		maxHeight: 300,
+		margin: theme.spacing(2),
 	},
-	img: {
-		margin: 'auto',
+	cardMedia: {
+		maxHeight: 300,
+	},
+	cardContent: {
+		textAlign: "left",
+	},
+	cardAction: {
 		display: 'block',
-		maxWidth: '100%',
-		maxHeight: '100%',
-	},
+		maxWidth: 300,
+		maxHeight: 300,
+	}
 }));
 
 function Settings(props) {
 	const [anchorEl, setAnchorEl] = useState(null);
-	const [selectedIndex, setSelectedIndex] = useState(1);
+	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [state, setState] = useState({
 		checkedNotifications: true,
 	});
@@ -74,25 +80,27 @@ function Settings(props) {
 						<Typography gutterBottom variant="h4">Public Profile</Typography>
 					</Grid>
 					<Grid item xs={12} sm={3}>
-						<Paper className={classes.paper}>
-							<ButtonBase className={classes.image}>
-								<img src={placeholder} className={classes.image} alt="placeholder" />
+						<Card className={classes.card}>
+							<input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+							<ButtonBase className={classes.cardAction}>
+								<label htmlFor="icon-button-file">
+									<CardMedia component='img' className={classes.cardMedia} image={placeholder} />
+								</label>
 							</ButtonBase>
-						</Paper>
+						</Card>
 					</Grid>
 					<Grid item xs={12} sm={9}>
 						<Paper className={classes.paper}>
 							<TextField
 								variant="outlined"
 								margin="normal"
-								defaultValue="Username_"
+								defaultValue="Username"
 								required
 								fullWidth
 								id="username"
 								label="User Name"
 								name="username"
 								autoComplete="nickname"
-								autoFocus
 							/>
 							<TextField
 								variant="outlined"
@@ -104,7 +112,6 @@ function Settings(props) {
 								label="Name"
 								name="Name"
 								autoComplete="name"
-								autoFocus
 							/>
 							<Typography gutterBottom variant="subtitle1">
 								<form className={classes.container} noValidate>
@@ -112,7 +119,7 @@ function Settings(props) {
 										id="date"
 										label="Birthday"
 										type="date"
-										defaultValue={Date.now()}
+										defaultValue={"1970-01-01"}
 										className={classes.textField}
 										InputLabelProps={{
 											shrink: true,
@@ -165,31 +172,26 @@ function Settings(props) {
 							label="Email"
 							name="email"
 							autoComplete="email"
-							autoFocus
 						/>
 						<TextField
 							variant="outlined"
 							margin="normal"
-							defaultValue="**********_ (empty if unchanged)"
-							required
+							placeholder="empty if unchanged"
 							fullWidth
 							id="password"
-							label="Password"
+							label="New Password"
 							name="password"
 							autoComplete="password"
-							autoFocus
 						/>
 						<TextField
 							variant="outlined"
 							margin="normal"
-							defaultValue="**********_ (empty if unchanged)"
-							required
+							placeholder="empty if unchanged"
 							fullWidth
 							id="confirmPassword"
-							label="Confirm Password"
+							label="Confirm New Password"
 							name="confirmPassword"
 							autoComplete="confirmPassword"
-							autoFocus
 						/>
 						<FormControlLabel
 							control={<Switch checked={state.checkedNotifications} onChange={handleChange} name="checkedNotifications" />}
@@ -205,14 +207,12 @@ function Settings(props) {
 					<TextField
 						variant="outlined"
 						margin="normal"
-						defaultValue="Enter Old Password_"
 						required
 						fullWidth
 						id="confirmOldPassword"
 						label="Confirm Old Password"
 						name="confirmOldPassword"
 						autoComplete="confirmOldPassword"
-						autoFocus
 					/>
 					</Paper>
 				</Grid>
