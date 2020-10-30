@@ -5,6 +5,7 @@ import { FavoriteBorder as FavoriteBorderIcon, Visibility as VisibilityIcon, Sen
 import ReactPlayer from 'react-player/youtube';
 import Playlist from "../modules/Playlist";
 import placeholder from "../../assets/placeholder.png";
+import viewPlaylistData from "../data/viewPlaylist.json";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -113,48 +114,8 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const importedComments = [
-	{
-		message: "Hello there",
-		user: "Kenobi",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "General Kenobi",
-		user: "Grievous",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "Hello there",
-		user: "Kenobi",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "General Kenobi",
-		user: "Grievous",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "Hello there",
-		user: "Kenobi",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "General Kenobi",
-		user: "Grievous",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "Hello there",
-		user: "Kenobi",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "General Kenobi",
-		user: "Grievous",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	}
-];
+const importedComments = viewPlaylistData['comments'];
+
 function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeCount, editable, shareable}) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);

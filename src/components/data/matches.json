@@ -1,7 +1,33 @@
 {
-    "comments": [
+    "people" : [
         {
-            "comments": "Hello there",
+            "id": "123",
+            "name": "Jason"
+        },
+        {
+            "id": "123bhgf",
+            "name": "Darren"
+        },
+        {
+            "id": "123asdcvx",
+            "name": "Farhan"
+        },
+        {
+            "id": "123gfdfg",
+            "name": "Rick"
+        },
+        {
+            "id": "123asf",
+            "name": "Kakarot"
+        },
+        {
+            "id": "123123sa",
+            "name": "Rito Yuki"
+        }
+    ],
+    "messages" : [
+        {
+            "message": "Hello there",
             "user": "Kenobi",
             "timestamp": "2005-05-20T00:00:00.000Z"
         },

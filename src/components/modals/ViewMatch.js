@@ -4,6 +4,7 @@ import { Dialog, DialogActions, Button, DialogTitle, TextField, Typography, Grid
 import { Send as SendIcon } from '@material-ui/icons';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import MatchChatCard from "../modules/MatchChatCard";
+import matchData from "../data/matches.json";
 
 // Need to adjust for mobile view in the future
 
@@ -81,75 +82,9 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const matchedPeople = [
-	{
-		id: "123",
-		name: "Jason"
-	},
-	{
-		id: "123bhgf",
-		name: "Darren"
-	},
-	{
-		id: "123asdcvx",
-		name: "Farhan"
-	},
-	{
-		id: "123gfdfg",
-		name: "Rick"
-	},
-	{
-		id: "123asf",
-		name: "Kakarot"
-	},
-	{
-		id: "123123sa",
-		name: "Rito Yuki"
-	}
-]
+const matchedPeople = matchData['people'];
 
-const messageLog = [
-	{
-		message: "Hello there",
-		user: "Kenobi",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "General Kenobi",
-		user: "Grievous",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "Hello there",
-		user: "Kenobi",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "General Kenobi",
-		user: "Grievous",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "Hello there",
-		user: "Kenobi",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "General Kenobi",
-		user: "Grievous",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "Hello there",
-		user: "Kenobi",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	},
-	{
-		message: "General Kenobi",
-		user: "Grievous",
-		timestamp: "2005-05-20T00:00:00.000Z"
-	}
-];
+const messageLog = matchData['messages'];
 
 function ViewMatch(props) {
 	const classes = useStyles();
