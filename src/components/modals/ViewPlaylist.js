@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Dialog, DialogActions, Button, DialogTitle, Typography, Grid, Container, TextField, Box, Link, Card, ButtonBase, CardMedia, CardContent } from '@material-ui/core';
+import { Avatar, Dialog, DialogActions, Button, DialogTitle, Typography, Grid, Container, TextField, Box, Link, Card, ButtonBase, CardMedia, CardContent, FormControlLabel, Switch } from '@material-ui/core';
 import { FavoriteBorder as FavoriteBorderIcon, Visibility as VisibilityIcon, Send as SendIcon } from '@material-ui/icons';
 import ReactPlayer from 'react-player/youtube';
 import Playlist from "../modules/Playlist";
 import placeholder from "../../assets/placeholder.png";
-import placeholder2 from "../../assets/placeholder2.png";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -160,11 +159,16 @@ function ViewPlaylist(props) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [comments, setComments] = useState(importedComments);
+	const [state, setState] = useState({
+		checkedPublic: true,
+	});
 	
 	const viewCount = props.viewCount ? props.viewCount : 2020;
 	const playlistName = props.playlistName ? props.playlistName : "Ayyy Lmao";
 	const playlistAuthor = props.playlistAuthor ? props.playlistAuthor : "X Æ A-13";
-	const likeCount = props.likeCount ? props.likeCount : 2020;
+	const thumbnail = props.thumbnail ? props.thumbnail : placeholder;
+	const likeCount = props.likeCount ? props.likeCount : 420;
+	const editable = props.editable ? props.editable : null;
 	
 	const handleOpen = () => {
 		setOpen(true);
@@ -174,11 +178,15 @@ function ViewPlaylist(props) {
 		setOpen(false);
 	};
 	
+	const handleChange = (event) => {
+		setState({ ...state, [event.target.name]: event.target.checked });
+	};
+	
 	return (
 		<div className={classes.container}>
 			<Card className={classes.root}>
 				<ButtonBase className={classes.cardAction} onClick={handleOpen}>
-					<CardMedia component='img' className={classes.cardMedia} image={placeholder2} />
+					<CardMedia component='img' className={classes.cardMedia} image={thumbnail} />
 					<CardContent className={classes.cardContent}>
 						<Typography variant='h6'>{playlistName}</Typography>
 					</CardContent>
@@ -195,7 +203,7 @@ function ViewPlaylist(props) {
 					<Grid item xs={12} sm={1} className={classes.importGrid}>
 						<DialogActions>
 							<Button variant="contained" onClick={handleClose} color="secondary" className={classes.cancel}>
-								Exit
+								{ editable ? "Save" : "Exit" }
 							</Button>
 						</DialogActions>
 					</Grid> 
@@ -213,7 +221,7 @@ function ViewPlaylist(props) {
 						<ReactPlayer className={classes.player}url='https://www.youtube.com/watch?v=rEq1Z0bjdwc' />
 					</Grid>
 					<Grid container item xs={12} sm={6}>
-						<Playlist></Playlist>
+						<Playlist editable={editable} draggable={editable} ></Playlist>
 					</Grid>
 				</Grid>
 				
@@ -225,13 +233,20 @@ function ViewPlaylist(props) {
 					className={classes.descriptionBox}>
 					<Grid item xs={1} container direction="column" alignItems="center">
 						<Grid container item xs={12} direction="row" alignItems="center">
-							<Grid item xs={6}><Button><FavoriteBorderIcon className={classes.icon}/></Button></Grid>
-							<Grid item xs={6}><Typography>{likeCount}</Typography></Grid>
-						</Grid>
-						<Grid container item xs={12} direction="row" alignItems="center">
 							<Grid item xs={6}><Button disabled><VisibilityIcon className={classes.icon}/></Button> </Grid>
 							<Grid item xs={6}><Typography>{viewCount}</Typography></Grid>
 						</Grid>
+						<Grid container item xs={12} direction="row" alignItems="center">
+							<Grid item xs={6}><Button><FavoriteBorderIcon className={classes.icon}/></Button></Grid>
+							<Grid item xs={6}><Typography>{likeCount}</Typography></Grid>
+						</Grid>
+						{ editable ?
+						<Grid container item xs={12} direction="row" alignItems="center">
+							<FormControlLabel
+							control={<Switch checked={state.checkedPublic} onChange={handleChange} name="checkedPublic" />}
+							label="Public" labelPlacement="start"
+							/>
+						</Grid> : null }
 					</Grid>
 					<Grid item xs={1}>
 						<Avatar variant="rounded" className={classes.profileImg} src={"https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg"}></Avatar>
@@ -242,11 +257,36 @@ function ViewPlaylist(props) {
 						justify="center"
 						alignItems="center"
 						className={classes.playlistAuthor}>
+						
+						{editable ? 
+						<TextField
+						variant="outlined"
+						margin="normal"
+						id="playlistTitle"
+						label="Playlist Title"
+						name="playlistTitle"
+						defaultValue={playlistName}
+						/>
+						:
 						<Grid item xs={12}> <Typography variant="h4">{playlistName}</Typography> </Grid>
+						}
 						<Grid item xs={12}> <Typography variant="h6">{`By ${playlistAuthor}`}</Typography> </Grid>
 					</Grid>
 					<Grid item xs={8} className={classes.playlistDescription}>
+						{editable ? 
+						<TextField
+						fullWidth
+						multiline
+						variant="outlined"
+						margin="normal"
+						id="playlistDescription"
+						label="Playlist Description"
+						name="playlistDescription"
+						defaultValue='I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.'
+						/>
+						:
 						<Typography variant="h6">I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.</Typography>
+						}
 					</Grid>
 				</Grid>
 				

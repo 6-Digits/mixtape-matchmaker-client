@@ -27,9 +27,9 @@ function PlaylistContainer(props) {
 		<div>
 			<Paper style={{maxHeight: height}} className={classes.sectionContainer}>
 				<Grid container spacing={3} className={classes.playlistsContainer}>
-					{playlists.map((text, index) => (
+					{playlists.map(x => (
 						<Grid item xs={3}>
-							<ViewPlaylist playlistName={`${text} ${index}`}></ViewPlaylist>
+							<ViewPlaylist playlistName={x.title} thumbnail={x.thumbnail} editable={x.editable}></ViewPlaylist>
 						</Grid>
 					))}
 				</Grid>

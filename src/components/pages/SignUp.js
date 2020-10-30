@@ -84,7 +84,7 @@ function SignUp({user, setUser}) {
 								name="firstName"
 								variant="outlined"
 								type="date"
-								defaultValue="1999-01-01"
+								defaultValue="1970-01-01"
 								required
 								fullWidth
 								id="birthdate"
@@ -97,10 +97,11 @@ function SignUp({user, setUser}) {
 							 required
 							 id="combo-box-demo"
 							 options={[
-								 	{title: "Female"}, 
-									{title: "Male"}, 
-									{title: "Other" }
-								]}
+								{title: "Male"}, 
+								{title: "Female"},
+								{title: "Machine"}, 
+								{title: "Other" }
+							 ]}
 							 getOptionLabel={(option) => option.title}
 							 fullWidth
 							 autoComplete="sex"

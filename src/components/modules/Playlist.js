@@ -4,7 +4,7 @@ import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import ReactPlayer from 'react-player/youtube';
 import PlaylistCard from './PlaylistCard';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon } from '@material-ui/icons';
+import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon, Undo as UndoIcon, Redo as RedoIcon, Share as ShareIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -154,7 +154,7 @@ function Playlist({title, importable, editable, draggable}) {
 			justify="space-between"
 			alignItems="center"
 			>
-				<Grid item xs={12} sm={6}>
+				<Grid item xs={12} sm={8}>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
 								<SearchIcon />
@@ -169,6 +169,42 @@ function Playlist({title, importable, editable, draggable}) {
 							/>
 					</div>
 				</Grid>
+				
+				{editable ?
+				<Grid item xs={3} sm={1}>
+						<Button
+						variant="contained"
+						color="secondary"
+						className={classes.button}
+						aria-controls="add-playlist" aria-haspopup="true">
+							<UndoIcon fontSize='large'></UndoIcon>
+						</Button>
+				</Grid>
+				: null }
+				
+				{editable ?
+				<Grid item xs={3} sm={1}>
+						<Button
+						variant="contained"
+						color="secondary"
+						className={classes.button}
+						aria-controls="add-playlist" aria-haspopup="true">
+							<RedoIcon fontSize='large'></RedoIcon> 
+						</Button>
+				</Grid>
+				: null }
+				
+				{editable ?
+				<Grid item xs={3} sm={1}>
+						<Button
+						variant="contained"
+						color="secondary"
+						className={classes.button}
+						aria-controls="add-playlist" aria-haspopup="true">
+							<ShareIcon fontSize='large'></ShareIcon>
+						</Button>
+				</Grid>
+				: null }
 				
 				{	editable ? 
 					null :
@@ -220,7 +256,7 @@ function Playlist({title, importable, editable, draggable}) {
 													<PlaylistCard 
 													order={index}
 													song={name} 
-													editable={true}
+													editable={editable}
 													author={author}
 													genre={genre}
 													duration={duration}

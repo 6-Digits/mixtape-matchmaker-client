@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography, InputBase, Button, Menu, MenuItem } from '@material-ui/core';
-import { Search as SearchIcon, Sort as SortIcon } from '@material-ui/icons';
+import { Search as SearchIcon, Sort as SortIcon, Add as AddIcon} from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';
 import PlaylistContainer from "../modules/PlaylistContainer";
@@ -60,6 +60,12 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
+const myPlaylists = Array(20).fill('My Playlist').map((x, i) => ({
+	title: x + ' ' + i,
+	thumbnail: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f82dc1a7-8b0b-495d-bab6-b97798f49ce4/dbwh40a-2466e07d-5072-4a4a-b248-1dad0272e0cf.png/v1/fill/w_1024,h_1132,strp/nero_claudius_navidad___padoru_padoru_by_alexzer09_dbwh40a-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD0xMTMyIiwicGF0aCI6IlwvZlwvZjgyZGMxYTctOGIwYi00OTVkLWJhYjYtYjk3Nzk4ZjQ5Y2U0XC9kYndoNDBhLTI0NjZlMDdkLTUwNzItNGE0YS1iMjQ4LTFkYWQwMjcyZTBjZi5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.OStV9rvQUYZQLJnxdKHWBNaHADQRzWDkEnO2kEyCyvo",
+	editable: true
+}));
+
 function MyPlaylists(props) {
 	const classes = useStyles();
 	const [sortAnchor, setSortAnchor] = useState(null);
@@ -98,7 +104,18 @@ function MyPlaylists(props) {
 						</div>
 					</Grid>
 					
-					<Grid item xs={12} sm={1} className={classes.importGrid}>
+					<Grid item xs={3} sm={1} className={classes.importGrid}>
+						<Button
+						variant="contained"
+						color="secondary"
+						className={classes.button}
+						aria-controls="add-playlist" aria-haspopup="true">
+							<AddIcon fontSize='large'></AddIcon>
+							{" Add"}
+						</Button>
+					</Grid> 
+					
+					<Grid item xs={3} sm={1} className={classes.importGrid}>
 						<Button
 						variant="contained"
 						color="secondary"
@@ -121,7 +138,7 @@ function MyPlaylists(props) {
 					</Grid> 
 				</Grid>
 				
-				<PlaylistContainer height={700} playlists={Array(20).fill('My Playlist')} />
+				<PlaylistContainer height={700} playlists={myPlaylists} />
 			</Grid>
 		</div>
 	);
