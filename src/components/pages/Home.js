@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme)=>({
 		height: "100px",
 	},
 	cardContent: {
-		textAlign: "center",
+		textAlign: "justify",
 	},
 	cardAction: {
 		display: 'block',
@@ -51,7 +51,7 @@ const popularPlaylists = Array(20).fill('Popular Tape').map((x, i) => ({
 
 const likedPlaylists = Array(20).fill('Liked Tape').map((x, i) => ({
 	title: x + ' ' + i,
-	thumbnail: "https://i.pinimg.com/474x/d5/b2/81/d5b281c8e30ae7a07216c9329fe7a340.jpg",
+	thumbnail: "https://i.kym-cdn.com/entries/icons/facebook/000/028/875/cover4.jpg",
 	editable: false
 }));
 
