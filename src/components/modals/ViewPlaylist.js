@@ -155,20 +155,21 @@ const importedComments = [
 		timestamp: "2005-05-20T00:00:00.000Z"
 	}
 ];
-function ViewPlaylist(props) {
+function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeCount, editable, shareable}) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [comments, setComments] = useState(importedComments);
 	const [state, setState] = useState({
 		checkedPublic: true,
 	});
-	
-	const viewCount = props.viewCount ? props.viewCount : 2020;
-	const playlistName = props.playlistName ? props.playlistName : "Ayyy Lmao";
-	const playlistAuthor = props.playlistAuthor ? props.playlistAuthor : "X Æ A-13";
-	const thumbnail = props.thumbnail ? props.thumbnail : placeholder;
-	const likeCount = props.likeCount ? props.likeCount : 420;
-	const editable = props.editable ? props.editable : null;
+    
+    shareable = shareable ? shareable : null;
+	viewCount = viewCount ? viewCount : 2020;
+	playlistName = playlistName ? playlistName : "Ayyy Lmao";
+	playlistAuthor = playlistAuthor ? playlistAuthor : "X Æ A-13";
+	thumbnail = thumbnail ? thumbnail : placeholder;
+	likeCount = likeCount ? likeCount : 420;
+	editable = editable ? editable : null;
 	
 	const handleOpen = () => {
 		setOpen(true);
@@ -213,7 +214,8 @@ function ViewPlaylist(props) {
 				<Grid
 					container
 					direction="row"
-					justify="center"
+                    justify="center"
+                    spacing={2}
 					alignItems="center"
 					className={classes.playlistArea}
 					>
@@ -221,7 +223,7 @@ function ViewPlaylist(props) {
 						<ReactPlayer className={classes.player}url='https://www.youtube.com/watch?v=rEq1Z0bjdwc' />
 					</Grid>
 					<Grid container item xs={12} sm={6}>
-						<Playlist editable={editable} draggable={editable} ></Playlist>
+						<Playlist editable={editable} draggable={editable} shareable={shareable}></Playlist>
 					</Grid>
 				</Grid>
 				

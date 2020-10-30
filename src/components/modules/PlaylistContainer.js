@@ -29,7 +29,7 @@ function PlaylistContainer(props) {
 				<Grid container spacing={3} className={classes.playlistsContainer}>
 					{playlists.map(x => (
 						<Grid item xs={3}>
-							<ViewPlaylist playlistName={x.title} thumbnail={x.thumbnail} editable={x.editable}></ViewPlaylist>
+							<ViewPlaylist playlistName={x.title} thumbnail={x.thumbnail} editable={x.editable} shareable={true}></ViewPlaylist>
 						</Grid>
 					))}
 				</Grid>

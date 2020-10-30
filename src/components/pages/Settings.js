@@ -21,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "auto",
 		width: "100%",
 	},
-	paper: {
+	paperCard: {
 		padding: theme.spacing(2),
 		margin: 'auto',
 		maxWidth: '100%',
+		backgroundColor: theme.palette.background.default
 	},
 	card: {
 		maxWidth: 300,
@@ -41,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
 		display: 'block',
 		maxWidth: 300,
 		maxHeight: 300,
+	},
+	button: {
+		fontWeight: 'bold'
 	}
 }));
 
@@ -90,7 +94,7 @@ function Settings(props) {
 						</Card>
 					</Grid>
 					<Grid item xs={12} sm={9}>
-						<Paper className={classes.paper}>
+						<Paper className={classes.paperCard}>
 							<TextField
 								variant="outlined"
 								margin="normal"
@@ -161,7 +165,7 @@ function Settings(props) {
 						<Typography gutterBottom variant="h4">Account Settings</Typography>
 					</Grid>
 					<Grid item xs>
-					<Paper className={classes.paper}>
+					<Paper className={classes.paperCard}>
 						<TextField
 							variant="outlined"
 							margin="normal"
@@ -203,7 +207,7 @@ function Settings(props) {
 					<Typography gutterBottom variant="h4">Confirm Changes</Typography>
 				</Grid>
 				<Grid item xs={12}>
-				<Paper className={classes.paper}>
+				<Paper className={classes.paperCard}>
 					<TextField
 						variant="outlined"
 						margin="normal"
@@ -217,7 +221,7 @@ function Settings(props) {
 					</Paper>
 				</Grid>
 				<Grid item xl={12}>
-					<Button size="large" color="primary" onClick={() => { alert('clicked') }}>Save Changes</Button>
+					<Button size="large" color="primary" variant="contained" className={classes.button} onClick={() => { alert('clicked') }}>Save Changes</Button>
 				</Grid>
 				</Grid>
 			</Paper>

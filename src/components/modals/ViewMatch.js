@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 		padding: "1rem 1rem 1rem 2rem",
 		backgroundColor: theme.palette.text.secondary,
 		overflowY: "auto",
-		height: "55vh",
+		height: "50vh",
 		borderRadius: "0.25rem",
 		width: "100%"
 	},
@@ -62,12 +62,12 @@ const useStyles = makeStyles((theme) => ({
 	sendMsgComponent: {
 		width: "100%",
 		height: "5vh",
-		marginBottom: "1rem"
+		marginBottom: "5rem"
 	},
 	enterMessageField: {
 		marginLeft: "-1.5rem",
 		width: "115%",
-		height: "5vh"
+		height: "4vh"
 	},
 	sendMsgIcon: {
 		width: "100%",

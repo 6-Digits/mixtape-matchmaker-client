@@ -119,7 +119,7 @@ const playlist = [
 	}
 ]
 
-function Playlist({title, importable, editable, draggable}) {
+function Playlist({title, importable, editable, draggable, shareable}) {
 	const [playlistItems, updatePlaylistItems] = useState(playlist);
 	const [sortAnchor, setSortAnchor] = useState(null);
 	
@@ -154,7 +154,7 @@ function Playlist({title, importable, editable, draggable}) {
 			justify="space-between"
 			alignItems="center"
 			>
-				<Grid item xs={12} sm={8}>
+				<Grid item xs={6}>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
 								<SearchIcon />
@@ -174,7 +174,7 @@ function Playlist({title, importable, editable, draggable}) {
 				<Grid item xs={3} sm={1}>
 						<Button
 						variant="contained"
-						color="secondary"
+						color="default"
 						className={classes.button}
 						aria-controls="add-playlist" aria-haspopup="true">
 							<UndoIcon fontSize='large'></UndoIcon>
@@ -186,7 +186,7 @@ function Playlist({title, importable, editable, draggable}) {
 				<Grid item xs={3} sm={1}>
 						<Button
 						variant="contained"
-						color="secondary"
+						color="default"
 						className={classes.button}
 						aria-controls="add-playlist" aria-haspopup="true">
 							<RedoIcon fontSize='large'></RedoIcon> 
@@ -194,11 +194,11 @@ function Playlist({title, importable, editable, draggable}) {
 				</Grid>
 				: null }
 				
-				{editable ?
+				{shareable ?
 				<Grid item xs={3} sm={1}>
 						<Button
 						variant="contained"
-						color="secondary"
+						color="primary"
 						className={classes.button}
 						aria-controls="add-playlist" aria-haspopup="true">
 							<ShareIcon fontSize='large'></ShareIcon>

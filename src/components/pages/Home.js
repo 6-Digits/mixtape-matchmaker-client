@@ -43,13 +43,13 @@ const useStyles = makeStyles((theme)=>({
 	}
 }));
 
-const popularPlaylists = Array(20).fill('Popular Playlist').map((x, i) => ({
+const popularPlaylists = Array(20).fill('Popular Tape').map((x, i) => ({
 	title: x + ' ' + i,
 	thumbnail: "https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg",
 	editable: false
 }));
 
-const likedPlaylists = Array(20).fill('Liked Playlist').map((x, i) => ({
+const likedPlaylists = Array(20).fill('Liked Tape').map((x, i) => ({
 	title: x + ' ' + i,
 	thumbnail: "https://i.pinimg.com/474x/d5/b2/81/d5b281c8e30ae7a07216c9329fe7a340.jpg",
 	editable: false
