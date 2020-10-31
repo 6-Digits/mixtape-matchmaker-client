@@ -191,16 +191,16 @@ function Playlist({title, importable, editable, draggable, shareable}) {
 					</Grid> 
 				}
 				{
-					importable ? 
-						<Grid item xs={12} sm={1} className={classes.importGrid}>
-							<Button
-							variant="contained"
-							color="primary"
-							className={classes.button}>
-								<LibraryAddIcon fontSize='large'></LibraryAddIcon>
-								{" Import"}
-							</Button>
-						</Grid> : null
+					// importable ? 
+					// 	<Grid item xs={12} sm={1} className={classes.importGrid}>
+					// 		<Button
+					// 		variant="contained"
+					// 		color="primary"
+					// 		className={classes.button}>
+					// 			<LibraryAddIcon fontSize='large'></LibraryAddIcon>
+					// 			{" Import"}
+					// 		</Button>
+					// 	</Grid> : null
 				}
 			</Grid>
 			<DragDropContext onDragEnd={handleOnDragEnd}>
