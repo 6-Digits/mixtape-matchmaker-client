@@ -21,12 +21,26 @@ const useStyles = makeStyles((theme) => ({
 	// }
 }));
   
+const api = 'http://localhost:42069/api';
+const success = "A reset email has been sent to the designated email!";
+const failure = "Failed to send an email either likely because the email does not exist in our database";
+
 function ForgotPassword(props) {
 	const [email, setEmail] = useState(null);
 	const [open, setOpen] = useState(false);
 	
-	const handleSubmit = () => {
-		alert(email);
+	const handleSubmit = async () => {
+		let requestOptions = {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json' },
+			body: JSON.stringify({"email":email})
+		};
+		let response = await fetch(api + '/resetPassword', requestOptions);
+		if (response.status == 200) {
+			alert(success);
+		} else {
+			alert(failure);
+		}
 		handleClose();
 	};
 
