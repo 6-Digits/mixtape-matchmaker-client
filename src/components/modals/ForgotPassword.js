@@ -35,7 +35,7 @@ function ForgotPassword(props) {
 			headers: {'Content-Type': 'application/json' },
 			body: JSON.stringify({"email":email})
 		};
-		let response = await fetch(api + '/resetPassword', requestOptions);
+		let response = await fetch(api + '/auth/resetPassword', requestOptions);
 		if (response.status == 200) {
 			alert(success);
 			handleClose();
