@@ -10,6 +10,7 @@
     "dotenv": "^8.2.0",
     "react": "^16.14.0",
     "react-beautiful-dnd": "^13.0.0",
+    "react-cookie": "^4.0.3",
     "react-dom": "^16.14.0",
     "react-draggable": "^4.4.3",
     "react-player": "^2.6.2",

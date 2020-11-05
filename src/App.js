@@ -12,30 +12,40 @@ import Notifications from "./components/modals/Notifications";
 import Search from "./components/pages/Search";
 import { Paper } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles } from "@material-ui/core/styles";
-import Cookies from 'universal-cookie';
+// import { useCookies } from 'react-cookie';
 
-const cookies = new Cookies();
-
+// const cookieName = 'mm_6digits_cookies';
+const api = 'http://localhost:42069/api';
 
 function App(props) {
+	// const [cookies, setCookie, removeCookie] = useCookies([cookieName]);
 	const [darkMode, setDarkMode] = useState(false);
-	const [user, setUser] = useState({user:false});
-	const [didLoad, setDidLoad] = useState(false);
+	const [user, setUser] = useState(null);
 	useEffect(() => {
-		// Update the document title using the browser API
-		if (!didLoad) {
-			// setUser({user:getUser()});
-			setDidLoad(true);
-		  }
-	  }, [didLoad]);
-	
-	const getUser = () => {
-		return cookies.get('user');
-	};
+		// let userToken = JSON.parse(cookies.get('userToken'));
+		// let userToken = cookies['userToken'];
+		let userToken = localStorage.getItem('userToken');
+		if(userToken){
+			fetchUser(userToken);
+		} 
+	  }, []);
 
-	const storeUser = (user) => {
-		cookies.set('user', user, { expires: 0 });
-		setUser({user:user});
+	const fetchUser = async (userToken) => {
+		let requestOptions = {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+		};
+		let response = await fetch(api + '/auth/me', requestOptions);
+		if(response.status == 200) {
+			let data = await response.json();
+			setUser(data);
+		}
+	};
+	const storeUser = (userToken) => {
+		let tomorrow = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1);
+		// setCookie('userToken', userToken, {path:'/', expires: tomorrow });
+		localStorage.setItem('userToken', userToken);
 	};
 
 	let theme = createMuiTheme({
@@ -86,19 +96,18 @@ function App(props) {
 					path="/"
 					render={(props) => {
 						return (
-						// user['user']  ?
-						// <Redirect to="/home" /> :
-						<Redirect to="/login" /> 
+							user  ?
+							<Redirect to="/home" user={user} setUser={setUser} /> :
+							<Redirect to="/login" /> 
 						)
 					}}
 				/>
 				<Route path="/login" name="Login" render={(props) =>
 					{
 						return (
-						// user['user'] ?
-						// <Redirect to="/home"/> 
-						// :
-						<Login user = {user['user']} setUser= {storeUser}/> 
+							user ?
+							<Redirect to="/home"/> 
+							: <Login user = {user} setUser= {setUser} storeUser={storeUser}/> 
 						)
 					}}
 				/>
@@ -106,9 +115,9 @@ function App(props) {
 				<Route path="/signup" name="SignUp" render={(props) => 
 					{
 						return (
-							// user['user']  ?
-						// <Redirect to="/home"/> :
-						 <SignUp user = {user['user']} setUser= {storeUser} /> 
+							user  ?
+							<Redirect to="/home"/> :
+							<SignUp user = {user} setUser= {setUser} storeUser={storeUser}/> 
 						)
 					}}
 				/>
@@ -116,10 +125,9 @@ function App(props) {
 				<Route path="/home" name="Home" render={(props) =>
 					{
 						return (
-							// user['user']  ?
-						<Home user = {user['user']} setUser= {storeUser}/> 
-						// :
-						// <Redirect to="/login"/> 
+							user  ?
+							<Home user = {user} setUser= {setUser}/> 
+							: <Redirect to="/login"/> 
 						)
 					}}
 				/>
@@ -130,9 +138,9 @@ function App(props) {
 				<Route path="/myplaylists" name="My Playlists" render={(props) =>
 					{
 						return (
-							// user['user']  ?
-						<MyPlaylist user = {user['user']} setUser= {storeUser}/> 
-						// <Redirect to="/login"/> 
+							user ?
+							<MyPlaylist user = {user} setUser= {setUser}/>  :
+							<Redirect to="/login"/> 
 						)
 					}}
 				/>
@@ -140,9 +148,9 @@ function App(props) {
 				<Route path="/matches" name="My Matches" render={(props) =>
 					{
 						return (
-							// user['user']  ?
-						<Matches user = {user['user']} setUser= {storeUser}/> 
-						// :<Redirect to="/login"/> 
+							user ?
+							<Matches user = {user} setUser= {setUser}/> 
+							: <Redirect to="/login"/> 
 						)
 					}}
 				/>
@@ -150,28 +158,19 @@ function App(props) {
 				<Route path="/settings" name="My Settings" render={(props) =>
 					{
 						return (
-							// user['user']  ?
-						<Settings user = {user['user']} setUser= {storeUser}/> 
-						// : <Redirect to="/login"/> 
+							user  ?
+							<Settings user = {user} setUser= {setUser}/> 
+							: <Redirect to="/login"/> 
 						)
 					}}
 				/>
 				<Route />
-				<Route path="/notifications" name="My Notifications" render={(props) =>
-					{
-						return (
-							// user['user']  ?
-						<Notifications user = {user['user']} setUser= {storeUser}/> 
-						// <Redirect to="/login"/> 
-						)
-					}}
-				/>
 				<Route path="/search" name="Search" render={(props) =>
 					{
 						return (
-							// user['user']  ?
-						<Search user = {user['user']} setUser= {storeUser}/> 
-						// <Redirect to="/login"/> 
+							user['user']  ?
+							<Search user = {user} setUser= {setUser}/> :
+							<Redirect to="/login"/> 
 						)
 					}}
 				/>

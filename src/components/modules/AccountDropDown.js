@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Avatar } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { AccountCircle, Settings as SettingsIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
-import placeholder from '../../assets/placeholder.png'
+import placeholder from '../../assets/placeholder.png';
+import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -12,10 +14,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function AccountDropDown() {
+function AccountDropDown({setUser}) {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
+	const history = useHistory();
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -24,6 +27,10 @@ function AccountDropDown() {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+	const logout = () => {
+		localStorage.clear();
+		setUser(null);
+	}
 
 	return (
 		<div>
@@ -61,7 +68,7 @@ function AccountDropDown() {
 					</ListItemIcon>
 					<ListItemText primary="Settings" />
 				</MenuItem>
-				<MenuItem component={Link} to="/login" className={classes.menuItem}>
+				<MenuItem component={Link} onClick={logout} className={classes.menuItem}>
 					<ListItemIcon>
 						<ExitToAppIcon fontSize="small" />
 					</ListItemIcon>

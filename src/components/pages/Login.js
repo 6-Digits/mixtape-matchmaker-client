@@ -2,38 +2,37 @@ import React, { useState, useEffect } from "react";
 import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";
-import { useHistory } from 'react-router-dom';
 import ForgotPassword from "../modals/ForgotPassword";
 import Footer from "../modules/Footer"
 import { Palette } from "@material-ui/icons";
 
-function Login({user, setUser}) {
+const api = 'http://localhost:42069/api';
+
+function Login({user, setUser, storeUser}) {
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
 	const [remember, setRemember] = useState(null);
 	const [error, setError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState("We could not find your account with the given email/password.");
 
-	const history = useHistory();
-
-	async function handleLogin(event){
+	const handleLogin = async (event) => {
 		event.preventDefault();
-		setError(true);
-		alert(`${email} ${password}`)
 		let requestOptions = {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json' },
 			body: JSON.stringify({"email":email, "password":password})
 		};
-		let response = await fetch('http://localhost:42069/api/auth/login', requestOptions);
-		let data = await response.json();
-		alert(response.status);
-		alert(JSON.stringify(data));
-		// alert(`${email} is ${password}`);
-		// history.push({
-		// 	pathname: '/home'
-		// });		
-	}
+		let response = await fetch(api + '/auth/login', requestOptions);
+		if (response.status == 200) {
+			let data = await response.json();
+			if(remember){
+				storeUser(data['token']);
+			}
+			setUser({change:true});
+		} else {
+			setError(true);
+		}
+	};
 
 	const changeEmail = (event) => {
 		setEmail(event.target.value);
@@ -117,7 +116,7 @@ function Login({user, setUser}) {
 				/>
 				<FormControlLabel
 				control={<Checkbox value="remember" color="primary" />}
-				label="Remember me"
+				label="Stay Logged In"
 				onChange={changeRemember}
 				/>
 				<Button

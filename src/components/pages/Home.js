@@ -55,12 +55,12 @@ const likedPlaylists = Array(20).fill('Liked Tape').map((x, i) => ({
 	editable: false
 }));
 
-function Home(props) {
+function Home({user, setUser}) {
 	const classes = useStyles();
 	
 	return (
 		<div>
-			<NavigationBar pageName='Home'></NavigationBar>
+			<NavigationBar setUser={setUser} pageName='Home'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.mainContainer}>
 				

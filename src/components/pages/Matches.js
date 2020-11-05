@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-function Matches(props) {
+function Matches({user, setUser}) {
 	const classes = useStyles();
 	const [width, setWidth] = useState(0);
 	
@@ -46,7 +46,7 @@ function Matches(props) {
 	
 	return (
 		<div style={{height: width > 599 ? "100vh" : "100%"}}>
-			<NavigationBar pageName='My Matches'></NavigationBar>
+			<NavigationBar setUser={setUser} pageName='My Matches'></NavigationBar>
 			<Grid
 				container
 				direction="row"

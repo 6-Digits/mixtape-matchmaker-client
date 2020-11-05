@@ -181,7 +181,7 @@ function NavigationBar(props) {
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
 						<Notifications />
-						<AccountDropDown />
+						<AccountDropDown setUser={props.setUser}/>
 					</div>
 				</Toolbar>
 			</AppBar>
