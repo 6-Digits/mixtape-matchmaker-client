@@ -38,10 +38,10 @@ function ForgotPassword(props) {
 		let response = await fetch(api + '/resetPassword', requestOptions);
 		if (response.status == 200) {
 			alert(success);
+			handleClose();
 		} else {
 			alert(failure);
 		}
-		handleClose();
 	};
 
 	const emailChange = (event) => {
