@@ -37,23 +37,63 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(3, 0, 2),
 		fontWeight: "bold",
 		fontFamily: "Arial Black"
-	  },
-	  container: {
-		  height: "100vh"
-	  }
+	},
+	container: {
+		height: "100vh"
+	},
+	loginError: {
+		color: theme.palette.error.main,
+		fontSize: '1rem',
+		textAlign: 'center',
+		marginBottom: '1rem'
+	}
   }));
 
 function SignUp({user, setUser}) {
-	const [signup, setSignUp] = useState({
+	const [firstName, setFirstName] = useState(null);
+	const [lastName, setLastName] = useState(null);
+	const [birthdate, setBirthdate] = useState(null);
+	const [gender, setGender] = useState(null);
+	const [email, setEmail] = useState(null);
+	const [password, setPassword] = useState(null);
+	const [confirmPass, setConfirmPass] = useState(null);
+	const [error, setError] = useState(false);
+	const [errorMsg, setErrorMsg] = useState("We could not sign up your account with the given email/password.");
 
-	});
+	const handleSignUp = (event) => {
+		event.preventDefault();
+		setError(true);
+	};
+
+	const firstNameChange = (event) => {
+		setFirstName(event.target.value);
+	};
+	const lastNameChange = (event) => {
+		setLastName(event.target.value);
+	};
+	const birthChange = (event) => {
+		setBirthdate(event.target.value);
+	};
+	const genderChange = (event) => {
+		setGender(event.target.value);
+	};
+	const emailChange = (event) => {
+		setEmail(event.target.value);
+	};
+	const passChange = (event) => {
+		setPassword(event.target.value);
+	};
+	const confirmPassChange = (event) => {
+		setConfirmPass(event.target.value);
+	};
+
 	const classes = useStyles();	
 	return (
 		<Container component="main" maxWidth="lg" className={classes.container}>
 			<div className={classes.content}>
 				<Container>
 					<img src={logo} className={classes.logo}/>
-					<form className={classes.form} noValidate>
+					<form className={classes.form} onSubmit={handleSignUp} noValidate>
 					<Grid container spacing={2}>
 						<Grid item xs={12} sm={6}>
 							<TextField
@@ -64,6 +104,7 @@ function SignUp({user, setUser}) {
 								fullWidth
 								id="firstName"
 								label="First Name"
+								onChange={firstNameChange}
 								autoFocus
 							/>
 						</Grid>
@@ -75,6 +116,7 @@ function SignUp({user, setUser}) {
 								id="lastName"
 								label="Last Name"
 								name="lastName"
+								onChange={lastNameChange}
 								autoComplete="lname"
 							/>
 						</Grid>
@@ -89,6 +131,7 @@ function SignUp({user, setUser}) {
 								fullWidth
 								id="birthdate"
 								label="Birth Date"
+								onChange={birthChange}
 								autoFocus
 							/>
 						</Grid>
@@ -106,6 +149,7 @@ function SignUp({user, setUser}) {
 							 fullWidth
 							 autoComplete="sex"
 							 renderInput={(params) => <TextField {...params} label="Gender" variant="outlined" />}
+							 onChange={genderChange}
 							 />
 						</Grid>
 						<Grid item xs={12}>
@@ -117,6 +161,7 @@ function SignUp({user, setUser}) {
 								label="Email Address"
 								name="email"
 								autoComplete="email"
+								onChange={emailChange}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -129,6 +174,7 @@ function SignUp({user, setUser}) {
 								type="password"
 								id="password"
 								autoComplete="current-password"
+								onChange={passChange}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -141,6 +187,7 @@ function SignUp({user, setUser}) {
 								type="confirm password"
 								id="confirm-password"
 								autoComplete="current-password"
+								onChange={confirmPassChange}
 							/>
 						</Grid>
 						{/* <Grid item xs={12}>
@@ -156,10 +203,10 @@ function SignUp({user, setUser}) {
 						variant="contained"
 						color="primary"
 						className={classes.submit}
-						href="/home"
 					>
 						Sign Up
 					</Button>
+					{error ? <div className={classes.loginError}>{errorMsg}</div> : null}
 					<Grid container justify="flex-start">
 						<Grid item>
 						<Link href="/login" variant="body2">

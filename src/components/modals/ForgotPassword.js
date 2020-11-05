@@ -22,8 +22,18 @@ const useStyles = makeStyles((theme) => ({
 }));
   
 function ForgotPassword(props) {
-	const [open, setOpen] = React.useState(false);
-  
+	const [email, setEmail] = useState(null);
+	const [open, setOpen] = useState(false);
+	
+	const handleSubmit = () => {
+		alert(email);
+		handleClose();
+	};
+
+	const emailChange = (event) => {
+		setEmail(event.target.value);
+	};
+
 	const handleOpen = () => {
 	  setOpen(true);
 	};
@@ -44,7 +54,6 @@ function ForgotPassword(props) {
 				<DialogContentText>
 					Please enter the email of a valid account and wait up to 5 minutes for a password reset email.
 				</DialogContentText>
-				
 				<TextField
 					autoFocus
 					margin="dense"
@@ -52,13 +61,14 @@ function ForgotPassword(props) {
 					label="Email Address"
 					type="email"
 					fullWidth
+					onChange={emailChange}
 				/>
 				</DialogContent>
 				<DialogActions>
 				<Button onClick={handleClose} color="secondary" className={classes.button}>
 					Cancel
 				</Button>
-				<Button onClick={handleClose} color="primary" className={classes.button}>
+				<Button onClick={handleSubmit} color="primary" className={classes.button}>
 					Send Password Reset Email
 				</Button>
 				</DialogActions>

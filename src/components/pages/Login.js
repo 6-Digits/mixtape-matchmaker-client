@@ -1,12 +1,54 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, Container } from '@material-ui/core';
+import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import ForgotPassword from "../modals/ForgotPassword";
 import Footer from "../modules/Footer"
+import { Palette } from "@material-ui/icons";
 
 function Login({user, setUser}) {
+	const [email, setEmail] = useState(null);
+	const [password, setPassword] = useState(null);
+	const [remember, setRemember] = useState(null);
+	const [error, setError] = useState(false);
+	const [errorMsg, setErrorMsg] = useState("We could not find your account with the given email/password.");
+
+	const history = useHistory();
+
+	async function handleLogin(event){
+		event.preventDefault();
+		setError(true);
+		alert(`${email} ${password}`)
+		let requestOptions = {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json' },
+			body: JSON.stringify({"email":email, "password":password})
+		};
+		let response = await fetch('http://localhost:42069/api/auth/login', requestOptions);
+		let data = await response.json();
+		alert(response.status);
+		alert(JSON.stringify(data));
+		// alert(`${email} is ${password}`);
+		// history.push({
+		// 	pathname: '/home'
+		// });		
+	}
+
+	const changeEmail = (event) => {
+		setEmail(event.target.value);
+		setError(false);
+	};
+
+	const changePassword = (event) => {
+		setPassword(event.target.value);
+		setError(false);
+	};
+
+	const changeRemember = (event) => {
+		setRemember(event.target.value);
+	}
+
 	const useStyles = makeStyles((theme) => ({
 		form: {
 		  width: '100%'
@@ -33,15 +75,22 @@ function Login({user, setUser}) {
 		},
 		container: {
 			height: "100vh"
+		},
+		loginError: {
+			color: theme.palette.error.main,
+			fontSize: '1rem',
+			textAlign: 'center',
+			marginBottom: '1rem'
 		}
 	  }));
+
 	const classes = useStyles();
 	return (
 	   <Container component="main" maxWidth="lg" className={classes.container}>
 		<div className={classes.content}>
 			<Container>
 				<img src={logo} className={classes.logo}/>
-				<form className={classes.form} noValidate>
+				<form className={classes.form} onSubmit={handleLogin} noValidate>
 				<TextField
 				variant="outlined"
 				margin="normal"
@@ -51,6 +100,7 @@ function Login({user, setUser}) {
 				label="Email Address"
 				name="email"
 				autoComplete="email"
+				onChange={changeEmail}
 				autoFocus
 				/>
 				<TextField
@@ -62,11 +112,13 @@ function Login({user, setUser}) {
 				label="Password"
 				type="password"
 				id="password"
+				onChange={changePassword}
 				autoComplete="current-password"
 				/>
 				<FormControlLabel
 				control={<Checkbox value="remember" color="primary" />}
 				label="Remember me"
+				onChange={changeRemember}
 				/>
 				<Button
 				type="submit"
@@ -74,10 +126,11 @@ function Login({user, setUser}) {
 				variant="contained"
 				color="primary"
 				className={classes.submit}
-				href="/home"
+				value="submit"
 				>
 				Log In
 				</Button>
+					{error ? <div className={classes.loginError}>{errorMsg}</div> : null}
 				<Grid 
 				container
 				direction="row"
