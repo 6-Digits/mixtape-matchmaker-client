@@ -107,7 +107,7 @@ function App(props) {
 						return (
 							user ?
 							<Redirect to="/home"/> 
-							: <Login user = {user} setUser= {setUser} storeUser={storeUser}/> 
+							: <Login user = {user} setUser= {setUser} storeUser={storeUser} fetchUser={fetchUser}/> 
 						)
 					}}
 				/>
@@ -117,7 +117,7 @@ function App(props) {
 						return (
 							user  ?
 							<Redirect to="/home"/> :
-							<SignUp user = {user} setUser= {setUser} storeUser={storeUser}/> 
+							<SignUp user = {user} setUser= {setUser} storeUser={storeUser} fetchUser={fetchUser}/> 
 						)
 					}}
 				/>

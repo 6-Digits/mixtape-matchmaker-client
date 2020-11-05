@@ -6,6 +6,8 @@ import logo from "../../assets/logo.png";
 import { Redirect } from 'react-router-dom'
 import Footer from "../modules/Footer";
 
+const api = 'http://localhost:42069/api';
+
 const useStyles = makeStyles((theme) => ({
 	paper: {
 	  marginTop: theme.spacing(8),
@@ -49,7 +51,14 @@ const useStyles = makeStyles((theme) => ({
 	}
   }));
 
-function SignUp({user, setUser}) {
+const errorNoPassMatch = "The passwords that you have enter do not match!";
+const errorSignUp = "We could not sign up your account with the given email/password. Please try again or contact support!";
+const errorInvalidEmail = "The email that you have entered is not valid!";
+const errorShortPass = "The password that you have entered should be at least 8 characters long!";
+const errorMissing = "One or more of the fields above are empty!";
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+function SignUp({user, setUser, storeUser, fetchUser}) {
 	const [firstName, setFirstName] = useState(null);
 	const [lastName, setLastName] = useState(null);
 	const [birthdate, setBirthdate] = useState(null);
@@ -58,33 +67,76 @@ function SignUp({user, setUser}) {
 	const [password, setPassword] = useState(null);
 	const [confirmPass, setConfirmPass] = useState(null);
 	const [error, setError] = useState(false);
-	const [errorMsg, setErrorMsg] = useState("We could not sign up your account with the given email/password.");
+	const [errorMsg, setErrorMsg] = useState(errorSignUp);
 
-	const handleSignUp = (event) => {
+	const handleSignUp = async (event) => {
 		event.preventDefault();
-		setError(true);
+		let validEmail = emailRegex.test(String(email).toLowerCase());
+		if(!validEmail) {
+			setError(true);
+			setErrorMsg(errorInvalidEmail);
+		} else if(password.length >= 8) {
+			setError(true);
+			setErrorMsg(errorShortPass);
+		} else if(confirmPass != password) {
+			setError(true);
+			setErrorMsg(errorNoPassMatch);
+		} else if(!firstName || !lastName || !birthdate || !gender) {
+			setError(true);
+			setErrorMsg(errorMissing);
+		}
+		if(!error){	
+			let userData = {
+				firstName: firstName,
+				lastName: lastName,
+				dob: birthdate,
+				gender: gender,
+				email: email,
+				password: password
+			}
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json' },
+				body: JSON.stringify(userData)
+			};
+			let response = await fetch(api + '/auth/register', requestOptions);
+			if (response.status == 200) {
+				let data = await response.json();
+				storeUser(data['token']);
+				fetchUser(data['token']);
+			} else {
+				setError(true);
+			}
+		}
 	};
 
 	const firstNameChange = (event) => {
 		setFirstName(event.target.value);
+		setError(false);
 	};
 	const lastNameChange = (event) => {
 		setLastName(event.target.value);
+		setError(false);
 	};
 	const birthChange = (event) => {
 		setBirthdate(event.target.value);
+		setError(false);
 	};
 	const genderChange = (event) => {
 		setGender(event.target.value);
+		setError(false);
 	};
 	const emailChange = (event) => {
 		setEmail(event.target.value);
+		setError(false);
 	};
 	const passChange = (event) => {
 		setPassword(event.target.value);
+		setError(false);
 	};
 	const confirmPassChange = (event) => {
 		setConfirmPass(event.target.value);
+		setError(false);
 	};
 
 	const classes = useStyles();	

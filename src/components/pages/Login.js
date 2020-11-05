@@ -8,7 +8,7 @@ import { Palette } from "@material-ui/icons";
 
 const api = 'http://localhost:42069/api';
 
-function Login({user, setUser, storeUser}) {
+function Login({user, setUser, storeUser, fetchUser}) {
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
 	const [remember, setRemember] = useState(null);
@@ -28,7 +28,7 @@ function Login({user, setUser, storeUser}) {
 			if(remember){
 				storeUser(data['token']);
 			}
-			setUser({change:true});
+			fetchUser(data['token']);
 		} else {
 			setError(true);
 		}
