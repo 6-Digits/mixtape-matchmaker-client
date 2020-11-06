@@ -48,7 +48,7 @@ function App(props) {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 		};
-		let response = await fetch(api + `/profile/id/5fa330c0a105189a4561b4e8`, requestOptions);
+		let response = await fetch(api + `/profile/id/${user._id}`, requestOptions);
 		if(response.status < 400) {
 			let data = await response.json();
 			setProfile(data);
