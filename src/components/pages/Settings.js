@@ -80,12 +80,8 @@ function Settings(props) {
 		setError(false);
 	};
 
-	const firstNameChange = (event) => {
-		setFirstName(event.target.value);
-		setError(false);
-	};
-	const lastNameChange = (event) => {
-		setLastName(event.target.value);
+	const nameChange = (event) => {
+		setName(event.target.value);
 		setError(false);
 	};
 	const birthChange = (event) => {
@@ -168,8 +164,8 @@ function Settings(props) {
 								id="name"
 								label="First Name"
 								name="First Name"
-								value={firstName}
-								onChange={firstNameChange}
+								value={name}
+								onChange={nameChange}
 								autoComplete="name"
 								className={classes.name}
 							/>
