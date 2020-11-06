@@ -20,7 +20,7 @@ const api = 'http://localhost:42069/api';
 function App(props) {
 	// const [cookies, setCookie, removeCookie] = useCookies([cookieName]);
 	const [darkMode, setDarkMode] = useState(false);
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 	useEffect(() => {
 		// let userToken = JSON.parse(cookies.get('userToken'));
 		// let userToken = cookies['userToken'];
@@ -29,7 +29,6 @@ function App(props) {
 			fetchUser(userToken);
 		} 
 	  }, []);
-
 	const fetchUser = async (userToken) => {
 		let requestOptions = {
 			method: 'GET',
@@ -39,6 +38,7 @@ function App(props) {
 		if(response.status == 200) {
 			let data = await response.json();
 			setUser(data);
+			localStorage.setItem('user', JSON.stringify(data));
 		}
 	};
 	const storeUser = (userToken) => {
@@ -91,6 +91,7 @@ function App(props) {
 		<ThemeProvider theme={theme}>
 			<Paper className={classes.fullScreen}>
 			<BrowserRouter className={classes}>
+				{}
 				<Route
 					exact
 					path="/"
