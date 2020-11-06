@@ -28,7 +28,6 @@ function App(props) {
 		let userToken = localStorage.getItem('userToken');
 		if(userToken){
 			fetchUser(userToken);
-			fetchUserProfile(userToken);
 		} 
 	  }, []);
 	const fetchUser = async (userToken) => {
@@ -40,21 +39,22 @@ function App(props) {
 		if(response.status == 200) {
 			let data = await response.json();
 			setUser(data);
-			localStorage.setItem('user', JSON.stringify(data));
+			localStorage.setItem('user', JSON.stringify(data));		
+			// fetchUserProfile(userToken, data['_id']);
 		}
 	};
-	const fetchUserProfile = async (userToken) => {
-		let requestOptions = {
-			method: 'GET',
-			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
-		};
-		let response = await fetch(api + `/profile/id/${user._id}`, requestOptions);
-		if(response.status < 400) {
-			let data = await response.json();
-			setProfile(data);
-			localStorage.setItem('profile', JSON.stringify(data));
-		}
-	};
+	// const fetchUserProfile = async (userToken, id) => {
+	// 	let requestOptions = {
+	// 		method: 'GET',
+	// 		headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+	// 	};
+	// 	let response = await fetch(api + `/profile/id/${id}}`, requestOptions);
+	// 	if(response.status < 400) {
+	// 		let data = await response.json();
+	// 		setProfile(data);
+	// 		localStorage.setItem('profile', JSON.stringify(data));
+	// 	}
+	// };
 	const storeUser = (userToken) => {
 		let tomorrow = new Date();
 		tomorrow.setDate(tomorrow.getDate() + 1);
@@ -117,7 +117,7 @@ function App(props) {
 							return (
 								user ?
 								<Redirect to="/home" /> :
-								<Login user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser} />
+								<Login user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser}/>
 							)
 						}}
 					/>
@@ -125,7 +125,7 @@ function App(props) {
 							return (
 								user  ?
 								<Redirect to="/home" /> :
-								<SignUp user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser} /> 
+								<SignUp user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser}/> 
 							)
 						}}
 					/>

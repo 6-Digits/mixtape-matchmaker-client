@@ -58,7 +58,7 @@ const errorShortPass = "The password that you have entered should be at least 8 
 const errorMissing = "One or more of the fields above are empty!";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-function SignUp({user, setUser, storeUser, fetchUser}) {
+function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 	const [firstName, setFirstName] = useState(null);
 	const [lastName, setLastName] = useState(null);
 	const [birthdate, setBirthdate] = useState(null);

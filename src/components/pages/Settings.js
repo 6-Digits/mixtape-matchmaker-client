@@ -44,15 +44,71 @@ const useStyles = makeStyles((theme) => ({
 	},
 	button: {
 		fontWeight: 'bold'
+	},
+	name: {
+		width:'50%'
 	}
 }));
+
+const errorNoPassMatch = "The passwords that you have enter do not match!";
+const errorSignUp = "We could not sign up your account with the given email/password. Please try again or contact support!";
+const errorInvalidEmail = "The email that you have entered is not valid!";
+const errorShortPass = "The password that you have entered should be at least 8 characters long!";
+const errorMissing = "One or more of the fields above are empty!";
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function Settings(props) {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [displayName, setDisplayName] = useState(null);
+	const [firstName, setFirstName] = useState("Adam");
+	const [lastName, setLastName] = useState("Smith");
+	const [birthdate, setBirthdate] = useState(null);
+	const [gender, setGender] = useState(null);
+	const [email, setEmail] = useState(null);
+	const [password, setPassword] = useState(null);
+	const [confirmPass, setConfirmPass] = useState(null);
+	const [error, setError] = useState(false);
+	const [errorMsg, setErrorMsg] = useState(null);
+
 	const [state, setState] = useState({
 		checkedNotifications: true,
 	});
+
+
+	const displayNameChange = (event) => {
+		setDisplayName(event.target.value);
+		setError(false);
+	};
+
+	const firstNameChange = (event) => {
+		setFirstName(event.target.value);
+		setError(false);
+	};
+	const lastNameChange = (event) => {
+		setLastName(event.target.value);
+		setError(false);
+	};
+	const birthChange = (event) => {
+		setBirthdate(event.target.value);
+		setError(false);
+	};
+	const genderChange = (event) => {
+		setGender(event.target.value);
+		setError(false);
+	};
+	const emailChange = (event) => {
+		setEmail(event.target.value);
+		setError(false);
+	};
+	const passChange = (event) => {
+		setPassword(event.target.value);
+		setError(false);
+	};
+	const confirmPassChange = (event) => {
+		setConfirmPass(event.target.value);
+		setError(false);
+	};
 
 	const handleChange = (event) => {
 		setState({ ...state, [event.target.name]: event.target.checked });
@@ -96,26 +152,41 @@ function Settings(props) {
 							<TextField
 								variant="outlined"
 								margin="normal"
-								defaultValue={props.profile.userName}
 								//defaultValue={JSON.stringify(props.profile.dob)}
 								required
 								fullWidth
 								id="username"
-								label="User Name"
+								label="Display Name"
 								name="username"
+								value={displayName}
+								onChange={displayNameChange}
 								autoComplete="nickname"
 							/>
 							<TextField
 								variant="outlined"
 								margin="normal"
-								defaultValue={props.profile.name}
 								//defaultValue={JSON.stringify(props.profile.dob)}
 								required
-								fullWidth
 								id="name"
-								label="Name"
-								name="Name"
-								autoComplete="name"
+								label="First Name"
+								name="First Name"
+								value={firstName}
+								onChange={firstNameChange}
+								autoComplete="fname"
+								className={classes.name}
+							/>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								//defaultValue={JSON.stringify(props.profile.dob)}
+								required
+								id="name"
+								label="Last Name"
+								name="Last Name"
+								value={lastName}
+								onChange={lastNameChange}
+								autoComplete="lname"
+								className={classes.name}
 							/>
 							<Typography gutterBottom variant="subtitle1">
 								<form className={classes.container} noValidate>
@@ -123,7 +194,8 @@ function Settings(props) {
 										id="datetime-local"
 										label="Birthday"
 										type="date"
-										defaultValue={JSON.stringify(props.profile.dob).slice(0,9)}
+										value={birthdate}
+										onChange={birthChange}
 										className={classes.textField}
 										InputLabelProps={{
 											shrink: true,
@@ -175,6 +247,8 @@ function Settings(props) {
 							id="email"
 							label="Email"
 							name="email"
+							value={email}
+							onChange={emailChange}
 							autoComplete="email"
 						/>
 						<TextField
@@ -185,6 +259,8 @@ function Settings(props) {
 							id="password"
 							label="New Password"
 							name="password"
+							value={password}
+							onChange={passChange}
 							autoComplete="password"
 						/>
 						<TextField
@@ -195,10 +271,19 @@ function Settings(props) {
 							id="confirmPassword"
 							label="Confirm New Password"
 							name="confirmPassword"
+							value={confirmPass}
+							onChange={confirmPassChange}
 							autoComplete="confirmPassword"
 						/>
 						<FormControlLabel
-							control={<Switch checked={state.checkedNotifications} onChange={handleChange} name="checkedNotifications" />}
+							control={
+								<Switch 
+									checked={state.checkedNotifications} 
+									onChange={handleChange} 
+									name="checkedNotifications" 
+									
+									/>
+							}
 							label="Allow Notifications" labelPlacement="start"
 						/>
 					</Paper>

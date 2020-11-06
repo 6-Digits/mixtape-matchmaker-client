@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const api = 'http://localhost:42069/api';
 
-function Login({user, setUser, storeUser, fetchUser}) {
+function Login({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 	const classes = useStyles();
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
