@@ -56,12 +56,13 @@ const errorSignUp = "We could not sign up your account with the given email/pass
 const errorInvalidEmail = "The email that you have entered is not valid!";
 const errorShortPass = "The password that you have entered should be at least 8 characters long!";
 const errorMissing = "One or more of the fields above are empty!";
+const errorAge = "You have to be atleast 18 years or older to register";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 	const [firstName, setFirstName] = useState(null);
 	const [lastName, setLastName] = useState(null);
-	const [birthdate, setBirthdate] = useState(null);
+	const [birthdate, setBirthdate] = useState("2000-01-01");
 	const [gender, setGender] = useState(null);
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
@@ -69,23 +70,43 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 	const [error, setError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(errorSignUp);
 
+	function getAge(dateString) {
+		var today = new Date();
+		var birthDate = new Date(dateString);
+		var age = today.getFullYear() - birthDate.getFullYear();
+		var m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+	}
+
 	const handleSignUp = async (event) => {
 		event.preventDefault();
 		let validEmail = emailRegex.test(String(email).toLowerCase());
+		let valid = true;
 		if(!validEmail) {
+			valid=false;
 			setError(true);
 			setErrorMsg(errorInvalidEmail);
 		} else if(password.length <= 8) {
+			valid=false;
 			setError(true);
 			setErrorMsg(errorShortPass);
 		} else if(confirmPass != password) {
+			valid=false;
 			setError(true);
 			setErrorMsg(errorNoPassMatch);
 		} else if(!firstName && !lastName && !birthdate && !gender) {
+			valid=false;
 			setError(true);
 			setErrorMsg(errorMissing);
+		} else if(getAge(birthdate) < 18) {
+			valid = false
+			setError(true);
+			setErrorMsg(errorAge);
 		}
-		if(!error){	
+		if(valid){	
 			let userData = {
 				firstName: firstName,
 				lastName: lastName,
@@ -106,6 +127,7 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 				fetchUser(data['token']);
 			} else {
 				setError(true);
+				setErrorMsg(errorSignUp);
 			}
 		}
 	};
@@ -178,11 +200,11 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 								name="firstName"
 								variant="outlined"
 								type="date"
-								defaultValue="1970-01-01"
 								required
 								fullWidth
 								id="birthdate"
 								label="Birth Date"
+								value={birthdate}
 								onChange={birthChange}
 								autoFocus
 							/>
