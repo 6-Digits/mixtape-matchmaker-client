@@ -52,11 +52,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const errorNoPassMatch = "The passwords that you have enter do not match!";
-const errorSignUp = "We could not sign up your account with the given email/password. Please try again or contact support!";
+const errorSignUp = "We could not sign up your account with the given email/password. Please use a different email or contact support!";
 const errorInvalidEmail = "The email that you have entered is not valid!";
 const errorShortPass = "The password that you have entered should be at least 8 characters long!";
 const errorMissing = "One or more of the fields above are empty!";
-const errorAge = "You have to be atleast 18 years or older to register";
+const errorAge = "You have to be at least 18 years of age or older to register";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
@@ -89,7 +89,7 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorInvalidEmail);
-		} else if(password.length <= 8) {
+		} else if(password.length < 8) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorShortPass);
@@ -111,7 +111,7 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 				firstName: firstName,
 				lastName: lastName,
 				dob: birthdate,
-				gender: gender,
+				gender: gender['title'],
 				email: email,
 				password: password
 			}
@@ -144,8 +144,8 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 		setBirthdate(event.target.value);
 		setError(false);
 	};
-	const genderChange = (event) => {
-		setGender(event.target.value);
+	const genderChange = (event, value) => {
+		setGender(value);
 		setError(false);
 	};
 	const emailChange = (event) => {
@@ -216,7 +216,6 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 							 options={[
 								{title: "Male"}, 
 								{title: "Female"},
-								{title: "Machine"}, 
 								{title: "Other" }
 							 ]}
 							 getOptionLabel={(option) => option.title}

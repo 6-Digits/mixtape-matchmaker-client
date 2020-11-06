@@ -61,8 +61,7 @@ function Settings(props) {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [displayName, setDisplayName] = useState(null);
-	const [firstName, setFirstName] = useState("Adam");
-	const [lastName, setLastName] = useState("Smith");
+	const [name, setName] = useState("Adam");
 	const [birthdate, setBirthdate] = useState(null);
 	const [gender, setGender] = useState(null);
 	const [email, setEmail] = useState(null);
@@ -165,27 +164,13 @@ function Settings(props) {
 							<TextField
 								variant="outlined"
 								margin="normal"
-								//defaultValue={JSON.stringify(props.profile.dob)}
 								required
 								id="name"
 								label="First Name"
 								name="First Name"
 								value={firstName}
 								onChange={firstNameChange}
-								autoComplete="fname"
-								className={classes.name}
-							/>
-							<TextField
-								variant="outlined"
-								margin="normal"
-								//defaultValue={JSON.stringify(props.profile.dob)}
-								required
-								id="name"
-								label="Last Name"
-								name="Last Name"
-								value={lastName}
-								onChange={lastNameChange}
-								autoComplete="lname"
+								autoComplete="name"
 								className={classes.name}
 							/>
 							<Typography gutterBottom variant="subtitle1">
