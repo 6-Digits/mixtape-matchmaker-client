@@ -75,13 +75,13 @@ function SignUp({user, setUser, storeUser, fetchUser}) {
 		if(!validEmail) {
 			setError(true);
 			setErrorMsg(errorInvalidEmail);
-		} else if(password.length >= 8) {
+		} else if(password.length <= 8) {
 			setError(true);
 			setErrorMsg(errorShortPass);
 		} else if(confirmPass != password) {
 			setError(true);
 			setErrorMsg(errorNoPassMatch);
-		} else if(!firstName || !lastName || !birthdate || !gender) {
+		} else if(!firstName && !lastName && !birthdate && !gender) {
 			setError(true);
 			setErrorMsg(errorMissing);
 		}
