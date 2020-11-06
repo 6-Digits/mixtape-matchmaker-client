@@ -76,7 +76,7 @@ function Settings(props) {
 	
 	return (
 		<div className={classes.root}>
-			<NavigationBar pageName='My Matches'></NavigationBar>
+			<NavigationBar setUser={setUser} pageName='My Matches'></NavigationBar>
 			
 			<Paper className={classes.paper}>
 				<Grid container spacing={3} className={classes.mainContainer}>
