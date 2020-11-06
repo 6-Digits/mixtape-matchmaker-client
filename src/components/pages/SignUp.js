@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'center',
 		marginBottom: '1rem'
 	}
-  }));
+}));
 
 const errorNoPassMatch = "The passwords that you have enter do not match!";
 const errorSignUp = "We could not sign up your account with the given email/password. Please try again or contact support!";
@@ -139,7 +139,7 @@ function SignUp({user, setUser, storeUser, fetchUser}) {
 		setError(false);
 	};
 
-	const classes = useStyles();	
+	const classes = useStyles();
 	return (
 		<Container component="main" maxWidth="lg" className={classes.container}>
 			<div className={classes.content}>
@@ -236,7 +236,7 @@ function SignUp({user, setUser, storeUser, fetchUser}) {
 								fullWidth
 								name="confirm password"
 								label="Confirm Password"
-								type="confirm password"
+								type="password"
 								id="confirm-password"
 								autoComplete="current-password"
 								onChange={confirmPassChange}

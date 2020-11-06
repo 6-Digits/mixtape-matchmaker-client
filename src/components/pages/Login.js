@@ -6,9 +6,45 @@ import ForgotPassword from "../modals/ForgotPassword";
 import Footer from "../modules/Footer"
 import { Palette } from "@material-ui/icons";
 
+const useStyles = makeStyles((theme) => ({
+	form: {
+		width: '100%'
+	},
+	submit: {
+		margin: theme.spacing(3, 0, 2),
+		fontWeight: "bold",
+		fontFamily: "Arial Black"
+	},
+	headerButton: {
+		fontSize: '2.5 rem'
+	},
+	content: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		height: "80vh" ,
+	},
+	logo: {
+		display: "flex",
+		margin: "auto",
+		height: "25vh",
+		width: "25vh"
+	},
+	container: {
+		height: "100vh"
+	},
+	loginError: {
+		color: theme.palette.error.main,
+		fontSize: '1rem',
+		textAlign: 'center',
+		marginBottom: '1rem'
+	}
+}));
+
 const api = 'http://localhost:42069/api';
 
 function Login({user, setUser, storeUser, fetchUser}) {
+	const classes = useStyles();
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
 	const [remember, setRemember] = useState(null);
@@ -47,45 +83,9 @@ function Login({user, setUser, storeUser, fetchUser}) {
 	const changeRemember = (event) => {
 		setRemember(event.target.value);
 	}
-
-	const useStyles = makeStyles((theme) => ({
-		form: {
-		  width: '100%'
-		},
-		submit: {
-		  margin: theme.spacing(3, 0, 2),
-		  fontWeight: "bold",
-		  fontFamily: "Arial Black"
-		},
-		headerButton: {
-			fontSize: 2.5	 + 'rem'
-		},
-		content: {
-			display: "flex",
-			justifyContent: "center",
-			alignItems: "center",
-			height: "80vh" ,
-		},
-		logo: {
-			display: "flex",
-			margin: "auto",
-			height: "25vh",
-			width: "25vh"
-		},
-		container: {
-			height: "100vh"
-		},
-		loginError: {
-			color: theme.palette.error.main,
-			fontSize: '1rem',
-			textAlign: 'center',
-			marginBottom: '1rem'
-		}
-	  }));
-
-	const classes = useStyles();
+	
 	return (
-	   <Container component="main" maxWidth="lg" className={classes.container}>
+		<Container component="main" maxWidth="lg" className={classes.container}>
 		<div className={classes.content}>
 			<Container>
 				<img src={logo} className={classes.logo}/>

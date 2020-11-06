@@ -3,7 +3,7 @@ import { Grid, Typography, InputBase, Button, Menu, MenuItem } from '@material-u
 import { Search as SearchIcon, Sort as SortIcon, Add as AddIcon} from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';
-import PlaylistContainer from "../modules/PlaylistContainer";
+import PlaylistsContainer from "../modules/PlaylistsContainer";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -138,7 +138,7 @@ function MyPlaylists(props) {
 					</Grid> 
 				</Grid>
 				
-				<PlaylistContainer height={700} playlists={myPlaylists} />
+				<PlaylistsContainer height={700} playlists={myPlaylists} />
 			</Grid>
 		</div>
 	);

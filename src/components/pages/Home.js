@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Grid, Typography } from "@material-ui/core"
 import NavigationBar from '../modules/NavigationBar';
-import PlaylistContainer from "../modules/PlaylistContainer";
+import PlaylistsContainer from "../modules/PlaylistsContainer";
 
 const useStyles = makeStyles((theme)=>({
 	mainContainer: {
@@ -68,13 +68,13 @@ function Home({user, setUser}) {
 					Popular Playlists
 				</Typography>
 				
-				<PlaylistContainer height={700} playlists={popularPlaylists} />
+				<PlaylistsContainer height={700} playlists={popularPlaylists} />
 				
 				<Typography variant="h3" className={classes.likedTitle}>
 					Liked Playlists
 				</Typography>
 				
-				<PlaylistContainer height={700} playlists={likedPlaylists} />
+				<PlaylistsContainer height={700} playlists={likedPlaylists} />
 				
 			</Grid>
 		</div>

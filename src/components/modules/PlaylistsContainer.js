@@ -17,11 +17,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function PlaylistContainer(props) {
+function PlaylistsContainer({height, playlists}) {
 	const classes = useStyles();
 	
-	const height = props.height ? props.height : 700;
-	const playlists = props.playlists ? props.playlists : [];
+	height = height ? height : 700;
+	playlists = playlists ? playlists : [];
 	
 	return (
 		<div>
@@ -38,4 +38,4 @@ function PlaylistContainer(props) {
 	)
 }
 
-export default PlaylistContainer;
+export default PlaylistsContainer;
