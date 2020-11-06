@@ -57,7 +57,7 @@ function Search(props) {
 	
 	return (
 		<div>
-			<NavigationBar setUser={setUser} pageName='Search'></NavigationBar>
+			<NavigationBar setUser={props.setUser} pageName='Search'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
 				<Grid container direction="row" justify="space-between" alignItems="center">
