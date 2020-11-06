@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Redirect} from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { Paper } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles } from "@material-ui/core/styles";
 import "./App.css";
 import Login from "./components/pages/Login";
 import Home from "./components/pages/Home";
@@ -10,8 +12,6 @@ import Matches from "./components/pages/Matches";
 import Settings from "./components/pages/Settings";
 import Notifications from "./components/modals/Notifications";
 import Search from "./components/pages/Search";
-import { Paper } from '@material-ui/core';
-import { createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles } from "@material-ui/core/styles";
 // import { useCookies } from 'react-cookie';
 
 // const cookieName = 'mm_6digits_cookies';
@@ -104,92 +104,72 @@ function App(props) {
 	return (
 		<ThemeProvider theme={theme}>
 			<Paper className={classes.fullScreen}>
-			<BrowserRouter className={classes}>
-				{}
-				<Route
-					exact
-					path="/"
-					render={(props) => {
-						return (
-							user  ?
-							<Redirect to="/home" user={user} setUser={setUser} /> :
-							<Redirect to="/login" /> 
-						)
-					}}
-				/>
-				<Route path="/login" name="Login" render={(props) =>
-					{
-						return (
-							user ?
-							<Redirect to="/home"/> 
-							: <Login user = {user} setUser= {setUser} storeUser={storeUser} fetchUser={fetchUser}/> 
-						)
-					}}
-				/>
-				<Route />
-				<Route path="/signup" name="SignUp" render={(props) => 
-					{
-						return (
-							user  ?
-							<Redirect to="/home"/> :
-							<SignUp user = {user} setUser= {setUser} storeUser={storeUser} fetchUser={fetchUser}/> 
-						)
-					}}
-				/>
-				<Route />
-				<Route path="/home" name="Home" render={(props) =>
-					{
-						return (
-							user  ?
-							<Home user = {user} setUser= {setUser}/> 
-							: <Redirect to="/login"/> 
-						)
-					}}
-				/>
-				<Route path="/about" name="About" render={(props) =>
-					<About/>}
-				/>
-				<Route />
-				<Route path="/myplaylists" name="My Playlists" render={(props) =>
-					{
-						return (
-							user ?
-							<MyPlaylist user = {user} setUser= {setUser}/>  :
-							<Redirect to="/login"/> 
-						)
-					}}
-				/>
-				<Route />
-				<Route path="/matches" name="My Matches" render={(props) =>
-					{
-						return (
-							user ?
-							<Matches user = {user} setUser= {setUser}/> 
-							: <Redirect to="/login"/> 
-						)
-					}}
-				/>
-				<Route />
-				<Route path="/settings" name="My Settings" render={(props) =>
-					{
-						return (
-							user  ?
-							<Settings user = {user} setUser= {setUser} profile = {setProfile}/> 
-							: <Redirect to="/login"/> 
-						)
-					}}
-				/>
-				<Route />
-				<Route path="/search" name="Search" render={(props) =>
-					{
-						return (
-							user['user']  ?
-							<Search user = {user} setUser= {setUser}/> :
-							<Redirect to="/login"/> 
-						)
-					}}
-				/>
-				<Route />
+				<BrowserRouter className={classes}>
+					<Route exact path="/" render={(props) => {
+							return (
+								user  ?
+								<Redirect to="/home" user={user} setUser={setUser} /> :
+								<Redirect to="/login" /> 
+							)
+						}}
+					/>
+					<Route path="/login" name="Login" render={(props) => {
+							return (
+								user ?
+								<Redirect to="/home" /> :
+								<Login user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser} />
+							)
+						}}
+					/>
+					<Route path="/signup" name="SignUp" render={(props) => {
+							return (
+								user  ?
+								<Redirect to="/home" /> :
+								<SignUp user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser} /> 
+							)
+						}}
+					/>
+					<Route path="/home" name="Home" render={(props) => {
+							return (
+								user  ?
+								<Home user={user} setUser={setUser} /> :
+								<Redirect to="/login" /> 
+							)
+						}}
+					/>
+					<Route path="/about" name="About" render={(props) => <About />} />
+					<Route path="/myplaylists" name="My Playlists" render={(props) => {
+							return (
+								user ?
+								<MyPlaylist user={user} setUser={setUser} />  :
+								<Redirect to="/login" /> 
+							)
+						}}
+					/>
+					<Route path="/matches" name="My Matches" render={(props) => {
+							return (
+								user ?
+								<Matches user={user} setUser={setUser} /> :
+								<Redirect to="/login" /> 
+							)
+						}}
+					/>
+					<Route path="/settings" name="My Settings" render={(props) => {
+							return (
+								user ?
+								<Settings user={user} setUser={setUser} /> :
+								<Redirect to="/login" /> 
+							)
+						}}
+					/>
+					<Route path="/search" name="Search" render={(props) => {
+							return (
+								user ?
+								<Search user={user} setUser={setUser} /> :
+								<Redirect to="/login" /> 
+							)
+						}}
+					/>
 				</BrowserRouter>
 			</Paper>
 		</ThemeProvider>

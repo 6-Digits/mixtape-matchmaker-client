@@ -4,7 +4,7 @@ import { Grid, Typography, Button, Menu, MenuItem } from '@material-ui/core';
 import { Search as SearchIcon, Sort as SortIcon } from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';
-import PlaylistContainer from "../modules/PlaylistContainer";
+import PlaylistsContainer from "../modules/PlaylistsContainer";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -96,7 +96,7 @@ function Search(props) {
 					</Grid>
 				</Grid>
 				
-				<PlaylistContainer height={700} playlists={searchPlaylists} />
+				<PlaylistsContainer height={700} playlists={searchPlaylists} />
 					
 			</Grid>
 		</div>

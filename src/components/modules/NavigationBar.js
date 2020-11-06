@@ -138,8 +138,6 @@ function NavigationBar(props) {
 		});
 	};
 
-	const menuId = 'primary-search-account-menu';
-
 	return (
 		<div className={classes.grow}>
 			<AppBar position="static">
