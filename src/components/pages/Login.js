@@ -25,9 +25,9 @@ function Login({user, setUser, storeUser, fetchUser}) {
 		let response = await fetch(api + '/auth/login', requestOptions);
 		if (response.status == 200) {
 			let data = await response.json();
-			if(remember){
+			// if(remember){
 				storeUser(data['token']);
-			}
+			// }
 			fetchUser(data['token']);
 		} else {
 			setError(true);
@@ -114,11 +114,11 @@ function Login({user, setUser, storeUser, fetchUser}) {
 				onChange={changePassword}
 				autoComplete="current-password"
 				/>
-				<FormControlLabel
+				{/* <FormControlLabel
 				control={<Checkbox value="remember" color="primary" />}
 				label="Stay Logged In"
 				onChange={changeRemember}
-				/>
+				/> */}
 				<Button
 				type="submit"
 				fullWidth
