@@ -73,7 +73,6 @@ function Settings(props) {
 	};
 
 	const classes = useStyles();
-	
 	return (
 		<div className={classes.root}>
 			<NavigationBar setUser={props.setUser} pageName='My Matches'></NavigationBar>
@@ -98,7 +97,7 @@ function Settings(props) {
 							<TextField
 								variant="outlined"
 								margin="normal"
-								defaultValue="Username"
+								defaultValue={props.profile.userName}
 								required
 								fullWidth
 								id="username"
@@ -109,7 +108,7 @@ function Settings(props) {
 							<TextField
 								variant="outlined"
 								margin="normal"
-								defaultValue="Actual Name"
+								defaultValue={props.profile.name}
 								required
 								fullWidth
 								id="name"
