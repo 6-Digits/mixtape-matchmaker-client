@@ -7,7 +7,6 @@ import placeholder from "../../assets/placeholder.png";
 const options = [
 	'Male',
 	'Female',
-	'Machine',
 	'Other',
 ];
 
@@ -98,6 +97,7 @@ function Settings(props) {
 								variant="outlined"
 								margin="normal"
 								defaultValue={props.profile.userName}
+								//defaultValue={JSON.stringify(props.profile.dob)}
 								required
 								fullWidth
 								id="username"
@@ -109,6 +109,7 @@ function Settings(props) {
 								variant="outlined"
 								margin="normal"
 								defaultValue={props.profile.name}
+								//defaultValue={JSON.stringify(props.profile.dob)}
 								required
 								fullWidth
 								id="name"
@@ -119,10 +120,10 @@ function Settings(props) {
 							<Typography gutterBottom variant="subtitle1">
 								<form className={classes.container} noValidate>
 									<TextField
-										id="date"
+										id="datetime-local"
 										label="Birthday"
 										type="date"
-										defaultValue={"1970-01-01"}
+										defaultValue={JSON.stringify(props.profile.dob).slice(0,9)}
 										className={classes.textField}
 										InputLabelProps={{
 											shrink: true,

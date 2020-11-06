@@ -49,7 +49,7 @@ function App(props) {
 			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 		};
 		let response = await fetch(api + `/profile/id/5fa330c0a105189a4561b4e8`, requestOptions);
-		if(response.status == 200) {
+		if(response.status < 400) {
 			let data = await response.json();
 			setProfile(data);
 			localStorage.setItem('profile', JSON.stringify(data));
@@ -157,7 +157,7 @@ function App(props) {
 					<Route path="/settings" name="My Settings" render={(props) => {
 							return (
 								user ?
-								<Settings user={user} setUser={setUser} /> :
+								<Settings user={user} setUser={setUser} profile = {profile}/> :
 								<Redirect to="/login" /> 
 							)
 						}}
