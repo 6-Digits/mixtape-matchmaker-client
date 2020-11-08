@@ -66,9 +66,12 @@ const myPlaylists = Array(20).fill('My Playlist').map((x, i) => ({
 	editable: true
 }));
 
+const api = 'http://localhost:42069/api';
+
 function MyPlaylists(props) {
 	const classes = useStyles();
 	const [sortAnchor, setSortAnchor] = useState(null);
+	const [myPlaylists, setMyPlaylist] = useState([]);
 	
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
@@ -77,7 +80,28 @@ function MyPlaylists(props) {
 	const handleSortClose = () => {
 		setSortAnchor(null);
 	};
+
+	const fetchMyPlaylists = async() => {
+		// let requestOptions = {
+		// 	method: 'GET',
+		// 	headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+		// };
+		// let response = await fetch(api + `/profile/id/${user._id}}`, requestOptions);
+		// alert(response.status);
+		// if(response.status == 200) {
+		// 	let data = await response.json();
+
+		// }
+	};
 	
+	useEffect(() => {
+		// let userToken = JSON.parse(cookies.get('userToken'));
+		// let userToken = cookies['userToken'];
+		if(props.user){
+			fetchMyPlaylists(props.user)
+		} 
+	  }, []);
+
 	return (
 		<div>
 			<NavigationBar setUser={props.setUser} pageName='My Playlists'></NavigationBar>
