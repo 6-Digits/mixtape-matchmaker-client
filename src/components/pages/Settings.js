@@ -107,10 +107,10 @@ function Settings(props) {
 	};
 
 	function getAge(dateString) {
-		lettoday = new Date();
-		letbirthDate = new Date(dateString);
-		letage = today.getFullYear() - birthDate.getFullYear();
-		letm = today.getMonth() - birthDate.getMonth();
+		let today = new Date();
+		let birthDate = new Date(dateString);
+		let age = today.getFullYear() - birthDate.getFullYear();
+		let m = today.getMonth() - birthDate.getMonth();
 		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
 			age--;
 		}
@@ -218,8 +218,8 @@ function Settings(props) {
 		setError(false);
 	};
 	const imgChange = (event) => {
-		letselectedFile = event.target.files[0];
-		letreader = new FileReader();
+		let selectedFile = event.target.files[0];
+		let reader = new FileReader();
 	  
 		reader.onload = function(event) {
 		  setImgSrc(event.target.result);

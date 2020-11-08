@@ -71,10 +71,10 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 	const [errorMsg, setErrorMsg] = useState(errorSignUp);
 
 	function getAge(dateString) {
-		lettoday = new Date();
-		letbirthDate = new Date(dateString);
-		letage = today.getFullYear() - birthDate.getFullYear();
-		letm = today.getMonth() - birthDate.getMonth();
+		let today = new Date();
+		let birthDate = new Date(dateString);
+		let age = today.getFullYear() - birthDate.getFullYear();
+		let m = today.getMonth() - birthDate.getMonth();
 		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
 			age--;
 		}
