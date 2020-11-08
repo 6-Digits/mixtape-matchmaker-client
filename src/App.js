@@ -21,7 +21,6 @@ function App(props) {
 	// const [cookies, setCookie, removeCookie] = useCookies([cookieName]);
 	const [darkMode, setDarkMode] = useState(false);
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-	const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')));
 	useEffect(() => {
 		// let userToken = JSON.parse(cookies.get('userToken'));
 		// let userToken = cookies['userToken'];
@@ -40,21 +39,8 @@ function App(props) {
 			let data = await response.json();
 			setUser(data);
 			localStorage.setItem('user', JSON.stringify(data));		
-			// fetchUserProfile(userToken, data['_id']);
 		}
 	};
-	// const fetchUserProfile = async (userToken, id) => {
-	// 	let requestOptions = {
-	// 		method: 'GET',
-	// 		headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
-	// 	};
-	// 	let response = await fetch(api + `/profile/id/${id}}`, requestOptions);
-	// 	if(response.status < 400) {
-	// 		let data = await response.json();
-	// 		setProfile(data);
-	// 		localStorage.setItem('profile', JSON.stringify(data));
-	// 	}
-	// };
 	const storeUser = (userToken) => {
 		let tomorrow = new Date();
 		tomorrow.setDate(tomorrow.getDate() + 1);
@@ -157,7 +143,7 @@ function App(props) {
 					<Route path="/settings" name="My Settings" render={(props) => {
 							return (
 								user ?
-								<Settings user={user} setUser={setUser} profile = {profile}/> :
+								<Settings user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser}/> :
 								<Redirect to="/login" /> 
 							)
 						}}

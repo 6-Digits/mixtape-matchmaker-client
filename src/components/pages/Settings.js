@@ -51,11 +51,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const errorNoPassMatch = "The passwords that you have enter do not match!";
-const errorSignUp = "We could not sign up your account with the given email/password. Please try again or contact support!";
+const errorCannotFetchData = "We cannot fetch the data from our database likely because you are not connected to the internet!";
+const errorSignUp = "We could not update your account settings. Either the password is incorrect or the server is down. Please try again or contact support!";
 const errorInvalidEmail = "The email that you have entered is not valid!";
 const errorShortPass = "The password that you have entered should be at least 8 characters long!";
 const errorMissing = "One or more of the fields above are empty!";
+const errorAge = "You have to be at least 18 years of age or older to register";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const api = 'http://localhost:42069/api';
 
 function Settings(props) {
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -74,6 +78,95 @@ function Settings(props) {
 		checkedNotifications: true,
 	});
 
+
+	const fetchUserProfile = async (userToken, user) => {
+		let requestOptions = {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+		};
+		let response = await fetch(api + `/profile/id/${user._id}}`, requestOptions);
+		alert(response.status);
+		alert(props.user._id);
+		if(response.status == 200) {
+			let data = await response.json();
+			setName(data['name']);
+			setDisplayName(data['username']);
+			setBirthdate(data['dob']);
+			options.forEach((genderOption, index) => {
+				if(data['gender'] == genderOption) {
+					setGender(index);
+				}
+			});
+		} else {
+			setError(true);
+			setErrorMsg(errorCannotFetchData);
+		}
+	};
+
+	function getAge(dateString) {
+		var today = new Date();
+		var birthDate = new Date(dateString);
+		var age = today.getFullYear() - birthDate.getFullYear();
+		var m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+	}
+
+	const saveUserSettings = async () => {
+		let validEmail = emailRegex.test(String(email).toLowerCase());
+		let valid = true;
+		if(!validEmail) {
+			valid=false;
+			setError(true);
+			setErrorMsg(errorInvalidEmail);
+		} else if(password.length < 8) {
+			valid=false;
+			setError(true);
+			setErrorMsg(errorShortPass);
+		} else if(!name && !birthdate && !gender) {
+			valid=false;
+			setError(true);
+			setErrorMsg(errorMissing);
+		} else if(getAge(birthdate) < 18) {
+			valid = false
+			setError(true);
+			setErrorMsg(errorAge);
+		}
+		if(valid){
+			let userData = {
+				name:name,
+				dob: birthdate,
+				gender: gender['title'],
+				email: email,
+				password: password
+			}
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json' },
+				body: JSON.stringify(userData)
+			};
+			let response = await fetch(api + '/auth/register', requestOptions);
+			if (response.status == 200) {
+				let data = await response.json();
+				props.storeUser(data['token']);
+				props.fetchUser(data['token']);
+			} else {
+				setError(true);
+				setErrorMsg(errorSignUp);
+			}
+		}
+	}
+
+	useEffect(() => {
+		// let userToken = JSON.parse(cookies.get('userToken'));
+		// let userToken = cookies['userToken'];
+		let userToken = localStorage.getItem('userToken');
+		if(userToken && props.user){
+			fetchUserProfile(userToken, props.user);
+		} 
+	  }, []);
 
 	const displayNameChange = (event) => {
 		setDisplayName(event.target.value);
@@ -147,7 +240,6 @@ function Settings(props) {
 							<TextField
 								variant="outlined"
 								margin="normal"
-								//defaultValue={JSON.stringify(props.profile.dob)}
 								required
 								fullWidth
 								id="username"
@@ -162,8 +254,8 @@ function Settings(props) {
 								margin="normal"
 								required
 								id="name"
-								label="First Name"
-								name="First Name"
+								label="Name"
+								name="Name"
 								value={name}
 								onChange={nameChange}
 								autoComplete="name"
@@ -287,7 +379,7 @@ function Settings(props) {
 					</Paper>
 				</Grid>
 				<Grid item xl={12}>
-					<Button size="large" color="primary" variant="contained" className={classes.button} onClick={() => { alert('clicked') }}>Save Changes</Button>
+					<Button size="large" color="primary" variant="contained" className={classes.button} onClick={saveUserSettings}>Save Changes</Button>
 				</Grid>
 				</Grid>
 			</Paper>
