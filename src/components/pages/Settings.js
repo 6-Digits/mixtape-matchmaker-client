@@ -84,7 +84,7 @@ function Settings(props) {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 		};
-		let response = await fetch(api + `/profile/id/${user._id}}`, requestOptions);
+		let response = await fetch(api + `/profile/id/${user._id}`, requestOptions);
 		alert(response.status);
 		alert(props.user._id);
 		if(response.status == 200) {
