@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	importGrid: {
 		maxWidth: "100%"
+	},
+	page: {
+		height: "100%"
 	}
 }));
 
@@ -81,29 +84,31 @@ function MyPlaylists(props) {
 		setSortAnchor(null);
 	};
 
-	const fetchMyPlaylists = async() => {
-		// let requestOptions = {
-		// 	method: 'GET',
-		// 	headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
-		// };
-		// let response = await fetch(api + `/profile/id/${user._id}}`, requestOptions);
-		// alert(response.status);
-		// if(response.status == 200) {
-		// 	let data = await response.json();
+	const fetchMyPlaylists = async(userToken, user) => {
+		let requestOptions = {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+		};
+		let response = await fetch(api + `/api/mixtape/id/${user._id}}`, requestOptions);
+		if(response.status == 200) {
+			let data = await response.json();
 
-		// }
+		} else {
+			alert(`failed to fetch data with error status ${response.status}`);
+		}
 	};
 	
 	useEffect(() => {
 		// let userToken = JSON.parse(cookies.get('userToken'));
 		// let userToken = cookies['userToken'];
-		if(props.user){
-			fetchMyPlaylists(props.user)
+		let userToken = localStorage.getItem('userToken');
+		if(userToken, props.user){
+			fetchMyPlaylists(userToken, props.user)
 		} 
 	  }, []);
 
 	return (
-		<div>
+		<div className={classes.page}>
 			<NavigationBar setUser={props.setUser} pageName='My Playlists'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>

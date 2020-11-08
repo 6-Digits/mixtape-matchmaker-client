@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Divider, ListItem, ListItemText, Button } from '@material-ui/core';
@@ -179,7 +179,7 @@ function NavigationBar(props) {
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
 						<Notifications />
-						<AccountDropDown setUser={props.setUser}/>
+						<AccountDropDown setUser={props.setUser} user={props.user}/>
 					</div>
 				</Toolbar>
 			</AppBar>

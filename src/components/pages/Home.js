@@ -60,7 +60,7 @@ function Home({user, setUser}) {
 	
 	return (
 		<div>
-			<NavigationBar setUser={setUser} pageName='Home'></NavigationBar>
+			<NavigationBar setUser={setUser} user={user} pageName='Home'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.mainContainer}>
 				

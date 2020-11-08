@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography, ButtonBase, TextField, List, ListItem, ListItemText, Menu, MenuItem, Switch, Button, FormControlLabel, Card, CardMedia } from '@material-ui/core';
 import NavigationBar from '../modules/NavigationBar';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import placeholder from "../../assets/placeholder.png";
 
 const options = [
-	'Male',
-	'Female',
-	'Other',
+	{title: "Male"}, 
+	{title: "Female"},
+	{title: "Other" }
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -64,16 +65,17 @@ const api = 'http://localhost:42069/api';
 function Settings(props) {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedIndex, setSelectedIndex] = useState(0);
-	const [displayName, setDisplayName] = useState(null);
+	const [displayName, setDisplayName] = useState(" ");
 	const [name, setName] = useState("Adam");
-	const [birthdate, setBirthdate] = useState(null);
+	const [birthdate, setBirthdate] = useState("");
 	const [gender, setGender] = useState(null);
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
 	const [confirmPass, setConfirmPass] = useState(null);
 	const [error, setError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(null);
-
+	const [imgSrc, setImgSrc] = useState(null);
+	const [allowNotifications, setAllowNotifications] = useState(null);
 	const [state, setState] = useState({
 		checkedNotifications: true,
 	});
@@ -85,16 +87,17 @@ function Settings(props) {
 			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 		};
 		let response = await fetch(api + `/profile/id/${user._id}`, requestOptions);
-		alert(response.status);
-		alert(props.user._id);
 		if(response.status == 200) {
 			let data = await response.json();
 			setName(data['name']);
-			setDisplayName(data['username']);
-			setBirthdate(data['dob']);
+			setDisplayName(data['userName']);
+			setBirthdate(data['dob'].substring(0, 10));
+			setEmail(props.user.email);
+			setImgSrc(data['imgSrc']);
+			setAllowNotifications(user.allowNotifications);
 			options.forEach((genderOption, index) => {
-				if(data['gender'] == genderOption) {
-					setGender(index);
+				if(data['gender'].toLowerCase() == genderOption['title'].toLowerCase()) {
+					setGender(genderOption);
 				}
 			});
 		} else {
@@ -139,7 +142,6 @@ function Settings(props) {
 				name:name,
 				dob: birthdate,
 				gender: gender['title'],
-				email: email,
 				password: password
 			}
 			let requestOptions = {
@@ -149,12 +151,30 @@ function Settings(props) {
 			};
 			let response = await fetch(api + '/auth/register', requestOptions);
 			if (response.status == 200) {
-				let data = await response.json();
-				props.storeUser(data['token']);
-				props.fetchUser(data['token']);
+				alert("Profile settings have updated successfully");
 			} else {
 				setError(true);
 				setErrorMsg(errorSignUp);
+			}
+			if(email != props.user.email || allowNotifications != props.user.allowNotifications) {
+				let accountData = {
+					email: email,
+					allowNotifications: allowNotifications
+				}
+				let requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json' },
+					body: JSON.stringify(accountData)
+				};
+				let response = await fetch(api + `/auth/id/${props.user.id}`, requestOptions);
+				if (response.status == 200) {
+					let data = await response.json();
+					props.storeUser(data['token']);
+					props.fetchUser(data['token']);
+				} else {
+					setError(true);
+					setErrorMsg(errorSignUp);
+				}
 			}
 		}
 	}
@@ -181,8 +201,8 @@ function Settings(props) {
 		setBirthdate(event.target.value);
 		setError(false);
 	};
-	const genderChange = (event) => {
-		setGender(event.target.value);
+	const genderChange = (event, value) => {
+		setGender(value);
 		setError(false);
 	};
 	const emailChange = (event) => {
@@ -197,9 +217,20 @@ function Settings(props) {
 		setConfirmPass(event.target.value);
 		setError(false);
 	};
+	const imgChange = (event) => {
+		var selectedFile = event.target.files[0];
+		var reader = new FileReader();
+	  
+		reader.onload = function(event) {
+		  setImgSrc(event.target.result);
+		  setError(false);
+		};
+	  
+		reader.readAsDataURL(selectedFile);
+	};
 
 	const handleChange = (event) => {
-		setState({ ...state, [event.target.name]: event.target.checked });
+		setAllowNotifications(!allowNotifications);
 	};
 
 	const handleClickListItem = (event) => {
@@ -218,7 +249,7 @@ function Settings(props) {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
-			<NavigationBar setUser={props.setUser} pageName='My Matches'></NavigationBar>
+			<NavigationBar setUser={props.setUser} user={props.user} pageName='My Matches'></NavigationBar>
 			
 			<Paper className={classes.paper}>
 				<Grid container spacing={3} className={classes.mainContainer}>
@@ -227,10 +258,10 @@ function Settings(props) {
 					</Grid>
 					<Grid item xs={12} sm={3}>
 						<Card className={classes.card}>
-							<input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+							<input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={imgChange}/>
 							<ButtonBase className={classes.cardAction}>
 								<label htmlFor="icon-button-file">
-									<CardMedia component='img' className={classes.cardMedia} image={placeholder} />
+									<CardMedia component='img' className={classes.cardMedia} image={imgSrc}/>
 								</label>
 							</ButtonBase>
 						</Card>
@@ -267,7 +298,7 @@ function Settings(props) {
 										id="datetime-local"
 										label="Birthday"
 										type="date"
-										value={birthdate}
+										value={"1998-11-14"}
 										onChange={birthChange}
 										className={classes.textField}
 										InputLabelProps={{
@@ -276,34 +307,19 @@ function Settings(props) {
 									/>
 								</form>
 							</Typography>
-							<List component="nav" aria-label="Gender Menu">
-								<ListItem
-									button
-									aria-haspopup="true"
-									aria-controls="gender-menu"
-									aria-label="gender"
-									onClick={handleClickListItem}
-								>
-									<ListItemText primary="Gender" secondary={options[selectedIndex]} />
-								</ListItem>
-							</List>
-							<Menu
-								id="gender-menu"
-								anchorEl={anchorEl}
-								keepMounted
-								open={Boolean(anchorEl)}
-								onClose={handleClose}
-							>
-								{options.map((option, index) => (
-									<MenuItem
-										key={option}
-										selected={index === selectedIndex}
-										onClick={(event) => handleMenuItemClick(event, index)}
-									>
-										{option}
-									</MenuItem>
-								))}
-							</Menu>
+							<Grid item xs={12} sm={6}>
+								<Autocomplete
+								required
+								id="combo-box-demo"
+								options={options}
+								getOptionLabel={(option) => option.title}
+								fullWidth
+								autoComplete="sex"
+								value={gender}
+								renderInput={(params) => <TextField {...params} label="Gender" variant="outlined" />}
+								onChange={genderChange}
+								/>
+							</Grid>
 						</Paper>
 					</Grid>
 					<Grid item xs={12}>
@@ -354,7 +370,7 @@ function Settings(props) {
 									checked={state.checkedNotifications} 
 									onChange={handleChange} 
 									name="checkedNotifications" 
-									
+									checked={allowNotifications}
 									/>
 							}
 							label="Allow Notifications" labelPlacement="start"

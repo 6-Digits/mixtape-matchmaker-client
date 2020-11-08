@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.text.disabled,
 		overflowY: "auto",
 		width: '100%',
+		height: '60vh'
 	},
 	playlistsContainer: {
 		padding: theme.spacing(2, 0, 2, 3),

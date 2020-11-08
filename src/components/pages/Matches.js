@@ -46,7 +46,7 @@ function Matches({user, setUser}) {
 	
 	return (
 		<div style={{height: width > 599 ? "100vh" : "100%"}}>
-			<NavigationBar setUser={setUser} pageName='My Matches'></NavigationBar>
+			<NavigationBar setUser={setUser} user={user} pageName='My Matches'></NavigationBar>
 			<Grid
 				container
 				direction="row"

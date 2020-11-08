@@ -13,12 +13,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const api = 'http://localhost:42069/api';
 
-function AccountDropDown({setUser}) {
+function AccountDropDown({setUser, user}) {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
-	const history = useHistory();
+	const [profileImg, setProfileImg] = useState(placeholder);
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -31,6 +32,27 @@ function AccountDropDown({setUser}) {
 		localStorage.clear();
 		setUser(null);
 	}
+	const fetchUserProfile = async (userToken, user) => {
+		let requestOptions = {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+		};
+		let response = await fetch(api + `/profile/id/${user._id}`, requestOptions);
+		if(response.status == 200) {
+			let data = await response.json();
+			setProfileImg(data['imgSrc']);
+		} else {
+
+		}
+	};
+	useEffect(() => {
+		// let userToken = JSON.parse(cookies.get('userToken'));
+		// let userToken = cookies['userToken'];
+		let userToken = localStorage.getItem('userToken');
+		if(userToken && user){
+			fetchUserProfile(userToken, user);
+		} 
+	  }, []);
 
 	return (
 		<div>
@@ -41,7 +63,7 @@ function AccountDropDown({setUser}) {
 				color="inherit"
 				onClick={handleClick}
 			>
-				<Avatar alt='avatar' src={placeholder} className={classes.avatar} />
+				<Avatar alt='avatar' src={profileImg} className={classes.avatar} />
 			</IconButton>
 			<Menu
 				id="customized-menu"
