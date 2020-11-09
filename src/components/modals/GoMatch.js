@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import {Avatar, Dialog, DialogActions, Button, DialogTitle, Typography, Grid} from '@material-ui/core';
-import ReactPlayer from 'react-player/youtube';
+import { Avatar, Dialog, DialogActions, Button, DialogTitle, Typography, Grid } from '@material-ui/core';
+import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
+import PlayerControls from "./PlayerControls";
 import heart from "../../assets/heart.png";
 import heartBreak from "../../assets/heart_break.png";
+
+const { keyboardControls } = utils
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -111,7 +114,14 @@ function GoMatch(props) {
 							<Avatar variant="rounded" className={classes.profileImg} src={"https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg"}></Avatar>
 						</Grid>
 						<Grid item>
-							<ReactPlayer className={classes.player}url='https://www.youtube.com/watch?v=rEq1Z0bjdwc' />
+							<Media>
+								{mediaProps => (
+								<div className="media" onKeyDown={keyboardControls.bind(null, mediaProps)}>
+									<Player src="https://www.youtube.com/watch?v=XUhVCoTsBaM" autoPlay={true} className="player" />
+									<PlayerControls />
+								</div>
+								)}
+							</Media>
 						</Grid>
 					</Grid>
 					<Grid container 

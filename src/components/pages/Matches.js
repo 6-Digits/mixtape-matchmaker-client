@@ -1,12 +1,15 @@
 import React, { useState, useEffect} from "react";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Grid, TextField} from '@material-ui/core';
-import ReactPlayer from 'react-player/youtube';
+import { Media, Player, utils } from 'react-media-player'
+import PlayerControls from "../modals/PlayerControls";
 import NavigationBar from '../modules/NavigationBar';
 import Playlist from "../modules/Playlist";
 import MatchSettings from "../modals/MatchSettings";
 import GoMatch from "../modals/GoMatch";
 import ViewMatch from "../modals/ViewMatch";
+
+const { keyboardControls } = utils
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -63,7 +66,14 @@ function Matches({user, setUser}) {
 					spacing={1}
 					style={{marginTop: width > 599 ? "4rem" : "0"}}>
 					<Grid container item xs={12} sm={11}>	
-						<ReactPlayer className={classes.player} url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
+						<Media>
+							{mediaProps => (
+							<div className="media" onKeyDown={keyboardControls.bind(null, mediaProps)}>
+								<Player src="https://www.youtube.com/watch?v=XUhVCoTsBaM" autoPlay={true} className="player" />
+								<PlayerControls />
+							</div>
+							)}
+						</Media>
 					</Grid>
 					<Grid container item xs={12} sm={11}
 						direction="column"
