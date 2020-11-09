@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {Grid, Typography, InputBase, Button, Menu, MenuItem} from '@material-ui/core';
+import { Grid, Typography, InputBase, Button, Menu, MenuItem } from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import ReactPlayer from 'react-player/youtube';
-import PlaylistCard from './PlaylistCard';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon, Undo as UndoIcon, Redo as RedoIcon, Share as ShareIcon } from '@material-ui/icons';
+import PlaylistCard from './PlaylistCard';
 import playlistData from '../data/playlist.json';
+
+const playlist = playlistData['playlist'];
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -76,8 +77,6 @@ const useStyles = makeStyles((theme) => ({
 		maxWidth: "100%"
 	}
 }));
-
-const playlist = playlistData['playlist'];
 
 function Playlist({title, importable, editable, draggable, shareable}) {
 	const [playlistItems, updatePlaylistItems] = useState(playlist);
@@ -208,7 +207,7 @@ function Playlist({title, importable, editable, draggable, shareable}) {
 					<Droppable droppableId="playlist" className={classes.dragContainer}>
 						{(provided) => (
 							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-								{playlistItems.map(({id, name, author, genre, duration, src}, index) => {
+								{playlistItems.map(({id, name, author, genre, duration, img, src}, index) => {
 									return (
 										<Draggable key={id} draggableId={id} index={index} isDragDisabled={!draggable}>
 											{(provided) => (
@@ -220,6 +219,7 @@ function Playlist({title, importable, editable, draggable, shareable}) {
 													author={author}
 													genre={genre}
 													duration={duration}
+													img = {img}
 													src = {src}
 													/>
 												</div>

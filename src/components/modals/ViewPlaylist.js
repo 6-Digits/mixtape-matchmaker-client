@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Dialog, DialogActions, Button, DialogTitle, Typography, Grid, Container, TextField, Box, Link, Card, ButtonBase, CardMedia, CardContent, FormControlLabel, Switch } from '@material-ui/core';
 import { FavoriteBorder as FavoriteBorderIcon, Visibility as VisibilityIcon, Send as SendIcon } from '@material-ui/icons';
-import ReactPlayer from 'react-player/youtube';
+import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
-import placeholder from "../../assets/placeholder.png";
+import PlayerControls from "./PlayerControls";
 import viewPlaylistData from "../data/viewPlaylist.json";
+import placeholder from "../../assets/placeholder.png";
+
+const { keyboardControls } = utils
+const importedComments = viewPlaylistData['comments'];
+
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -27,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
 		width: "97%",
 		margin: "auto"
 	},
+	media: {
+		margin: 'auto',
+	},
 	player: {
+		width: '50%',
 		marginTop: '1rem',
 		marginBottom: '1rem'
 	},
@@ -114,7 +123,6 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const importedComments = viewPlaylistData['comments'];
 
 function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeCount, editable, shareable}) {
 	const classes = useStyles();
@@ -181,7 +189,14 @@ function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeC
 					className={classes.playlistArea}
 					>
 					<Grid container item xs={12} sm={5}>
-						<ReactPlayer className={classes.player}url='https://www.youtube.com/watch?v=rEq1Z0bjdwc' />
+						<Media>
+							{mediaProps => (
+							<div className="media" onKeyDown={keyboardControls.bind(null, mediaProps)}>
+								<Player src="https://www.youtube.com/watch?v=XUhVCoTsBaM" autoPlay={true} className="player" />
+								<PlayerControls />
+							</div>
+							)}
+						</Media>
 					</Grid>
 					<Grid container item xs={12} sm={6}>
 						<Playlist editable={editable} draggable={editable} shareable={shareable}></Playlist>

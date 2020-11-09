@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function PlaylistCard({order, editable, song, author, genre, duration, img, src}) {
-	src = src ? src : "https://compote.slate.com/images/fb3403a0-6ffc-471a-8568-b0f01fa3bd6b.jpg";
+	img = img ? img : "https://compote.slate.com/images/fb3403a0-6ffc-471a-8568-b0f01fa3bd6b.jpg";
 	
 	const classes = useStyles();
 	return (
@@ -55,7 +55,7 @@ function PlaylistCard({order, editable, song, author, genre, duration, img, src}
 					</Button>
 				</Grid>
 				<Grid item xs={6} sm={2}>
-					<Avatar variant="square" src={src} className={classes.songImg} />
+					<Avatar variant="square" src={img} className={classes.songImg} />
 				</Grid>
 				
 				<Grid item xs={12} sm={5} className={classes.songDetails}>
