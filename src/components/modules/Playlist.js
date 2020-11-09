@@ -4,9 +4,6 @@ import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon, Undo as UndoIcon, Redo as RedoIcon, Share as ShareIcon } from '@material-ui/icons';
 import PlaylistCard from './PlaylistCard';
-import playlistData from '../data/playlist.json';
-
-const playlist = playlistData['playlist'];
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -78,8 +75,8 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-function Playlist({title, importable, editable, draggable, shareable}) {
-	const [playlistItems, updatePlaylistItems] = useState(playlist);
+function Playlist({title, importable, editable, draggable, shareable, songs, currentIndex, handleCurrentIndex}) {
+	const [playlistItems, updatePlaylistItems] = useState(songs);
 	const [sortAnchor, setSortAnchor] = useState(null);
 	
 	const handleSortClick = (event) => {
@@ -213,14 +210,16 @@ function Playlist({title, importable, editable, draggable, shareable}) {
 											{(provided) => (
 												<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 													<PlaylistCard 
-													order={index}
+													index={index}
 													song={name} 
 													editable={editable}
 													author={author}
 													genre={genre}
 													duration={duration}
-													img = {img}
-													src = {src}
+													img={img}
+													src={src}
+													currentIndex={currentIndex}
+													handleCurrentIndex={handleCurrentIndex}
 													/>
 												</div>
 											)}

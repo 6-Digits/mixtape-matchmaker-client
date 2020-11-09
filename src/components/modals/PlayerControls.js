@@ -5,19 +5,11 @@ import { PauseCircleFilled, PlayCircleFilled, SkipPrevious, SkipNext, VolumeUp, 
 const { formatTime } = utils;
 
 
-function PlayerControls({media}) {
+function PlayerControls({media, currentIndex, handleCurrentIndex}) {
 	const { volume, duration, currentTime } = media;
 	
 	const handlePlayPause = () => {
 		media.playPause();
-	}
-	
-	const handlePrevious = () => {
-		
-	}
-	
-	const handleNext = () => {
-		
 	}
 	
 	const handleMuteUnmute = () => {
@@ -34,6 +26,14 @@ function PlayerControls({media}) {
 	
 	const handleFullscreen = () => {
 		media.fullscreen();
+	}
+	
+	const handleNext = () => {
+		handleCurrentIndex(currentIndex + 1);
+	}
+	
+	const handlePrevious = () => {
+		handleCurrentIndex(currentIndex - 1);
 	}
 	
 	return (

@@ -6,8 +6,10 @@ import Playlist from "../modules/Playlist";
 import PlayerControls from "./PlayerControls";
 import heart from "../../assets/heart.png";
 import heartBreak from "../../assets/heart_break.png";
+import playlistData from '../data/playlist.json';
 
-const { keyboardControls } = utils
+const { keyboardControls } = utils;
+const importedSongs = playlistData['songs'];
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -61,12 +63,24 @@ const useStyles = makeStyles((theme) => ({
 	description: {
 		height: '20vh',
 		overflowY: 'auto'
-	}
+	},
+	media: {
+		position: 'relative',
+		height: '100%',
+		width: '100%',
+	},
+	player: {
+		width: '100%',
+		height: '100%',
+	},
 }));
   
 function GoMatch(props) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
+	const [songs, setSongs] = useState(importedSongs);
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
   
 	const handleOpen = () => {
 		setOpen(true);
@@ -75,6 +89,22 @@ function GoMatch(props) {
 	const handleClose = () => {
 		setOpen(false);
 	};
+	
+	useEffect(() => {
+		setCurrentSong(songs[currentIndex]);
+	}, [currentIndex]);
+	
+	const handleCurrentIndex = (value) => {
+		if (value >= songs.length) {
+			setCurrentIndex(0);
+		}
+		else if (value < 0) {
+			setCurrentIndex(songs.length - 1);
+		}
+		else {
+			setCurrentIndex(value);
+		}
+	}
 	
 	return (
 		<div className={classes.container}>
@@ -116,9 +146,9 @@ function GoMatch(props) {
 						<Grid item>
 							<Media>
 								{mediaProps => (
-								<div className="media" onKeyDown={keyboardControls.bind(null, mediaProps)}>
-									<Player src="https://www.youtube.com/watch?v=XUhVCoTsBaM" autoPlay={true} className="player" />
-									<PlayerControls />
+								<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
+									<Player src={currentSong.src} autoPlay={true} className={classes.player} />
+									<PlayerControls currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex} />
 								</div>
 								)}
 							</Media>
@@ -134,7 +164,7 @@ function GoMatch(props) {
 							<Typography variant="h6">I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.</Typography>
 						</Grid>
 						<Grid item>
-							<Playlist ></Playlist>
+							<Playlist songs={importedSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex} />
 						</Grid>
 						<Grid container direction="row" justify="space-evenly" alignItems="center">
 							<Button variant="contained" className={classes.likeButton}><Avatar className={classes.likeImg} src={heart} variant="rounded"></Avatar></Button> 

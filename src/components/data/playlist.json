@@ -1,5 +1,5 @@
 {
-    "playlist": [
+    "songs": [
 		{
 			"id": "utp",
 			"name": "Uptown Funk",
@@ -45,5 +45,47 @@
 			"img": "https://m.media-amazon.com/images/M/MV5BNGEyODc1ZTctZDk0YS00ODYyLTk2YmItZjg5Yzg0MzMzMjRjXkEyXkFqcGdeQXVyNDQ5MDYzMTk@._V1_.jpg",
 			"src": "https://www.youtube.com/watch?v=DyXF8dfl0Ao"
 		}
-	]
+	],
+	"comments": [
+        {
+            "message": "Hello there",
+            "user": "Kenobi",
+            "timestamp": "2005-05-20T00:00:00.000Z"
+        },
+        {
+            "message": "General Kenobi",
+            "user": "Grievous",
+            "timestamp": "2005-05-20T00:00:00.000Z"
+        },
+        {
+            "message": "Hello there",
+            "user": "Kenobi",
+            "timestamp": "2005-05-20T00:00:00.000Z"
+        },
+        {
+            "message": "General Kenobi",
+            "user": "Grievous",
+            "timestamp": "2005-05-20T00:00:00.000Z"
+        },
+        {
+            "message": "Hello there",
+            "user": "Kenobi",
+            "timestamp": "2005-05-20T00:00:00.000Z"
+        },
+        {
+            "message": "General Kenobi",
+            "user": "Grievous",
+            "timestamp": "2005-05-20T00:00:00.000Z"
+        },
+        {
+            "message": "Hello there",
+            "user": "Kenobi",
+            "timestamp": "2005-05-20T00:00:00.000Z"
+        },
+        {
+            "message": "General Kenobi",
+            "user": "Grievous",
+            "timestamp": "2005-05-20T00:00:00.000Z"
+        }
+    ]
 }

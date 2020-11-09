@@ -8,8 +8,10 @@ import Playlist from "../modules/Playlist";
 import MatchSettings from "../modals/MatchSettings";
 import GoMatch from "../modals/GoMatch";
 import ViewMatch from "../modals/ViewMatch";
+import playlistData from '../data/playlist.json';
 
-const { keyboardControls } = utils
+const { keyboardControls } = utils;
+const importedSongs = playlistData['songs'];
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -30,12 +32,24 @@ const useStyles = makeStyles((theme) => ({
 	playlistEdit: {
 		marginTop: "1rem",
 		padding: "0 0 2vh 0"
-	}
+	},
+	media: {
+		position: 'relative',
+		height: '100%',
+		width: '100%',
+	},
+	player: {
+		width: '100%',
+		height: '100%',
+	},
 }));
 
 function Matches({user, setUser}) {
 	const classes = useStyles();
 	const [width, setWidth] = useState(0);
+	const [songs, setSongs] = useState(importedSongs);
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
 	
 	useEffect(() => {
 		function updateWidth() {
@@ -44,8 +58,23 @@ function Matches({user, setUser}) {
 		window.addEventListener('resize', updateWidth);
 		updateWidth();
 		return () => window.removeEventListener('resize', updateWidth);
-	  }, []);
+	}, []);
 	
+	useEffect(() => {
+		setCurrentSong(songs[currentIndex]);
+	}, [currentIndex]);
+	
+	const handleCurrentIndex = (value) => {
+		if (value >= songs.length) {
+			setCurrentIndex(0);
+		}
+		else if (value < 0) {
+			setCurrentIndex(songs.length - 1);
+		}
+		else {
+			setCurrentIndex(value);
+		}
+	}
 	
 	return (
 		<div style={{height: width > 599 ? "100vh" : "100%"}}>
@@ -68,9 +97,9 @@ function Matches({user, setUser}) {
 					<Grid container item xs={12} sm={11}>	
 						<Media>
 							{mediaProps => (
-							<div className="media" onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src="https://www.youtube.com/watch?v=XUhVCoTsBaM" autoPlay={true} className="player" />
-								<PlayerControls />
+							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
+								<Player src={currentSong.src} autoPlay={true} className={classes.player} />
+								<PlayerControls currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex} />
 							</div>
 							)}
 						</Media>
@@ -91,7 +120,8 @@ function Matches({user, setUser}) {
 					</Grid>
 				</Grid>
 				<Grid container item xs={12} sm={7}>
-					<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}/>
+					<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}
+					songs={importedSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}/>
 					<Grid
 						container
 						direction="column"

@@ -3,54 +3,58 @@ import { Grid, Typography, Card, Button, Avatar, useRadioGroup } from '@material
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { PlayCircleOutline as PlayCircleOutlineIcon, Delete as DeleteIcon } from '@material-ui/icons';
 
-const useStyles = makeStyles((theme) => ({
-	card: {
-		backgroundColor: theme.palette.background.paper,
-		color: theme.palette.text.primary,
-		textAlign: "center",
-		fontWeight: "bold",
-	},
-	fullSize: {
-		height: '100%',
-		width: '100%'
-	},
-	playSongButton: {
-		height: '10vh',
-		width: '100%'
-	},
-	songImg: {
-		height: '10vh',
-		width: '80%'
-	},
-	songDetails: {
-		textAlign: "left",
-		height:"100%",
-	},
-	playIcon: {
-		height: '5vh',
-		width: '5vh'
-	},
-	deleteIcon: {
-		height: '5vh',
-		width: '5vh'
-	},
-	duration: {
-
-	},
-	order: {
-
-	}
-}));
-
-function PlaylistCard({order, editable, song, author, genre, duration, img, src}) {
+function PlaylistCard({index, editable, song, author, genre, duration, img, src, currentIndex, handleCurrentIndex}) {
+	const useStyles = makeStyles((theme) => ({
+		card: {
+			backgroundColor: index == currentIndex ? theme.palette.primary.dark : theme.palette.background.paper,
+			color: theme.palette.text.primary,
+			textAlign: "center",
+			fontWeight: "bold",
+		},
+		fullSize: {
+			height: '100%',
+			width: '100%'
+		},
+		playSongButton: {
+			height: '10vh',
+			width: '100%'
+		},
+		songImg: {
+			height: '10vh',
+			width: '80%'
+		},
+		songDetails: {
+			textAlign: "left",
+			height:"100%",
+		},
+		playIcon: {
+			height: '5vh',
+			width: '5vh'
+		},
+		deleteIcon: {
+			height: '5vh',
+			width: '5vh'
+		},
+		duration: {
+	
+		},
+		order: {
+	
+		}
+	}));
+	const classes = useStyles();
+	
 	img = img ? img : "https://compote.slate.com/images/fb3403a0-6ffc-471a-8568-b0f01fa3bd6b.jpg";
 	
-	const classes = useStyles();
+	const handlePlay = () => {
+		handleCurrentIndex(index);
+	}
+	
 	return (
 		<Card className={classes.card}>
 			<Grid container direction="row" justify="space-between" alignItems="center">
 				<Grid item xs={6} sm={2}>
-					<Button variant="text" className={classes.playSongButton}>
+					<Button variant="text" className={classes.playSongButton} onClick={handlePlay}>
 						<PlayCircleOutlineIcon className={classes.playIcon} />
 					</Button>
 				</Grid>

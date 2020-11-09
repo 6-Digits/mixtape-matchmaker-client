@@ -5,11 +5,12 @@ import { FavoriteBorder as FavoriteBorderIcon, Visibility as VisibilityIcon, Sen
 import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
 import PlayerControls from "./PlayerControls";
-import viewPlaylistData from "../data/viewPlaylist.json";
 import placeholder from "../../assets/placeholder.png";
+import playlistData from '../data/playlist.json';
 
-const { keyboardControls } = utils
-const importedComments = viewPlaylistData['comments'];
+const { keyboardControls } = utils;
+const importedSongs = playlistData['songs'];
+const importedComments = playlistData['comments'];
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,12 +34,13 @@ const useStyles = makeStyles((theme) => ({
 		margin: "auto"
 	},
 	media: {
-		margin: 'auto',
+		position: 'relative',
+		height: '100%',
+		width: '100%',
 	},
 	player: {
-		width: '50%',
-		marginTop: '1rem',
-		marginBottom: '1rem'
+		width: '100%',
+		height: '100%',
 	},
 	playlistTitle: {
 		textAlign: "center"
@@ -127,18 +129,23 @@ const useStyles = makeStyles((theme) => ({
 function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeCount, editable, shareable}) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
+	const [checkedPublic, setCheckedPublic] = useState(true);
+	const [songs, setSongs] = useState(importedSongs);
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
 	const [comments, setComments] = useState(importedComments);
-	const [state, setState] = useState({
-		checkedPublic: true,
-	});
-    
-    shareable = shareable ? shareable : null;
+	
+	shareable = shareable ? shareable : null;
 	viewCount = viewCount ? viewCount : 2020;
 	playlistName = playlistName ? playlistName : "Ayyy Lmao";
 	playlistAuthor = playlistAuthor ? playlistAuthor : "X Æ A-13";
 	thumbnail = thumbnail ? thumbnail : placeholder;
 	likeCount = likeCount ? likeCount : 420;
 	editable = editable ? editable : null;
+	
+	useEffect(() => {
+		setCurrentSong(songs[currentIndex]);
+	}, [currentIndex]);
 	
 	const handleOpen = () => {
 		setOpen(true);
@@ -148,9 +155,21 @@ function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeC
 		setOpen(false);
 	};
 	
-	const handleChange = (event) => {
-		setState({ ...state, [event.target.name]: event.target.checked });
+	const handleCheckedPublic = (event) => {
+		setCheckedPublic(event.target.checked);
 	};
+	
+	const handleCurrentIndex = (value) => {
+		if (value >= songs.length) {
+			setCurrentIndex(0);
+		}
+		else if (value < 0) {
+			setCurrentIndex(songs.length - 1);
+		}
+		else {
+			setCurrentIndex(value);
+		}
+	}
 	
 	return (
 		<div className={classes.container}>
@@ -191,15 +210,18 @@ function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeC
 					<Grid container item xs={12} sm={5}>
 						<Media>
 							{mediaProps => (
-							<div className="media" onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src="https://www.youtube.com/watch?v=XUhVCoTsBaM" autoPlay={true} className="player" />
-								<PlayerControls />
+							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
+								<Player src={currentSong.src} autoPlay={true} className={classes.player} />
+								<PlayerControls currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex} />
 							</div>
 							)}
 						</Media>
 					</Grid>
 					<Grid container item xs={12} sm={6}>
-						<Playlist editable={editable} draggable={editable} shareable={shareable}></Playlist>
+						<Playlist 
+						editable={editable} draggable={editable} shareable={shareable} 
+						songs={importedSongs} currentIndex={currentIndex} 
+						handleCurrentIndex={handleCurrentIndex} />
 					</Grid>
 				</Grid>
 				
@@ -221,7 +243,7 @@ function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeC
 						{ editable ?
 						<Grid container item xs={12} direction="row" alignItems="center">
 							<FormControlLabel
-							control={<Switch checked={state.checkedPublic} onChange={handleChange} name="checkedPublic" />}
+							control={<Switch checked={checkedPublic} onChange={handleCheckedPublic} name="checkedPublic" />}
 							label="Public" labelPlacement="start"
 							/>
 						</Grid> : null }
@@ -278,7 +300,7 @@ function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeC
 					<Box
 						className={classes.commentBox}>
 						{
-							comments.map(({message, user, timestamp},index) => {
+							comments.map(({message, user, timestamp}, index) => {
 								return( 
 								<Grid
 									container 
