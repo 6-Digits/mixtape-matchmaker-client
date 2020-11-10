@@ -94,6 +94,7 @@ function MyPlaylists(props) {
 		let response = await fetch(`${api}/mixtape/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
+			alert(JSON.stringify(data));
 			setMyPlaylists(data);
 			setPlaylistCache(data);
 		} else {

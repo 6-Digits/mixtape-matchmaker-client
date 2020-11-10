@@ -126,10 +126,9 @@ const useStyles = makeStyles((theme) => ({
 const defaultDesc = 'I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.';
 
 function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
-
 	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
 	const importedDesc = playlist ? playlist['description'] : defaultDesc;
-	const importedThumbnail = importedSongs ? importedSongs[0]['imgUrl'] : placeholder;
+	const importedThumbnail = playlist ?  playlist['songList'] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder;
 	const importedLikeCount = playlist ? playlist['hearts'] : 420;
 	const importedComments = playlistData['comments'];
 	const importedViewCount = playlist ? playlist['view'] : 2020;
@@ -155,7 +154,14 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	
 	useEffect(() => {
 		setCurrentSong(songs[currentIndex]);
+		if(playlist) {
+			fetchAuthor();
+		}
 	}, [currentIndex]);
+
+	const fetchAuthor = () => {
+		
+	  };
 	
 	const handleOpen = () => {
 		setOpen(true);
