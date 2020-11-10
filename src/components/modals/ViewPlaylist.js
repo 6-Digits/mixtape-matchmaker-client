@@ -128,7 +128,7 @@ const defaultDesc = 'I hope my classicist friends will forgive me if I abbreviat
 function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
 	const importedDesc = playlist ? playlist['description'] : defaultDesc;
-	const importedThumbnail = playlist ?  playlist['songList'] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder;
+	const importedThumbnail = playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder;
 	const importedLikeCount = playlist ? playlist['hearts'] : 420;
 	const importedComments = playlistData['comments'];
 	const importedViewCount = playlist ? playlist['view'] : 2020;
