@@ -227,7 +227,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 						<Media>
 							{mediaProps => (
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src={currentSong.url} autoPlay={true} className={classes.player} />
+								<Player src={currentSong ? currentSong.url : null} autoPlay={true} className={classes.player} />
 								<PlayerControls currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex} />
 							</div>
 							)}
