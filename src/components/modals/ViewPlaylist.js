@@ -9,8 +9,6 @@ import placeholder from "../../assets/placeholder.png";
 import playlistData from '../data/playlist.json';
 
 const { keyboardControls } = utils;
-const importedSongs = playlistData['songs'];
-const importedComments = playlistData['comments'];
 
 
 const useStyles = makeStyles((theme) => ({
@@ -125,22 +123,34 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
+const defaultDesc = 'I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.';
 
-function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeCount, editable, shareable}) {
+function ViewPlaylist({editable, shareable, playlist}) {
+
+	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
+	const importedDesc = playlist ? playlist['description'] : defaultDesc;
+	const importedThumbnail = importedSongs ? importedSongs[0]['imgUrl'] : placeholder;
+	const importedLikeCount = playlist ? playlist['hearts'] : 420;
+	const importedComments = playlistData['comments'];
+	const importedViewCount = playlist ? playlist['view'] : 2020;
+	const importedAuthor = playlist ? playlist['owner'] : "X Æ A-13";
+	const importedName = playlist ? playlist['name'] : "Ayyy Lmao";
+
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [checkedPublic, setCheckedPublic] = useState(true);
+	const [description, setDescription] = useState(importedDesc);
+	const [viewCount, setViewCount] = useState(importedViewCount);
+	const [likeCount, setLikeCount] = useState(importedLikeCount);
+	const [thumbnail, setThumbnail] = useState(importedThumbnail);
+	const [playlistName, setPlaylistName] = useState(importedName);
+	const [playlistAuthor, setPlaylistAuthor] = useState(importedAuthor);
 	const [songs, setSongs] = useState(importedSongs);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
 	const [comments, setComments] = useState(importedComments);
 	
-	shareable = shareable ? shareable : null;
-	viewCount = viewCount ? viewCount : 2020;
-	playlistName = playlistName ? playlistName : "Ayyy Lmao";
-	playlistAuthor = playlistAuthor ? playlistAuthor : "X Æ A-13";
-	thumbnail = thumbnail ? thumbnail : placeholder;
-	likeCount = likeCount ? likeCount : 420;
+	shareable = editable ? editable : null;
 	editable = editable ? editable : null;
 	
 	useEffect(() => {
@@ -282,10 +292,10 @@ function ViewPlaylist({viewCount, playlistName, playlistAuthor, thumbnail, likeC
 						id="playlistDescription"
 						label="Playlist Description"
 						name="playlistDescription"
-						defaultValue='I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.'
+						defaultValue={description}
 						/>
 						:
-						<Typography variant="h6">I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.</Typography>
+						<Typography variant="h6">{description}</Typography>
 						}
 					</Grid>
 				</Grid>

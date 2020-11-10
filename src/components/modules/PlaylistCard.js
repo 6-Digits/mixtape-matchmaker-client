@@ -6,7 +6,7 @@ import { PlayCircleOutline as PlayCircleOutlineIcon, Delete as DeleteIcon } from
 function PlaylistCard({index, editable, song, author, genre, duration, img, src, currentIndex, handleCurrentIndex}) {
 	const useStyles = makeStyles((theme) => ({
 		card: {
-			backgroundColor: index == currentIndex ? theme.palette.primary.dark : theme.palette.background.paper,
+			backgroundColor: index === currentIndex ? theme.palette.primary.dark : theme.palette.background.paper,
 			color: theme.palette.text.primary,
 			textAlign: "center",
 			fontWeight: "bold",

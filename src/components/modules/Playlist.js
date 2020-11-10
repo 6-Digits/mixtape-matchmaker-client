@@ -204,20 +204,20 @@ function Playlist({title, importable, editable, draggable, shareable, songs, cur
 					<Droppable droppableId="playlist" className={classes.dragContainer}>
 						{(provided) => (
 							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-								{playlistItems.map(({id, name, author, genre, duration, img, src}, index) => {
+								{playlistItems.map(({id, title, author, genre, duration, imgUrl, url}, index) => {
 									return (
 										<Draggable key={id} draggableId={id} index={index} isDragDisabled={!draggable}>
 											{(provided) => (
 												<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 													<PlaylistCard 
 													index={index}
-													song={name} 
+													song={title} 
 													editable={editable}
 													author={author}
 													genre={genre}
 													duration={duration}
-													img={img}
-													src={src}
+													img={imgUrl}
+													src={url}
 													currentIndex={currentIndex}
 													handleCurrentIndex={handleCurrentIndex}
 													/>

@@ -35,7 +35,7 @@ function App(props) {
 			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 		};
 		let response = await fetch(api + '/auth/me', requestOptions);
-		if(response.status == 200) {
+		if(response.status === 200) {
 			let data = await response.json();
 			setUser(data);
 			localStorage.setItem('user', JSON.stringify(data));		

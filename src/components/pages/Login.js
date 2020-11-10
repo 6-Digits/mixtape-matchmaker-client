@@ -59,7 +59,7 @@ function Login({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 			body: JSON.stringify({"email":email, "password":password})
 		};
 		let response = await fetch(api + '/auth/login', requestOptions);
-		if (response.status == 200) {
+		if (response.status === 200) {
 			let data = await response.json();
 			// if(remember){
 				storeUser(data['token']);

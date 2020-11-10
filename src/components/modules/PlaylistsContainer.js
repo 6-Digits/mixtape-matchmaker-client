@@ -18,19 +18,39 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function PlaylistsContainer({height, playlists}) {
+function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, setPlaylists}) {
 	const classes = useStyles();
 	
 	height = height ? height : 700;
 	playlists = playlists ? playlists : [];
 	
+	useEffect(() => {
+		// let userToken = JSON.parse(cookies.get('userToken'));
+		// let userToken = cookies['userToken'];
+		let userToken = localStorage.getItem('userToken');
+		if(userToken && user){
+			fetchPlaylists(userToken, user);
+		} 
+	  }, []);
+	
+	const updatePlaylist = (index, playlist) => {
+		setPlaylists(playlist.map((value, i) => {
+			if(i === index) {
+				return playlist;
+			} else {
+				return value;
+			}
+		}))
+	}
+
 	return (
 		<div>
 			<Paper style={{maxHeight: height}} className={classes.sectionContainer}>
 				<Grid container spacing={3} className={classes.playlistsContainer}>
-					{playlists.map(x => (
+					{playlists.map((playlist, index) => (
 						<Grid item xs={3}>
-							<ViewPlaylist playlistName={x.title} thumbnail={x.thumbnail} editable={x.editable} shareable={true}></ViewPlaylist>
+							<ViewPlaylist 
+								playlist={playlist} editable={editable} updatePlaylist={updatePlaylist} index={index}></ViewPlaylist>
 						</Grid>
 					))}
 				</Grid>

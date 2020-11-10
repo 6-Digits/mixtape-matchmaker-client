@@ -87,7 +87,7 @@ function Settings(props) {
 			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 		};
 		let response = await fetch(api + `/profile/id/${user._id}`, requestOptions);
-		if(response.status == 200) {
+		if(response.status === 200) {
 			let data = await response.json();
 			setName(data['name']);
 			setDisplayName(data['userName']);
@@ -96,7 +96,7 @@ function Settings(props) {
 			setImgSrc(data['imgSrc']);
 			setAllowNotifications(user.allowNotifications);
 			options.forEach((genderOption, index) => {
-				if(data['gender'].toLowerCase() == genderOption['title'].toLowerCase()) {
+				if(data['gender'].toLowerCase() === genderOption['title'].toLowerCase()) {
 					setGender(genderOption);
 				}
 			});
@@ -150,7 +150,7 @@ function Settings(props) {
 				body: JSON.stringify(userData)
 			};
 			let response = await fetch(api + '/auth/register', requestOptions);
-			if (response.status == 200) {
+			if (response.status === 200) {
 				alert("Profile settings have updated successfully");
 			} else {
 				setError(true);
@@ -167,7 +167,7 @@ function Settings(props) {
 					body: JSON.stringify(accountData)
 				};
 				let response = await fetch(api + `/auth/id/${props.user.id}`, requestOptions);
-				if (response.status == 200) {
+				if (response.status === 200) {
 					let data = await response.json();
 					props.storeUser(data['token']);
 					props.fetchUser(data['token']);

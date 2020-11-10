@@ -121,7 +121,7 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 				body: JSON.stringify(userData)
 			};
 			let response = await fetch(api + '/auth/register', requestOptions);
-			if (response.status == 200) {
+			if (response.status === 200) {
 				let data = await response.json();
 				storeUser(data['token']);
 				fetchUser(data['token']);

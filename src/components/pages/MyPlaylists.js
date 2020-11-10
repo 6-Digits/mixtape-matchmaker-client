@@ -74,7 +74,8 @@ const api = 'http://localhost:42069/api';
 function MyPlaylists(props) {
 	const classes = useStyles();
 	const [sortAnchor, setSortAnchor] = useState(null);
-	const [myPlaylists, setMyPlaylist] = useState([]);
+	const [myPlaylists, setMyPlaylists] = useState([]);
+	const [playlistCache, setPlaylistCache] = useState();
 	
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
@@ -89,23 +90,15 @@ function MyPlaylists(props) {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 		};
-		let response = await fetch(api + `/api/mixtape/id/${user._id}}`, requestOptions);
-		if(response.status == 200) {
+		let response = await fetch(`${api}/mixtape/uid/${user._id}`, requestOptions);
+		if(response.status === 200) {
 			let data = await response.json();
-
+			setMyPlaylists(data);
+			setPlaylistCache(data);
 		} else {
 			alert(`failed to fetch data with error status ${response.status}`);
 		}
 	};
-	
-	useEffect(() => {
-		// let userToken = JSON.parse(cookies.get('userToken'));
-		// let userToken = cookies['userToken'];
-		let userToken = localStorage.getItem('userToken');
-		if(userToken, props.user){
-			fetchMyPlaylists(userToken, props.user)
-		} 
-	  }, []);
 
 	return (
 		<div className={classes.page}>
@@ -167,7 +160,7 @@ function MyPlaylists(props) {
 					</Grid> 
 				</Grid>
 				
-				<PlaylistsContainer height={700} playlists={myPlaylists} />
+				<PlaylistsContainer height={700} playlists={myPlaylists} setPlaylists={setMyPlaylists} editable={true} fetchPlaylists={fetchMyPlaylists} user={props.user}/>
 			</Grid>
 		</div>
 	);

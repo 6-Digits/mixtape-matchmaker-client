@@ -46,10 +46,6 @@ const useStyles = makeStyles((theme) => ({
 		margin: "auto"
 
 	},
-	player: {
-		marginTop: '1rem',
-		marginBottom: '1rem'
-	},
 	likeImg: {
 		width: '10vh',
 		height: '10vh'
@@ -72,6 +68,8 @@ const useStyles = makeStyles((theme) => ({
 	player: {
 		width: '100%',
 		height: '100%',
+		marginTop: '1rem',
+		marginBottom: '1rem'
 	},
 }));
   
