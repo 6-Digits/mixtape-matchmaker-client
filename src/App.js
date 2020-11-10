@@ -88,7 +88,7 @@ function App(props) {
 	const classes = useStyles();
 	
 	return (
-		<ThemeProvider theme={theme}>
+		<ThemeProvider theme={theme} className={classes.fullScreen}>
 			<Paper className={classes.fullScreen}>
 				<BrowserRouter className={classes}>
 					<Route exact path="/" render={(props) => {

@@ -33,19 +33,21 @@ const useStyles = makeStyles((theme) => ({
 	},
 	importGrid: {
 		maxWidth: "100%"
+	},
+	page: {
+		height: "100%"
 	}
 }));
 
-const searchPlaylists = Array(20).fill('Result Playlist').map((x, i) => ({
-	title: x + ' ' + i,
-	thumbnail: "https://i.kym-cdn.com/entries/icons/original/000/030/814/Dio_vs_Dire_-_Thunder_Cross_Split_Attack_-_4K_-_JJBA_Part_1_-_%E3%82%B8%E3%83%A7%E3%82%B8%E3%83%A7_1-12_screenshot.png",
-	editable: false
-}));
+const searchPlaceHolder = Array(20).fill('Searched Results').map((x, i) => {
+	return null;
+});
 
 function Search(props) {
 	const classes = useStyles();
 	const location = useLocation();
 	const [sortAnchor, setSortAnchor] = useState(null);
+	const [playlists, setPlaylists] = useState(searchPlaceHolder);
 	
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
@@ -55,8 +57,21 @@ function Search(props) {
 		setSortAnchor(null);
 	};
 	
+	useEffect(() => {
+		fetchPlaylists();
+	  }, [location.query]);
+
+	const fetchPlaylists = () => {
+		if(location.query){
+			setPlaylists(searchPlaceHolder);
+		} else {
+			setPlaylists([]);
+		}	
+	};
+
+
 	return (
-		<div>
+		<div className={classes.page}>
 			<NavigationBar setUser={props.setUser} user={props.user} pageName='Search'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
@@ -91,12 +106,12 @@ function Search(props) {
 					
 					<Grid item xs={12} sm={6}>
 						<Typography className={classes.query}> 
-							{location.query}
+							{location.query ? location.query : "No results found"}
 						</Typography>
 					</Grid>
 				</Grid>
 				
-				<PlaylistsContainer height={700} playlists={searchPlaylists} />
+				<PlaylistsContainer height={700} playlists={playlists} fetchPlaylists={fetchPlaylists} user={props.user}/>
 					
 			</Grid>
 		</div>

@@ -43,30 +43,26 @@ const useStyles = makeStyles((theme)=>({
 	}
 }));
 
-const popConst = Array(20).fill('Popular Tape').map((x, i) => ({
-	title: x + ' ' + i,
-	thumbnail: "https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg",
-	editable: false
-}));
+const popConst = Array(20).fill('Popular Tape').map((x, i) => {
+	return null;
+});
 
-const likeConst = Array(20).fill('Liked Tape').map((x, i) => ({
-	title: x + ' ' + i,
-	thumbnail: "https://i.kym-cdn.com/entries/icons/facebook/000/028/875/cover4.jpg",
-	editable: false
-}));
+const likeConst = Array(20).fill('Liked Tape').map((x, i) => {
+	return null;
+});
 
 function Home({user, setUser}) {
 	const classes = useStyles();
 
-	const [popularPlaylists, setPopularPlaylists] = useState([]);
-	const [likedPlaylists, setLikedPlaylists] = useState([]);
+	const [popularPlaylists, setPopularPlaylists] = useState(likeConst);
+	const [likedPlaylists, setLikedPlaylists] = useState(popConst);
 	
 	const fetchPopularPlaylists = () => {
-		setPopularPlaylists([null, null, null]);
+		setPopularPlaylists(likeConst);
 	};
 
 	const fetchLikedPlaylists = () => {
-		setLikedPlaylists([null, null, null]);
+		setLikedPlaylists(popConst);
 	};
 
 	return (
