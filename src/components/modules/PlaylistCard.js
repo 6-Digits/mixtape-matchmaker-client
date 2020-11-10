@@ -45,7 +45,7 @@ function PlaylistCard({index, editable, song, author, genre, duration, img, src,
 	const classes = useStyles();
 	
 	img = img ? img : "https://compote.slate.com/images/fb3403a0-6ffc-471a-8568-b0f01fa3bd6b.jpg";
-	
+
 	const handlePlay = () => {
 		handleCurrentIndex(index);
 	}
