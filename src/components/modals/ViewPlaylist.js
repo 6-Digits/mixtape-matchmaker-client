@@ -144,6 +144,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	const [likeCount, setLikeCount] = useState(importedLikeCount);
 	const [thumbnail, setThumbnail] = useState(importedThumbnail);
 	const [playlistName, setPlaylistName] = useState(importedName);
+	const [profileImage, setProfileImage] = useState("https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg");
 	const [playlistAuthor, setPlaylistAuthor] = useState(null);
 	const [songs, setSongs] = useState(importedSongs);
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -171,6 +172,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 			if(response.status === 200) {
 				let data = await response.json();
 				setPlaylistAuthor(data['userName']);
+				setProfileImage(data['imgSrc']);
 			} else {
 				setPlaylistAuthor('User not found');
 			}
@@ -281,7 +283,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 						</Grid> : null }
 					</Grid>
 					<Grid item xs={1}>
-						<Avatar variant="rounded" className={classes.profileImg} src={"https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg"}></Avatar>
+						<Avatar variant="rounded" className={classes.profileImg} src={profileImage}></Avatar>
 					</Grid>
 					<Grid item xs={2}  
 						container
