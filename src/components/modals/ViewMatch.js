@@ -8,7 +8,6 @@ import matchData from "../data/matches.json";
 import useChat from "./useChat";
 
 // Need to adjust for mobile view in the future
-
 const useStyles = makeStyles((theme) => ({
 	container: {
 		width: "100%",
@@ -92,9 +91,9 @@ const roomId = 177013;
 function ViewMatch(props) {
 	const classes = useStyles();
 	const [matches, setMatches] = useState(matchedPeople);
-	const[messages, setMessages] = useState(messageLog);
+	//const[messages, setMessages] = useState(messageLog);
 	const [open, setOpen] = useState(false);
-	/*const { messages, sendMessage } = useChat(roomId);
+	const { messages, sendMessage } = useChat(roomId);
 	const [newMessage, setNewMessage] = useState("");
 
 	const handleNewMessageChange = (event) => {
@@ -105,7 +104,6 @@ function ViewMatch(props) {
 		sendMessage(newMessage);
 		setNewMessage("");
 	};
-	*/
 	function handleOnDragEnd(result) {
 		if (!result.destination) {
 			return;
@@ -215,6 +213,8 @@ function ViewMatch(props) {
 									fullWidth
 									name="send-message"
 									label="Enter a message"
+									value={newMessage}
+        							onChange={handleNewMessageChange}
 									type="text"
 									multiline={true}
 									rows={2}
@@ -223,7 +223,7 @@ function ViewMatch(props) {
 								/>
 							</Grid>
 							<Grid item xs={12} sm={3}>
-								<Button variant="contained" className={classes.sendMessageButton}>
+								<Button variant="contained" onClick={handleSendMessage} className={classes.sendMessageButton}>
 									<SendIcon className={classes.sendMsgIcon} />
 								</Button>
 							</Grid>
