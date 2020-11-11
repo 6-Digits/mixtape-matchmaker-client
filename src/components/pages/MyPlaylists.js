@@ -110,7 +110,7 @@ function MyPlaylists(props) {
 				method: 'POST',
 				headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 			};
-			let response = await fetch(`${api}/mixtape/createMixtape/id/${props.user._id}`, requestOptions);
+			let response = await fetch(`${api}/mixtape/createMixtape/uid/${props.user._id}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
 				setLoading(false);
