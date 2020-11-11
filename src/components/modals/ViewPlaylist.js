@@ -124,6 +124,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const defaultDesc = 'I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.';
+const api = 'http://localhost:42069/api';
 
 function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
@@ -131,8 +132,8 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	const importedThumbnail = playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder;
 	const importedLikeCount = playlist ? playlist['hearts'] : 420;
 	const importedComments = playlistData['comments'];
-	const importedViewCount = playlist ? playlist['view'] : 2020;
-	const importedAuthor = playlist ? playlist['owner'] : "X Æ A-13";
+	const importedViewCount = playlist ? playlist['view'] ? playlist['view'] : 0 : 0;
+	const importedAuthor = playlist ? playlist['owner'] : null;
 	const importedName = playlist ? playlist['name'] : "Ayyy Lmao";
 
 	const classes = useStyles();
@@ -143,7 +144,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	const [likeCount, setLikeCount] = useState(importedLikeCount);
 	const [thumbnail, setThumbnail] = useState(importedThumbnail);
 	const [playlistName, setPlaylistName] = useState(importedName);
-	const [playlistAuthor, setPlaylistAuthor] = useState(importedAuthor);
+	const [playlistAuthor, setPlaylistAuthor] = useState(null);
 	const [songs, setSongs] = useState(importedSongs);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
@@ -154,13 +155,28 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	
 	useEffect(() => {
 		setCurrentSong(songs[currentIndex]);
-		if(playlist) {
+		if(!playlistAuthor) {
 			fetchAuthor();
 		}
 	}, [currentIndex]);
 
-	const fetchAuthor = () => {
-		
+	const fetchAuthor = async() => {
+		let userID = importedAuthor;
+		if(userID){
+			let requestOptions = {
+				method: 'GET',
+				headers: {'Content-Type': 'application/json'}
+			};
+			let response = await fetch(api + `/profile/id/${userID}`, requestOptions);
+			if(response.status === 200) {
+				let data = await response.json();
+				setPlaylistAuthor(data['userName']);
+			} else {
+				setPlaylistAuthor('User not found');
+			}
+		} else {
+			setPlaylistAuthor('User not found');
+		}
 	  };
 	
 	const handleOpen = () => {
@@ -243,7 +259,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 				
 				<Grid container 
 					direction="row"
-					justify="flex-start"
+					justify="center"
 					alignItems="center"
 					spacing={1}
 					className={classes.descriptionBox}>
@@ -271,7 +287,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 						container
 						direction="column"
 						justify="center"
-						alignItems="center"
+						alignItems="flex-start"
 						className={classes.playlistAuthor}>
 						
 						{editable ? 
@@ -293,6 +309,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 						<TextField
 						fullWidth
 						multiline
+						rows={5}
 						variant="outlined"
 						margin="normal"
 						id="playlistDescription"

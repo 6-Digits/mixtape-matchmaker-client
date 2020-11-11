@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "clsx": "^1.1.1",
     "dotenv": "^8.2.0",
+    "firebase": "^8.0.1",
     "react": "^16.14.0",
     "react-beautiful-dnd": "^13.0.0",
     "react-cookie": "^4.0.3",

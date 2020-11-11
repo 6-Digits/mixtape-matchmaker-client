@@ -12,11 +12,9 @@ const options = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1,
-	},
 	mainContainer: {
-		padding: '5vh 20vh 10vh 20vh',
+		padding: '0 0 0 1rem',
+		borderRadius: "0",
 		display: "flex",
 		justifyContent: "auto",
 		width: "100%",
@@ -25,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 		padding: theme.spacing(2),
 		margin: 'auto',
 		maxWidth: '100%',
-		backgroundColor: theme.palette.background.default
+		backgroundColor: theme.palette.background.default,
 	},
 	card: {
 		maxWidth: 300,
@@ -33,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(2),
 	},
 	cardMedia: {
-		maxHeight: 300,
+		maxHeight: 265,
 	},
 	cardContent: {
 		textAlign: "left",
@@ -43,11 +41,31 @@ const useStyles = makeStyles((theme) => ({
 		maxWidth: 300,
 		maxHeight: 300,
 	},
+	container: {
+		width: "100%"
+	},
 	button: {
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		width: "100%"
 	},
 	name: {
-		width:'50%'
+		width:'100%'
+	},
+	genderDate: {
+		marginTop: "0.5rem"	,
+		marginBottom: "0.5rem"	
+	},
+	saveError: {
+		color: theme.palette.error.main,
+		fontSize: '1rem',
+		textAlign: 'center',
+		marginBottom: '1rem'
+	},
+	success: {
+		color: theme.palette.success.main,
+		fontSize: '1rem',
+		textAlign: 'center',
+		marginBottom: '1rem'
 	}
 }));
 
@@ -63,6 +81,7 @@ const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 const api = 'http://localhost:42069/api';
 
 function Settings(props) {
+	const [success, setSuccess] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [displayName, setDisplayName] = useState(" ");
@@ -76,6 +95,7 @@ function Settings(props) {
 	const [errorMsg, setErrorMsg] = useState(null);
 	const [imgSrc, setImgSrc] = useState(null);
 	const [allowNotifications, setAllowNotifications] = useState(null);
+	const [oldPassword, setOldPassword] = useState(null);
 	const [state, setState] = useState({
 		checkedNotifications: true,
 	});
@@ -124,11 +144,17 @@ function Settings(props) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorInvalidEmail);
-		} else if(password.length < 8) {
-			valid=false;
-			setError(true);
-			setErrorMsg(errorShortPass);
-		} else if(!name && !birthdate && !gender) {
+		} else if(password) {
+			if(password.length < 8){
+				valid=false;
+				setError(true);
+				setErrorMsg(errorShortPass);
+			} else if(password != confirmPass) {
+				valid=false;
+				setError(true);
+				setErrorMsg(errorNoPassMatch);
+			}
+		} else if(!name || !birthdate || !gender || !oldPassword) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorMissing);
@@ -136,13 +162,17 @@ function Settings(props) {
 			valid = false
 			setError(true);
 			setErrorMsg(errorAge);
+		} else {
+			setSuccess(true);
 		}
 		if(valid){
 			let userData = {
 				name:name,
 				dob: birthdate,
 				gender: gender['title'],
-				password: password
+			}
+			if (password) {
+				userData['password'] = password;
 			}
 			let requestOptions = {
 				method: 'POST',
@@ -173,7 +203,7 @@ function Settings(props) {
 					props.fetchUser(data['token']);
 				} else {
 					setError(true);
-					setErrorMsg(errorSignUp);
+					setErrorMsg(await response.json());
 				}
 			}
 		}
@@ -191,31 +221,43 @@ function Settings(props) {
 	const displayNameChange = (event) => {
 		setDisplayName(event.target.value);
 		setError(false);
+		setSuccess(false);
 	};
 
 	const nameChange = (event) => {
 		setName(event.target.value);
 		setError(false);
+		setSuccess(false);
 	};
 	const birthChange = (event) => {
 		setBirthdate(event.target.value);
 		setError(false);
+		setSuccess(false);
 	};
 	const genderChange = (event, value) => {
 		setGender(value);
 		setError(false);
+		setSuccess(false);
 	};
 	const emailChange = (event) => {
 		setEmail(event.target.value);
 		setError(false);
+		setSuccess(false);
 	};
 	const passChange = (event) => {
 		setPassword(event.target.value);
 		setError(false);
+		setSuccess(false);
 	};
 	const confirmPassChange = (event) => {
 		setConfirmPass(event.target.value);
 		setError(false);
+		setSuccess(false);
+	};
+	const oldPasswordChange = (event) => {
+		setOldPassword(event.target.value);
+		setError(false);
+		setSuccess(false);
 	};
 	const imgChange = (event) => {
 		let selectedFile = event.target.files[0];
@@ -224,6 +266,7 @@ function Settings(props) {
 		reader.onload = function(event) {
 		  setImgSrc(event.target.result);
 		  setError(false);
+		  setSuccess(false);
 		};
 	  
 		reader.readAsDataURL(selectedFile);
@@ -231,6 +274,8 @@ function Settings(props) {
 
 	const handleChange = (event) => {
 		setAllowNotifications(!allowNotifications);
+		setError(false);
+		setSuccess(false);
 	};
 
 	const handleClickListItem = (event) => {
@@ -256,7 +301,7 @@ function Settings(props) {
 					<Grid item xs={12}>
 						<Typography gutterBottom variant="h4">Public Profile</Typography>
 					</Grid>
-					<Grid item xs={12} sm={3}>
+					<Grid item xs={12} sm={3} alignItems="center">
 						<Card className={classes.card}>
 							<input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={imgChange}/>
 							<ButtonBase className={classes.cardAction}>
@@ -266,7 +311,7 @@ function Settings(props) {
 							</ButtonBase>
 						</Card>
 					</Grid>
-					<Grid item xs={12} sm={9}>
+					<Grid item xs={12} sm={9} alignItems="center">
 						<Paper className={classes.paperCard}>
 							<TextField
 								variant="outlined"
@@ -292,33 +337,41 @@ function Settings(props) {
 								autoComplete="name"
 								className={classes.name}
 							/>
-							<Typography gutterBottom variant="subtitle1">
-								<form className={classes.container} noValidate>
-									<TextField
-										id="datetime-local"
-										label="Birthday"
-										type="date"
-										value={"1998-11-14"}
-										onChange={birthChange}
-										className={classes.textField}
-										InputLabelProps={{
-											shrink: true,
-										}}
+							<Grid item xs={12} 
+								direction="row" 
+								justify="space-between" container alignItems="center"
+								className={classes.genderDate}>
+								<Grid item xs ={5}>
+									<Typography gutterBottom variant="subtitle1">
+										<form className={classes.container} noValidate>
+											<TextField
+												id="datetime-local"
+												label="Birthday"
+												type="date"
+												required
+												fullWidth
+												value={"1998-11-14"}
+												onChange={birthChange}
+												className={classes.textField}
+												InputLabelProps={{
+													shrink: true,
+												}}
+											/>
+										</form>
+									</Typography>
+								</Grid>
+								<Grid item xs={6}>
+									<Autocomplete
+									required
+									id="combo-box-demo"
+									options={options}
+									getOptionLabel={(option) => option.title}
+									autoComplete="sex"
+									value={gender}
+									renderInput={(params) => <TextField {...params} label="Gender *" variant="outlined" />}
+									onChange={genderChange}
 									/>
-								</form>
-							</Typography>
-							<Grid item xs={12} sm={6}>
-								<Autocomplete
-								required
-								id="combo-box-demo"
-								options={options}
-								getOptionLabel={(option) => option.title}
-								fullWidth
-								autoComplete="sex"
-								value={gender}
-								renderInput={(params) => <TextField {...params} label="Gender" variant="outlined" />}
-								onChange={genderChange}
-								/>
+								</Grid>
 							</Grid>
 						</Paper>
 					</Grid>
@@ -348,6 +401,7 @@ function Settings(props) {
 							id="password"
 							label="New Password"
 							name="password"
+							type="password"
 							value={password}
 							onChange={passChange}
 							autoComplete="password"
@@ -363,6 +417,7 @@ function Settings(props) {
 							value={confirmPass}
 							onChange={confirmPassChange}
 							autoComplete="confirmPassword"
+							type="password"
 						/>
 						<FormControlLabel
 							control={
@@ -390,12 +445,18 @@ function Settings(props) {
 						id="confirmOldPassword"
 						label="Confirm Old Password"
 						name="confirmOldPassword"
+						type="password"
 						autoComplete="confirmOldPassword"
+						onChange={oldPasswordChange}
 					/>
 					</Paper>
 				</Grid>
-				<Grid item xl={12}>
+				<Grid item xs={12} fullWidth>
 					<Button size="large" color="primary" variant="contained" className={classes.button} onClick={saveUserSettings}>Save Changes</Button>
+				</Grid>
+				<Grid item xs={12}>
+				{error ? <div className={classes.saveError}>{errorMsg}</div> : null}
+				{success ? <div className={classes.success}>Settings have been saved successfully!</div> : null}
 				</Grid>
 				</Grid>
 			</Paper>

@@ -97,7 +97,7 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorNoPassMatch);
-		} else if(!firstName && !lastName && !birthdate && !gender) {
+		} else if(!firstName || !lastName || !birthdate || !gender) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorMissing);
