@@ -4,6 +4,7 @@ import { Grid, Paper, Typography, ButtonBase, TextField, List, ListItem, ListIte
 import NavigationBar from '../modules/NavigationBar';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import placeholder from "../../assets/placeholder.png";
+import {storage} from "../frameworks/Firebase";
 
 const options = [
 	{title: "Male"}, 
@@ -74,6 +75,7 @@ const errorCannotFetchData = "We cannot fetch the data from our database likely 
 const errorSignUp = "We could not update your account settings. Either the password is incorrect or the server is down. Please try again or contact support!";
 const errorInvalidEmail = "The email that you have entered is not valid!";
 const errorShortPass = "The password that you have entered should be at least 8 characters long!";
+const errorNoChange = "No fields were changed!";
 const errorMissing = "One or more of the fields above are empty!";
 const errorAge = "You have to be at least 18 years of age or older to register";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -81,9 +83,15 @@ const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 const api = 'http://localhost:42069/api';
 
 function Settings(props) {
+	let prevDisplayName = null;
+	let prevName = null;
+	let prevBirthDate = null;
+	let prevGender = null;
+	let prevImg = null;
 	const [success, setSuccess] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [imgFile, setImgFile] = useState(0);
 	const [displayName, setDisplayName] = useState(" ");
 	const [name, setName] = useState("Adam");
 	const [birthdate, setBirthdate] = useState("");
@@ -109,17 +117,22 @@ function Settings(props) {
 		let response = await fetch(api + `/profile/id/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			setName(data['name']);
+			setName(data['name']); 
+			prevName = data['name'];
 			setDisplayName(data['userName']);
+			prevDisplayName = data['userName'];
 			setBirthdate(data['dob'].substring(0, 10));
+			prevBirthDate = data['dob'].substring(0,10);
 			setEmail(props.user.email);
 			setImgSrc(data['imgSrc']);
+			prevImg = data['imgSrc'];
 			setAllowNotifications(user.allowNotifications);
 			options.forEach((genderOption, index) => {
 				if(data['gender'].toLowerCase() === genderOption['title'].toLowerCase()) {
 					setGender(genderOption);
 				}
 			});
+			prevGender = data['gender'];
 		} else {
 			setError(true);
 			setErrorMsg(errorCannotFetchData);
@@ -138,6 +151,11 @@ function Settings(props) {
 	}
 
 	const saveUserSettings = async () => {
+		if(!props.user) {
+			setError(true);
+			setErrorMsg(errorSignUp);
+			return null;
+		}
 		let validEmail = emailRegex.test(String(email).toLowerCase());
 		let valid = true;
 		if(!validEmail) {
@@ -154,7 +172,7 @@ function Settings(props) {
 				setError(true);
 				setErrorMsg(errorNoPassMatch);
 			}
-		} else if(!name || !birthdate || !gender || !oldPassword) {
+		} else if(!name || !birthdate || !gender || !oldPassword || !displayName || !imgSrc) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorMissing);
@@ -162,34 +180,74 @@ function Settings(props) {
 			valid = false
 			setError(true);
 			setErrorMsg(errorAge);
-		} else {
-			setSuccess(true);
-		}
+		} 
 		if(valid){
-			let userData = {
-				name:name,
-				dob: birthdate,
-				gender: gender['title'],
-			}
-			if (password) {
-				userData['password'] = password;
-			}
-			let requestOptions = {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json' },
-				body: JSON.stringify(userData)
-			};
-			let response = await fetch(api + '/auth/register', requestOptions);
-			if (response.status === 200) {
-				alert("Profile settings have updated successfully");
-			} else {
+			let userImageRef = storage.ref(`${props.user._id}/images/`);
+			userImageRef.listAll().then(function (result) {
+				result.items.forEach(function (file) {
+					file.delete();
+				});
+				let uploadTask = userImageRef.put(imgFile);
+				uploadTask.on('state_changed', function(snapshot){
+					// Observe state change events such as progress, pause, and resume
+					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+					// var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					// console.log('Upload is ' + progress + '% done');
+					// switch (snapshot.state) {
+					//   case firebase.storage.TaskState.PAUSED: // or 'paused'
+					// 	console.log('Upload is paused');
+					// 	break;
+					//   case firebase.storage.TaskState.RUNNING: // or 'running'
+					// 	console.log('Upload is running');
+					// 	break;
+					// }
+					}, function(error) {
+					// Handle unsuccessful uploads
+					setError(true);
+					setErrorMsg(error);
+					}, function() {
+					// Handle successful uploads on complete
+					// For instance, get the download URL: https://firebasestorage.googleapis.com/...
+					uploadTask.snapshot.ref.getDownloadURL().then(async function(downloadURL) {
+						let userData = {
+							name:name,
+							userName: displayName,
+							dob: birthdate,
+							gender: gender['title'],
+							password: oldPassword
+						};
+						if(prevImg !== imgSrc){
+							userData['imgSrc'] = downloadURL;
+						}
+						let requestOptions = {
+							method: 'POST',
+							headers: {'Content-Type': 'application/json' },
+							body: JSON.stringify(userData)
+						};
+						let response = await fetch(api + '/profile/id/' + props.user._id, requestOptions);
+						let data = await response.json();
+						if (response.status === 200) {
+							setSuccess(true);
+						} else {
+							setError(true);
+							setErrorMsg(errorSignUp);
+							alert(response.status);
+						}
+					});
+				});
+			}).catch(err => {
 				setError(true);
-				setErrorMsg(errorSignUp);
-			}
+				setErrorMsg(err);
+			});
 			if(email != props.user.email || allowNotifications != props.user.allowNotifications) {
+				valid =true;
 				let accountData = {
 					email: email,
-					allowNotifications: allowNotifications
+					allowNotifications: allowNotifications,
+					oldPassword: oldPassword
+				}
+				if (oldPassword) {
+					accountData['password'] = password;
 				}
 				let requestOptions = {
 					method: 'POST',
@@ -197,13 +255,14 @@ function Settings(props) {
 					body: JSON.stringify(accountData)
 				};
 				let response = await fetch(api + `/auth/id/${props.user.id}`, requestOptions);
+				let data = await response.json();
 				if (response.status === 200) {
-					let data = await response.json();
+					setSuccess(true);
 					props.storeUser(data['token']);
 					props.fetchUser(data['token']);
 				} else {
 					setError(true);
-					setErrorMsg(await response.json());
+					setErrorMsg(errorSignUp);
 				}
 			}
 		}
@@ -261,6 +320,7 @@ function Settings(props) {
 	};
 	const imgChange = (event) => {
 		let selectedFile = event.target.files[0];
+		setImgFile(selectedFile);
 		let reader = new FileReader();
 	  
 		reader.onload = function(event) {
