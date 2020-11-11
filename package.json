@@ -16,6 +16,7 @@
     "react-media-player": "^0.7.9",
     "react-router-dom": "^5.2.0",
     "react-scripts": "1.1.5",
+    "socket.io-client": "^2.3.0",
     "universal-cookie": "^4.0.4"
   },
   "scripts": {
