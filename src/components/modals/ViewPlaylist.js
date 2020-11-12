@@ -120,13 +120,24 @@ const useStyles = makeStyles((theme) => ({
 		display: 'block',
 		maxWidth: 300,
 		maxHeight: 250,
+	},
+	loginError: {
+		color: theme.palette.error.main,
+		fontSize: '1rem',
+		textAlign: 'center',
+		marginBottom: '1rem'
 	}
 }));
 
 const defaultDesc = 'I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.';
 const api = 'http://localhost:42069/api';
+const errorDefault = "Sorry! We could not save to the playlist. You are either disconnected from the internet or the servers are down. Please save your work using external software and try again later. Click save again to close the playlist.";
+const errorTitleLength = "The playlist title you have entered is either empty or too long (exceeds 255 characters). Please enter a valid playlist title or click save again to close.";
+const errorDescription = "The description of your playlist cannot be empty! Please add a description or click save again to close.";
+
 
 function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
+	
 	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
 	const importedDesc = playlist ? playlist['description'] : defaultDesc;
 	const importedThumbnail = playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder;
@@ -135,13 +146,18 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	const importedViewCount = playlist ? playlist['view'] ? playlist['view'] : 0 : 0;
 	const importedAuthor = playlist ? playlist['owner'] : null;
 	const importedName = playlist ? playlist['name'] : "Ayyy Lmao";
+	const importPublic = playlist ? playlist['public'] ? playlist['public'] : false : false;
 
 	const classes = useStyles();
+	const [error, setError] = useState(false);
+	const [changed, setChanged] = useState(false);
+	const [errorMsg, setErrorMsg] = useState(errorDefault);
 	const [open, setOpen] = useState(false);
-	const [checkedPublic, setCheckedPublic] = useState(true);
+	const [checkedPublic, setCheckedPublic] = useState(importPublic);
 	const [description, setDescription] = useState(importedDesc);
 	const [viewCount, setViewCount] = useState(importedViewCount);
 	const [likeCount, setLikeCount] = useState(importedLikeCount);
+	const [liked, setLiked] = useState(false);
 	const [thumbnail, setThumbnail] = useState(importedThumbnail);
 	const [playlistName, setPlaylistName] = useState(importedName);
 	const [profileImage, setProfileImage] = useState("https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg");
@@ -191,6 +207,8 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	
 	const handleCheckedPublic = (event) => {
 		setCheckedPublic(event.target.checked);
+		setChanged(true);
+		setError(false);
 	};
 	
 	const handleCurrentIndex = (value) => {
@@ -204,6 +222,65 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 			setCurrentIndex(value);
 		}
 	}
+
+	const savePlaylist = async() => {
+		if(error){
+			alert("saved is clicked");
+			handleClose();
+		}
+		if(playlist && changed){
+			if(!playlistName || playlistName.length > 255 || playlistName.length === 0) {
+				setError(true);
+				setErrorMsg(errorTitleLength);
+			} else if(!description || description.length === 0){
+				setError(true);
+				setErrorMsg(errorDescription);
+			} else {
+				let playlistID = playlist['_id'];
+				let playlistData = {
+					name: playlistName,
+					description: description,
+					view: viewCount,
+					match: false,
+					hearts: likeCount,
+					comments: [],
+					songList: songs.map((song) => {
+						return song['_id'];
+					}),
+					public: checkedPublic
+
+				};
+				let requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json'}
+				};
+				let response = await fetch(api + `/mixtape/updateMixtape/id/${playlistID}`, requestOptions);
+				if(response.status === 200) {
+					let data = await response.json();
+
+				setChanged(false);
+					handleClose();
+				} else {
+					setErrorMsg(errorDefault);
+					setError(true);
+				}
+			}
+		} else {
+			handleClose();
+		}
+	};
+	
+	const descriptionChange = (event) => {
+		setDescription(event.target.value);
+		setError(false);
+		setChanged(true);
+	};
+
+	const playlistNameChange = (event) => {
+		setPlaylistName(event.target.value);
+		setError(false);
+		setChanged(true);
+	};
 	
 	return (
 		<div className={classes.container}>
@@ -225,7 +302,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 
 					<Grid item xs={12} sm={1} className={classes.importGrid}>
 						<DialogActions>
-							<Button variant="contained" onClick={handleClose} color="secondary" className={classes.cancel}>
+							<Button variant="contained" onClick={editable ? savePlaylist : handleClose } color="secondary" className={classes.cancel}>
 								{ editable ? "Save" : "Exit" }
 							</Button>
 						</DialogActions>
@@ -254,7 +331,7 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 					<Grid container item xs={12} sm={6}>
 						<Playlist 
 						editable={editable} draggable={editable} shareable={shareable} 
-						songs={importedSongs} currentIndex={currentIndex} 
+						songs={songs} setSongs={setSongs} currentIndex={currentIndex}
 						handleCurrentIndex={handleCurrentIndex} />
 					</Grid>
 				</Grid>
@@ -299,7 +376,8 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 						id="playlistTitle"
 						label="Playlist Title"
 						name="playlistTitle"
-						defaultValue={playlistName}
+						value={playlistName}
+						onChange={playlistNameChange}
 						/>
 						:
 						<Grid item xs={12}> <Typography variant="h4">{playlistName}</Typography> </Grid>
@@ -317,14 +395,15 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 						id="playlistDescription"
 						label="Playlist Description"
 						name="playlistDescription"
-						defaultValue={description}
+						value={description}
+						onChange={descriptionChange}
 						/>
 						:
 						<Typography variant="h6">{description}</Typography>
 						}
 					</Grid>
 				</Grid>
-				
+				{error ? <div className={classes.loginError}>{errorMsg}</div> : null}
 				<Grid
 					container
 					justify="space-between"

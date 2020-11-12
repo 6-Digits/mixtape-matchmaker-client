@@ -121,7 +121,7 @@ function Matches({user, setUser}) {
 				</Grid>
 				<Grid container item xs={12} sm={7}>
 					<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}
-					songs={importedSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}/>
+					songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}/>
 					<Grid
 						container
 						direction="column"

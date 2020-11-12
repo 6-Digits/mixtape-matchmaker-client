@@ -75,10 +75,8 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-function Playlist({title, importable, editable, draggable, shareable, songs, currentIndex, handleCurrentIndex}) {
-	const [playlistItems, updatePlaylistItems] = useState(songs);
+function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
-	
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
 	};
@@ -90,11 +88,11 @@ function Playlist({title, importable, editable, draggable, shareable, songs, cur
 	function handleOnDragEnd(result) {
 		if (!result.destination) return;
 
-		const items = Array.from(playlistItems);
+		const items = Array.from(songs);
 		const [reorderedItem] = items.splice(result.source.index, 1);
 		items.splice(result.destination.index, 0, reorderedItem);
 
-		updatePlaylistItems(items);
+		setSongs(items);
 	}
 
 	const classes = useStyles();
@@ -204,7 +202,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, cur
 					<Droppable droppableId="playlist" className={classes.dragContainer}>
 						{(provided) => (
 							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-								{playlistItems.map(({id, title, author, genre, duration, imgUrl, url}, index) => {
+								{songs.map(({id, title, author, genre, duration, imgUrl, url}, index) => {
 									return (
 										<Draggable key={id} draggableId={id} index={index} isDragDisabled={!draggable}>
 											{(provided) => (
