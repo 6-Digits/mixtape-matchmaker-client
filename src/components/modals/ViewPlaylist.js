@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Dialog, DialogActions, Button, DialogTitle, Typography, Grid, Container, TextField, Box, Link, Card, ButtonBase, CardMedia, CardContent, FormControlLabel, Switch } from '@material-ui/core';
-import { FavoriteBorder as FavoriteBorderIcon, Visibility as VisibilityIcon, Send as SendIcon } from '@material-ui/icons';
+import { Avatar, Dialog, DialogActions, Button, DialogTitle, DialogContent, DialogContentText, Typography, Grid, Container, TextField, Box, Link, Card, ButtonBase, CardMedia, CardContent, FormControlLabel, Switch } from '@material-ui/core';
+import { FavoriteBorder as FavoriteBorderIcon, Visibility as VisibilityIcon, Send as SendIcon, Delete as DeleteIcon} from '@material-ui/icons';
 import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
 import PlayerControls from "./PlayerControls";
@@ -112,20 +112,33 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardMedia: {
 		maxHeight: 180,
+		padding: 0
 	},
 	cardContent: {
 		textAlign: "left",
+		padding: "0.1rem"
 	},
 	cardAction: {
 		display: 'block',
 		maxWidth: 300,
 		maxHeight: 250,
 	},
+	cardTitle: {
+		textAlign: "center",
+		overflowX: "auto"
+	},
 	loginError: {
 		color: theme.palette.error.main,
 		fontSize: '1rem',
 		textAlign: 'center',
 		marginBottom: '1rem'
+	},
+	deleteButton: {
+		borderRadius: 0
+	},
+	deleteIcon: {
+		height: '100%',
+		width: '100%'
 	}
 }));
 
@@ -136,7 +149,7 @@ const errorTitleLength = "The playlist title you have entered is either empty or
 const errorDescription = "The description of your playlist cannot be empty! Please add a description or click save again to close.";
 
 
-function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
+function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user}) {
 	
 	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
 	const importedDesc = playlist ? playlist['description'] : defaultDesc;
@@ -166,6 +179,14 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
 	const [comments, setComments] = useState(importedComments);
+	const [deleteOpen, setDeleteOpen] = useState(false);
+		
+	const handleOpenDeleteDialog = () => {
+		setDeleteOpen(true);
+	};
+	const handleCloseDeleteDialog = () => {
+		setDeleteOpen(false);
+	};
 	
 	shareable = editable ? editable : null;
 	editable = editable ? editable : null;
@@ -282,18 +303,71 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 		setError(false);
 		setChanged(true);
 	};
+
+	const deletePlaylist = async() => {
+		let userToken = localStorage.getItem('userToken');
+		if(playlist && deleteOpen && userToken) {
+			let playlistID = playlist['_id'];
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
+			};
+			let response = await fetch(api + `/mixtape/deleteMixtape/id/${playlistID}`, requestOptions);
+			if(response.status === 200) {
+				let data = await response.json();
+				fetchPlaylists(userToken, user);
+				handleCloseDeleteDialog();
+			} else {
+				alert(`Failed to delete playlist with error status: ${response.status}`);
+				handleCloseDeleteDialog();
+			}
+		} else {
+			alert("Failed to delete playlist because the playlist you've selected doesn't exist!");
+			handleCloseDeleteDialog();
+		}
+	};
+
 	
 	return (
 		<div className={classes.container}>
 			<Card className={classes.root}>
-				<ButtonBase className={classes.cardAction} onClick={handleOpen}>
-					<CardMedia component='img' className={classes.cardMedia} image={thumbnail} />
+				<div className={classes.cardAction}>
+					<Button className={classes.cardMedia}>
+						<CardMedia component='img' className={classes.cardMedia} image={thumbnail} onClick={handleOpen}/>
+					</Button>
 					<CardContent className={classes.cardContent}>
-						<Typography variant='h6'>{playlistName}</Typography>
+						{editable ? 
+						<Grid direction="row" container justify="space-between" alignItems="center">
+							<Grid item xs={9}><Typography variant='h6' className={classes.cardTitle}>{playlistName}</Typography></Grid>
+							<Grid item xs={3}><Button className={classes.deleteButton} onClick={handleOpenDeleteDialog}><DeleteIcon className={classes.deleteIcon}/></Button></Grid>
+						</Grid>
+						: <Typography variant='h6' className={classes.cardTitle}>{playlistName}</Typography>}
 					</CardContent>
-				</ButtonBase>
+				</div>
 			</Card>
-			
+
+			{editable ? 
+				<Dialog open={deleteOpen} onClose={handleCloseDeleteDialog} aria-labelledby="form-dialog-title">
+					<DialogTitle id="form-dialog-title" >Confirm Delete Playlist</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							{`Are you sure about deleting the playlist '${playlistName}'?`}
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+					<Button onClick={handleCloseDeleteDialog} color="secondary" className={classes.button}
+				variant="contained">
+						Cancel
+					</Button>
+					<Button onClick={deletePlaylist} color="primary" className={classes.button}
+				variant="contained">
+						Yes, please delete this playlist
+					</Button>
+					</DialogActions>
+				</Dialog>
+				: null 
+			}
+
 			<Dialog fullWidth={true} maxWidth="xl" className={classes.modal} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
 				
 				<Grid container direction="row" justify="space-between" alignItems="center">

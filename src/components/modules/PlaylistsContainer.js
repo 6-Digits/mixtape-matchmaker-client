@@ -50,7 +50,7 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 					{playlists.map((playlist, index) => (
 						<Grid item xs={3}>
 							<ViewPlaylist 
-								playlist={playlist} editable={editable} updatePlaylist={updatePlaylist} index={index}></ViewPlaylist>
+								playlist={playlist} editable={editable} fetchPlaylists={fetchPlaylists} index={index} user={user}></ViewPlaylist>
 						</Grid>
 					))}
 				</Grid>

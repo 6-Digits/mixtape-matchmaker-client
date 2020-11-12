@@ -79,10 +79,12 @@ function ForgotPassword(props) {
 				/>
 				</DialogContent>
 				<DialogActions>
-				<Button onClick={handleClose} color="secondary" className={classes.button}>
+				<Button onClick={handleClose} color="secondary" className={classes.button}
+				variant="contained">
 					Cancel
 				</Button>
-				<Button onClick={handleSubmit} color="primary" className={classes.button}>
+				<Button onClick={handleSubmit} color="primary" className={classes.button}
+				variant="contained">
 					Send Password Reset Email
 				</Button>
 				</DialogActions>
