@@ -252,14 +252,16 @@ function ViewPlaylist({editable, shareable, playlist, updatePlaylists}) {
 				};
 				let requestOptions = {
 					method: 'POST',
-					headers: {'Content-Type': 'application/json'}
+					headers: {'Content-Type': 'application/json'},
+					body: JSON.stringify(playlistData)
 				};
-				let response = await fetch(api + `/mixtape/updateMixtape/id/${playlistID}`, playlistData);
+				let response = await fetch(api + `/mixtape/updateMixtape/id/${playlistID}`, requestOptions);
 				if(response.status === 200) {
 					let data = await response.json();
 					setChanged(false);
 					handleClose();
 				} else {
+					alert(response.status);
 					setErrorMsg(errorDefault);
 					setError(true);
 				}
