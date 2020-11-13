@@ -277,7 +277,7 @@ function Settings(props) {
 					headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
 					body: JSON.stringify(accountData)
 				};
-				let response = await fetch(api + `/account/id/${props.user.id}`, requestOptions);
+				let response = await fetch(api + `/account/id/${props.user._id}`, requestOptions);
 				let data = await response.json();
 				if (response.status === 200) {
 					setSuccess(true);
