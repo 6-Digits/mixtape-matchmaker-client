@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 function Matches({user, setUser}) {
 	const classes = useStyles();
 	const [width, setWidth] = useState(0);
+	const [changed, setChanged] = useState(false);
 	const [songs, setSongs] = useState(importedSongs);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
@@ -98,7 +99,7 @@ function Matches({user, setUser}) {
 						<Media>
 							{mediaProps => (
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src={currentSong.src} autoPlay={true} className={classes.player} />
+								<Player src={currentSong.src} autoPlay={true} className={classes.player}/>
 								<PlayerControls currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex} />
 							</div>
 							)}
@@ -121,7 +122,8 @@ function Matches({user, setUser}) {
 				</Grid>
 				<Grid container item xs={12} sm={7}>
 					<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}
-					songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}/>
+					songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
+					setChanged={setChanged}/>
 					<Grid
 						container
 						direction="column"

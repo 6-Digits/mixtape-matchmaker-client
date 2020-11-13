@@ -189,7 +189,6 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user}) {
 	};
 	
 	shareable = editable ? editable : null;
-	editable = editable ? editable : null;
 	
 	useEffect(() => {
 		setCurrentSong(songs[currentIndex]);
@@ -407,7 +406,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user}) {
 						<Playlist 
 						editable={editable} draggable={editable} shareable={shareable} 
 						songs={songs} setSongs={setSongs} currentIndex={currentIndex}
-						handleCurrentIndex={handleCurrentIndex} />
+						handleCurrentIndex={handleCurrentIndex} setChanged={setChanged} />
 					</Grid>
 				</Grid>
 				

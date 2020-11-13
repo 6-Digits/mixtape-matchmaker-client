@@ -87,7 +87,7 @@ function Settings(props) {
 	let prevName = null;
 	let prevBirthDate = null;
 	let prevGender = null;
-	let prevImg = null;
+	const [prevImg, setPrevImg] = useState(null);
 	const [success, setSuccess] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedIndex, setSelectedIndex] = useState(0);
@@ -125,7 +125,7 @@ function Settings(props) {
 			prevBirthDate = data['dob'].substring(0,10);
 			setEmail(props.user.email);
 			setImgSrc(data['imgSrc']);
-			prevImg = data['imgSrc'];
+			setPrevImg(data['imgSrc']);
 			setAllowNotifications(user.allowNotifications);
 			options.forEach((genderOption, index) => {
 				if(data['gender'].toLowerCase() === genderOption['title'].toLowerCase()) {
@@ -182,79 +182,102 @@ function Settings(props) {
 			setErrorMsg(errorAge);
 		} 
 		if(valid){
-			let userImageRef = storage.ref(`${props.user._id}/images/`);
-			userImageRef.listAll().then(function (result) {
-				result.items.forEach(function (file) {
-					file.delete();
-				});
-				let uploadTask = userImageRef.put(imgFile);
-				uploadTask.on('state_changed', function(snapshot){
-					// Observe state change events such as progress, pause, and resume
-					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-					// var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-					// console.log('Upload is ' + progress + '% done');
-					// switch (snapshot.state) {
-					//   case firebase.storage.TaskState.PAUSED: // or 'paused'
-					// 	console.log('Upload is paused');
-					// 	break;
-					//   case firebase.storage.TaskState.RUNNING: // or 'running'
-					// 	console.log('Upload is running');
-					// 	break;
-					// }
-					}, function(error) {
-					// Handle unsuccessful uploads
+			if(!imgFile) {
+				let userData = {
+					name:name,
+					userName: displayName,
+					dob: birthdate,
+					gender: gender['title'],
+					password: oldPassword,
+					imgSrc: prevImg
+				};
+				let requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json' },
+					body: JSON.stringify(userData)
+				};
+				let response = await fetch(api + '/profile/id/' + props.user._id, requestOptions);
+				let data = await response.json();
+				if (response.status === 200) {
+					setSuccess(true);
+				} else {
 					setError(true);
-					setErrorMsg(error);
-					}, function() {
-					// Handle successful uploads on complete
-					// For instance, get the download URL: https://firebasestorage.googleapis.com/...
-					uploadTask.snapshot.ref.getDownloadURL().then(async function(downloadURL) {
-						let userData = {
-							name:name,
-							userName: displayName,
-							dob: birthdate,
-							gender: gender['title'],
-							password: oldPassword
-						};
-						if(prevImg !== imgSrc){
-							userData['imgSrc'] = downloadURL;
-						}
-						let requestOptions = {
-							method: 'POST',
-							headers: {'Content-Type': 'application/json' },
-							body: JSON.stringify(userData)
-						};
-						let response = await fetch(api + '/profile/id/' + props.user._id, requestOptions);
-						let data = await response.json();
-						if (response.status === 200) {
-							setSuccess(true);
-						} else {
-							setError(true);
-							setErrorMsg(errorSignUp);
-							alert(response.status);
-						}
+					setErrorMsg(errorSignUp);
+				}
+			} else {
+				let userImageRef = storage.ref(`${props.user._id}/images/`);
+				userImageRef.listAll().then(function (result) {
+					result.items.forEach(function (file) {
+						file.delete();
 					});
+					let uploadTask = userImageRef.put(imgFile);
+					uploadTask.on('state_changed', function(snapshot){
+						// Observe state change events such as progress, pause, and resume
+						// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+						// var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+						// console.log('Upload is ' + progress + '% done');
+						// switch (snapshot.state) {
+						//   case firebase.storage.TaskState.PAUSED: // or 'paused'
+						// 	console.log('Upload is paused');
+						// 	break;
+						//   case firebase.storage.TaskState.RUNNING: // or 'running'
+						// 	console.log('Upload is running');
+						// 	break;
+						// }
+						}, function(error) {
+						// Handle unsuccessful uploads
+						setError(true);
+						setErrorMsg(error);
+						}, function() {
+						// Handle successful uploads on complete
+						// For instance, get the download URL: https://firebasestorage.googleapis.com/...
+						uploadTask.snapshot.ref.getDownloadURL().then(async function(downloadURL) {
+							let userData = {
+								name:name,
+								userName: displayName,
+								dob: birthdate,
+								gender: gender['title'],
+								password: oldPassword,
+								imgSrc: downloadURL
+							};
+							let requestOptions = {
+								method: 'POST',
+								headers: {'Content-Type': 'application/json' },
+								body: JSON.stringify(userData)
+							};
+							let response = await fetch(api + '/profile/id/' + props.user._id, requestOptions);
+							let data = await response.json();
+							if (response.status === 200) {
+								setSuccess(true);
+							} else {
+								setError(true);
+								setErrorMsg(errorSignUp);
+							}
+						});
+					});
+				}).catch(err => {
+					setError(true);
+					setErrorMsg(err);
 				});
-			}).catch(err => {
-				setError(true);
-				setErrorMsg(err);
-			});
-			if(email != props.user.email || allowNotifications != props.user.allowNotifications) {
+			}
+			if(email != props.user.email || allowNotifications != props.user.allowNotifications || password) {
 				valid =true;
+				let userToken = localStorage.getItem('userToken');
 				let accountData = {
 					email: email,
 					allowNotifications: allowNotifications,
-					oldPassword: oldPassword
+					oldPassword: oldPassword,
 				}
-				if (oldPassword) {
+				if (password) {
+					alert('Password is changed')
 					accountData['password'] = password;
 				}
 				let requestOptions = {
 					method: 'POST',
-					headers: {'Content-Type': 'application/json' },
+					headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
 					body: JSON.stringify(accountData)
 				};
-				let response = await fetch(api + `/auth/id/${props.user.id}`, requestOptions);
+				let response = await fetch(api + `/account/id/${props.user.id}`, requestOptions);
 				let data = await response.json();
 				if (response.status === 200) {
 					setSuccess(true);
@@ -265,6 +288,7 @@ function Settings(props) {
 					setErrorMsg(errorSignUp);
 				}
 			}
+			
 		}
 	}
 
@@ -289,10 +313,11 @@ function Settings(props) {
 		setSuccess(false);
 	};
 	const birthChange = (event) => {
-		setBirthdate(event.target.value);
+		setBirthdate(event.target.value.substring(0, 10));
 		setError(false);
 		setSuccess(false);
 	};
+
 	const genderChange = (event, value) => {
 		setGender(value);
 		setError(false);
@@ -410,7 +435,7 @@ function Settings(props) {
 												type="date"
 												required
 												fullWidth
-												value={"1998-11-14"}
+												value={birthdate}
 												onChange={birthChange}
 												className={classes.textField}
 												InputLabelProps={{

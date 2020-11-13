@@ -75,12 +75,11 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex}) {
+function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
 	};
-	
 	const handleSortClose = () => {
 		setSortAnchor(null);
 	};
@@ -93,9 +92,13 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 		items.splice(result.destination.index, 0, reorderedItem);
 
 		setSongs(items);
+		setChanged(true);
 	}
 
 	const classes = useStyles();
+	const shareContent = () => {
+		alert(`draggable is ${draggable}`);
+	};
 	return (
 		<div className={classes.playlist}>
 			{title ? 
@@ -154,6 +157,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 						variant="contained"
 						color="primary"
 						className={classes.button}
+						onClick={shareContent}
 						aria-controls="add-playlist" aria-haspopup="true">
 							<ShareIcon fontSize='large'></ShareIcon>
 						</Button>
@@ -202,9 +206,9 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 					<Droppable droppableId="playlist" className={classes.dragContainer}>
 						{(provided) => (
 							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-								{songs.map(({id, title, author, genre, duration, imgUrl, url}, index) => {
+								{songs.map(({id, title, author, genre, duration, imgUrl, url, uuid}, index) => {
 									return (
-										<Draggable key={id} draggableId={id} index={index} isDragDisabled={!draggable}>
+										<Draggable key={uuid} draggableId={uuid} index={index} isDragDisabled={!draggable}>
 											{(provided) => (
 												<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 													<PlaylistCard 
