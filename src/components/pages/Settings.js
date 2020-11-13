@@ -282,7 +282,8 @@ function Settings(props) {
 				if (response.status === 200) {
 					setSuccess(true);
 					props.storeUser(data['token']);
-					props.fetchUser(data['token']);
+					props.setUser(data);
+					localStorage.setItem('user', JSON.stringify(data));		
 				} else {
 					setError(true);
 					setErrorMsg(errorSignUp);
