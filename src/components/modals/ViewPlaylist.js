@@ -10,7 +10,6 @@ import playlistData from '../data/playlist.json';
 
 const { keyboardControls } = utils;
 
-
 const useStyles = makeStyles((theme) => ({
 	container: {
 		width:"100%",
