@@ -88,12 +88,12 @@ const messageLog = matchData['messages'];
 
 const roomId = 177013;
 
-function ViewMatch(props) {
+function ViewMatch(user) {
 	const classes = useStyles();
 	const [matches, setMatches] = useState(matchedPeople);
 	//const[messages, setMessages] = useState(messageLog);
 	const [open, setOpen] = useState(false);
-	const { messages, sendMessage } = useChat(roomId);
+	const { messages, sendMessage } = useChat(roomId, user.user);
 	const [newMessage, setNewMessage] = useState("");
 
 	const handleNewMessageChange = (event) => {
