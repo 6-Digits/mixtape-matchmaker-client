@@ -39,15 +39,13 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const searchPlaceHolder = Array(20).fill('Searched Results').map((x, i) => {
-	return null;
-});
+const api = 'http://localhost:42069/api';
 
 function Search(props) {
 	const classes = useStyles();
 	const location = useLocation();
 	const [sortAnchor, setSortAnchor] = useState(null);
-	const [playlists, setPlaylists] = useState(searchPlaceHolder);
+	const [playlists, setPlaylists] = useState([]);
 	
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
@@ -61,9 +59,19 @@ function Search(props) {
 		fetchPlaylists();
 	  }, [location.query]);
 
-	const fetchPlaylists = () => {
+	const fetchPlaylists = async () => {
 		if(location.query){
-			setPlaylists(searchPlaceHolder);
+			let requestOptions = {
+				method: 'GET',
+				headers: {'Content-Type': 'application/json'}
+			};
+			let response = await fetch(`${api}/mixtape/search/${location.query}`, requestOptions);
+			if(response.status === 200) {
+				let data = await response.json();
+				setPlaylists(data);
+			} else {
+				alert(`failed to fetch data with error status ${response.status}`);
+			}
 		} else {
 			setPlaylists([]);
 		}	

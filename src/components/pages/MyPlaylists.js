@@ -64,12 +64,6 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const myPlaylists = Array(20).fill('My Playlist').map((x, i) => ({
-	title: x + ' ' + i,
-	thumbnail: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f82dc1a7-8b0b-495d-bab6-b97798f49ce4/dbwh40a-2466e07d-5072-4a4a-b248-1dad0272e0cf.png/v1/fill/w_1024,h_1132,strp/nero_claudius_navidad___padoru_padoru_by_alexzer09_dbwh40a-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD0xMTMyIiwicGF0aCI6IlwvZlwvZjgyZGMxYTctOGIwYi00OTVkLWJhYjYtYjk3Nzk4ZjQ5Y2U0XC9kYndoNDBhLTI0NjZlMDdkLTUwNzItNGE0YS1iMjQ4LTFkYWQwMjcyZTBjZi5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.OStV9rvQUYZQLJnxdKHWBNaHADQRzWDkEnO2kEyCyvo",
-	editable: true
-}));
-
 const api = 'http://localhost:42069/api';
 
 function MyPlaylists(props) {
