@@ -48,6 +48,7 @@ function SearchBar({editable, search, setSearch, local}) {
     const [open, setOpen] = useState(true);
     const [options, setOptions] = useState([]);
     const [canceled, setCanceled] = useState(false);
+    const [timeout, setTimeout] = useState(null);
     // const controller = new window.AbortController();
     // const { signal } = controller;
 
@@ -79,7 +80,14 @@ function SearchBar({editable, search, setSearch, local}) {
 		}
     };
     const onSearch = (event) => {
-        setSearch(event.target.value);
+        if(timeout){
+            clearTimeout(timeout);
+            setTimeout(null);
+        }
+        // Make a new timeout set to go off in 1000ms (1 second)
+        setTimeout(setTimeout(function () {
+            setSearch(event.target.value);
+        }, 700));
     }
 
 	return (
@@ -92,7 +100,7 @@ function SearchBar({editable, search, setSearch, local}) {
                 ref={anchorRef}
                 aria-describedby={id}
                 value={search}
-                onChange={onSearch}
+                onKeyUp={onSearch}
                 placeholder={editable ? "Songs to add..." : "Search playlist song..."}
                 classes={{
                         root: classes.inputRoot,

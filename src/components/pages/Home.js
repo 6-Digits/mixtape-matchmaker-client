@@ -54,15 +54,15 @@ const likeConst = Array(20).fill('Liked Tape').map((x, i) => {
 function Home({user, setUser}) {
 	const classes = useStyles();
 
-	const [popularPlaylists, setPopularPlaylists] = useState(likeConst);
-	const [likedPlaylists, setLikedPlaylists] = useState(popConst);
+	const [popularPlaylists, setPopularPlaylists] = useState([]);
+	const [likedPlaylists, setLikedPlaylists] = useState([]);
 	
 	const fetchPopularPlaylists = () => {
-		setPopularPlaylists(likeConst);
+		setPopularPlaylists([]);
 	};
 
 	const fetchLikedPlaylists = () => {
-		setLikedPlaylists(popConst);
+		setLikedPlaylists([]);
 	};
 
 	return (
