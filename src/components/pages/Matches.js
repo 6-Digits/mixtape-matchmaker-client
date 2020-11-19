@@ -116,7 +116,7 @@ function Matches({user, setUser}) {
 							<GoMatch></GoMatch>
 						</Grid>
 						<Grid container item xs={12} fullWidth>
-							<ViewMatch></ViewMatch>
+							<ViewMatch user={user}></ViewMatch>
 						</Grid>
 					</Grid>
 				</Grid>

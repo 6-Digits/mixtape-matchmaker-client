@@ -11,6 +11,7 @@ ReactDOM.render(
     // <CookiesProvider>
         <App />,
     // </CookiesProvider>, 
+    
 document.getElementById('root'));
 
 registerServiceWorker();

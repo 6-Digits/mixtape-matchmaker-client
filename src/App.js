@@ -12,6 +12,7 @@ import Matches from "./components/pages/Matches";
 import Settings from "./components/pages/Settings";
 import Notifications from "./components/modals/Notifications";
 import Search from "./components/pages/Search";
+import ChatRoom from "./components/pages/ChatRoom";
 // import { useCookies } from 'react-cookie';
 
 // const cookieName = 'mm_6digits_cookies';
@@ -140,6 +141,14 @@ function App(props) {
 							)
 						}}
 					/>
+					<Route path="/chat" name="Chat" render={(props) => {
+							return (
+								user ?
+								<ChatRoom user={user} setUser={setUser} /> :
+								<Redirect to="/login" /> 
+							)
+						}}
+					/>
 					<Route path="/settings" name="My Settings" render={(props) => {
 							return (
 								user ?
@@ -159,6 +168,7 @@ function App(props) {
 				</BrowserRouter>
 			</Paper>
 		</ThemeProvider>
+		
 	);
 }
 
