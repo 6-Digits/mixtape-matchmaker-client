@@ -4,6 +4,7 @@ import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon, Undo as UndoIcon, Redo as RedoIcon, Share as ShareIcon } from '@material-ui/icons';
 import PlaylistCard from './PlaylistCard';
+import SearchBar from './SearchBar';
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -77,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
+	const [search, setSearch] = useState("");
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
 	};
@@ -112,19 +114,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 			alignItems="center"
 			>
 				<Grid item xs={6}>
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-								<SearchIcon />
-						</div>
-							<InputBase
-								placeholder={editable ? "Songs to add..." : "Search playlist song..."}
-								classes={{
-										root: classes.inputRoot,
-										input: classes.inputInput,
-								}}
-								inputProps={{ 'aria-label': 'search' }}
-							/>
-					</div>
+					<SearchBar search={search} setSearch={setSearch} editable={editable}/>
 				</Grid>
 				
 				{editable ?
