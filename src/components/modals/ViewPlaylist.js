@@ -149,7 +149,7 @@ const errorTitleLength = "The playlist title you have entered is either empty or
 const errorDescription = "The description of your playlist cannot be empty! Please add a description or click save again to close.";
 
 
-function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user}) {
+function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, removePlaylist}) {
 	
 	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
 	const importedDesc = playlist ? playlist['description'] : defaultDesc;
@@ -314,8 +314,8 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user}) {
 			let response = await fetch(api + `/mixtape/deleteMixtape/id/${playlistID}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
-				fetchPlaylists(userToken, user);
 				handleCloseDeleteDialog();
+				fetchPlaylists(userToken, user);
 			} else {
 				alert(`Failed to delete playlist with error status: ${response.status}`);
 				handleCloseDeleteDialog();

@@ -18,11 +18,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, setPlaylists}) {
+function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, removePlaylist}) {
 	const classes = useStyles();
 	
 	height = height ? height : 700;
-	playlists = playlists ? playlists : [];
 	
 	useEffect(() => {
 		// let userToken = JSON.parse(cookies.get('userToken'));
@@ -33,16 +32,6 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 		} 
 	  }, []);
 	
-	const updatePlaylist = (index, playlist) => {
-		setPlaylists(playlist.map((value, i) => {
-			if(i === index) {
-				return playlist;
-			} else {
-				return value;
-			}
-		}))
-	}
-
 	return (
 		<div>
 			<Paper style={{maxHeight: height}} className={classes.sectionContainer}>
@@ -50,7 +39,9 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 					{playlists.map((playlist, index) => (
 						<Grid item xs={3}>
 							<ViewPlaylist 
-								playlist={playlist} editable={editable} fetchPlaylists={fetchPlaylists} index={index} user={user}></ViewPlaylist>
+								playlist={playlist} editable={editable} fetchPlaylists={fetchPlaylists} 
+								index={index} user={user} removePlaylist={removePlaylist}
+								key={playlist['_id']}></ViewPlaylist>
 						</Grid>
 					))}
 				</Grid>

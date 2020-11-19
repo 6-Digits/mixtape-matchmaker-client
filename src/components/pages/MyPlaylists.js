@@ -131,6 +131,13 @@ function MyPlaylists(props) {
 		}
 	};
 
+	
+	const removePlaylist = (playlistID) => {
+		setMyPlaylists(myPlaylists.filter(function(playlist) { 
+			return playlist['_id'] !== playlistID
+		}));
+	};
+
 	return (
 		<div className={classes.page}>
 			<NavigationBar setUser={props.setUser} user={props.user} pageName='My Playlists'></NavigationBar>
@@ -192,7 +199,8 @@ function MyPlaylists(props) {
 					</Grid> 
 				</Grid>
 				
-				<PlaylistsContainer height={700} playlists={myPlaylists} setPlaylists={setMyPlaylists} editable={true} fetchPlaylists={fetchMyPlaylists} user={props.user}/>
+				<PlaylistsContainer height={700} playlists={myPlaylists} setPlaylists={setMyPlaylists} editable={true} fetchPlaylists={fetchMyPlaylists} user={props.user}
+				removePlaylist={removePlaylist}/>
 			</Grid>
 		</div>
 	);
