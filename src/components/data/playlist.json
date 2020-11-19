@@ -2,6 +2,7 @@
     "songs": [
 		{
 			"id": "utp",
+			"_id": "utp",
 			"title": "Uptown Funk",
 			"author": "Mark Ronson",
 			"genre": "Pop",
@@ -11,6 +12,7 @@
 		},
 		{
 			"id": "pra",
+			"_id": "pra",
 			"title": "Party Rock Anthem",
 			"author": "David Listenbee",
 			"genre": "Pop",
@@ -20,6 +22,7 @@
 		},
 		{
 			"id": "igf",
+			"_id": "igf",
 			"title": "I Gotta Feeling",
 			"author": "Black Eyed Peas",
 			"genre": "Pop",
@@ -29,6 +32,7 @@
 		},
 		{
 			"id": "dsd",
+			"_id": "dsd",
 			"title": "Party Rock Anthem 2",
 			"author": "Hello there",
 			"genre": "Pop 2.0",
@@ -38,6 +42,7 @@
 		},
 		{
 			"id": "fsf",
+			"_id": "fsf",
 			"title": "I Gotta Feeling 2",
 			"author": "General Kenobi",
 			"genre": "Pop 3.0",

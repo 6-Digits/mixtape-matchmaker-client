@@ -1,6 +1,12 @@
 {
   "name": "mixtape-matchmaker-client",
   "version": "0.1.0",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
