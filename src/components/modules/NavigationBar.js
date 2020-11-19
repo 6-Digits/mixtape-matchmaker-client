@@ -211,9 +211,6 @@ function NavigationBar(props) {
 					<ListItem button key='Matches' component='a' href='/matches'>
 						<ListItemText primary='Matches' />
 					</ListItem>
-					<ListItem button key='Chat' components='a' href='/chat'>
-						<ListItemText primary='Chat'/>
-					</ListItem>
 				</List>
 
 				<Divider />

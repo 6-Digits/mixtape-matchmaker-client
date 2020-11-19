@@ -46,6 +46,22 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: "0.25rem",
 		width: "100%"
 	},
+	myMessage: {
+		width: "55%",
+		margin: "8px",
+		padding: "12px 8px",
+		borderRadius: "4px",
+		backgroundColor: "#0084ff",
+		marginLeft: "auto",
+	},
+	receivedMessage: {
+		width: "55%",
+		margin: "8px",
+		padding: "12px 8px",
+		borderRadius: "4px",
+		backgroundColor: "#3f4042",
+		marginRight: "auto",
+	},
 	message: {
 		marginTop: "1rem",
 		padding: "1rem 1rem 1rem 1rem",
@@ -101,8 +117,11 @@ function ViewMatch(user) {
 	};
 
 	const handleSendMessage = () => {
-		sendMessage(newMessage);
-		setNewMessage("");
+		// Ensures not sending an empty message
+		if(newMessage !== ""){
+			sendMessage(newMessage);
+			setNewMessage("");
+		}
 	};
 	function handleOnDragEnd(result) {
 		if (!result.destination) {
@@ -190,13 +209,12 @@ function ViewMatch(user) {
 						<Box
 							className={classes.messageBoard}>
 							{messages.map((message, i) => (
-								<li
+								<Grid
 									key={i}
-									className={`message-item ${message.ownedByCurrentUser ? "my-message" : "received-message"
-										}`}
+									className={message.ownedByCurrentUser ? `${classes.myMessage}` : `${classes.receivedMessage}`}
 								>
 									{message.body}
-								</li>
+								</Grid>
 							))}
 						</Box>
 						{/*Sending message portion*/}
