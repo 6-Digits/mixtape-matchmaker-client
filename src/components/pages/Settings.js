@@ -188,7 +188,10 @@ function Settings(props) {
 					userName: displayName,
 					dob: birthdate,
 					gender: gender['title'],
-					password: oldPassword,
+					email: email,
+					allowNotifications: allowNotifications,
+					oldPassword: oldPassword,
+					newPassword: password,
 					imgSrc: prevImg
 				};
 				let requestOptions = {
@@ -196,7 +199,7 @@ function Settings(props) {
 					headers: {'Content-Type': 'application/json' },
 					body: JSON.stringify(userData)
 				};
-				let response = await fetch(api + '/profile/id/' + props.user._id, requestOptions);
+				let response = await fetch(api + '/profile/uid/' + props.user._id, requestOptions);
 				let data = await response.json();
 				if (response.status === 200) {
 					setSuccess(true);
@@ -237,7 +240,10 @@ function Settings(props) {
 								userName: displayName,
 								dob: birthdate,
 								gender: gender['title'],
-								password: oldPassword,
+								email: email,
+								allowNotifications: allowNotifications,
+								oldPassword: oldPassword,
+								newPassword: password,
 								imgSrc: downloadURL
 							};
 							let requestOptions = {
@@ -245,7 +251,7 @@ function Settings(props) {
 								headers: {'Content-Type': 'application/json' },
 								body: JSON.stringify(userData)
 							};
-							let response = await fetch(api + '/profile/id/' + props.user._id, requestOptions);
+							let response = await fetch(api + '/profile/uid/' + props.user._id, requestOptions);
 							let data = await response.json();
 							if (response.status === 200) {
 								setSuccess(true);
@@ -260,35 +266,35 @@ function Settings(props) {
 					setErrorMsg(err);
 				});
 			}
-			if(email != props.user.email || allowNotifications != props.user.allowNotifications || password) {
-				valid =true;
-				let userToken = localStorage.getItem('userToken');
-				let accountData = {
-					email: email,
-					allowNotifications: allowNotifications,
-					oldPassword: oldPassword,
-				}
-				if (password) {
-					alert('Password is changed')
-					accountData['password'] = password;
-				}
-				let requestOptions = {
-					method: 'POST',
-					headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
-					body: JSON.stringify(accountData)
-				};
-				let response = await fetch(api + `/account/id/${props.user._id}`, requestOptions);
-				let data = await response.json();
-				if (response.status === 200) {
-					setSuccess(true);
-					props.storeUser(data['token']);
-					props.setUser(data);
-					localStorage.setItem('user', JSON.stringify(data));		
-				} else {
-					setError(true);
-					setErrorMsg(errorSignUp);
-				}
-			}
+			// if(email != props.user.email || allowNotifications != props.user.allowNotifications || password) {
+				// valid =true;
+				// let userToken = localStorage.getItem('userToken');
+				// let accountData = {
+				// 	email: email,
+				// 	allowNotifications: allowNotifications,
+				// 	oldPassword: oldPassword,
+				// }
+				// if (password) {
+				// 	alert('Password is changed')
+				// 	accountData['password'] = password;
+				// }
+				// let requestOptions = {
+				// 	method: 'POST',
+				// 	headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
+				// 	body: JSON.stringify(accountData)
+				// };
+				// let response = await fetch(api + `/account/id/${props.user._id}`, requestOptions);
+				// let data = await response.json();
+				// if (response.status === 200) {
+				// 	setSuccess(true);
+				// 	props.storeUser(data['token']);
+				// 	props.setUser(data);
+				// 	localStorage.setItem('user', JSON.stringify(data));		
+				// } else {
+				// 	setError(true);
+				// 	setErrorMsg(errorSignUp);
+				// }
+			//}
 			
 		}
 	}
