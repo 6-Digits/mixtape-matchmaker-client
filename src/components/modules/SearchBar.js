@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Grid, Typography, InputBase, Button, Menu, MenuItem, MenuList, Grow, Paper, Popper, Fade } from '@material-ui/core';
+import { Grid, Typography, InputBase, Button, Menu, MenuItem, MenuList, Grow, Paper, Popper, Fade, ClickAwayListener } from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon, Undo as UndoIcon, Redo as RedoIcon, Share as ShareIcon } from '@material-ui/icons';
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -45,10 +45,11 @@ const api = 'http://localhost:42069/api';
 
 function SearchBar({editable, search, setSearch, local}) {
     const [loading, setLoading] = useState(true);
+    const [typed, setTyped] = useState("");
     const [open, setOpen] = useState(true);
     const [options, setOptions] = useState([]);
     const [canceled, setCanceled] = useState(false);
-    const [timeout, setTimeout] = useState(null);
+    const [timeout, setTimeOut] = useState(null);
     // const controller = new window.AbortController();
     // const { signal } = controller;
 
@@ -76,18 +77,21 @@ function SearchBar({editable, search, setSearch, local}) {
 		if(response.status === 200) {
             let data = await response.json();
             setOptions(data['results'].slice(0,5));
+            setOpen(true);
             setLoading(false);
 		}
     };
     const onSearch = (event) => {
-        if(timeout){
-            clearTimeout(timeout);
-            setTimeout(null);
-        }
+        setTyped(event.target.value);
+        clearTimeout(timeout);
         // Make a new timeout set to go off in 1000ms (1 second)
-        setTimeout(setTimeout(function () {
-            setSearch(event.target.value);
-        }, 700));
+        setTimeOut(setTimeout(function () {
+            setSearch(typed);
+        }, 1000));
+    }
+
+    const handleClose = () => {
+        setOpen(false);
     }
 
 	return (
@@ -99,8 +103,8 @@ function SearchBar({editable, search, setSearch, local}) {
             <InputBase
                 ref={anchorRef}
                 aria-describedby={id}
-                value={search}
-                onKeyUp={onSearch}
+                value={typed}
+                onChange={onSearch}
                 placeholder={editable ? "Songs to add..." : "Search playlist song..."}
                 classes={{
                         root: classes.inputRoot,
@@ -113,13 +117,13 @@ function SearchBar({editable, search, setSearch, local}) {
                 {({ TransitionProps }) => (
                     <Fade {...TransitionProps}>
                         <Paper>
-                        {/* <ClickAwayListener onClickAway={handleClose}> */}
-                        <MenuList autoFocusItem={open} id="popper-menu-list">
-                            {options.map((value, index) => {
-                                return <MenuItem>{value['title']}</MenuItem>;
-                            })}
-                        </MenuList>
-                        {/* </ClickAwayListener> */}
+                        <ClickAwayListener onClickAway={handleClose}>
+                            <MenuList autoFocusItem={open} id="popper-menu-list">
+                                {options.map((value, index) => {
+                                    return <MenuItem>{value['title']}</MenuItem>;
+                                })}
+                            </MenuList>
+                        </ClickAwayListener>
                         </Paper>
                     </Fade>
                 )}
