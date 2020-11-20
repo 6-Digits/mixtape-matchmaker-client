@@ -70,11 +70,10 @@ function Home({user, setUser}) {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
 		};
-		let response = await fetch(`${api}/mixtape/popular`, requestOptions);
+		let response = await fetch(`${api}/mixtape/liked/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			setLikedPlaylists([]);
-			//setLikedPlaylists(data);
+			setLikedPlaylists(data);
 		} else {
 			setLikedPlaylists([]);
 		}

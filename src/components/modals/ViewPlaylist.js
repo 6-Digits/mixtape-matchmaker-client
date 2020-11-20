@@ -141,21 +141,21 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const defaultDesc = 'I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.';
 const api = 'http://localhost:42069/api';
 const errorDefault = "Sorry! We could not save to the playlist. You are either disconnected from the internet or the servers are down. Please save your work using external software and try again later. Click save again to close the playlist.";
-const errorTitleLength = "The playlist title you have entered is either empty or too long (exceeds 255 characters). Please enter a valid playlist title or click save again to close.";
+const errorTitle = "The playlist title you have entered is empty. Please enter a valid playlist title "
+const errorTitleLength = "The playlist title you have entered is too long (exceeds 255 characters). Please enter a valid playlist title.";
 const errorDescription = "The description of your playlist cannot be empty! Please add a description or click save again to close.";
 
 
 function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists}) {
 	
 	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
-	const importedDesc = playlist ? playlist['description'] : defaultDesc;
+	const importedDesc = playlist ? playlist['description'] : "";
 	const importedThumbnail = playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder;
-	const importedLikeCount = playlist ? playlist['hearts'] : 420;
+	const importedLikeCount = playlist ? playlist['hearts'] : 0;
 	const importedComments = playlistData['comments'];
-	const importedViewCount = playlist ? playlist['view'] ? playlist['view'] : 0 : 0;
+	const importedViewCount = playlist ? playlist['views'] ? playlist['views'] : 0 : 0;
 	const importedAuthor = playlist ? playlist['owner'] : null;
 	const importedName = playlist ? playlist['name'] : "Ayyy Lmao";
 	const importPublic = playlist ? playlist['public'] ? playlist['public'] : false : false;
@@ -219,6 +219,13 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	  };
 	
 	const handleOpen = () => {
+		setViewCount(viewCount + 1);
+		let requestOptions = {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({mixtapeID: playlist['_id']})
+		};
+		fetch(`${api}/mixtape/view`, requestOptions);
 		setOpen(true);
 	};
 	
@@ -245,30 +252,26 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	}
 
 	const savePlaylist = async() => {
-		if(error){
-			handleClose();
+		if (error){
+			//handleClose();
 		}
-		if(playlist && changed){
-			if(!playlistName || playlistName.length > 255 || playlistName.length === 0) {
+		if (playlist && changed) {
+			if (!playlistName || playlistName.length === 0) {
+				setError(true);
+				setErrorMsg(errorTitle);
+			} else if (!playlistName || playlistName.length > 255) {
 				setError(true);
 				setErrorMsg(errorTitleLength);
-			} else if(!description || description.length === 0){
-				setError(true);
-				setErrorMsg(errorDescription);
 			} else {
 				let playlistID = playlist['_id'];
 				let playlistData = {
+					_id: playlistID,
 					name: playlistName,
 					description: description,
-					view: viewCount,
-					match: false,
-					hearts: likeCount,
 					comments: [],
-					songList: songs.map((song) => {
-						return song['_id'];
-					}),
+					songList: songs.map((song) => song['_id']),
 					public: checkedPublic,
-					_id: playlistID
+					match: false,
 				};
 				let requestOptions = {
 					method: 'POST',

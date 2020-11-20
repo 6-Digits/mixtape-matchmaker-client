@@ -161,6 +161,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 		});
 		setViewingSongs(newSongList);
 		setSongs(newSongList);
+		setChanged(true);
 	};
 	
 	return (
