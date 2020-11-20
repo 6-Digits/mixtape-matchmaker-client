@@ -231,9 +231,12 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			headers: {'Content-Type': 'application/json'},
 		}).then(async (res) => {
 			const data = await res.json();
+			//alert(data)
 			const found = playlist['_id'] in data;
 			setLiked(found);
-		}).catch((err) => {alert(err.message)})
+		}).catch((err) =>{
+			alert(err.message)
+		})
 		
 		setOpen(true);
 	};
