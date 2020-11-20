@@ -70,7 +70,7 @@ function Search(props) {
 				let data = await response.json();
 				setPlaylists(data);
 			} else {
-				alert(`failed to fetch data with error status ${response.status}`);
+				setPlaylists([]);
 			}
 		} else {
 			setPlaylists([]);
