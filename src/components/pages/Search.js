@@ -57,7 +57,7 @@ function Search(props) {
 	
 	useEffect(() => {
 		fetchPlaylists();
-	  }, [location.query]);
+	}, [location.query]);
 
 	const fetchPlaylists = async () => {
 		if(location.query){

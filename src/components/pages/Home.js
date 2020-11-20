@@ -43,27 +43,47 @@ const useStyles = makeStyles((theme)=>({
 	}
 }));
 
-const popConst = Array(20).fill('Popular Tape').map((x, i) => {
-	return null;
-});
-
-const likeConst = Array(20).fill('Liked Tape').map((x, i) => {
-	return null;
-});
+const api = 'http://localhost:42069/api';
 
 function Home({user, setUser}) {
 	const classes = useStyles();
-
 	const [popularPlaylists, setPopularPlaylists] = useState([]);
 	const [likedPlaylists, setLikedPlaylists] = useState([]);
 	
-	const fetchPopularPlaylists = () => {
-		setPopularPlaylists([]);
+	const fetchPopularPlaylists = async () => {
+		let requestOptions = {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json'}
+		};
+		let response = await fetch(`${api}/mixtape/popular`, requestOptions);
+		if(response.status === 200) {
+			let data = await response.json();
+			//setPopularPlaylists([]);
+			setPopularPlaylists(data);
+		} else {
+			setPopularPlaylists([]);
+		}
 	};
 
-	const fetchLikedPlaylists = () => {
-		setLikedPlaylists([]);
+	const fetchLikedPlaylists = async () => {
+		let requestOptions = {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json'}
+		};
+		let response = await fetch(`${api}/mixtape/popular`, requestOptions);
+		if(response.status === 200) {
+			let data = await response.json();
+			setLikedPlaylists([]);
+			//setLikedPlaylists(data);
+		} else {
+			setLikedPlaylists([]);
+		}
 	};
+	
+	useEffect(() => {
+		fetchPopularPlaylists();
+		fetchLikedPlaylists();
+	}, [popularPlaylists, likedPlaylists]);
 
 	return (
 		<div>
