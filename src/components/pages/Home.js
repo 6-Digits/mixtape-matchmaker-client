@@ -58,7 +58,6 @@ function Home({user, setUser}) {
 		let response = await fetch(`${api}/mixtape/popular`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			//setPopularPlaylists([]);
 			setPopularPlaylists(data);
 		} else {
 			setPopularPlaylists([]);
@@ -94,13 +93,13 @@ function Home({user, setUser}) {
 					Popular Playlists
 				</Typography>
 				
-				<PlaylistsContainer height={700} playlists={popularPlaylists} user={user} fetchPlaylists={fetchPopularPlaylists} />
+				<PlaylistsContainer height={800} playlists={popularPlaylists} user={user} fetchPlaylists={fetchPopularPlaylists} />
 				
 				<Typography variant="h3" className={classes.likedTitle}>
 					Liked Playlists
 				</Typography>
 				
-				<PlaylistsContainer height={700} playlists={likedPlaylists} user={user} fetchPlaylists={fetchLikedPlaylists}/>
+				<PlaylistsContainer height={800} playlists={likedPlaylists} user={user} fetchPlaylists={fetchLikedPlaylists}/>
 				
 			</Grid>
 		</div>

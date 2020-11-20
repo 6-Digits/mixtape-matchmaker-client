@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Dialog, DialogActions, Button, DialogTitle, DialogContent, DialogContentText, Typography, Grid, Container, TextField, Box, Link, Card, ButtonBase, CardMedia, CardContent, FormControlLabel, Switch } from '@material-ui/core';
-import { FavoriteBorder as FavoriteBorderIcon, Visibility as VisibilityIcon, Send as SendIcon, Delete as DeleteIcon} from '@material-ui/icons';
+import { FavoriteBorder as FavoriteBorderIcon, Favorite as FavoriteIcon, Visibility as VisibilityIcon, Send as SendIcon, Delete as DeleteIcon} from '@material-ui/icons';
 import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
 import PlayerControls from "./PlayerControls";
@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
 		maxHeight: 250,
 	},
 	cardMedia: {
-		maxHeight: 180,
+		maxHeight: 125,
 		padding: 0
 	},
 	cardContent: {
@@ -120,7 +120,8 @@ const useStyles = makeStyles((theme) => ({
 	cardAction: {
 		display: 'block',
 		maxWidth: 300,
-		maxHeight: 250,
+		maxHeight: 200,
+		height: 200,
 	},
 	cardTitle: {
 		textAlign: "center",
@@ -145,19 +146,17 @@ const api = 'http://localhost:42069/api';
 const errorDefault = "Sorry! We could not save to the playlist. You are either disconnected from the internet or the servers are down. Please save your work using external software and try again later. Click save again to close the playlist.";
 const errorTitle = "The playlist title you have entered is empty. Please enter a valid playlist title "
 const errorTitleLength = "The playlist title you have entered is too long (exceeds 255 characters). Please enter a valid playlist title.";
-const errorDescription = "The description of your playlist cannot be empty! Please add a description or click save again to close.";
-
 
 function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists}) {
 	
-	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
+	const importedSongs = playlist ? playlist['songList'] : [];
 	const importedDesc = playlist ? playlist['description'] : "";
 	const importedThumbnail = playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder;
 	const importedLikeCount = playlist ? playlist['hearts'] : 0;
 	const importedComments = playlistData['comments'];
 	const importedViewCount = playlist ? playlist['views'] ? playlist['views'] : 0 : 0;
 	const importedAuthor = playlist ? playlist['owner'] : null;
-	const importedName = playlist ? playlist['name'] : "Ayyy Lmao";
+	const importedName = playlist ? playlist['name'] : "";
 	const importPublic = playlist ? playlist['public'] ? playlist['public'] : false : false;
 
 	const classes = useStyles();
@@ -196,7 +195,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				fetchAuthor();
 			}
 		}
-	}, [currentIndex, songs]);
+	}, [currentIndex, songs, liked]);
 
 	const fetchAuthor = async() => {
 		let userID = importedAuthor;
@@ -205,7 +204,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				method: 'GET',
 				headers: {'Content-Type': 'application/json'}
 			};
-			let response = await fetch(api + `/profile/id/${userID}`, requestOptions);
+			let response = await fetch(`${api}/profile/id/${userID}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
 				setPlaylistAuthor(data['userName']);
@@ -226,6 +225,16 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			body: JSON.stringify({mixtapeID: playlist['_id']})
 		};
 		fetch(`${api}/mixtape/view`, requestOptions);
+		
+		fetch(`${api}/mixtape/likedIDs/uid/${user['_id']}`, {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json'},
+		}).then(async (res) => {
+			const data = await res.json();
+			const found = playlist['_id'] in data;
+			setLiked(found);
+		}).catch((err) => {alert(err.message)})
+		
 		setOpen(true);
 	};
 	
@@ -335,6 +344,31 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			handleCloseDeleteDialog();
 		}
 	};
+	
+	const handleLike = () => {
+		if (liked) {
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({mixtapeID: playlist['_id'], userID: user['_id']})
+			};
+			fetch(`${api}/mixtape/unlike`, requestOptions).then((res) => {
+				setLiked(false);
+				setLikeCount(likeCount - 1);
+			}).catch((err) => {})
+		}
+		else {
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({mixtapeID: playlist['_id'], userID: user['_id']})
+			};
+			fetch(`${api}/mixtape/like`, requestOptions).then((res) => {
+				setLiked(true);
+				setLikeCount(likeCount + 1);
+			}).catch((err) => {})
+		}
+	}
 
 	
 	return (
@@ -432,7 +466,10 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 							<Grid item xs={6}><Typography>{viewCount}</Typography></Grid>
 						</Grid>
 						<Grid container item xs={12} direction="row" alignItems="center">
-							<Grid item xs={6}><Button><FavoriteBorderIcon className={classes.icon}/></Button></Grid>
+							<Grid item xs={6}>
+								<Button onClick={handleLike}>
+									{ liked ? <FavoriteIcon className={classes.icon} /> : <FavoriteBorderIcon className={classes.icon} />}
+								</Button></Grid>
 							<Grid item xs={6}><Typography>{likeCount}</Typography></Grid>
 						</Grid>
 						{ editable ?

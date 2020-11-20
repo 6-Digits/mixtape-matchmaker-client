@@ -119,7 +119,7 @@ function Search(props) {
 					</Grid>
 				</Grid>
 				
-				<PlaylistsContainer height={700} playlists={playlists} fetchPlaylists={fetchPlaylists} user={props.user}/>
+				<PlaylistsContainer height={800} playlists={playlists} fetchPlaylists={fetchPlaylists} user={props.user}/>
 					
 			</Grid>
 		</div>

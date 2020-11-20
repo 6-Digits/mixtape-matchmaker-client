@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, removePlaylist, setPlaylists}) {
 	const classes = useStyles();
 	
-	height = height ? height : 700;
+	height = height ? height : 800;
 	
 	useEffect(() => {
 		// let userToken = JSON.parse(cookies.get('userToken'));
