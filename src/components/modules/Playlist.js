@@ -101,9 +101,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 		items.splice(result.destination.index, 0, reorderedItem);
 
 		setViewingSongs(items);
-		if(search.length === 0) {
-			setSongs(items);
-		}
+		setSongs(items);
 		setChanged(true);
 	}
 
