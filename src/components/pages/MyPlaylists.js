@@ -94,7 +94,6 @@ function MyPlaylists(props) {
 		let response = await fetch(`${api}/mixtape/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			//alert(JSON.stringify(data));
 			data = data.map((dict, index) => {
 				dict['songList'] = dict['songList'].map((song, i) => {
 					song['uuid'] = uuidv4() + uuidv4();

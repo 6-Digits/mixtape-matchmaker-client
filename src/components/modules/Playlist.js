@@ -81,6 +81,8 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
+const api = 'http://localhost:42069/api';
+
 function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [search, setSearch] = useState("");
@@ -100,9 +102,9 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 		const [reorderedItem] = items.splice(result.source.index, 1);
 		items.splice(result.destination.index, 0, reorderedItem);
 
+		setChanged(true);
 		setViewingSongs(items);
 		setSongs(items);
-		setChanged(true);
 	}
 
 	const classes = useStyles();
@@ -134,11 +136,23 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 		}
 	}
 
-	const addSong = (song) => {
-		song['uuid'] = uuidv4() + uuidv4();
-		let newSongList = [...songs, song];
-		setViewingSongs(newSongList);
-		setSongs(newSongList);
+	const addSong = async(song) => {
+		let userToken = localStorage.getItem('userToken');
+		let requestOptions = {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
+			body: JSON.stringify(song)
+		};
+		let response = await fetch(api + '/mixtape/addSong', requestOptions);
+		if(response.status === 200) {
+			let data = await response.json();
+			song['uuid'] = uuidv4() + uuidv4();
+			song['_id'] = data;
+			let newSongList = [...songs, song];
+			setViewingSongs(newSongList);
+			setSongs(newSongList);	
+			setChanged(true);
+		}
 	};
 
 	const deleteSong = (uuid) => {
