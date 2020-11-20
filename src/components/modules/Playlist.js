@@ -75,6 +75,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	importGrid: {
 		maxWidth: "100%"
+	},
+	controlSongs: {
+		marginBottom: "0.5rem"
 	}
 }));
 
@@ -159,9 +162,13 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 			direction="row"
 			justify="space-between"
 			alignItems="center"
+			className={classes.controlSongs}
 			>
 				<Grid item xs={6}>
+					{editable ? 
 					<SearchBar search={search} setSearch={setSearch} editable={editable} filterSongs={filterSongs} addSong={addSong}/>
+					: null
+					}
 				</Grid>
 				
 				{editable ?
