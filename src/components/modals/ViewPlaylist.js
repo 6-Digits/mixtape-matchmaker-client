@@ -245,9 +245,6 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	}
 
 	const savePlaylist = async() => {
-		alert(JSON.stringify(songs.map((song) => {
-			return song['_id'];
-		})));
 		if(error){
 			handleClose();
 		}
