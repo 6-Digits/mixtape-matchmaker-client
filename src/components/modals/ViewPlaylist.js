@@ -218,26 +218,26 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	  };
 	
 	const handleOpen = () => {
-		setViewCount(viewCount + 1);
-		let requestOptions = {
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({mixtapeID: playlist['_id']})
-		};
+		// setViewCount(viewCount + 1);
+		// let requestOptions = {
+		// 	method: 'POST',
+		// 	headers: {'Content-Type': 'application/json'},
+		// 	body: JSON.stringify({mixtapeID: playlist['_id']})
+		// };
 		
-		//fetch(`${api}/mixtape/view`, requestOptions);
+		// //fetch(`${api}/mixtape/view`, requestOptions);
 		
-		fetch(`${api}/mixtape/likedIDs/uid/${user['_id']}`, {
-			method: 'GET',
-			headers: {'Content-Type': 'application/json'},
-		}).then(async (res) => {
-			const data = await res.json();
-			//alert(data)
-			const found = playlist['_id'] in data;
-			setLiked(found);
-		}).catch((err) =>{
-			alert(err.message)
-		})
+		// fetch(`${api}/mixtape/likedIDs/uid/${user['_id']}`, {
+		// 	method: 'GET',
+		// 	headers: {'Content-Type': 'application/json'},
+		// }).then(async (res) => {
+		// 	const data = await res.json();
+		// 	//alert(data)
+		// 	const found = playlist['_id'] in data;
+		// 	setLiked(found);
+		// }).catch((err) =>{
+		// 	alert(err.message)
+		// })
 		
 		setOpen(true);
 	};
