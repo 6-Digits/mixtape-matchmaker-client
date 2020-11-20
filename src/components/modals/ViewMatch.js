@@ -102,7 +102,8 @@ const matchedPeople = matchData['people'];
 
 const messageLog = matchData['messages'];
 
-const roomId = 177013;
+// Should not be hardcoded in later implementations
+const roomId = "5fb5a9f39b71118664cd1c8e";
 
 function ViewMatch(user) {
 	const classes = useStyles();
