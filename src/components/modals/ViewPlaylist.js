@@ -224,7 +224,8 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({mixtapeID: playlist['_id']})
 		};
-		fetch(`${api}/mixtape/view`, requestOptions);
+		
+		//fetch(`${api}/mixtape/view`, requestOptions);
 		
 		fetch(`${api}/mixtape/likedIDs/uid/${user['_id']}`, {
 			method: 'GET',
