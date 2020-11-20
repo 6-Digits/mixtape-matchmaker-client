@@ -5,6 +5,8 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon, Undo as UndoIcon, Redo as RedoIcon, Share as ShareIcon } from '@material-ui/icons';
 import PlaylistCard from './PlaylistCard';
 import SearchBar from './SearchBar';
+import Fuse from 'fuse.js'
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -79,6 +81,8 @@ const useStyles = makeStyles((theme) => ({
 function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [search, setSearch] = useState("");
+	const [viewingSongs, setViewingSongs] = useState(songs);
+
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
 	};
@@ -89,11 +93,14 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 	function handleOnDragEnd(result) {
 		if (!result.destination) return;
 
-		const items = Array.from(songs);
+		const items = Array.from(viewingSongs);
 		const [reorderedItem] = items.splice(result.source.index, 1);
 		items.splice(result.destination.index, 0, reorderedItem);
 
-		setSongs(items);
+		setViewingSongs(items);
+		if(search.length === 0) {
+			setSongs(items);
+		}
 		setChanged(true);
 	}
 
@@ -101,6 +108,46 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 	const shareContent = () => {
 		alert(`draggable is ${draggable}`);
 	};
+
+	const filterSongs = (event) => {
+        setSearch(event.target.value);
+		if(event.target.value.length > 2){
+			let options = {
+				includeScore: false,
+				keys: [
+					{
+					name: 'title',
+					weight: 0.7
+					},
+					{
+					name: 'author',
+					weight: 0.3
+					}
+				]
+			};
+			let fuse = new Fuse(songs, options);
+			let result = fuse.search(search);
+			setViewingSongs(result);
+		} else {
+			setViewingSongs(songs);
+		}
+	}
+
+	const addSong = (song) => {
+		song['uuid'] = uuidv4() + uuidv4();
+		let newSongList = [...songs, song];
+		setViewingSongs(newSongList);
+		setSongs(newSongList);
+	};
+
+	const deleteSong = (uuid) => {
+		let newSongList = songs.filter(function(song) { 
+			return song['uuid'] !== uuid;
+		});
+		setViewingSongs(newSongList);
+		setSongs(newSongList);
+	};
+	
 	return (
 		<div className={classes.playlist}>
 			{title ? 
@@ -114,7 +161,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 			alignItems="center"
 			>
 				<Grid item xs={6}>
-					<SearchBar search={search} setSearch={setSearch} editable={editable}/>
+					<SearchBar search={search} setSearch={setSearch} editable={editable} filterSongs={filterSongs} addSong={addSong}/>
 				</Grid>
 				
 				{editable ?
@@ -196,7 +243,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 					<Droppable droppableId="playlist" className={classes.dragContainer}>
 						{(provided) => (
 							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-								{songs.map(({id, title, author, genre, duration, imgUrl, url, uuid}, index) => {
+								{viewingSongs.map(({id, title, author, genre, duration, imgUrl, url, uuid}, index) => {
 									return (
 										<Draggable key={uuid} draggableId={uuid} index={index} isDragDisabled={!draggable}>
 											{(provided) => (
@@ -212,6 +259,8 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 													src={url}
 													currentIndex={currentIndex}
 													handleCurrentIndex={handleCurrentIndex}
+													uuid={uuid}
+													deleteSong={deleteSong}
 													/>
 												</div>
 											)}

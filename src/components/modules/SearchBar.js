@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Grid, Typography, InputBase, Button, Menu, MenuItem, MenuList, Grow, Paper, Popper, Fade, ClickAwayListener } from '@material-ui/core';
+import { Grid, Typography, InputBase, Button, Menu, MenuItem, MenuList, Grow, Paper, Popper, Fade, ClickAwayListener, Avatar} from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon, Undo as UndoIcon, Redo as RedoIcon, Share as ShareIcon } from '@material-ui/icons';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import YouTubeIcon from '@material-ui/icons/YouTube';
 
 const useStyles = makeStyles((theme) => ({
 	input: {
@@ -38,15 +39,25 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
     },
     popper: {
-        width: '50%'
+        width: '50%',
+        zIndex: "9999!important"
+    },
+    songImg: {
+        
+    },
+    searchItem: {
+        overflowX: "auto"
+    },
+    searchSongTitle: {
+        overflowX: "auto"
     }
 }));
 const api = 'http://localhost:42069/api';
 
-function SearchBar({editable, search, setSearch, local}) {
+function SearchBar({editable, search, setSearch, local, filterSongs, addSong}) {
     const [loading, setLoading] = useState(true);
     const [typed, setTyped] = useState("");
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const [canceled, setCanceled] = useState(false);
     const [timeout, setTimeOut] = useState(null);
@@ -58,7 +69,7 @@ function SearchBar({editable, search, setSearch, local}) {
     const classes = useStyles();
 
     useEffect(() => {
-        if(search.length > 2) {
+        if(search.length > 1) {
             setLoading(true);
             populateSearch();
         } else {
@@ -104,7 +115,7 @@ function SearchBar({editable, search, setSearch, local}) {
                 ref={anchorRef}
                 aria-describedby={id}
                 value={typed}
-                onChange={onSearch}
+                onChange={local ? filterSongs : onSearch}
                 placeholder={editable ? "Songs to add..." : "Search playlist song..."}
                 classes={{
                         root: classes.inputRoot,
@@ -120,7 +131,21 @@ function SearchBar({editable, search, setSearch, local}) {
                         <ClickAwayListener onClickAway={handleClose}>
                             <MenuList autoFocusItem={open} id="popper-menu-list">
                                 {options.map((value, index) => {
-                                    return <MenuItem>{value['title']}</MenuItem>;
+                                    let duration = value['duration'];
+                                    return <MenuItem 
+                                        className={classes.searchItem}
+                                        onClick={()=>{addSong(value);handleClose();}}>
+                                        <Grid
+                                        direction="row"
+                                        container
+                                        justify="space-evenly"
+                                        alignItems="center">
+                                        <Grid item xs={1} container><YouTubeIcon></YouTubeIcon></Grid>
+                                        <Grid item xs={1} container> <Avatar variant="square" src={value['imgUrl']} className={classes.songImg} /></Grid>
+                                        <Grid item xs={9} container className={classes.searchSongTitle}>{value['title']}</Grid>
+                                        <Grid item xs={1}>{ `${Math.floor(duration / 60)}:${ duration % 60 > 10 ? duration % 60 : '0' + duration % 60}` }</Grid>
+                                        </Grid>
+                                    </MenuItem>;
                                 })}
                             </MenuList>
                         </ClickAwayListener>
