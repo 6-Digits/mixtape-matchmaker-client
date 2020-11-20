@@ -68,7 +68,7 @@ function Notifications() {
 			</IconButton>
 			<StyledMenu>
 				{options.map((option) => (
-					<MenuItem key={option} selected={option === 'Pyxis'}>
+					<MenuItem key={option}>
 						{option}
 					</MenuItem>
 				))}
