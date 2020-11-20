@@ -5,6 +5,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';
 import PlaylistsContainer from "../modules/PlaylistsContainer";
 import { v4 as uuidv4 } from 'uuid';
+import Fuse from 'fuse.js'
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -76,9 +77,13 @@ function MyPlaylists(props) {
 	const classes = useStyles();
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [myPlaylists, setMyPlaylists] = useState([]);
-	const [playlistCache, setPlaylistCache] = useState(null);
+	const [playlistCache, setPlaylistCache] = useState([]);
+	const [searchTimeout, setSearchTimeout] = useState(null);
+	const [search, setSearch] = useState("");
 	const [loading, setLoading] = useState(false);
-	
+
+	const [reverse, setReverse] = useState(false);
+
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
 	};
@@ -110,6 +115,12 @@ function MyPlaylists(props) {
 		}
 	};
 
+	useEffect(() => {
+		if(search.length < 2) {
+			setPlaylistCache(myPlaylists);
+		}
+	  }, [myPlaylists]);
+
 	const addPlaylist = async() => {
 		let userToken = localStorage.getItem('userToken');
 		if(!loading && userToken){
@@ -131,11 +142,67 @@ function MyPlaylists(props) {
 		}
 	};
 
-	
 	const removePlaylist = (playlistID) => {
 		setMyPlaylists(myPlaylists.filter(function(playlist) { 
-			return playlist['_id'] !== playlistID
+			return playlist['_id'] !== playlistID;
 		}));
+		setPlaylistCache(playlistCache.filter(function(playlist) { 
+			return playlist['_id'] !== playlistID;
+		}));
+	};
+
+	const searchPlaylists = (event) => {
+		setSearch(event.target.value);
+		if(event.target.value.length > 2){
+			// clearTimeout(searchTimeout);
+			// // Make a new timeout set to go off in 500ms (.5 second)
+			// setSearchTimeout(setTimeout(function () {
+				//Search through the list using Fuse.js
+				let options = {
+					includeScore: false,
+					keys: [
+					  {
+						name: 'name',
+						weight: 0.7
+					  },
+					  {
+						name: 'description',
+						weight: 0.3
+					  }
+					]
+				  };
+				let fuse = new Fuse(playlistCache, options);
+				let result = fuse.search(search);
+				setMyPlaylists(result);
+			// }, 750));
+		} else {
+			setMyPlaylists(playlistCache);
+		}
+	}
+
+	const sortPlaylistTitle = () => {
+		let playlists = myPlaylists.map(element => {
+			return element;
+		});
+		playlists.sort((a, b) => a.name.localeCompare(b.name));
+		setMyPlaylists(playlists);
+		handleSortClose();
+	};
+
+	const sortPlaylistDuration = () => {
+		let playlists = myPlaylists.map(element => {
+			let totalLength = 0;
+			element.songList.forEach(song=>{
+				if(song['duration']){
+					totalLength += song['duration'];
+				}
+			});
+			element['duration'] = totalLength;
+			return element;
+		});
+		playlists.sort(function(a, b){return b-a});
+		setMyPlaylists(playlists);
+		handleSortClose();
 	};
 
 	return (
@@ -160,6 +227,8 @@ function MyPlaylists(props) {
 											input: classes.inputInput,
 									}}
 									inputProps={{ 'aria-label': 'search' }}
+									value={search}
+									onChange={searchPlaylists}
 								/>
 						</div>
 					</Grid>
@@ -192,9 +261,8 @@ function MyPlaylists(props) {
 							open={Boolean(sortAnchor)}
 							onClose={handleSortClose}
 						>
-							<MenuItem onClick={handleSortClose}>By Title</MenuItem>
-							<MenuItem onClick={handleSortClose}>By Duration</MenuItem>
-							<MenuItem onClick={handleSortClose}>By Author</MenuItem>
+							<MenuItem onClick={sortPlaylistTitle}>By Title</MenuItem>
+							<MenuItem onClick={sortPlaylistDuration}>By Duration</MenuItem>
 						</Menu>
 					</Grid> 
 				</Grid>

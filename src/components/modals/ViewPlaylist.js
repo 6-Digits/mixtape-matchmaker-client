@@ -148,7 +148,7 @@ const errorTitleLength = "The playlist title you have entered is either empty or
 const errorDescription = "The description of your playlist cannot be empty! Please add a description or click save again to close.";
 
 
-function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, removePlaylist}) {
+function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists}) {
 	
 	const importedSongs = playlist ? playlist['songList'] : playlistData['songs'];
 	const importedDesc = playlist ? playlist['description'] : defaultDesc;
@@ -190,11 +190,13 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	shareable = editable ? editable : null;
 	
 	useEffect(() => {
-		setCurrentSong(songs[currentIndex]);
-		if(!playlistAuthor) {
-			fetchAuthor();
+		if(songs){
+			setCurrentSong(songs[currentIndex]);
+			if(!playlistAuthor) {
+				fetchAuthor();
+			}
 		}
-	}, [currentIndex]);
+	}, [currentIndex, songs]);
 
 	const fetchAuthor = async() => {
 		let userID = importedAuthor;
@@ -266,8 +268,8 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 					songList: songs.map((song) => {
 						return song['_id'];
 					}),
-					public: checkedPublic
-
+					public: checkedPublic,
+					_id: playlistID
 				};
 				let requestOptions = {
 					method: 'POST',
@@ -277,6 +279,13 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				let response = await fetch(api + `/mixtape/updateMixtape/id/${playlistID}`, requestOptions);
 				if(response.status === 200) {
 					let data = await response.json();
+					setPlaylists(playlists.map(element=> {
+						if(element['_id'] == playlistID) {
+							playlistData['songList'] = songs;
+							return playlistData;
+						}
+						return element;
+					}));
 					setChanged(false);
 					handleClose();
 				} else {
@@ -314,7 +323,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			if(response.status === 200) {
 				let data = await response.json();
 				handleCloseDeleteDialog();
-				fetchPlaylists(userToken, user);
+				removePlaylist(playlistID);
 			} else {
 				alert(`Failed to delete playlist with error status: ${response.status}`);
 				handleCloseDeleteDialog();
@@ -395,7 +404,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 						<Media>
 							{mediaProps => (
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src={currentSong ? currentSong.url : null} autoPlay={true} className={classes.player} />
+								<Player src={currentSong ? currentSong.url : null} autoPlay={false} className={classes.player} />
 								<PlayerControls currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex} />
 							</div>
 							)}
