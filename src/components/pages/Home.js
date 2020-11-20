@@ -78,10 +78,10 @@ function Home({user, setUser}) {
 		}
 	};
 	
-	useEffect(() => {
-		fetchPopularPlaylists();
-		fetchLikedPlaylists();
-	}, [popularPlaylists, likedPlaylists]);
+	// useEffect(() => {
+	// 	fetchPopularPlaylists();
+	// 	fetchLikedPlaylists();
+	// }, [popularPlaylists, likedPlaylists]);
 
 	return (
 		<div>
