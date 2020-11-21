@@ -5,10 +5,19 @@ import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";
 import { Redirect } from 'react-router-dom'
 import Footer from "../modules/Footer";
+import IntroCarousel from "../modules/IntroCarousel";
 
 const api = 'http://localhost:42069/api';
 
 const useStyles = makeStyles((theme) => ({
+	hook:{
+		backgroundColor: theme.palette.background.default,
+		width: "100%",
+		height: "100%"
+	},
+	signup: {
+		padding: "0 1.5rem 0 1.5rem"
+	},
 	paper: {
 	  marginTop: theme.spacing(8),
 	  display: 'flex',
@@ -18,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		display: "flex",
 		justifyContent: "center",
-		alignItems: "center",
-		height: "90vh" ,
+		alignItems: "center"
 	},
 	avatar: {
 	  margin: theme.spacing(1),
@@ -163,135 +171,138 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 
 	const classes = useStyles();
 	return (
-		<Container component="main" maxWidth="lg" className={classes.container}>
-			<div className={classes.content}>
-				<Container>
-					<img src={logo} className={classes.logo}/>
-					<form className={classes.form} onSubmit={handleSignUp} noValidate>
-					<Grid container spacing={2}>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								autoComplete="fname"
-								name="firstName"
-								variant="outlined"
-								required
-								fullWidth
-								id="firstName"
-								label="First Name"
-								onChange={firstNameChange}
-								autoFocus
-							/>
-						</Grid>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="lastName"
-								label="Last Name"
-								name="lastName"
-								onChange={lastNameChange}
-								autoComplete="lname"
-							/>
-						</Grid>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								autoComplete="bday"
-								name="firstName"
-								variant="outlined"
-								type="date"
-								required
-								fullWidth
-								id="birthdate"
-								label="Birth Date"
-								value={birthdate}
-								onChange={birthChange}
-								autoFocus
-							/>
-						</Grid>
-						<Grid item xs={12} sm={6}>
-							<Autocomplete
-							 required
-							 id="combo-box-demo"
-							 options={[
-								{title: "Male"}, 
-								{title: "Female"},
-								{title: "Other" }
-							 ]}
-							 getOptionLabel={(option) => option.title}
-							 fullWidth
-							 autoComplete="sex"
-							 renderInput={(params) => <TextField {...params} label="Gender" variant="outlined" />}
-							 onChange={genderChange}
-							 />
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="email"
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								onChange={emailChange}
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"
-								autoComplete="current-password"
-								onChange={passChange}
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								name="confirm password"
-								label="Confirm Password"
-								type="password"
-								id="confirm-password"
-								autoComplete="current-password"
-								onChange={confirmPassChange}
-							/>
-						</Grid>
-						{/* <Grid item xs={12}>
-						<FormControlLabel
-							control={<Checkbox value="allowExtraEmails" color="primary" />}
-							label="I want to receive inspiration, marketing promotions and updates via email."
+		<Grid container className={classes.container} fullWidth>
+		<Grid xs={12} direction="row" justify="space-between" className={classes.content} container>
+			<Grid item xs={8} className={classes.hook} container>
+				<IntroCarousel/>
+			</Grid>
+			<Grid item xs={4} container className={classes.signup}>
+				<img src={logo} className={classes.logo}/>
+				<form className={classes.form} onSubmit={handleSignUp} noValidate>
+				<Grid container spacing={2}>
+					<Grid item xs={12} sm={6}>
+						<TextField
+							autoComplete="fname"
+							name="firstName"
+							variant="outlined"
+							required
+							fullWidth
+							id="firstName"
+							label="First Name"
+							onChange={firstNameChange}
+							autoFocus
 						/>
-						</Grid> */}
 					</Grid>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}
-					>
-						Sign Up
-					</Button>
-					{error ? <div className={classes.loginError}>{errorMsg}</div> : null}
-					<Grid container justify="flex-start">
-						<Grid item>
-						<Link href="/login" variant="body2">
-							Already have an account? Sign in
-						</Link>
-						</Grid>
+					<Grid item xs={12} sm={6}>
+						<TextField
+							variant="outlined"
+							required
+							fullWidth
+							id="lastName"
+							label="Last Name"
+							name="lastName"
+							onChange={lastNameChange}
+							autoComplete="lname"
+						/>
 					</Grid>
-					</form>
-				</Container>
-			</div>
-			<Footer></Footer>
-		</Container>
+					<Grid item xs={12} sm={6}>
+						<TextField
+							autoComplete="bday"
+							name="firstName"
+							variant="outlined"
+							type="date"
+							required
+							fullWidth
+							id="birthdate"
+							label="Birth Date"
+							value={birthdate}
+							onChange={birthChange}
+							autoFocus
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<Autocomplete
+							required
+							id="combo-box-demo"
+							options={[
+							{title: "Male"}, 
+							{title: "Female"},
+							{title: "Other" }
+							]}
+							getOptionLabel={(option) => option.title}
+							fullWidth
+							autoComplete="sex"
+							renderInput={(params) => <TextField {...params} label="Gender" variant="outlined" />}
+							onChange={genderChange}
+							/>
+					</Grid>
+					<Grid item xs={12}>
+						<TextField
+							variant="outlined"
+							required
+							fullWidth
+							id="email"
+							label="Email Address"
+							name="email"
+							autoComplete="email"
+							onChange={emailChange}
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<TextField
+							variant="outlined"
+							required
+							fullWidth
+							name="password"
+							label="Password"
+							type="password"
+							id="password"
+							autoComplete="current-password"
+							onChange={passChange}
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<TextField
+							variant="outlined"
+							required
+							fullWidth
+							name="confirm password"
+							label="Confirm Password"
+							type="password"
+							id="confirm-password"
+							autoComplete="current-password"
+							onChange={confirmPassChange}
+						/>
+					</Grid>
+					{/* <Grid item xs={12}>
+					<FormControlLabel
+						control={<Checkbox value="allowExtraEmails" color="primary" />}
+						label="I want to receive inspiration, marketing promotions and updates via email."
+					/>
+					</Grid> */}
+				</Grid>
+				<Button
+					type="submit"
+					fullWidth
+					variant="contained"
+					color="primary"
+					className={classes.submit}
+				>
+					Sign Up
+				</Button>
+				{error ? <div className={classes.loginError}>{errorMsg}</div> : null}
+				<Grid container justify="flex-start">
+					<Grid item>
+					<Link href="/login" variant="body2">
+						Already have an account? Sign in
+					</Link>
+					</Grid>
+				</Grid>
+				</form>
+			</Grid>
+		</Grid>
+		{/* <Footer></Footer> */}
+	  </Grid>
 	);
 }
 

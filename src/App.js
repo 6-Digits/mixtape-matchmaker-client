@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
-import { Paper } from '@material-ui/core';
+import { Paper, CssBaseline } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider, responsiveFontSizes, makeStyles } from "@material-ui/core/styles";
 import "./App.css";
 import Login from "./components/pages/Login";
@@ -83,12 +83,16 @@ function App(props) {
 			width: "100%"
 		},
 		encompassScreen: {
+			height: "100vh" ,
+			width: "100%",
+			margin: 0
 		}
 	}));
 	const classes = useStyles();
 	
 	return (
-		<ThemeProvider theme={theme} className={classes.fullScreen}>
+		<ThemeProvider theme={theme} className={classes.encompassScreen}>
+			<CssBaseline />
 			<Paper className={classes.fullScreen}>
 				<BrowserRouter className={classes}>
 					<Route exact path="/" render={(props) => {

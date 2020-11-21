@@ -10,13 +10,14 @@ import logo from "../../assets/logo.png";
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
 	grow: {
-		flexGrow: 2,
+		flexGrow: 2
 	},
 	toolbar: {
 		margin: '1vh 0 1vh 0',
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
+		color: theme.palette.text.primary
 	},
 	title: {
 		display: 'none',
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 			display: 'block',
 		},
 		fontWeight: 'bold',
+		color: theme.palette.text.primary
 	},
 	search: {
 		position: 'relative',
@@ -39,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 			marginLeft: theme.spacing(3),
 			width: 'auto',
 		},
+		color: theme.palette.text.primary
 	},
 	searchButton: {
 		padding: theme.spacing(1, 1.5, 1, 1.5),
@@ -48,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 			backgroundColor: fade(theme.palette.common.white, 0.25),
 		},
 		fontWeight: 'bold',
+		color: theme.palette.text.primary
 	},
 	searchIcon: {
 		padding: theme.spacing(0, 2),
@@ -112,6 +116,9 @@ const useStyles = makeStyles((theme) => ({
 		display: "block",
 		margin: '0 3vh 0 2vh',
 		height: "5vh",
+	},
+	appBar: {
+		backgroundColor: theme.palette.background.default
 	}
 }));
 
@@ -140,7 +147,7 @@ function NavigationBar(props) {
 
 	return (
 		<div className={classes.grow}>
-			<AppBar position="static">
+			<AppBar position="static" className={classes.appBar}>
 				<Toolbar className={classes.toolbar}>
 					<IconButton
 						edge="start"

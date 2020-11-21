@@ -5,6 +5,7 @@ import logo from "../../assets/logo.png";
 import ForgotPassword from "../modals/ForgotPassword";
 import Footer from "../modules/Footer"
 import { Palette } from "@material-ui/icons";
+import IntroCarousel from "../modules/IntroCarousel";
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -19,10 +20,8 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: '2.5 rem'
 	},
 	content: {
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		height: "80vh" ,
+		width: "100%",
+		height: "100%"
 	},
 	logo: {
 		display: "flex",
@@ -38,6 +37,14 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: '1rem',
 		textAlign: 'center',
 		marginBottom: '1rem'
+	},
+	hook:{
+		backgroundColor: theme.palette.background.default,
+		width: "100%",
+		height: "100%"
+	},
+	login: {
+		padding: "0 1.5rem 0 1.5rem"
 	}
 }));
 
@@ -85,9 +92,12 @@ function Login({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 	}
 	
 	return (
-		<Container component="main" maxWidth="lg" className={classes.container}>
-		<div className={classes.content}>
-			<Container>
+		<Grid container className={classes.container} fullWidth>
+		<Grid xs={12} direction="row" justify="space-between" className={classes.content} container>
+			<Grid item xs={8} className={classes.hook} container>
+				<IntroCarousel/>
+			</Grid>
+			<Grid item xs={4} container className={classes.login}>
 				<img src={logo} className={classes.logo}/>
 				<form className={classes.form} onSubmit={handleLogin} noValidate>
 				<TextField
@@ -141,10 +151,10 @@ function Login({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 					</Link>
 				</Grid>
 			</form>
-		  </Container>
-		</div>
-		<Footer></Footer>
-	  </Container>
+		  </Grid>
+		</Grid>
+		{/* <Footer></Footer> */}
+	  </Grid>
 	);
 }
 
