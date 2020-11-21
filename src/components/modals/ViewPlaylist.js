@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: "bold"
 	},
 	playlistArea: {
-		padding: "1rem 0rem 1rem 0rem",
+		padding: "1rem 1rem 1rem 1rem",
 		borderRadius: '0.5rem',
 		backgroundColor: theme.palette.background.default,
 		width: "97%",
@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 	player: {
 		width: '100%',
 		height: '100%',
+		display: 'none'
 	},
 	playlistTitle: {
 		textAlign: "center"
@@ -114,7 +115,6 @@ const useStyles = makeStyles((theme) => ({
 		padding: 0
 	},
 	cardContent: {
-		textAlign: "left",
 		padding: "0.1rem"
 	},
 	cardAction: {
@@ -139,6 +139,9 @@ const useStyles = makeStyles((theme) => ({
 	deleteIcon: {
 		height: '100%',
 		width: '100%'
+	},
+	viewingTitle: {
+		marginTop: "1rem"
 	}
 }));
 
@@ -388,7 +391,11 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 							<Grid item xs={9}><Typography variant='h6' className={classes.cardTitle}>{playlistName}</Typography></Grid>
 							<Grid item xs={3}><Button className={classes.deleteButton} onClick={handleOpenDeleteDialog}><DeleteIcon className={classes.deleteIcon}/></Button></Grid>
 						</Grid>
-						: <Typography variant='h6' className={classes.cardTitle}>{playlistName}</Typography>}
+						: <Grid container alignItems="center" justify="center" className={classes.viewingTitle}> 
+							<Grid item xs={12}>
+								<Typography variant='h6' className={classes.cardTitle}>{playlistName}</Typography>	
+							</Grid>
+						</Grid> }
 					</CardContent>
 				</div>
 			</Card>
@@ -434,27 +441,29 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				
 				<Grid
 					container
-					direction="row"
+					direction="column"
                     justify="center"
                     spacing={2}
 					alignItems="center"
 					className={classes.playlistArea}
 					>
-					<Grid container item xs={12} sm={5}>
-						<Media>
-							{mediaProps => (
-							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src={currentSong ? currentSong.url : null} autoPlay={false} className={classes.player} />
-								<PlayerControls currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex} />
-							</div>
-							)}
-						</Media>
-					</Grid>
-					<Grid container item xs={12} sm={6}>
+					<Grid container item xs={12}>
 						<Playlist 
 						editable={editable} draggable={editable} shareable={shareable} 
 						songs={songs} setSongs={setSongs} currentIndex={currentIndex}
 						handleCurrentIndex={handleCurrentIndex} setChanged={setChanged} />
+					</Grid>
+					
+					<Grid container item xs={12}>
+						<Media>
+							{mediaProps => (
+							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
+								<Player src={currentSong ? currentSong.url : null} autoPlay={false} className={classes.player} />
+								<PlayerControls currentIndex={currentIndex} 
+									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong.imgUrl} />
+							</div>
+							)}
+						</Media>
 					</Grid>
 				</Grid>
 				

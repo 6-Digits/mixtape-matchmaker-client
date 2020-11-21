@@ -77,7 +77,7 @@ function IntroCarousel(props){
                 <Grid direction="column" container justify="center" alignItems="center" className={classes.mm}>
                     <Avatar variant="square" src={logo} className={classes.logo}></Avatar>
                     <Typography variant="h1">{"Mixtape Matchmaker"}</Typography>
-                    <Typography variant="h3">{"Make more memories"}</Typography>
+                    <Typography variant="h3">{"Make More Memories"}</Typography>
                     <Button href="/about" variant="contained" className={classes.button}>{"Learn more"}</Button>
                 </Grid> 
             </Carousel>
