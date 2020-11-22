@@ -40,8 +40,25 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
   
+const defaultImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUnnWZ_Dh48jrrZJ1hDbUrU-WzKKkCX1rQzQ&usqp=CAU";
+const errorDefault = "We could not saving your match settings likely because you are offline or our servers are down. Please try again later";
+const errorGender = "You do not have a valid gender preference, please select a valid gender preference";
+const errorAge = "The age preference you have enter is either not in the valid (18 or older) range or unspecified. Please enter a valid age range";
+const errorLocation = "The location you have enter could not be computed in our database. Please try again later";
+
+
+
 function MatchSettings(props) {
 	const classes = useStyles();
+	const [genderPreference, setGenderPreference] = useState("Other");
+	const [ageLower, setAgeLower] = useState(18);
+	const [ageUpper, setAgeUpper] = useState(100);
+	const [location, setLocation] = useState("New York City");
+	const [description, setDescription] = useState("This is the default profile description");
+	const [profilePicture, setProfilePicture] = useState(defaultImg);
+	const [error, setError] = useState(false);
+	const [errorMsg, setErrorMsg] = useState();
+
 	const [open, setOpen] = useState(false);
   
 	const handleOpen = () => {
@@ -52,6 +69,36 @@ function MatchSettings(props) {
 		setOpen(false);
 	};
 	
+	const changeAgeLower = (event) => {
+		setAgeLower(event.target.value);
+		setError(false);
+	}
+
+	const changeAgeUpper = (event) => {
+		setAgeUpper(event.target.value);
+		setError(false);
+	}
+
+	const changeGenderPreference = (event) => {
+		setGenderPreference(event.target.value);
+		setError(false);
+	}
+
+	const changeLocation = (event) => {
+		setLocation(event.target.value);
+		setError(false);
+	}
+
+	const changeDescription = (event) => {
+		setDescription(event.target.value);
+		setError(false);
+	}
+
+	const changeProfilePicture = (event) => {
+		setProfilePicture(event.target.value);
+		setError(false);
+	}
+
 	return (
 		<div className={classes.container}>
 			<Button className={classes.button} onClick={handleOpen} variant="contained" fullWidth>{"Match Settings"}</Button>
@@ -86,6 +133,8 @@ function MatchSettings(props) {
 								id="age-lower"
 								label="Youngest Age"
 								type="number"
+								value={ageLower}
+								onChange={changeAgeLower}
 								className={classes.input}
 							/>
 						</Grid>
@@ -95,6 +144,8 @@ function MatchSettings(props) {
 								margin="normal"
 								id="age-upper"
 								label="Oldest Age"
+								value={ageUpper}
+								onChange={changeAgeUpper}
 								type="number"
 								className={classes.input}
 								style={{marginLeft:"1rem"}}
@@ -109,6 +160,8 @@ function MatchSettings(props) {
 						label="My Location"
 						type="text"
 						fullWidth
+						value={location}
+						onChange={changeLocation}
 						className={classes.input}
 					/>
 					<TextField
@@ -118,6 +171,8 @@ function MatchSettings(props) {
 						label="Profile Description"
 						type="text"
 						fullWidth
+						value={description}
+						onChange={changeDescription}
 						rows={5}
 						multiline={true}
 						className={classes.input}
@@ -135,7 +190,7 @@ function MatchSettings(props) {
 							label="Profile Picture"
 							type="file"
 							className={classes.imgUpload}/>
-						<Avatar alt="Remy Sharp" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUnnWZ_Dh48jrrZJ1hDbUrU-WzKKkCX1rQzQ&usqp=CAU" className={classes.profileImg} />
+						<Avatar alt="Remy Sharp" src={profilePicture} className={classes.profileImg} />
 					</Grid>
 				</DialogContent>
 				<DialogActions>
