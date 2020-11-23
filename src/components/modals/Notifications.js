@@ -3,6 +3,8 @@ import { IconButton, Badge, Menu, MenuItem, withStyles } from '@material-ui/core
 import { Notifications as NotificationsIcon } from '@material-ui/icons';
 import Notification from '../modules/Notification';
 
+const api = 'http://localhost:42069/api';
+
 const options = [
 	<Notification link='http://localhost:8080/matches' message='JSON has sent you a message!'></Notification>,
 	<Notification link='http://localhost:8080/settings' message='FARHAN has matched with you!'></Notification>,
@@ -12,6 +14,19 @@ const options = [
 const ITEM_HEIGHT = 48;
 
 function Notifications() {
+	const fetchNotifications = async () => {
+		let requestOptions = {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json'}
+		};
+		let response = await fetch(`${api}/profile/notifications/uid/${user._id}`, requestOptions);
+		if(response.status === 200) {
+			let data = await response.json();
+		} else {
+			
+		}
+	};
+
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 
