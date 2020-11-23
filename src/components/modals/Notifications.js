@@ -19,7 +19,7 @@ function Notifications() {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
 		};
-		let response = await fetch(`${api}/profile/notifications/uid/${user._id}`, requestOptions);
+		//let response = await fetch(`${api}/profile/notifications/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
 		} else {
