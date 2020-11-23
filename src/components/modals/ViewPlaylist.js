@@ -460,7 +460,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
 								<Player src={currentSong ? currentSong.url : null} autoPlay={false} className={classes.player} />
 								<PlayerControls currentIndex={currentIndex} 
-									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong.imgUrl} />
+									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} />
 							</div>
 							)}
 						</Media>
