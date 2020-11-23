@@ -14,6 +14,7 @@ const options = [
 const ITEM_HEIGHT = 48;
 
 function Notifications() {
+	/*
 	const fetchNotifications = async () => {
 		let requestOptions = {
 			method: 'GET',
@@ -26,6 +27,7 @@ function Notifications() {
 			
 		}
 	};
+	*/
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
