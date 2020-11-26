@@ -3,7 +3,7 @@ import { Grid, Typography, Card, Button, Avatar, useRadioGroup } from '@material
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { PlayCircleOutline as PlayCircleOutlineIcon, Delete as DeleteIcon } from '@material-ui/icons';
 
-function PlaylistCard({index, editable, song, author, genre, duration, img, src, currentIndex, handleCurrentIndex, deleteSong, uuid}) {
+function PlaylistCard({index, editable, song, author, genre, duration, img, src, currentIndex, handleCurrentIndex, deleteSong, uuid, setAutoPlay}) {
 	const useStyles = makeStyles((theme) => ({
 		card: {
 			backgroundColor: index === currentIndex ? theme.palette.primary.dark : theme.palette.background.paper,
@@ -48,6 +48,13 @@ function PlaylistCard({index, editable, song, author, genre, duration, img, src,
 
 	const handlePlay = () => {
 		handleCurrentIndex(index);
+		setAutoPlay(true);
+	}
+	
+	const handleDelete = () => {
+		setAutoPlay(false);
+		deleteSong(uuid);
+		handleCurrentIndex(index);
 	}
 	
 	return (
@@ -70,7 +77,7 @@ function PlaylistCard({index, editable, song, author, genre, duration, img, src,
 				
 				{ editable ?
 				<Grid item xs={6} sm={1}>
-					<Button onClick={() => {deleteSong(uuid)}} variant="text" className={classes.deleteSongButton}>
+					<Button onClick={() => {handleDelete}} variant="text" className={classes.deleteSongButton}>
 						<DeleteIcon className={classes.deleteIcon} />
 					</Button>
 				</Grid> : null

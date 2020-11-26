@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withMediaProps, utils } from 'react-media-player'
 import { Grid, IconButton, Slider, makeStyles, Avatar } from '@material-ui/core';
 import { PauseCircleFilled, PlayCircleFilled, SkipPrevious, SkipNext, VolumeUp, VolumeDown, VolumeOff, Fullscreen, FullscreenExit } from '@material-ui/icons';
@@ -16,8 +16,10 @@ const useStyles = makeStyles((theme)=>({
 	}
 }));
 
-function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl}) {
+function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAutoPlay}) {
+	const classes = useStyles();
 	const { volume, duration, currentTime } = media;
+	
 	const handlePlayPause = () => {
 		media.playPause();
 	}
@@ -40,13 +42,14 @@ function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl}) {
 	
 	const handleNext = () => {
 		handleCurrentIndex(currentIndex + 1);
+		setAutoPlay(true);
 	}
 	
 	const handlePrevious = () => {
 		handleCurrentIndex(currentIndex - 1);
+		setAutoPlay(true);
 	}
 	
-	const classes = useStyles();
 	return (
 		<Grid container direction="row" alignItems="center" justify="space-between">
 				{/* <Grid item>

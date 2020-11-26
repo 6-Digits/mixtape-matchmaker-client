@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
 
 const api = 'http://localhost:42069/api';
 
-function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged}) {
+function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [search, setSearch] = useState("");
 	const [viewingSongs, setViewingSongs] = useState(songs);
@@ -281,6 +281,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 													handleCurrentIndex={handleCurrentIndex}
 													uuid={uuid}
 													deleteSong={deleteSong}
+													setAutoPlay={setAutoPlay}
 													/>
 												</div>
 											)}

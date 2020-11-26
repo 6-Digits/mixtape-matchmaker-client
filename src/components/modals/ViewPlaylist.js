@@ -181,6 +181,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
 	const [comments, setComments] = useState(importedComments);
 	const [deleteOpen, setDeleteOpen] = useState(false);
+	const [autoPlay, setAutoPlay] = useState(false);
 		
 	const handleOpenDeleteDialog = () => {
 		setDeleteOpen(true);
@@ -243,10 +244,12 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 		})
 		
 		setOpen(true);
+		setAutoPlay(false);
 	};
 	
 	const handleClose = () => {
 		setOpen(false);
+		setAutoPlay(false);
 	};
 	
 	const handleCheckedPublic = (event) => {
@@ -451,16 +454,18 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 						<Playlist 
 						editable={editable} draggable={editable} shareable={shareable} 
 						songs={songs} setSongs={setSongs} currentIndex={currentIndex}
-						handleCurrentIndex={handleCurrentIndex} setChanged={setChanged} />
+						handleCurrentIndex={handleCurrentIndex} setChanged={setChanged}
+						setAutoPlay={setAutoPlay} />
 					</Grid>
 					
 					<Grid container item xs={12}>
 						<Media>
 							{mediaProps => (
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src={currentSong ? currentSong.url : null} autoPlay={false} className={classes.player} />
+								<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} />
 								<PlayerControls currentIndex={currentIndex} 
-									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} />
+									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
+									setAutoPlay={setAutoPlay} />
 							</div>
 							)}
 						</Media>
