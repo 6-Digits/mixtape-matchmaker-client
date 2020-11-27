@@ -177,21 +177,6 @@ function MatchSettings(props) {
 						multiline={true}
 						className={classes.input}
 					/>
-					<Grid
-						container
-						direction="row"
-						justify="space-evenly"
-						alignItems="center"
-						>
-						<TextField
-							autoFocus
-							margin="normal"
-							id="profile-img"
-							label="Profile Picture"
-							type="file"
-							className={classes.imgUpload}/>
-						<Avatar alt="Remy Sharp" src={profilePicture} className={classes.profileImg} />
-					</Grid>
 				</DialogContent>
 				<DialogActions>
 				<Button variant="contained" onClick={handleClose} color="secondary" className={classes.cancel}>
