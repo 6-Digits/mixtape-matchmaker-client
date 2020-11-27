@@ -13,6 +13,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "ajv": "^6.0.0",
+    "clipboard-polyfill": "^3.0.1",
     "clsx": "^1.1.1",
     "dotenv": "^8.2.0",
     "firebase": "^8.0.1",

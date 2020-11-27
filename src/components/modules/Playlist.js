@@ -7,6 +7,7 @@ import PlaylistCard from './PlaylistCard';
 import SearchBar from './SearchBar';
 import Fuse from 'fuse.js'
 import { v4 as uuidv4 } from 'uuid';
+import ShareDropDown from "./ShareDropDown";
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -83,10 +84,11 @@ const useStyles = makeStyles((theme) => ({
 
 const api = 'http://localhost:42069/api';
 
-function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay}) {
+function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay, playlistID}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [search, setSearch] = useState("");
 	const [viewingSongs, setViewingSongs] = useState(songs);
+	const shareLink = `${window.location.origin}/share/${playlistID}`;
 
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
@@ -108,9 +110,6 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 	}
 
 	const classes = useStyles();
-	const shareContent = () => {
-		alert(`draggable is ${draggable}`);
-	};
 
 	const filterSongs = (event) => {
         setSearch(event.target.value);
@@ -206,19 +205,6 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 				</Grid>
 				: null }
 				
-				{shareable ?
-				<Grid item xs={3} sm={1}>
-						<Button
-						variant="contained"
-						color="primary"
-						className={classes.button}
-						onClick={shareContent}
-						aria-controls="add-playlist" aria-haspopup="true">
-							<ShareIcon fontSize='large'></ShareIcon>
-						</Button>
-				</Grid>
-				: null }
-				
 				{	editable ? 
 					null :
 					<Grid item xs={12} sm={1} className={classes.importGrid}>
@@ -243,6 +229,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 						</Menu>
 					</Grid> 
 				}
+				<ShareDropDown contentLink={shareLink}></ShareDropDown>
 				{
 					// importable ? 
 					// 	<Grid item xs={12} sm={1} className={classes.importGrid}>

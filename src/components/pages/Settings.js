@@ -369,20 +369,6 @@ function Settings(props) {
 		setError(false);
 		setSuccess(false);
 	};
-
-	const handleClickListItem = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleMenuItemClick = (event, index) => {
-		setSelectedIndex(index);
-		setAnchorEl(null);
-	};
-
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
-
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>

@@ -484,7 +484,8 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 						editable={editable} draggable={editable} shareable={shareable} 
 						songs={songs} setSongs={setSongs} currentIndex={currentIndex}
 						handleCurrentIndex={handleCurrentIndex} setChanged={setChanged}
-						setAutoPlay={setAutoPlay} />
+						setAutoPlay={setAutoPlay}
+						playlistID={playlist['_id']} />
 					</Grid>
 					
 					<Grid container item xs={12}>
