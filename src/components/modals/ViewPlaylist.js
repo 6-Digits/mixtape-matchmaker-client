@@ -199,7 +199,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				fetchAuthor();
 			}
 		}
-	}, [currentIndex, songs, liked]);
+	}, [currentIndex, songs, liked, autoPlay]);
 
 	const fetchAuthor = async() => {
 		let userID = importedAuthor;
@@ -462,7 +462,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 						<Media>
 							{mediaProps => (
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} />
+								<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} defaultVolume={0.25} />
 								<PlayerControls currentIndex={currentIndex} 
 									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
 									setAutoPlay={setAutoPlay} />

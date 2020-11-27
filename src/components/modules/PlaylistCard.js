@@ -72,12 +72,12 @@ function PlaylistCard({index, editable, song, author, genre, duration, img, src,
 				<Grid item xs={12} sm={5} className={classes.songDetails}>
 					<Typography variant="h4">{ song }</Typography>
 					<Typography>{ author }</Typography>
-					<Typography>{ genre }</Typography>
+					<Typography>{ genre.slice(0, 3).join(', ') }</Typography>
 				</Grid>
 				
 				{ editable ?
 				<Grid item xs={6} sm={1}>
-					<Button onClick={() => {handleDelete}} variant="text" className={classes.deleteSongButton}>
+					<Button onClick={handleDelete} variant="text" className={classes.deleteSongButton}>
 						<DeleteIcon className={classes.deleteIcon} />
 					</Button>
 				</Grid> : null

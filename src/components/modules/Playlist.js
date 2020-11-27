@@ -119,12 +119,12 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 				includeScore: false,
 				keys: [
 					{
-					name: 'title',
-					weight: 0.7
+						name: 'title',
+						weight: 0.7
 					},
 					{
-					name: 'author',
-					weight: 0.3
+						name: 'author',
+						weight: 0.3
 					}
 				]
 			};
@@ -140,15 +140,13 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 		let userToken = localStorage.getItem('userToken');
 		let requestOptions = {
 			method: 'POST',
-			headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
-			body: JSON.stringify(song)
-		};
-		let response = await fetch(api + '/mixtape/addSong', requestOptions);
+			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+		}
+		let response = await fetch(`${api}/mixtape/createSong/${song.videoId}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			song['uuid'] = uuidv4() + uuidv4();
-			song['_id'] = data;
-			let newSongList = [...songs, song];
+			data['uuid'] = uuidv4() + uuidv4();
+			let newSongList = [...songs, data];
 			setViewingSongs(newSongList);
 			setSongs(newSongList);	
 			setChanged(true);
@@ -179,7 +177,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 			>
 				<Grid item xs={6}>
 					{editable ? 
-					<SearchBar search={search} setSearch={setSearch} editable={editable} filterSongs={filterSongs} addSong={addSong}/>
+					<SearchBar search={search} setSearch={setSearch} filterSongs={filterSongs} addSong={addSong}/>
 					: null
 					}
 				</Grid>
