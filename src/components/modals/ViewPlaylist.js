@@ -156,7 +156,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const importedDesc = playlist ? playlist['description'] : "";
 	const importedThumbnail = playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder;
 	const importedLikeCount = playlist ? playlist['hearts'] : 0;
-	const importedComments = playlistData['comments'];
+	const importedComments = playlist ? playlist['comments'] : [];
 	const importedViewCount = playlist ? playlist['views'] ? playlist['views'] : 0 : 0;
 	const importedAuthor = playlist ? playlist['owner'] : null;
 	const importedName = playlist ? playlist['name'] : "";
@@ -179,6 +179,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const [songs, setSongs] = useState(importedSongs);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
+	const [comment, setComment] = useState('');
 	const [comments, setComments] = useState(importedComments);
 	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [autoPlay, setAutoPlay] = useState(false);
@@ -221,22 +222,12 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 		}
 	  };
 	
-	const handleOpen = () => {
-		// setViewCount(viewCount + 1);
-		// let requestOptions = {
-		// 	method: 'POST',
-		// 	headers: {'Content-Type': 'application/json'},
-		// 	body: JSON.stringify({mixtapeID: playlist['_id']})
-		// };
-		
-		// //fetch(`${api}/mixtape/view`, requestOptions);
-		
+	const handleOpen = () => {		
 		fetch(`${api}/mixtape/likedIDs/uid/${user['_id']}`, {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'},
 		}).then(async (res) => {
 			const data = await res.json();
-			//alert(data)
 			const found = playlist['_id'] in data;
 			setLiked(found);
 		}).catch((err) =>{
@@ -287,7 +278,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 					_id: playlistID,
 					name: playlistName,
 					description: description,
-					comments: [],
+					comments: comments.map((c) => c['_id']),
 					songList: songs.map((song) => song['_id']),
 					public: checkedPublic,
 					match: false,
@@ -297,7 +288,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 					headers: {'Content-Type': 'application/json'},
 					body: JSON.stringify(playlistData)
 				};
-				let response = await fetch(api + `/mixtape/updateMixtape/id/${playlistID}`, requestOptions);
+				let response = await fetch(`${api}/mixtape/updateMixtape/id/${playlistID}`, requestOptions);
 				if(response.status === 200) {
 					let data = await response.json();
 					setPlaylists(playlists.map(element=> {
@@ -340,7 +331,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				method: 'POST',
 				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
 			};
-			let response = await fetch(api + `/mixtape/deleteMixtape/id/${playlistID}`, requestOptions);
+			let response = await fetch(`${api}/mixtape/deleteMixtape/id/${playlistID}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
 				handleCloseDeleteDialog();
@@ -376,8 +367,46 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			fetch(`${api}/mixtape/like`, requestOptions).then((res) => {
 				setLiked(true);
 				setLikeCount(likeCount + 1);
-			}).catch((err) => {})
+			}).catch((err) => {
+				alert(`Failed to like mixtape: ${err}`);
+			})
 		}
+	}
+	
+	const handleComment = async () => {
+		let userToken = localStorage.getItem('userToken');
+		
+		if (comment && comment.trim() && userToken) {
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
+				body: JSON.stringify({user: user['_id'], text: comment})
+			};
+			let response = await fetch(`${api}/mixtape/createComment`, requestOptions);
+			if (response.status === 200) {
+				let data = await response.json();
+				let newComments = [data, ...comments]
+				setComments(newComments);
+				
+				let playlistID = playlist['_id'];
+				let playlistData = {
+					_id: playlist['_id'],
+					comments: newComments.map((c) => c['_id']),
+				};
+				let requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json'},
+					body: JSON.stringify(playlistData)
+				};
+				
+				fetch(`${api}/mixtape/updateMixtapeComments/id/${playlistID}`, requestOptions).catch((err) => {
+					alert(`Failed to create comment: ${err}`)
+				});
+			} else {
+				alert(`Failed to create comment: ${response.status}`);
+			}
+		}
+		setComment('');
 	}
 
 	
@@ -553,7 +582,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 					<Box
 						className={classes.commentBox}>
 						{
-							comments.map(({message, user, timestamp}, index) => {
+							comments.map((comment, index) => {
 								return( 
 								<Grid
 									container 
@@ -565,10 +594,10 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 									className={classes.comment}>
 									<Grid item xs={12}>
 										<Typography disableTypography className={classes.messageText}>
-										<Link>{user}</Link>{`: ${message}`}</Typography>
+										<Link>{comment.name}</Link>{`: ${comment.text}`}</Typography>
 									</Grid>
 									<Grid item xs={12}>
-										<Typography disableTypography className={classes.messageTS}>{timestamp}</Typography>
+										<Typography disableTypography className={classes.messageTS}>{comment.date}</Typography>
 									</Grid>
 								</Grid>
 								);
@@ -589,14 +618,16 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 								name="send-message"
 								label="Enter a message"
 								type="text"
+								value={comment}
 								multiline={true}
 								rows={2}
 								id="send-message"
 								className={classes.enterComment}
+								onChange={event => setComment(event.target.value)}
 								/>
 						</Grid>
 						<Grid item xs={1}>
-							<Button variant="contained" className={classes.sendMessageButton}>
+							<Button variant="contained" className={classes.sendMessageButton} onClick={handleComment}>
 								<SendIcon className={classes.sendMsgIcon}/>
 							</Button>
 						</Grid>
