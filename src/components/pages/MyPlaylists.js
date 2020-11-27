@@ -115,22 +115,24 @@ function MyPlaylists(props) {
 	  }, [myPlaylists]);
 
 	const addPlaylist = async() => {
-		let userToken = localStorage.getItem('userToken');
-		if(!loading && userToken){
-			setLoading(true);
-			let requestOptions = {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
-			};
-			let response = await fetch(`${api}/mixtape/createMixtape/uid/${props.user._id}`, requestOptions);
-			if(response.status === 200) {
-				let data = await response.json();
-				setLoading(false);
-				setMyPlaylists([...myPlaylists, data]);
-				setPlaylistCache([...myPlaylists, data]);
-			} else {
-				alert(`failed to fetch data with error status ${response.status}`);
-				setLoading(false);
+		if(myPlaylists.length <= 50) {
+			let userToken = localStorage.getItem('userToken');
+			if(!loading && userToken){
+				setLoading(true);
+				let requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+				};
+				let response = await fetch(`${api}/mixtape/createMixtape/uid/${props.user._id}`, requestOptions);
+				if(response.status === 200) {
+					let data = await response.json();
+					setLoading(false);
+					setMyPlaylists([...myPlaylists, data]);
+					setPlaylistCache([...myPlaylists, data]);
+				} else {
+					alert(`failed to fetch data with error status ${response.status}`);
+					setLoading(false);
+				}
 			}
 		}
 	};
@@ -232,6 +234,7 @@ function MyPlaylists(props) {
 						color="secondary"
 						className={classes.button}
 						onClick={props.user ? addPlaylist : null}
+						disabled={myPlaylists.length > 50}
 						aria-controls="add-playlist" aria-haspopup="true">
 							<AddIcon fontSize='large'></AddIcon>
 							{" Add"}

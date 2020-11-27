@@ -9,6 +9,7 @@ import MatchSettings from "../modals/MatchSettings";
 import GoMatch from "../modals/GoMatch";
 import ViewMatch from "../modals/ViewMatch";
 import playlistData from '../data/playlist.json';
+import placeholder from "../../assets/placeholder.png";
 
 const { keyboardControls } = utils;
 const importedSongs = playlistData['songs'];
@@ -48,9 +49,10 @@ function Matches({user, setUser}) {
 	const classes = useStyles();
 	const [width, setWidth] = useState(0);
 	const [changed, setChanged] = useState(false);
-	const [songs, setSongs] = useState(importedSongs);
+	const [songs, setSongs] = useState([]);
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
+	const [currentSong, setCurrentSong] = useState(songs ? songs[currentIndex] : null);
+	const [autoPlay, setAutoPlay] = useState(false);
 	
 	useEffect(() => {
 		function updateWidth() {
@@ -99,8 +101,10 @@ function Matches({user, setUser}) {
 						<Media>
 							{mediaProps => (
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src={currentSong.src} autoPlay={true} className={classes.player}/>
-								<PlayerControls currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex} />
+								<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} defaultVolume={0.25}/>
+								<PlayerControls currentIndex={currentIndex} 
+									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
+									setAutoPlay={setAutoPlay}  />
 							</div>
 							)}
 						</Media>
@@ -123,7 +127,7 @@ function Matches({user, setUser}) {
 				<Grid container item xs={12} sm={7}>
 					<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}
 					songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
-					setChanged={setChanged}/>
+					setChanged={setChanged} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
 					<Grid
 						container
 						direction="column"
