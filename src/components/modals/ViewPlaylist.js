@@ -154,7 +154,6 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	
 	const importedSongs = playlist ? playlist['songList'] : [];
 	const importedDesc = playlist ? playlist['description'] : "";
-	const importedThumbnail = playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder;
 	const importedLikeCount = playlist ? playlist['hearts'] : 0;
 	const importedComments = playlist ? playlist['comments'] : [];
 	const importedViewCount = playlist ? playlist['views'] ? playlist['views'] : 0 : 0;
@@ -164,8 +163,6 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 
 
 	const classes = useStyles();
-	const [undo, setUndo] = useState([]);
-	const [redo, setRedo] = useState([]);
 	const [error, setError] = useState(false);
 	const [changed, setChanged] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(errorDefault);
@@ -175,7 +172,6 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const [viewCount, setViewCount] = useState(importedViewCount);
 	const [likeCount, setLikeCount] = useState(importedLikeCount);
 	const [liked, setLiked] = useState(false);
-	const [thumbnail, setThumbnail] = useState(importedThumbnail);
 	const [playlistName, setPlaylistName] = useState(importedName);
 	const [profileImage, setProfileImage] = useState("https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg");
 	const [playlistAuthor, setPlaylistAuthor] = useState(null);
@@ -418,7 +414,11 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			<Card className={classes.root}>
 				<div className={classes.cardAction}>
 					<Button className={classes.cardMedia}>
-						<CardMedia component='img' className={classes.cardMedia} image={thumbnail} onClick={handleOpen}/>
+						<CardMedia component='img' className={classes.cardMedia} 
+						image={
+							playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder
+						} 
+						onClick={handleOpen}/>
 					</Button>
 					<CardContent className={classes.cardContent}>
 						{editable ? 
