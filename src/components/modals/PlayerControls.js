@@ -84,7 +84,7 @@ function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAut
 				</Grid>
 				
 				<Grid item xs={3} container>
-					<Slider value={currentTime} min={0} max={duration.toFixed(4)} step={1} onChange={handleSeek} className={classes.videoSlider}/>
+					<Slider value={currentTime} min={0} max={duration ? duration.toFixed(4) : 0} step={1} onChange={handleSeek} className={classes.videoSlider}/>
 				</Grid>
 				
 				<Grid item xs={1} container>

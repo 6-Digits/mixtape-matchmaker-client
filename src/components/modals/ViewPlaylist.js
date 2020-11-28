@@ -162,7 +162,10 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const importedName = playlist ? playlist['name'] : "";
 	const importPublic = playlist ? playlist['public'] ? playlist['public'] : false : false;
 
+
 	const classes = useStyles();
+	const [undo, setUndo] = useState([]);
+	const [redo, setRedo] = useState([]);
 	const [error, setError] = useState(false);
 	const [changed, setChanged] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(errorDefault);

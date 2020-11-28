@@ -83,11 +83,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const api = 'http://localhost:42069/api';
+// Change Stack Syntax
+/*
+	{
+		type : 'add' | 'swap' | 'remove'
+		start: currentIndex - default
+		end  : currentIndex - default
+		song : {} - Song to add
+	}
+*/
 
 function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay, playlistID}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [search, setSearch] = useState("");
 	const [viewingSongs, setViewingSongs] = useState(songs);
+	const [undo, setUndo] = useState([]);
+	const [redo, setRedo] = useState([]);
+
 	const shareLink = `${window.location.origin}/share/${playlistID}`;
 
 	const handleSortClick = (event) => {
@@ -99,14 +111,16 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 
 	function handleOnDragEnd(result) {
 		if (!result.destination) return;
+		if (result.destination.index === result.source.index) return;
 
-		const items = Array.from(viewingSongs);
-		const [reorderedItem] = items.splice(result.source.index, 1);
+		let items = Array.from(viewingSongs);
+		let [reorderedItem] = items.splice(result.source.index, 1);
 		items.splice(result.destination.index, 0, reorderedItem);
 
 		setChanged(true);
 		setViewingSongs(items);
 		setSongs(items);
+		createSwap(result.source.index, result.destination.index);
 	}
 
 	const classes = useStyles();
@@ -135,6 +149,117 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 		}
 	}
 
+	const createSwap = (start, end, stack = 'undo') => {
+		let swap = {
+			type : 'swap',
+			start: start,
+			end  : end,
+			song : {}
+		};
+		if(stack === 'undo') {
+			let undoCopy = undo.slice(undo.length > 10 ? 1 : 0);
+			undoCopy.push(swap);
+			setUndo(undoCopy);
+		} else {
+			let redoCopy = redo.slice(redo.length > 10 ? 1 : 0);
+			redoCopy.push(swap);
+			setRedo(redoCopy);
+		}
+	};
+	
+	const createAdd = (song, index, stack = 'undo') => {
+		let add = {
+			type : 'add',
+			start: index,
+			end  : index,
+			song : song
+		};
+		if(stack === 'undo') {
+			let undoCopy = undo.slice(undo.length > 10 ? 1 : 0);
+			undoCopy.push(add);
+			setUndo(undoCopy);
+		} else {
+			let redoCopy = redo.slice(redo.length > 10 ? 1 : 0);
+			redoCopy.push(add);
+			setRedo(redoCopy);
+		}
+	};
+
+	const createRemove = (song, index, stack = 'undo') => {
+		let remove = {
+			type : 'remove',
+			start: index,
+			end  : index,
+			song : song
+		};
+		if(stack === 'undo') {
+			let undoCopy = undo.slice(undo.length > 10 ? 1 : 0);
+			undoCopy.push(remove);
+			setUndo(undoCopy);
+		} else {
+			let redoCopy = redo.slice(redo.length > 10 ? 1 : 0);
+			redoCopy.push(remove);
+			setRedo(redoCopy);
+		}
+	};
+
+	const undoAction = () => {
+		let action = undo.slice(-1)[0];
+		if(action){
+			setUndo(undo.slice(0, -1)); //Pop
+			let items = Array.from(viewingSongs);
+			let type = action.type;
+			if(type === 'swap') {
+				let [reorderedItem] = items.splice(action.end, 1);
+				items.splice(action.start, 0, reorderedItem);
+				setChanged(true);
+				setViewingSongs(items);
+				setSongs(items);
+				createSwap(action.start, action.end, 'redo');
+			} else if(type === 'add') {
+				items.splice(action.start, 0, action.song);
+				setChanged(true);
+				setViewingSongs(items);
+				setSongs(items);
+				createRemove(action.song, action.start, 'redo');
+			} else if(type === 'remove') {
+				items.splice(action.start, 1);
+				setChanged(true);
+				setViewingSongs(items);
+				setSongs(items);
+				createAdd(action.song, action.start, 'redo');
+			}
+		}
+	};	
+	const redoAction = () => {
+		let action = redo.slice(-1)[0];
+		if(action){
+			setRedo(redo.slice(0, -1)); //Pop
+			let type = action.type;
+			let items = Array.from(viewingSongs);
+			if(type === 'swap') {
+				let [reorderedItem] = items.splice(action.start, 1);
+				items.splice(action.end, 0, reorderedItem);
+				setChanged(true);
+				setViewingSongs(items);
+				setSongs(items);
+				createSwap(action.start, action.end);
+			} else if(type === 'add') {
+				items.splice(action.start, 0, action.song);
+				setChanged(true);
+				setViewingSongs(items);
+				setSongs(items);
+				createRemove(action.song, action.start);
+			} else if(type === 'remove') {
+				items.splice(action.start, 1);
+				setChanged(true);
+				setViewingSongs(items);
+				setSongs(items);
+				createAdd(action.song, action.start);
+			}
+		}
+	};
+
 	const addSong = async(song) => {
 		let userToken = localStorage.getItem('userToken');
 		let requestOptions = {
@@ -146,6 +271,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 			let data = await response.json();
 			data['uuid'] = uuidv4() + uuidv4();
 			let newSongList = [...songs, data];
+			createRemove(data, songs.length);
 			setViewingSongs(newSongList);
 			setSongs(newSongList);	
 			setChanged(true);
@@ -153,9 +279,19 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 	};
 
 	const deleteSong = (uuid) => {
-		let newSongList = songs.filter(function(song) { 
+		let songIndex = -1;
+		let deletedSong = null;
+		let newSongList = songs.filter(function(song, index) { 
+			if(song['uuid'] === uuid){
+				songIndex = index;
+				deletedSong = song;
+			} 
 			return song['uuid'] !== uuid;
 		});
+		if(songIndex === -1 || !deletedSong) {
+			return;
+		}
+		createAdd(deletedSong, songIndex);
 		setViewingSongs(newSongList);
 		setSongs(newSongList);
 		setChanged(true);
@@ -187,6 +323,8 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 						variant="contained"
 						color="default"
 						className={classes.button}
+						disabled = {undo.length < 1}
+						onClick = {undoAction}
 						aria-controls="add-playlist" aria-haspopup="true">
 							<UndoIcon fontSize='large'></UndoIcon>
 						</Button>
@@ -199,7 +337,10 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 						variant="contained"
 						color="default"
 						className={classes.button}
-						aria-controls="add-playlist" aria-haspopup="true">
+						aria-controls="add-playlist" aria-haspopup="true"
+						disabled = {redo.length < 1}
+						onClick={redoAction}
+						>
 							<RedoIcon fontSize='large'></RedoIcon> 
 						</Button>
 				</Grid>
