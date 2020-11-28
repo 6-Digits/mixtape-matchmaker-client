@@ -346,7 +346,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 				</Grid>
 				: null }
 				
-				{	editable ? 
+				{	true ? 
 					null :
 					<Grid item xs={12} sm={1} className={classes.importGrid}>
 						<Button

@@ -142,6 +142,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	viewingTitle: {
 		marginTop: "1rem"
+	},
+	button: {
+		fontWeight: "bold"
 	}
 }));
 
@@ -460,9 +463,26 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			<Dialog fullWidth={true} maxWidth="xl" className={classes.modal} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
 				
 				<Grid container direction="row" justify="space-between" alignItems="center">
-					<Grid item xs={12} sm={6}>
+					<Grid item xs={6}>
 						<DialogTitle disableTypography id="form-dialog-title" className={classes.modalTitle}>View Playlist</DialogTitle>
 					</Grid>
+
+					{/* <Grid item xs={3} direction="row" justify="flex-end" 
+						className={classes.importGrid} alignItems="center" container>
+						{
+							editable ? 
+							<Grid item xs={6} container>
+								<Button variant="contained" onClick={savePlaylist} color="primary" className={classes.button}>
+								{"Save"}
+								</Button>
+							</Grid> : null
+						}
+						<Grid item xs={6} container>
+							<Button variant="contained" onClick={handleClose} color="secondary" className={classes.button}>
+								{ "exit"}
+							</Button>
+						</Grid>
+					</Grid>  */}
 
 					<Grid item xs={12} sm={1} className={classes.importGrid}>
 						<DialogActions>
