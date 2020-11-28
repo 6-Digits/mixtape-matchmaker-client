@@ -58,6 +58,17 @@ function Home({user, setUser}) {
 		let response = await fetch(`${api}/mixtape/popular`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
+			data = data.map((dict, index) => {
+				let totalLength = 0;
+				dict['songList'] = dict['songList'].map((song, i) => {
+					if(song['duration']){
+						totalLength += song['duration'];
+					}
+					return song;
+				});
+				dict['duration'] = totalLength
+				return dict;
+			});
 			setPopularPlaylists(data);
 		} else {
 			setPopularPlaylists([]);
@@ -72,6 +83,17 @@ function Home({user, setUser}) {
 		let response = await fetch(`${api}/mixtape/liked/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
+			data = data.map((dict, index) => {
+				let totalLength = 0;
+				dict['songList'] = dict['songList'].map((song, i) => {
+					if(song['duration']){
+						totalLength += song['duration'];
+					}
+					return song;
+				});
+				dict['duration'] = totalLength
+				return dict;
+			});
 			setLikedPlaylists(data);
 		} else {
 			setLikedPlaylists([]);

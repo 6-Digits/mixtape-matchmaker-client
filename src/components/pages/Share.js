@@ -62,6 +62,14 @@ function Share(props) {
 			let response = await fetch(`${api}/mixtape/viewMixtape/id/${id}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
+				let totalLength = 0;
+				data['songList'] = data['songList'].map((song, i) => {
+					if(song['duration']){
+						totalLength += song['duration'];
+					}
+					return song;
+				});
+				data['duration'] = totalLength
 				setPlaylists([data]);
                 setQuery(data['name']);
 			} else {

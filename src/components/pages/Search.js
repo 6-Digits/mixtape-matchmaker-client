@@ -68,6 +68,17 @@ function Search(props) {
 			let response = await fetch(`${api}/mixtape/search/${location.query}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
+				data = data.map((dict, index) => {
+					let totalLength = 0;
+					dict['songList'] = dict['songList'].map((song, i) => {
+						if(song['duration']){
+							totalLength += song['duration'];
+						}
+						return song;
+					});
+					dict['duration'] = totalLength
+					return dict;
+				});
 				setPlaylists(data);
 			} else {
 				setPlaylists([]);
@@ -77,6 +88,23 @@ function Search(props) {
 		}	
 	};
 
+
+	const sortPlaylistTitle = (ascending) => {
+		let playlistsTemp = playlists.map(element => {
+			return element;
+		});
+		playlistsTemp.sort((a, b) => ascending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
+		setPlaylists(playlistsTemp);
+		handleSortClose();
+	};
+
+	const sortPlaylistDuration = (ascending) => {
+		let playlistsTemp = Array.from(playlists);
+		playlistsTemp.sort((a, b) => ascending ? parseFloat(a.duration) - parseFloat(b.duration) : 
+											 parseFloat(b.duration) - parseFloat(a.duration) );
+		setPlaylists(playlistsTemp);
+		handleSortClose();
+	};
 
 	return (
 		<div className={classes.page}>
@@ -106,9 +134,10 @@ function Search(props) {
 							open={Boolean(sortAnchor)}
 							onClose={handleSortClose}
 						>
-							<MenuItem onClick={handleSortClose}>By Title</MenuItem>
-							<MenuItem onClick={handleSortClose}>By Duration</MenuItem>
-							<MenuItem onClick={handleSortClose}>By Author</MenuItem>
+							<MenuItem onClick={() => sortPlaylistTitle(true)}>By Title (Ascending)</MenuItem>
+							<MenuItem onClick={() => sortPlaylistTitle(false)}>By Title (Descending)</MenuItem>
+							<MenuItem onClick={() => sortPlaylistDuration(true)}>By Duration (Ascending)</MenuItem>
+							<MenuItem onClick={() => sortPlaylistDuration(false)}>By Duration (Descending)</MenuItem>
 						</Menu>
 					</Grid> 
 					

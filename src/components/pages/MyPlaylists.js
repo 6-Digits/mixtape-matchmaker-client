@@ -95,10 +95,15 @@ function MyPlaylists(props) {
 		if(response.status === 200) {
 			let data = await response.json();
 			data = data.map((dict, index) => {
+				let totalLength = 0;
 				dict['songList'] = dict['songList'].map((song, i) => {
 					song['uuid'] = uuidv4() + uuidv4();
+					if(song['duration']){
+						totalLength += song['duration'];
+					}
 					return song;
 				});
+				dict['duration'] = totalLength
 				return dict;
 			});
 			setMyPlaylists(data);
@@ -175,27 +180,19 @@ function MyPlaylists(props) {
 		}
 	}
 
-	const sortPlaylistTitle = () => {
+	const sortPlaylistTitle = (ascending) => {
 		let playlists = myPlaylists.map(element => {
 			return element;
 		});
-		playlists.sort((a, b) => a.name.localeCompare(b.name));
+		playlists.sort((a, b) => ascending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
 		setMyPlaylists(playlists);
 		handleSortClose();
 	};
 
-	const sortPlaylistDuration = () => {
-		let playlists = myPlaylists.map(element => {
-			let totalLength = 0;
-			element.songList.forEach(song=>{
-				if(song['duration']){
-					totalLength += song['duration'];
-				}
-			});
-			element['duration'] = totalLength;
-			return element;
-		});
-		playlists.sort(function(a, b){return b-a});
+	const sortPlaylistDuration = (ascending) => {
+		let playlists = Array.from(myPlaylists);
+		playlists.sort((a, b) => ascending ? parseFloat(a.duration) - parseFloat(b.duration) : 
+											 parseFloat(b.duration) - parseFloat(a.duration) );
 		setMyPlaylists(playlists);
 		handleSortClose();
 	};
@@ -257,8 +254,10 @@ function MyPlaylists(props) {
 							open={Boolean(sortAnchor)}
 							onClose={handleSortClose}
 						>
-							<MenuItem onClick={sortPlaylistTitle}>By Title</MenuItem>
-							<MenuItem onClick={sortPlaylistDuration}>By Duration</MenuItem>
+							<MenuItem onClick={() => sortPlaylistTitle(true)}>By Title (Ascending)</MenuItem>
+							<MenuItem onClick={() => sortPlaylistTitle(false)}>By Title (Descending)</MenuItem>
+							<MenuItem onClick={() => sortPlaylistDuration(true)}>By Duration (Ascending)</MenuItem>
+							<MenuItem onClick={() => sortPlaylistDuration(false)}>By Duration (Descending)</MenuItem>
 						</Menu>
 					</Grid> 
 				</Grid>
