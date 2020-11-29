@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography, InputBase, Button, Menu, MenuItem } from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { LibraryAdd as LibraryAddIcon, Sort as SortIcon, Search as SearchIcon, Undo as UndoIcon, Redo as RedoIcon, Share as ShareIcon } from '@material-ui/icons';
-import PlaylistCard from './PlaylistCard';
-import SearchBar from './SearchBar';
+import { Sort as SortIcon, Undo as UndoIcon, Redo as RedoIcon } from '@material-ui/icons';
+import PlaylistSongCard from './PlaylistSongCard';
+import PlaylistSearchBar from './PlaylistSearchBar';
 import Fuse from 'fuse.js'
 import { v4 as uuidv4 } from 'uuid';
 import ShareDropDown from "./ShareDropDown";
@@ -93,7 +93,7 @@ const api = 'http://localhost:42069/api';
 	}
 */
 
-function Playlist({title, importable, editable, draggable, shareable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay, playlistID}) {
+function Playlist({title, editable, draggable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay, playlistID}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [search, setSearch] = useState("");
 	const [viewingSongs, setViewingSongs] = useState(songs);
@@ -126,7 +126,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 	const classes = useStyles();
 
 	const filterSongs = (event) => {
-        setSearch(event.target.value);
+		setSearch(event.target.value);
 		if(event.target.value.length > 2){
 			let options = {
 				includeScore: false,
@@ -312,7 +312,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 			>
 				<Grid item xs={6}>
 					{editable ? 
-					<SearchBar search={search} setSearch={setSearch} filterSongs={filterSongs} addSong={addSong}/>
+					<PlaylistSearchBar search={search} setSearch={setSearch} filterSongs={filterSongs} addSong={addSong}/>
 					: null
 					}
 				</Grid>
@@ -394,7 +394,7 @@ function Playlist({title, importable, editable, draggable, shareable, songs, set
 										<Draggable key={uuid} draggableId={uuid} index={index} isDragDisabled={!draggable}>
 											{(provided) => (
 												<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-													<PlaylistCard 
+													<PlaylistSongCard 
 													index={index}
 													song={title} 
 													editable={editable}

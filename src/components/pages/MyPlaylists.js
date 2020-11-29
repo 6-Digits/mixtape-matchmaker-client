@@ -117,7 +117,7 @@ function MyPlaylists(props) {
 		if(search.length < 2) {
 			setPlaylistCache(myPlaylists);
 		}
-	  }, [myPlaylists]);
+	}, [myPlaylists]);
 
 	const addPlaylist = async() => {
 		if(myPlaylists.length <= 50) {
@@ -154,27 +154,23 @@ function MyPlaylists(props) {
 	const searchPlaylists = (event) => {
 		setSearch(event.target.value);
 		if(event.target.value.length > 2){
-			// clearTimeout(searchTimeout);
-			// // Make a new timeout set to go off in 500ms (.5 second)
-			// setSearchTimeout(setTimeout(function () {
-				//Search through the list using Fuse.js
-				let options = {
-					includeScore: false,
-					keys: [
-					  {
-						name: 'name',
-						weight: 0.7
-					  },
-					  {
-						name: 'description',
-						weight: 0.3
-					  }
-					]
-				  };
-				let fuse = new Fuse(playlistCache, options);
-				let result = fuse.search(search);
-				setMyPlaylists(result);
-			// }, 750));
+			// Search through the list using Fuse.js
+			let options = {
+				includeScore: false,
+				keys: [
+					{
+					name: 'name',
+					weight: 0.7
+					},
+					{
+					name: 'description',
+					weight: 0.3
+					}
+				]
+				};
+			let fuse = new Fuse(playlistCache, options);
+			let result = fuse.search(search);
+			setMyPlaylists(result);
 		} else {
 			setMyPlaylists(playlistCache);
 		}
@@ -191,8 +187,7 @@ function MyPlaylists(props) {
 
 	const sortPlaylistDuration = (ascending) => {
 		let playlists = Array.from(myPlaylists);
-		playlists.sort((a, b) => ascending ? parseFloat(a.duration) - parseFloat(b.duration) : 
-											 parseFloat(b.duration) - parseFloat(a.duration) );
+		playlists.sort((a, b) => ascending ? parseFloat(a.duration) - parseFloat(b.duration) : parseFloat(b.duration) - parseFloat(a.duration));
 		setMyPlaylists(playlists);
 		handleSortClose();
 	};
@@ -215,8 +210,8 @@ function MyPlaylists(props) {
 								<InputBase
 									placeholder="Search for playlist..."
 									classes={{
-											root: classes.inputRoot,
-											input: classes.inputInput,
+										root: classes.inputRoot,
+										input: classes.inputInput,
 									}}
 									inputProps={{ 'aria-label': 'search' }}
 									value={search}

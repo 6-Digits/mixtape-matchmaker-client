@@ -24,8 +24,6 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 	height = height ? height : 800;
 	
 	useEffect(() => {
-		// let userToken = JSON.parse(cookies.get('userToken'));
-		// let userToken = cookies['userToken'];
 		let userToken = localStorage.getItem('userToken');
 		if(userToken && user){
 			fetchPlaylists(userToken, user);

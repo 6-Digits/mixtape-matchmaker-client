@@ -99,11 +99,6 @@ function Home({user, setUser}) {
 			setLikedPlaylists([]);
 		}
 	};
-	
-	// useEffect(() => {
-	// 	fetchPopularPlaylists();
-	// 	fetchLikedPlaylists();
-	// }, [popularPlaylists, likedPlaylists]);
 
 	return (
 		<div>
