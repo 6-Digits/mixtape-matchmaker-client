@@ -14,6 +14,7 @@ const options = [
 
 const useStyles = makeStyles((theme) => ({
 	mainContainer: {
+		marginTop: "0.5rem",
 		padding: '0 0 0 1rem',
 		borderRadius: "0",
 		display: "flex",
