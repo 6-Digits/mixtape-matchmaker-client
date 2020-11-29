@@ -54,15 +54,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 const api = 'http://localhost:42069/api';
 
-function SearchBar({search, setSearch, local, filterSongs, addSong}) {
+function PlaylistSearchBar({search, setSearch, local, filterSongs, addSong}) {
 	const [loading, setLoading] = useState(true);
 	const [typed, setTyped] = useState("");
 	const [open, setOpen] = useState(false);
 	const [options, setOptions] = useState([]);
 	const [canceled, setCanceled] = useState(false);
 	const [timeout, setTimeOut] = useState(null);
-	// const controller = new window.AbortController();
-	// const { signal } = controller;
 
 	const id = 'search-popper';
 	const anchorRef = useRef(null);
@@ -164,4 +162,4 @@ function SearchBar({search, setSearch, local, filterSongs, addSong}) {
 	);
 }
 
-export default SearchBar;
+export default PlaylistSearchBar;
