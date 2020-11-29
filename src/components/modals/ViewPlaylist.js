@@ -6,7 +6,6 @@ import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
 import PlayerControls from "./PlayerControls";
 import placeholder from "../../assets/placeholder.png";
-import playlistData from '../data/playlist.json';
 
 const { keyboardControls } = utils;
 
@@ -222,7 +221,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 		} else {
 			setPlaylistAuthor('User not found');
 		}
-	  };
+	};
 	
 	const handleOpen = () => {		
 		fetch(`${api}/mixtape/likedIDs/uid/${user['_id']}`, {
@@ -280,10 +279,8 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 					_id: playlistID,
 					name: playlistName,
 					description: description,
-					comments: comments.map((c) => c['_id']),
 					songList: songs.map((song) => song['_id']),
 					public: checkedPublic,
-					match: false,
 				};
 				let requestOptions = {
 					method: 'POST',
@@ -384,26 +381,11 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
 				body: JSON.stringify({user: user['_id'], text: comment})
 			};
-			let response = await fetch(`${api}/mixtape/createComment`, requestOptions);
+			let response = await fetch(`${api}/mixtape/createComment/mid/${playlist['_id']}`, requestOptions);
 			if (response.status === 200) {
 				let data = await response.json();
 				let newComments = [data, ...comments]
 				setComments(newComments);
-				
-				let playlistID = playlist['_id'];
-				let playlistData = {
-					_id: playlist['_id'],
-					comments: newComments.map((c) => c['_id']),
-				};
-				let requestOptions = {
-					method: 'POST',
-					headers: {'Content-Type': 'application/json'},
-					body: JSON.stringify(playlistData)
-				};
-				
-				fetch(`${api}/mixtape/updateMixtapeComments/id/${playlistID}`, requestOptions).catch((err) => {
-					alert(`Failed to create comment: ${err}`)
-				});
 			} else {
 				alert(`Failed to create comment: ${response.status}`);
 			}
