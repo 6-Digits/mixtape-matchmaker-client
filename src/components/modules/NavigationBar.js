@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Divider, ListItem, ListItemText, Button } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Divider, ListItem, ListItemText, Button, ListItemIcon } from '@material-ui/core';
 import { Menu as MenuIcon, Search as SearchIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
 import Notifications from "../modals/Notifications.js";
 import AccountDropDown from "./AccountDropDown.js";
 import logo from "../../assets/logo.png";
+import HomeIcon from '@material-ui/icons/Home';
+import QueueMusicIcon from '@material-ui/icons/QueueMusic';
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import InfoIcon from '@material-ui/icons/Info';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -211,12 +215,15 @@ function NavigationBar(props) {
 				<Divider />
 				<List>
 					<ListItem button key='Home' component='a' href='/home'>
-						<ListItemText primary='Home' />
+						<ListItemIcon><HomeIcon></HomeIcon></ListItemIcon>
+						<ListItemText primary='Home'></ListItemText>
 					</ListItem>
 					<ListItem button key='My Playlists' component='a' href='/myplaylists'>
+						<ListItemIcon><QueueMusicIcon></QueueMusicIcon></ListItemIcon>
 						<ListItemText primary='My Playlists' />
 					</ListItem>
 					<ListItem button key='Matches' component='a' href='/matches'>
+						<ListItemIcon><LoyaltyIcon></LoyaltyIcon></ListItemIcon>
 						<ListItemText primary='Matches' />
 					</ListItem>
 				</List>
@@ -224,6 +231,7 @@ function NavigationBar(props) {
 				<Divider />
 				<List>
 					<ListItem button key='About' component='a' href='/about'>
+						<ListItemIcon><InfoIcon></InfoIcon></ListItemIcon>
 						<ListItemText primary='About' />
 					</ListItem>
 				</List>
