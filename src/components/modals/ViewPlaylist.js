@@ -61,7 +61,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 	playlistDescription: {
 		overflowY: "auto",
-		height: '20vh'
+		height: '12vh',
+		backgroundColor: theme.palette.background.default,
+		borderRadius: '0.25rem'
+	},
+	description: {
+		padding: '0.5rem',
+		fontSize: '1.5rem'
 	},
 	playlistAuthor: {
 		overflowX: "auto"
@@ -571,8 +577,6 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 						fullWidth
 						multiline
 						rows={5}
-						variant="outlined"
-						margin="normal"
 						id="playlistDescription"
 						label="Playlist Description"
 						name="playlistDescription"
@@ -580,7 +584,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 						onChange={descriptionChange}
 						/>
 						:
-						<Typography variant="h6">{description}</Typography>
+						<div variant="h6" className={classes.description}>{description}</div>
 						}
 					</Grid>
 				</Grid>

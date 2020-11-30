@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 	dragBox: {
 		padding: "1rem 2rem 1rem 0rem",
 		borderRadius: "0.25rem",
-		backgroundColor: theme.palette.text.secondary,
+		backgroundColor: theme.palette.background.default,
 		overflowY: "auto",
 		height: "60vh"
 	},
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	messageBoard: {
 		padding: "1rem 1rem 1rem 2rem",
-		backgroundColor: theme.palette.text.secondary,
+		backgroundColor: theme.palette.background.default,
 		overflowY: "auto",
 		height: "50vh",
 		borderRadius: "0.25rem",
