@@ -96,7 +96,7 @@ function Matches({user, setUser}) {
 		}
 		window.addEventListener('resize', updateWidth);
 		updateWidth();
-		let userToken = localStorage.setItem('userToken', userToken);
+		let userToken = localStorage.getItem('userToken', userToken);
 		fetchMatchPlaylist(userToken, user);
 		return () => window.removeEventListener('resize', updateWidth);
 	}, []);
