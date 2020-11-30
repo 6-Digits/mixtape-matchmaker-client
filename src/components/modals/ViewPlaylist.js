@@ -293,6 +293,13 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 					setPlaylists(playlists.map(element=> {
 						if(element['_id'] == playlistID) {
 							playlistData['songList'] = songs;
+							let totalLength = 0;
+							playlistData['songList'].forEach((song, i) => {
+								if(song['duration']){
+									totalLength += song['duration'];
+								}
+							});
+							playlistData['duration'] = totalLength;
 							return playlistData;
 						}
 						return element;
@@ -588,6 +595,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 					<Box
 						className={classes.commentBox}>
 						{
+							comments ?
 							comments.map((comment, index) => {
 								return( 
 								<Grid
@@ -607,7 +615,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 									</Grid>
 								</Grid>
 								);
-							})
+							}) : null
 						}
 					</Box>
 					<Grid
