@@ -63,7 +63,7 @@ function About(props) {
 								variant="contained"
 								size="large"
 								color="primary"
-								>Back to Home</Button>
+								>Back to Previous Page</Button>
 						</div>
 					</div>
 					<img src={logo} className={classes.logo}/>
