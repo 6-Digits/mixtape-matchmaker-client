@@ -47,8 +47,8 @@ function MatchChatCard(props) {
 			<Grid container direction="row" justify="space-between" alignItems="center" className={classes.content}>
 				<Grid item xs={12} sm={9}>
 					<CardActionArea className={classes.clickArea}>
-						<Grid container alignItems="center">
-							<Grid item xs={12} sm={5}>
+						<Grid container alignItems="center" >
+							<Grid item xs={12} sm={5} onClick={props.handleSelectedChat(props.index)}>
 								<Avatar variant="rounded" src={props.recipient.imgSrc} className={classes.profileImg}></Avatar>
 							</Grid>
 							<Grid item xs={12} sm={7}>

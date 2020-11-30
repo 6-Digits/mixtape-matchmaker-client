@@ -196,7 +196,8 @@ function ViewMatch(props) {
 																<MatchChatCard
 																	recipient={chat.recipient}
 																	id={chat._id}
-																	//onClick={handleSelectedChat(index)}
+																	handleSelectedChat={handleSelectedChat}
+																	index={index}
 																></MatchChatCard>
 															</div>
 														)}
