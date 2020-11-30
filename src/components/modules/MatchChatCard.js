@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 		height: "100%"
 	},
 	dislikeButton: {
-
+		backgroundColor: theme.palette.background.default
 	},
 	dislikeImg: {
 

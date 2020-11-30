@@ -31,13 +31,71 @@ const useStyles = makeStyles((theme) => ({
 	dragBox: {
 		padding: "1rem 2rem 1rem 0rem",
 		borderRadius: "0.25rem",
-		backgroundColor: theme.palette.text.secondary,
+		backgroundColor: theme.palette.background.default,
 		overflowY: "auto",
 		height: "60vh"
 	},
 	card: {
 		marginTop: "1rem",
 	},
+	messageBoard: {
+		padding: "1rem 1rem 1rem 2rem",
+		backgroundColor: theme.palette.background.default,
+		overflowY: "auto",
+		height: "50vh",
+		borderRadius: "0.25rem",
+		width: "100%"
+	},
+	myMessage: {
+		width: "55%",
+		margin: "8px",
+		padding: "12px 8px",
+		borderRadius: "4px",
+		backgroundColor: "#0084ff",
+		marginLeft: "auto",
+	},
+	receivedMessage: {
+		width: "55%",
+		margin: "8px",
+		padding: "12px 8px",
+		borderRadius: "4px",
+		backgroundColor: "#3f4042",
+		marginRight: "auto",
+	},
+	message: {
+		marginTop: "1rem",
+		padding: "1rem 1rem 1rem 1rem",
+		backgroundColor: theme.palette.background.paper,
+		borderRadius: "0.5rem",
+	},
+	messageText: {
+		fontSize: "1.5rem",
+		color: theme.palette.text.primary
+	},
+	messageTS: {
+		fontsize: "0.5rem",
+		color: theme.palette.text.disabled
+	},
+	sendMsgComponent: {
+		width: "100%",
+		height: "5vh",
+		marginBottom: "5rem"
+	},
+	enterMessageField: {
+		marginLeft: "-1.5rem",
+		width: "115%",
+		height: "4vh"
+	},
+	sendMsgIcon: {
+		width: "100%",
+		height: "5vh"
+	},
+	sendMessageButton: {
+		width: "80%",
+		height: "100%",
+		marginLeft: "3.5rem",
+		marginTop: "1.5rem"
+	}
 }));
 
 const matchedPeople = matchData['people'];
