@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme)=>({
 	
 }));
 
-function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAutoPlay, name, author}) {
+function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAutoPlay, name}) {
 	const classes = useStyles();
 	const { volume, duration, currentTime } = media;
 	
@@ -85,9 +85,12 @@ function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAut
 				</Grid>
 
 				<Grid item xs={6} container direction="row" justify="space-between" >
-					{name && author ? 
+					{ name ?  
 						<Grid item xs={12} container justify="center" className={classes.marquee}>
-							<Marquee delay={1000} direction="left" className={classes.marqueeText}>{`${name} - ${author}`}</Marquee>
+							{ name.length > 48 ? 
+								<Marquee delay={1000} direction="left" className={classes.marqueeText}>{`${name}`}</Marquee> : 
+								<div className={classes.marqueeText}>{`${name}`}</div>
+							}
 						</Grid>
 						: null
 					}
