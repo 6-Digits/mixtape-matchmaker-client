@@ -59,6 +59,7 @@ const matchPlaylistAPI = "http://localhost:42069/api/match/mixtape/uid/:uid";
 const errorDefault = "Could not save the playlist for some reason. You may be disconnected from the network or the server is down.";
 const errorTitle = "The title is either too long (More than 255 Characters) or empty. Please enter a valid title!";
 const errorDescription = "The description is too long (More than 5000 characters). Please enter a valid description!";
+const api = 'http://localhost:42069/api';
 
 function Matches({user, setUser}) {
 	const classes = useStyles();
@@ -73,7 +74,7 @@ function Matches({user, setUser}) {
 	const [errorMsg, setErrorMsg] = useState(errorDefault);
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	
+
 	useEffect(() => {
 		function updateWidth() {
 			setWidth(window.innerWidth);
