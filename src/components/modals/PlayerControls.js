@@ -2,21 +2,27 @@ import React, { useState, useEffect } from 'react'
 import { withMediaProps, utils } from 'react-media-player'
 import { Grid, IconButton, Slider, makeStyles, Avatar } from '@material-ui/core';
 import { PauseCircleFilled, PlayCircleFilled, SkipPrevious, SkipNext, VolumeUp, VolumeDown, VolumeOff, Fullscreen, FullscreenExit } from '@material-ui/icons';
+import Marquee from 'react-double-marquee';
+
 const { formatTime } = utils;
 const useStyles = makeStyles((theme)=>({
 	videoSlider: {
-		marginLeft: "-1rem"
 	},
 	volumeSlider: {
-		marginLeft: "-1rem"
 	},
 	imgSrc: {
 		height: "4rem",
 		width: "7rem"
-	}
+	},
+	marquee: {
+		whiteSpace: 'nowrap',
+		fontWeight: 'bold',
+		fontFamily: 'Lucida Console'
+	},
+	
 }));
 
-function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAutoPlay}) {
+function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAutoPlay, name, author}) {
 	const classes = useStyles();
 	const { volume, duration, currentTime } = media;
 	
@@ -60,7 +66,7 @@ function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAut
 				<Grid item xs={1}>
 					<Avatar variant="square" className={classes.imgSrc} src={imgUrl}></Avatar>
 				</Grid>
-				<Grid item xs={1} container>
+				<Grid item xs={1} container variant='outlined'>
 					<IconButton onClick={handlePrevious}>
 						<SkipPrevious fontSize="large" />
 					</IconButton>
@@ -77,23 +83,32 @@ function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAut
 						<SkipNext fontSize="large" />
 					</IconButton>
 				</Grid>
-				<Grid item xs={1} container>
-					<time>
-						{formatTime(media.currentTime)}
-					</time>
+
+				<Grid item xs={6} container direction="row" justify="space-between" >
+					{name && author ? 
+						<Grid item xs={12} container justify="center" className={classes.marquee}>
+							<Marquee delay={1000} direction="left" className={classes.marqueeText}>{`${name} - ${author}`}</Marquee>
+						</Grid>
+						: null
+					}
+					<Grid item xs={12} container justify="space-between" alignItems="center">
+						<Grid item xs={2} container justify="center">
+							<time>
+								{formatTime(media.currentTime)}
+							</time>
+						</Grid>
+						<Grid item xs={8} container justify="center">
+							<Slider value={currentTime} min={0} max={duration ? duration.toFixed(4) : 0} step={1} onChange={handleSeek} className={classes.videoSlider}/>
+						</Grid>
+						<Grid item xs={2} container  justify="center">
+							<time>
+								{formatTime(media.duration)}
+							</time>
+						</Grid>
+					</Grid>
 				</Grid>
 				
-				<Grid item xs={3} container>
-					<Slider value={currentTime} min={0} max={duration ? duration.toFixed(4) : 0} step={1} onChange={handleSeek} className={classes.videoSlider}/>
-				</Grid>
-				
-				<Grid item xs={1} container>
-					<time>
-						{formatTime(media.duration)}
-					</time>
-				</Grid>
-				
-				<Grid item xs={1} container>
+				<Grid item xs={1} container justify='center'>
 					<IconButton onClick={handleMuteUnmute}>
 						{media.isMuted ? <VolumeOff /> : volume > 0.5 ? <VolumeUp /> : <VolumeDown />}
 					</IconButton>

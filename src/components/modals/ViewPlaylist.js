@@ -185,7 +185,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const [playlistAuthor, setPlaylistAuthor] = useState(null);
 	const [songs, setSongs] = useState(importedSongs);
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [currentSong, setCurrentSong] = useState(songs[currentIndex]);
+	const [currentSong, setCurrentSong] = useState(songs ? songs[currentIndex] : null);
 	const [comment, setComment] = useState('');
 	const [comments, setComments] = useState(importedComments);
 	const [deleteOpen, setDeleteOpen] = useState(false);
@@ -512,6 +512,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
 								<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} defaultVolume={0.25} />
 								<PlayerControls currentIndex={currentIndex} 
+									name={currentSong ? currentSong['title'] : null} author={currentSong ? currentSong['author'] : null}
 									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
 									setAutoPlay={setAutoPlay} />
 							</div>

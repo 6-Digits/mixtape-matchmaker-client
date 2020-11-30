@@ -87,8 +87,10 @@ function Matches({user, setUser}) {
 	}, []);
 	
 	useEffect(() => {
-		setCurrentSong(songs[currentIndex]);
-	}, [currentIndex]);
+		if(songs){
+			setCurrentSong(songs[currentIndex]);
+		}
+	}, [currentIndex, songs, autoPlay]);
 	
 	const handleCurrentIndex = (value) => {
 		if (value >= songs.length) {
@@ -127,12 +129,14 @@ function Matches({user, setUser}) {
 				<Button variant="contained" color="secondary" className={classes.saveButton}>Save Changes</Button>
 				<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}
 									songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
-									setChanged={setChanged} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
+									setChanged={setChanged} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}
+									setAutoPlay={setAutoPlay} />
 				<Media>
 					{mediaProps => (
 					<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
 						<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} defaultVolume={0.25}/>
 						<PlayerControls currentIndex={currentIndex} 
+							name={currentSong ? currentSong['title'] : null} author={currentSong ? currentSong['author'] : null}
 							handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
 							setAutoPlay={setAutoPlay}  />
 					</div>
