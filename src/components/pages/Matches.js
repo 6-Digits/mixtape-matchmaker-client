@@ -139,9 +139,9 @@ function Matches({user, setUser}) {
 		let response = await fetch(`${api}/match/mixtape/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			setSongs(data['songs'] ? data['songs'] : []);
-			setCurrentSong(data['songs'] ? data['songs'][currentIndex] : null);
-			setDescription(data['description'] ? data['name'] : "");
+			setSongs(data['songList'] ? data['songList'] : []);
+			setCurrentSong(data['songList'] ? data['songList'][currentIndex] : null);
+			setDescription(data['description'] ? data['description'] : "");
 			setTitle(data['name'] ? data['name'] : "");
 			setPlaylistID(data['_id'] ? data['_id'] : "");
 		} else {
@@ -161,7 +161,7 @@ function Matches({user, setUser}) {
 			setError(true);
 			setErrorMsg(errorPlaylist);
 		} else {
-			let userToken = localStorage.setItem('userToken', userToken);
+			let userToken = localStorage.getItem('userToken', userToken);
 			let playlistData = {
 				name: title,
 				description: description,
@@ -172,7 +172,7 @@ function Matches({user, setUser}) {
 				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
 				body: JSON.stringify(playlistData)
 			};
-			let response = await fetch(`${api}/match/mixtape/mid/${user._id}`, requestOptions);
+			let response = await fetch(`${api}/match/mixtape/mid/${playlistID}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
 				setSuccess(true);
@@ -230,7 +230,7 @@ function Matches({user, setUser}) {
 					style={{width: width > 599 ? null : '100%' }}
 					>
 					<Grid container item xs={12}>
-						<MatchSettings></MatchSettings>
+						<MatchSettings user={user}></MatchSettings>
 					</Grid>
 					<Grid container item xs={12}>
 						<GoMatch></GoMatch>
