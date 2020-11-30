@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	commentBox: {
 		width:'95%',
-		height: '40vh',
+		maxHeight: '40vh',
 		overflowY: 'auto',
 	},
 	messageText: {
@@ -592,32 +592,6 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 					direction="column"
 					className={classes.commentSection}
 					fullWidth>
-					<Box
-						className={classes.commentBox}>
-						{
-							comments ?
-							comments.map((comment, index) => {
-								return( 
-								<Grid
-									container 
-									xs={12}
-									direction="column"
-									justify="flex-start"
-									alignItems="flex-start"
-									spacing={0}
-									className={classes.comment}>
-									<Grid item xs={12}>
-										<Typography disableTypography className={classes.messageText}>
-										<Link>{comment.name}</Link>{`: ${comment.text}`}</Typography>
-									</Grid>
-									<Grid item xs={12}>
-										<Typography disableTypography className={classes.messageTS}>{comment.date}</Typography>
-									</Grid>
-								</Grid>
-								);
-							}) : null
-						}
-					</Box>
 					<Grid
 						container
 						justify="center"
@@ -646,6 +620,32 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 							</Button>
 						</Grid>
 					</Grid>
+					<Box
+						className={classes.commentBox}>
+						{
+							comments ?
+							comments.map((comment, index) => {
+								return( 
+								<Grid
+									container 
+									xs={12}
+									direction="column"
+									justify="flex-start"
+									alignItems="flex-start"
+									spacing={0}
+									className={classes.comment}>
+									<Grid item xs={12}>
+										<Typography disableTypography className={classes.messageText}>
+										<Link>{comment.name}</Link>{`: ${comment.text}`}</Typography>
+									</Grid>
+									<Grid item xs={12}>
+										<Typography disableTypography className={classes.messageTS}>{comment.date}</Typography>
+									</Grid>
+								</Grid>
+								);
+							}) : null
+						}
+					</Box>
 				</Grid>
 			</Dialog>
 		</div>
