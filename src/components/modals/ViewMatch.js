@@ -112,7 +112,7 @@ function ViewMatch(props) {
 	const [matches, setMatches] = useState(matchedPeople);
 	const [chats, setChats] = useState([]);
 	const [open, setOpen] = useState(false);
-	const [currentChat, setCurrentChat] = useState(null);
+	const [currentChat, setCurrentChat] = useState(0);
 
 	const fetchMyChats = async(user) => {
 		let requestOptions = {
@@ -141,13 +141,13 @@ function ViewMatch(props) {
 		items.splice(result.destination.index, 0, reorderedItem);
 		setMatches(items);
 	}
-	const handleSelectedChat = (event) => {
-		//alert(event)
+	const handleSelectedChat = (index) => {
+		alert(index)
+		setCurrentChat(index)
 	}
 	const handleOpen = () => {
 		setOpen(true);
 	};
-
 	const handleClose = () => {
 		setOpen(false);
 	};
@@ -194,10 +194,10 @@ function ViewMatch(props) {
 														{(provided) => (
 															<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 																<MatchChatCard
-																	name={chat.user1 != props.user._id ? chat.user1 : chat.user2}
+																	recipient={chat.recipient}
 																	id={chat._id}
-																	onClick={handleSelectedChat}
-																/>
+																	//onClick={handleSelectedChat(index)}
+																></MatchChatCard>
 															</div>
 														)}
 													</Draggable>
@@ -210,7 +210,7 @@ function ViewMatch(props) {
 							</div>
 						</DragDropContext>
 					</Grid>
-					<ViewChat user={props.user} currentChat={chats[0]}></ViewChat>
+					<ViewChat user={props.user} currentChat={chats[currentChat]}></ViewChat>
 				</Grid>
 			</Dialog>
 		</div>

@@ -37,10 +37,10 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-function MatchChatCard({name, src}) {
+function MatchChatCard(props) {
 	const classes = useStyles();
 	
-	src = src ? src : "https://em.wattpad.com/e4221541680f315f5ae6be4e68a4849b66f9edc6/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f563465566c7463467142753963513d3d2d3537383031383537372e313533306363663163386637343662623638393430393337353532302e676966";
+	let src = src ? src : "https://em.wattpad.com/e4221541680f315f5ae6be4e68a4849b66f9edc6/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f563465566c7463467142753963513d3d2d3537383031383537372e313533306363663163386637343662623638393430393337353532302e676966";
 	
 	return (
 		<Card className={classes.card}>
@@ -49,10 +49,10 @@ function MatchChatCard({name, src}) {
 					<CardActionArea className={classes.clickArea}>
 						<Grid container alignItems="center">
 							<Grid item xs={12} sm={5}>
-								<Avatar variant="rounded" src={src} className={classes.profileImg}></Avatar>
+								<Avatar variant="rounded" src={props.recipient.imgSrc} className={classes.profileImg}></Avatar>
 							</Grid>
 							<Grid item xs={12} sm={7}>
-								<Typography variant="h6" className={classes.profileName}>{name}</Typography>
+								<Typography variant="h6" className={classes.profileName}>{props.recipient.userName}</Typography>
 							</Grid>
 						</Grid>
 					</CardActionArea>
