@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
 		padding: theme.spacing(1, 0, 1, 0),
 		margin: theme.spacing(3, 0, 3, 0),
 		borderRadius: "0.25rem",
-		backgroundColor: theme.palette.text.disabled,
+		backgroundColor: theme.palette.background.default,
 		overflowY: "auto",
 		width: '100%',
 		height: '60vh'

@@ -112,7 +112,7 @@ function PlaylistSearchBar({search, setSearch, local, filterSongs, addSong}) {
 	return (
 		<div className={classes.search}>
 			<div className={classes.searchIcon}>
-					{loading ? <CircularProgress/> :
+					{loading ? <CircularProgress size={25}/> :
 					<SearchIcon /> }
 			</div>
 			<InputBase

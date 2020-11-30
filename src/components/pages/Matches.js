@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Grid, TextField} from '@material-ui/core';
+import { Grid, TextField, Button} from '@material-ui/core';
 import { Media, Player, utils } from 'react-media-player'
 import PlayerControls from "../modals/PlayerControls";
 import NavigationBar from '../modules/NavigationBar';
@@ -18,6 +18,14 @@ const useStyles = makeStyles((theme) => ({
 	form: {
 		width: '100%'
 	},
+	saveButton: {
+		fontWeight: "bold",
+		position: "absolute",
+		top: '6rem',
+		right: '1rem',
+		height: '3rem',
+		width: '10rem'
+	},
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 		fontWeight: "bold",
@@ -25,25 +33,32 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: "1.5rem"
 	},
 	content: {
-		marginTop: "5vh",
+		padding: "0 1rem 0 1rem",
+		background: theme.palette.background.paper
 	},
 	fullHeight: {
 		height: "100%"
 	},
-	playlistEdit: {
-		marginTop: "1rem",
-		padding: "0 0 2vh 0"
-	},
 	media: {
-		position: 'relative',
+		marginTop: '1rem',
 		height: '100%',
 		width: '100%',
 	},
 	player: {
-		width: '100%',
-		height: '100%',
+		display: 'none'
 	},
+	playlistContainer: {
+		padding: '1rem 1rem 1rem 1rem'
+	},
+	descContainer: {
+		marginTop: '1rem'
+	}
 }));
+
+const matchPlaylistAPI = "http://localhost:42069/api/match/mixtape/uid/:uid";
+const errorDefault = "Could not save the playlist for some reason. You may be disconnected from the network or the server is down.";
+const errorTitle = "The title is either too long (More than 255 Characters) or empty. Please enter a valid title!";
+const errorDescription = "The description is too long (More than 5000 characters). Please enter a valid description!";
 
 function Matches({user, setUser}) {
 	const classes = useStyles();
@@ -53,6 +68,11 @@ function Matches({user, setUser}) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [currentSong, setCurrentSong] = useState(songs ? songs[currentIndex] : null);
 	const [autoPlay, setAutoPlay] = useState(false);
+	const [error, setError] = useState(false);
+	const [success, setSuccess] = useState(false);
+	const [errorMsg, setErrorMsg] = useState(errorDefault);
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
 	
 	useEffect(() => {
 		function updateWidth() {
@@ -61,6 +81,7 @@ function Matches({user, setUser}) {
 		window.addEventListener('resize', updateWidth);
 		updateWidth();
 		return () => window.removeEventListener('resize', updateWidth);
+
 	}, []);
 	
 	useEffect(() => {
@@ -79,80 +100,101 @@ function Matches({user, setUser}) {
 		}
 	}
 	
+	const titleChange = (e) => {
+		setTitle(e.target.value);
+		setError(false);
+		setSuccess(false)
+	}
+
+	const descriptionChange = (e) => {
+		setDescription(e.target.value);
+		setError(false);
+		setSuccess(false)
+	}
+
 	return (
 		<div style={{height: width > 599 ? "100vh" : "100%"}}>
 			<NavigationBar setUser={setUser} user={user} pageName='My Matches'></NavigationBar>
 			<Grid
 				container
-				direction="row"
+				direction="column"
+				alignItems="center"
+				justify="center"
+				className={classes.playlistContainer}
+				>
+				<Button variant="contained" color="secondary" className={classes.saveButton}>Save Changes</Button>
+				<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}
+									songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
+									setChanged={setChanged} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
+				<Media>
+					{mediaProps => (
+					<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
+						<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} defaultVolume={0.25}/>
+						<PlayerControls currentIndex={currentIndex} 
+							handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
+							setAutoPlay={setAutoPlay}  />
+					</div>
+					)}
+				</Media>
+			</Grid>
+					{error ? <div className={classes.error}>{errorMsg}</div> : null}
+					{success ? <div className={classes.success}>{"Changes have been saved successfully!"}</div> : null}
+			<Grid
+				container
+				direction={width > 599 ? "row" : "column"}
 				justify="center"
 				alignItems="center"
+				justify="space-between"
 				className={classes.content}
+				fullWidth
 			>
 				<Grid 
-					container
 					direction="column"
-					justify="space-evenly"
+					justify="space-between"
 					alignItems="center"
-					item xs={12} sm={4}
-					spacing={1}
-					style={{marginTop: width > 599 ? "4rem" : "0"}}>
-					<Grid container item xs={12} sm={11}>	
-						<Media>
-							{mediaProps => (
-							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} defaultVolume={0.25}/>
-								<PlayerControls currentIndex={currentIndex} 
-									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
-									setAutoPlay={setAutoPlay}  />
-							</div>
-							)}
-						</Media>
+					item 
+					xs={width > 599 ? 4 : 12}
+					style={{width: width > 599 ? null : '100%' }}
+					>
+					<Grid container item xs={12}>
+						<MatchSettings></MatchSettings>
 					</Grid>
-					<Grid container item xs={12} sm={11}
-						direction="column"
-						justify="center"
-						alignItems="center">	
-						<Grid container item xs={12} fullWidth>
-							<MatchSettings></MatchSettings>
-						</Grid>
-						<Grid container item xs={12} fullWidth>
-							<GoMatch></GoMatch>
-						</Grid>
-						<Grid container item xs={12} fullWidth>
-							<ViewMatch user={user}></ViewMatch>
-						</Grid>
+					<Grid container item xs={12}>
+						<GoMatch></GoMatch>
+					</Grid>
+					<Grid container item xs={12}>
+						<ViewMatch user={user}></ViewMatch>
 					</Grid>
 				</Grid>
-				<Grid container item xs={12} sm={7}>
-					<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}
-					songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
-					setChanged={setChanged} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
-					<Grid
-						container
-						direction="column"
-						justify="space-evenly"
-						alignItems="center"
-						spacing={4}
-						className={classes.playlistEdit}
-						>
-						<Grid container item xs={12} spacing={3}>	  
-							<TextField 	
-							fullWidth
-							id="playlist-title" 
-							label="Title of Match Playlist" 
-							variant="outlined" />
-						</Grid>
+				<Grid
+					direction="column"
+					justify="space-between"
+					alignItems="center"
+					xs={width > 599 ? 8 : 12}
+					item
+					style={{width: width > 599 ? null : '100%', 
+							padding: width > 599 ? "0 1rem 0 1rem" : null}}
+					>
+					<Grid container item xs={12}>	  
+						<TextField 	
+						fullWidth
+						id="playlist-title" 
+						label="Title of Match Playlist" 
+						value={title}
+						onChange={titleChange}
+						variant="outlined" />
+					</Grid>
 
-						<Grid container item xs={12} spacing={3}>
-							<TextField 
-							fullWidth
-							id="playlist-desc" 
-							label="Description of Match Playlist" 
-							multiline
-							rows={8}
-							variant="outlined" />
-						</Grid>
+					<Grid container item xs={12} className={classes.descContainer}>
+						<TextField 
+						fullWidth
+						id="playlist-desc" 
+						label="Description of Match Playlist" 
+						value={description}
+						onChange={descriptionChange}
+						multiline
+						rows={8}
+						variant="outlined" />
 					</Grid>
 				</Grid>
 			</Grid>

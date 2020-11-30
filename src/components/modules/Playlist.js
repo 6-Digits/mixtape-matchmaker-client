@@ -56,13 +56,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 	card: {
 		marginTop: "1rem",
-		width: "90%",
+		width: "97.5%",
 		margin: "auto"
 	},
 	dragBox: {
 		padding: theme.spacing(1, 0, 1, 0),
 		borderRadius: "0.25rem",
-		backgroundColor: theme.palette.text.secondary,
+		backgroundColor: theme.palette.background.default,
 		overflowY: "auto",
 		height: "30vh"
 	},

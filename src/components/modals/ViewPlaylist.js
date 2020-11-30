@@ -91,8 +91,8 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '1rem',
 		padding: "1rem 1rem 1rem 1rem",
 		borderRadius: '0.5rem',
-		backgroundColor: theme.palette.text.primary,
-		color: theme.palette.background.default
+		backgroundColor: theme.palette.background.paper,
+		// color: theme.palette.background.default
 	},
 	commentBox: {
 		width:'95%',
