@@ -52,12 +52,24 @@ const useStyles = makeStyles((theme) => ({
 	},
 	descContainer: {
 		marginTop: '1rem'
+	},
+	error: {
+		textAlign: 'center',
+		fontSize: '2rem',
+		color: theme.palette.error.main,
+		marginBottom: '1rem'
+	},
+	success: {
+		textAlign: 'center',
+		fontSize: '2rem',
+		color: theme.palette.success.main,
+		marginBottom: '1rem'
 	}
 }));
 
 const matchPlaylistAPI = "http://localhost:42069/api/match/mixtape/uid/:uid";
 const errorDefault = "Could not save the playlist for some reason. You may be disconnected from the network or the server is down.";
-const errorPlaylist = "Your match playlist cannot be empty!";
+const errorPlaylist = "Your match playlist cannot be empty or exceed 30 songs!";
 const errorTitle = "The title is either too long (More than 255 Characters) or empty. Please enter a valid title!";
 const errorDescription = "The description is too long (More than 5000 characters). Please enter a valid description!";
 const api = 'http://localhost:42069/api';
@@ -75,6 +87,8 @@ function Matches({user, setUser}) {
 	const [errorMsg, setErrorMsg] = useState(errorDefault);
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
+	const [playlistID, setPlaylistID] = useState("");
+	const [timeout, setTO] = useState(null);
 
 	useEffect(() => {
 		function updateWidth() {
@@ -82,8 +96,9 @@ function Matches({user, setUser}) {
 		}
 		window.addEventListener('resize', updateWidth);
 		updateWidth();
+		let userToken = localStorage.setItem('userToken', userToken);
+		fetchMatchPlaylist(userToken, user);
 		return () => window.removeEventListener('resize', updateWidth);
-
 	}, []);
 	
 	useEffect(() => {
@@ -116,6 +131,58 @@ function Matches({user, setUser}) {
 		setSuccess(false)
 	}
 
+	const fetchMatchPlaylist = async(userToken, user) => {
+		let requestOptions = {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+		};
+		let response = await fetch(`${api}/match/mixtape/uid/${user._id}`, requestOptions);
+		if(response.status === 200) {
+			let data = await response.json();
+			setSongs(data['songs'] ? data['songs'] : []);
+			setCurrentSong(data['songs'] ? data['songs'][currentIndex] : null);
+			setDescription(data['description'] ? data['name'] : "");
+			setTitle(data['name'] ? data['name'] : "");
+			setPlaylistID(data['_id'] ? data['_id'] : "");
+		} else {
+			alert(`Failed to get match playlist with error: ${response.status}!`);
+		}
+	};
+	const saveMatchPlaylist = async() => {
+		setError(false);
+		setSuccess(false);
+		if(title.length < 1 || title.length > 255)  {
+			setErrorMsg(errorTitle);
+			setError(true);
+		} else if(description.length > 5000) {
+			setErrorMsg(errorDescription);
+			setError(true);
+		} else if(songs.length < 1 || songs.length > 30) {
+			setError(true);
+			setErrorMsg(errorPlaylist);
+		} else {
+			let userToken = localStorage.setItem('userToken', userToken);
+			let playlistData = {
+				name: title,
+				description: description,
+				songList: songs,
+			};
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
+				body: JSON.stringify(playlistData)
+			};
+			let response = await fetch(`${api}/match/mixtape/mid/${user._id}`, requestOptions);
+			if(response.status === 200) {
+				let data = await response.json();
+				setSuccess(true);
+			} else {
+				setErrorMsg(errorDefault);
+				setError(true);
+			}
+		}
+	};
+
 	return (
 		<div style={{height: width > 599 ? "100vh" : "100%"}}>
 			<NavigationBar setUser={setUser} user={user} pageName='My Matches'></NavigationBar>
@@ -126,10 +193,10 @@ function Matches({user, setUser}) {
 				justify="center"
 				className={classes.playlistContainer}
 				>
-				<Button variant="contained" color="secondary" className={classes.saveButton}>Save Changes</Button>
+				<Button variant="contained" color="secondary" className={classes.saveButton} onClick={saveMatchPlaylist}>Save Changes</Button>
 				<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}
 									songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
-									setChanged={setChanged} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}
+									setChanged={setChanged} playlistID={playlistID}
 									setAutoPlay={setAutoPlay} />
 				<Media>
 					{mediaProps => (

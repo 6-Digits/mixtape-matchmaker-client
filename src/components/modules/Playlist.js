@@ -261,20 +261,24 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 	};
 
 	const addSong = async(song) => {
-		let userToken = localStorage.getItem('userToken');
-		let requestOptions = {
-			method: 'POST',
-			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
-		}
-		let response = await fetch(`${api}/mixtape/createSong/${song.videoId}`, requestOptions);
-		if(response.status === 200) {
-			let data = await response.json();
-			data['uuid'] = uuidv4() + uuidv4();
-			let newSongList = [...songs, data];
-			createRemove(data, songs.length);
-			setViewingSongs(newSongList);
-			setSongs(newSongList);	
-			setChanged(true);
+		if(songs.length > 30) {
+			alert("You cannot add more than 30 songs!");
+		} else {
+			let userToken = localStorage.getItem('userToken');
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+			}
+			let response = await fetch(`${api}/mixtape/createSong/${song.videoId}`, requestOptions);
+			if(response.status === 200) {
+				let data = await response.json();
+				data['uuid'] = uuidv4() + uuidv4();
+				let newSongList = [...songs, data];
+				createRemove(data, songs.length);
+				setViewingSongs(newSongList);
+				setSongs(newSongList);	
+				setChanged(true);
+			}
 		}
 	};
 
