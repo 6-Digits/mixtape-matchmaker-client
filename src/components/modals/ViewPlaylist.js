@@ -242,7 +242,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 		})
 
 		fetch(`${api}/mixtape/view`, {
-			method: 'GET',
+			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
 				mixtapeID : playlist['_id'],
