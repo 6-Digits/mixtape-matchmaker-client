@@ -240,6 +240,19 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 		}).catch((err) =>{
 			alert(err.message)
 		})
+
+		fetch(`${api}/mixtape/view`, {
+			method: 'GET',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				mixtapeID : playlist['_id'],
+				userID : user['_id']
+			})
+		}).then(async (res) => {
+			// Don't really have to do anything here
+		}).catch((err) =>{
+			alert(err.message)
+		})
 		
 		setOpen(true);
 		setAutoPlay(false);
