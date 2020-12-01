@@ -88,7 +88,7 @@ function ViewChat(props) {
         // Ensures not sending an empty message
         if (newMessage !== "") {
             sendMessage(newMessage);
-            // alert(JSON.stringify(messages))
+            //alert(JSON.stringify(messages))
             // let temp = oldMessages.map((message) => message)
             // temp.push({
             //     user : props.user._id,

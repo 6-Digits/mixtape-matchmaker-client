@@ -13,6 +13,8 @@ const useChat = (roomId, user) => {
 			query: { roomId },
 		});
 
+		setMessages([]);
+
 		socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
 			//alert(JSON.stringify(message))
 			const incomingMessage = {
@@ -21,6 +23,7 @@ const useChat = (roomId, user) => {
 				chatID : roomId,
 			};
 			setMessages((messages) => [...messages, incomingMessage]);
+			//setMessages([incomingMessage])
 		});
 
 		return () => {
