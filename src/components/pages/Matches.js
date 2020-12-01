@@ -165,14 +165,14 @@ function Matches({user, setUser}) {
 			let playlistData = {
 				name: title,
 				description: description,
-				songList: songs,
+				songList: songs.map((song) => song['_id']),
 			};
 			let requestOptions = {
 				method: 'POST',
 				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
 				body: JSON.stringify(playlistData)
 			};
-			let response = await fetch(`${api}/match/mixtape/mid/${user._id}`, requestOptions);
+			let response = await fetch(`${api}/match/mixtape/mid/${playlistID}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
 				setSuccess(true);

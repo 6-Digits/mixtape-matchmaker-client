@@ -142,7 +142,6 @@ function ViewMatch(props) {
 		setMatches(items);
 	}
 	const handleSelectedChat = (index) => {
-		alert(index)
 		setCurrentChat(index)
 	}
 	const handleOpen = () => {
