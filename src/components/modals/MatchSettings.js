@@ -99,9 +99,46 @@ function MatchSettings(props) {
 				setAgeUpper(data['ageUpper'] ? data['ageUpper'] : 100);
 				setLocation(data['location'] ? data['location'] : '');
 			} else {
-				alert('Error when fetching ' + api + `/match/id/${props.user._id} with ${response.status}`)
 				setError(true);
 				setErrorMsg(errorFetch);
+			}
+		}
+	};
+
+	const saveMatchSettings = async() => {
+		let userToken = localStorage.getItem('userToken', userToken);
+		if(!genderPreference) {
+			setError(true);
+			setErrorMsg(errorGender);
+		} else if(ageLower < 18 || ageLower > ageUpper) {
+			setError(true);
+			setErrorMsg(errorAge);
+		} else if(ageUpper < 18 || ageUpper > 2147483647) {
+			setError(true);
+			setErrorMsg(errorAge);
+		} else if(!location) {
+			setError(true);
+			setErrorMsg(errorLocation);
+		} else if(!error){
+			let userData = {
+				gender: genderPreference['title'],
+				ageUpper: ageUpper,
+				ageLower: ageLower,
+				location: location
+			};
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken },
+				body: JSON.stringify(userData)
+			};
+			let response = await fetch(api + '/match/id/' + props.user._id, requestOptions);
+			if (response.status === 200) {
+				let data = await response.json();
+				setError(false);
+				handleClose();
+			} else {
+				setError(true);
+				setErrorMsg(errorDefault);
 			}
 		}
 	};
@@ -124,8 +161,8 @@ function MatchSettings(props) {
 		setError(false);
 	}
 
-	const changeGenderPreference = (event) => {
-		setGenderPreference(event.target.value);
+	const changeGenderPreference = (event, value) => {
+		setGenderPreference(value);
 		setError(false);
 	}
 
@@ -157,6 +194,8 @@ function MatchSettings(props) {
 						required
 						id="gender"
 						options={genderOptions}
+						value={genderPreference}
+						onChange={changeGenderPreference}
 						getOptionLabel={(option) => option.title}
 						fullWidth
 						autoComplete="sex"
@@ -192,12 +231,12 @@ function MatchSettings(props) {
 							/>
 						</Grid>
 					</Grid>
-					<Typography variant="h6" className={classes.sectionHeader, classes.profileHeader}>My Location</Typography>
+					{/* <Typography variant="h6" className={classes.sectionHeader, classes.profileHeader}>My Location</Typography> */}
 					<TextField
 						autoFocus
 						margin="normal"
 						id="location"
-						label="My Location"
+						label="Location"
 						type="text"
 						fullWidth
 						value={location}
@@ -223,7 +262,7 @@ function MatchSettings(props) {
 				<Button variant="contained" onClick={handleClose} color="secondary" className={classes.cancel}>
 					Cancel
 				</Button>
-				<Button variant="contained" onClick={handleClose} color="primary" className={classes.save}>
+				<Button variant="contained" onClick={saveMatchSettings} color="primary" className={classes.save}>
 					Save Match Preferences
 				</Button>
 				</DialogActions>
