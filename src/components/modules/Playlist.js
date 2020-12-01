@@ -93,7 +93,8 @@ const api = 'http://localhost:42069/api';
 	}
 */
 
-function Playlist({title, editable, draggable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay, playlistID}) {
+function Playlist({title, editable, draggable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay, playlistID,
+					notSharable}) {
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [search, setSearch] = useState("");
 	const [viewingSongs, setViewingSongs] = useState(songs);
@@ -379,7 +380,9 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 						</Menu>
 					</Grid> 
 				}
-				<ShareDropDown contentLink={shareLink}></ShareDropDown>
+				{notSharable ? null : 
+					<ShareDropDown contentLink={shareLink}></ShareDropDown>
+				}
 				{
 					// importable ? 
 					// 	<Grid item xs={12} sm={1} className={classes.importGrid}>
