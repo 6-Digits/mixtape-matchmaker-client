@@ -37,14 +37,21 @@ const useStyles = makeStyles((theme) => ({
 	modalTitle: {
 		fontSize: "2rem",
 		fontWeight: "bold"
-	}
+	},
+	error: {
+		textAlign: 'center',
+		fontSize: '1rem',
+		color: theme.palette.error.main,
+		marginBottom: '1rem'
+	},
 }));
   
 const defaultImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUnnWZ_Dh48jrrZJ1hDbUrU-WzKKkCX1rQzQ&usqp=CAU";
+const errorFetch = "We failed to get your match settings. This is likely because either the server is down or you are disconnected from the internet.";
 const errorDefault = "We could not saving your match settings likely because you are offline or our servers are down. Please try again later";
-const errorGender = "You do not have a valid gender preference, please select a valid gender preference";
-const errorAge = "The age preference you have enter is either not in the valid (18 or older) range or unspecified. Please enter a valid age range";
-const errorLocation = "The location you have enter could not be computed in our database. Please try again later";
+const errorGender = "You do not have a valid gender preference, please select a valid gender preference!";
+const errorAge = "The age preference you have enter is either not in the valid (18 or older) range or unspecified. Please enter a valid age range!";
+const errorLocation = "The location you have enter could not be computed in our database. Please try again later!";
 
 const api = 'http://localhost:42069/api';
 
@@ -70,7 +77,6 @@ function MatchSettings(props) {
 	const fetchPreferences = async() => {
 		let userToken = localStorage.getItem('userToken', userToken);
 		if(userToken) {
-			alert("FETCHING");
 			let requestOptions = {
 				method: 'GET',
 				headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
@@ -78,11 +84,11 @@ function MatchSettings(props) {
 			let response = await fetch(api + `/match/id/${props.user._id}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
-				alert(data);
+				alert('The data I get from querying : ' + JSON.stringify(data));
 			} else {
-				alert(response.error);
+				alert('Error when fetching ' + api + `/match/id/${props.user._id} with ${response.status}`)
 				setError(true);
-				setErrorMsg(errorDefault);
+				setErrorMsg(errorFetch);
 			}
 		}
 	};
@@ -203,7 +209,7 @@ function MatchSettings(props) {
 						multiline={true}
 						className={classes.input}
 					/>
-					{error ? <div>{errorMsg}</div> : null}
+					{error ? <div className={classes.error}>{errorMsg}</div> : null}
 				</DialogContent>
 				<DialogActions>
 				<Button variant="contained" onClick={handleClose} color="secondary" className={classes.cancel}>

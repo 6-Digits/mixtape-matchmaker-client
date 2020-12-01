@@ -109,6 +109,11 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 		setSortAnchor(null);
 	};
 
+	useEffect(() => {
+		setViewingSongs(songs)
+	}, [songs]);
+
+
 	function handleOnDragEnd(result) {
 		if (!result.destination) return;
 		if (result.destination.index === result.source.index) return;
