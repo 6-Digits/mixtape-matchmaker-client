@@ -70,10 +70,15 @@ const useStyles = makeStyles((theme) => ({
 function ViewChat(props) {
     //let roomId = "5fc4575cd83f8fcbb7a5139d"
     //(JSON.stringify(props.currentChat))
+    //alert(props.currentChat._id)
     const classes = useStyles();
     const [oldMessages, setOldMessages] = useState(props.currentChat.messages);
     const { messages, sendMessage } = useChat(props.currentChat._id, props.user);
     const [newMessage, setNewMessage] = useState("");
+
+    useEffect(() => {
+        setOldMessages(props.currentChat.messages)
+    }, [props.currentChat._id]);
 
     const handleNewMessageChange = (event) => {
         setNewMessage(event.target.value);
@@ -83,6 +88,13 @@ function ViewChat(props) {
         // Ensures not sending an empty message
         if (newMessage !== "") {
             sendMessage(newMessage);
+            // alert(JSON.stringify(messages))
+            // let temp = oldMessages.map((message) => message)
+            // temp.push({
+            //     user : props.user._id,
+            //     text : newMessage
+            // })
+            // setOldMessages(temp)
             setNewMessage("");
         }
     };
@@ -106,7 +118,7 @@ function ViewChat(props) {
                         {message.text}
                         </Grid>
                     ))}
-                    {messages.map((message, i) => (
+                    {messages.filter(message => message.chatID == props.currentChat._id).map((message, i) => (
                         <Grid
                             key={i}
                             className={message.ownedByCurrentUser ? `${classes.myMessage}` : `${classes.receivedMessage}`}

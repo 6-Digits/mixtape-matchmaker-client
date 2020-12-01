@@ -113,6 +113,7 @@ function ViewMatch(props) {
 	const [chats, setChats] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [currentChat, setCurrentChat] = useState(0);
+	const [reloadChat, setReloadChat] = useState(false);
 
 	const fetchMyChats = async(user) => {
 		let requestOptions = {
@@ -120,7 +121,7 @@ function ViewMatch(props) {
 			headers: {'Content-Type': 'application/json', /*'x-access-token': userToken*/}
 		};
 		let response = await fetch(`${api}/match/chat/uid/${user._id}`, requestOptions);
-		if(response.status === 200) {
+		if(response.status <= 400) {
 			let data = await response.json();
 			setChats(data);
 		}else{
@@ -130,7 +131,7 @@ function ViewMatch(props) {
 
 	useEffect(() => {
 		fetchMyChats(props.user)
-	}, []);
+	}, [currentChat]);
 
 	function handleOnDragEnd(result) {
 		if (!result.destination) {
