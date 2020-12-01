@@ -170,7 +170,7 @@ function GoMatch(props) {
 						direction="column" item xs={8}
 						className={classes.rightCard}>
 						<Grid item>
-							<Playlist title="" importable={false} editable={false} draggable={false}
+							<Playlist title="" importable={false} editable={false} draggable={false} notSharable={true}
 									songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
 									playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
 						</Grid>

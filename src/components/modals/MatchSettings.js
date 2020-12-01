@@ -55,6 +55,12 @@ const errorLocation = "The location you have enter could not be computed in our 
 
 const api = 'http://localhost:42069/api';
 
+const genderOptions = [
+	{title: "Male"},
+	{title: "Female"},
+	{title: "Other" }
+];
+
 function MatchSettings(props) {
 	const classes = useStyles();
 	const [genderPreference, setGenderPreference] = useState("Other");
@@ -84,11 +90,55 @@ function MatchSettings(props) {
 			let response = await fetch(api + `/match/id/${props.user._id}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
-				alert('The data I get from querying : ' + JSON.stringify(data));
+				genderOptions.forEach((genderOption, index) => {
+					if(data['gender'].toLowerCase() === genderOption['title'].toLowerCase()) {
+						setGenderPreference(genderOption);
+					}
+				});
+				setAgeLower(data['ageLower'] ? data['ageLower'] : 18);
+				setAgeUpper(data['ageUpper'] ? data['ageUpper'] : 100);
+				setLocation(data['location'] ? data['location'] : '');
 			} else {
-				alert('Error when fetching ' + api + `/match/id/${props.user._id} with ${response.status}`)
 				setError(true);
 				setErrorMsg(errorFetch);
+			}
+		}
+	};
+
+	const saveMatchSettings = async() => {
+		let userToken = localStorage.getItem('userToken', userToken);
+		if(!genderPreference) {
+			setError(true);
+			setErrorMsg(errorGender);
+		} else if(ageLower < 18 || ageLower > ageUpper) {
+			setError(true);
+			setErrorMsg(errorAge);
+		} else if(ageUpper < 18 || ageUpper > 2147483647) {
+			setError(true);
+			setErrorMsg(errorAge);
+		} else if(!location) {
+			setError(true);
+			setErrorMsg(errorLocation);
+		} else if(!error){
+			let userData = {
+				gender: genderPreference['title'],
+				ageUpper: ageUpper,
+				ageLower: ageLower,
+				location: location
+			};
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken },
+				body: JSON.stringify(userData)
+			};
+			let response = await fetch(api + '/match/id/' + props.user._id, requestOptions);
+			if (response.status === 200) {
+				let data = await response.json();
+				setError(false);
+				handleClose();
+			} else {
+				setError(true);
+				setErrorMsg(errorDefault);
 			}
 		}
 	};
@@ -111,8 +161,8 @@ function MatchSettings(props) {
 		setError(false);
 	}
 
-	const changeGenderPreference = (event) => {
-		setGenderPreference(event.target.value);
+	const changeGenderPreference = (event, value) => {
+		setGenderPreference(value);
 		setError(false);
 	}
 
@@ -139,16 +189,13 @@ function MatchSettings(props) {
 				maxWidth="lg" className={classes.modal} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
 				<DialogTitle disableTypography  id="form-dialog-title" className={classes.modalTitle}>My Match Settings</DialogTitle>
 				<DialogContent>
-					<Typography variant="h6" className={classes.sectionHeader}>Match Preferences</Typography>
+					{/* <Typography variant="h6" className={classes.sectionHeader}>Match Preferences</Typography> */}
 					<Autocomplete
 						required
 						id="gender"
-						options={[
-							{title: "Male"},
-							{title: "Female"},
-							{title: "Machine"},
-							{title: "Other" }
-						]}
+						options={genderOptions}
+						value={genderPreference}
+						onChange={changeGenderPreference}
 						getOptionLabel={(option) => option.title}
 						fullWidth
 						autoComplete="sex"
@@ -184,19 +231,19 @@ function MatchSettings(props) {
 							/>
 						</Grid>
 					</Grid>
-					<Typography variant="h6" className={classes.sectionHeader, classes.profileHeader}>My Profile</Typography>
+					{/* <Typography variant="h6" className={classes.sectionHeader, classes.profileHeader}>My Location</Typography> */}
 					<TextField
 						autoFocus
 						margin="normal"
 						id="location"
-						label="My Location"
+						label="Location"
 						type="text"
 						fullWidth
 						value={location}
 						onChange={changeLocation}
 						className={classes.input}
 					/>
-					<TextField
+					{/* <TextField
 						autoFocus
 						margin="normal"
 						id="profile"
@@ -208,14 +255,14 @@ function MatchSettings(props) {
 						rows={5}
 						multiline={true}
 						className={classes.input}
-					/>
+					/> */}
 					{error ? <div className={classes.error}>{errorMsg}</div> : null}
 				</DialogContent>
 				<DialogActions>
 				<Button variant="contained" onClick={handleClose} color="secondary" className={classes.cancel}>
 					Cancel
 				</Button>
-				<Button variant="contained" onClick={handleClose} color="primary" className={classes.save}>
+				<Button variant="contained" onClick={saveMatchSettings} color="primary" className={classes.save}>
 					Save Match Preferences
 				</Button>
 				</DialogActions>
