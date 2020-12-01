@@ -189,7 +189,7 @@ function MatchSettings(props) {
 				maxWidth="lg" className={classes.modal} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
 				<DialogTitle disableTypography  id="form-dialog-title" className={classes.modalTitle}>My Match Settings</DialogTitle>
 				<DialogContent>
-					<Typography variant="h6" className={classes.sectionHeader}>Match Preferences</Typography>
+					{/* <Typography variant="h6" className={classes.sectionHeader}>Match Preferences</Typography> */}
 					<Autocomplete
 						required
 						id="gender"
