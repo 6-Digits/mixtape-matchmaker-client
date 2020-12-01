@@ -55,6 +55,12 @@ const errorLocation = "The location you have enter could not be computed in our 
 
 const api = 'http://localhost:42069/api';
 
+const genderOptions = [
+	{title: "Male"},
+	{title: "Female"},
+	{title: "Other" }
+];
+
 function MatchSettings(props) {
 	const classes = useStyles();
 	const [genderPreference, setGenderPreference] = useState("Other");
@@ -84,7 +90,14 @@ function MatchSettings(props) {
 			let response = await fetch(api + `/match/id/${props.user._id}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
-				alert('The data I get from querying : ' + JSON.stringify(data));
+				genderOptions.forEach((genderOption, index) => {
+					if(data['gender'].toLowerCase() === genderOption['title'].toLowerCase()) {
+						setGenderPreference(genderOption);
+					}
+				});
+				setAgeLower(data['ageLower'] ? data['ageLower'] : 18);
+				setAgeUpper(data['ageUpper'] ? data['ageUpper'] : 100);
+				setLocation(data['location'] ? data['location'] : '');
 			} else {
 				alert('Error when fetching ' + api + `/match/id/${props.user._id} with ${response.status}`)
 				setError(true);
@@ -143,12 +156,7 @@ function MatchSettings(props) {
 					<Autocomplete
 						required
 						id="gender"
-						options={[
-							{title: "Male"},
-							{title: "Female"},
-							{title: "Machine"},
-							{title: "Other" }
-						]}
+						options={genderOptions}
 						getOptionLabel={(option) => option.title}
 						fullWidth
 						autoComplete="sex"
@@ -184,7 +192,7 @@ function MatchSettings(props) {
 							/>
 						</Grid>
 					</Grid>
-					<Typography variant="h6" className={classes.sectionHeader, classes.profileHeader}>My Profile</Typography>
+					<Typography variant="h6" className={classes.sectionHeader, classes.profileHeader}>My Location</Typography>
 					<TextField
 						autoFocus
 						margin="normal"
@@ -196,7 +204,7 @@ function MatchSettings(props) {
 						onChange={changeLocation}
 						className={classes.input}
 					/>
-					<TextField
+					{/* <TextField
 						autoFocus
 						margin="normal"
 						id="profile"
@@ -208,7 +216,7 @@ function MatchSettings(props) {
 						rows={5}
 						multiline={true}
 						className={classes.input}
-					/>
+					/> */}
 					{error ? <div className={classes.error}>{errorMsg}</div> : null}
 				</DialogContent>
 				<DialogActions>
