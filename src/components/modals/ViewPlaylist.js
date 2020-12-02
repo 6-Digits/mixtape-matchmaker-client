@@ -72,6 +72,15 @@ const useStyles = makeStyles((theme) => ({
 	playlistAuthor: {
 		overflowX: "auto"
 	},
+	playlistDuration: {
+		position: 'absolute',
+		bottom: '0',
+		right: '0',
+		padding: '0.5rem',
+		fontWeight: 'bold',
+		background: theme.palette.background.default,
+		opacity: 0.7
+	},
 	profileImg: {
 		width: "100%",
 		height: "10vh"
@@ -430,6 +439,9 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 							playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder
 						} 
 						onClick={handleOpen}/>
+						<div className={classes.playlistDuration}>{playlist['duration'] ? `${Math.floor(playlist['duration']/60)}:${playlist['duration']%60 > 9 ?
+						playlist['duration']%60 : '0' + playlist['duration']%60
+						}` : '0:00'}</div>
 					</Button>
 					<CardContent className={classes.cardContent}>
 						{editable ? 
