@@ -44,6 +44,12 @@ const useStyles = makeStyles((theme) => ({
     },
     messageTime: {
         fontSize: "0.5rem",
+    }, 
+    sendMsgComponent: {
+        marginTop: "1rem"
+    }, 
+    sendMessageButton: {
+        width: '100%'
     }
 }))
 
