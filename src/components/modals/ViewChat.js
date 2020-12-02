@@ -66,12 +66,15 @@ function ViewChat(props) {
 
     useEffect(() => {
         setOldMessages(props.currentChat ? props.currentChat.messages : [])
+    }, [props.currentChat ? props.currentChat._id : null, messages]);
+
+    useEffect(() => {
         //STYLE THE BUTTON SO THE SIZE WILL BE ADAPTIVE
         if(textFieldRef.current){
             setButtonHeight(textFieldRef.current.offsetHeight);
         }
-    }, [props.currentChat ? props.currentChat._id : null, textFieldRef.current]);
 
+    }, [textFieldRef.current])
     const handleNewMessageChange = (event) => {
         setNewMessage(event.target.value);
     };
@@ -116,18 +119,18 @@ function ViewChat(props) {
                         </div>
                     </div> : null
                 )) : null }
-                { props.user && props.match && props.currentChat ? 
-                messages.filter(message => message.chatID === props.currentChat ? props.currentChat._id : "").map((message, i) => (
+                { props && props.user && props.match && props.currentChat ? 
+                messages.filter(message => message.chatID == props.currentChat._id).map((message, i) => (
                     message ? 
                     <div className={classes.card}>
-                        <div className={message.user === props.user._id ? classes.cardMyMessage : classes.cardReceivedMessage }>
+                        <div className={message.ownedByCurrentUser ? classes.cardMyMessage : classes.cardReceivedMessage }>
                             <div
                                 key={i}
-                                className={message.user === props.user._id ? classes.myMessage : classes.receivedMessage}
+                                className={message.ownedByCurrentUser ? classes.myMessage : classes.receivedMessage}
                             >
                                 <Grid container direction="column" className={classes.message}>
                                     <Grid item>
-                                        {`${message.user !== props.user._id ? `${props.match.name}: ` : ""}${message.text}`}
+                                        {`${!message.ownedByCurrentUser ? `${props.match.name}: ` : ""}${message.body}`}
                                     </Grid>  
                                     <Grid item className={classes.messageTime}> 
                                         {message.date}

@@ -36,6 +36,7 @@ const useChat = (roomId, user) => {
 		socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
 			user: user,
 			body: messageBody,
+			date: new Date().toISOString(),
 			senderId: socketRef.current.id,
 		});
 	};
