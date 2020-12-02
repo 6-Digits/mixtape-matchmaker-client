@@ -68,7 +68,7 @@ function App(props) {
 			// },
 			'*::-webkit-scrollbar': {
 			  width: '8px',
-			  height: '4px',
+			  height: '4px'
 			},
 			'*:hover::-webkit-scrollbar-thumb': {
 				visibility: 'visible'

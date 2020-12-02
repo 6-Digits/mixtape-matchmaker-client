@@ -11,59 +11,39 @@ const useStyles = makeStyles((theme) => ({
         padding: "1rem 1rem 1rem 2rem",
         backgroundColor: theme.palette.text.secondary,
         overflowY: "auto",
-        height: "50vh",
+        height: "53vh",
         borderRadius: "0.25rem",
         width: "100%"
     },
+    card: {
+        display: "block",
+        width: "100%",
+        marginBottom: "1rem"
+    },
+    cardMyMessage: {
+        display: "flex",
+        justifyContent: 'flex-end',
+    },
+    cardReceivedMessage: {
+        display: "flex",
+        justifyContent: 'flex-start',
+    },
     myMessage: {
-        width: "50%",
-        margin: "8px",
-        padding: "12px 8px",
-        borderRadius: "4px",
-        backgroundColor: "#0084ff",
-        marginLeft: "auto",
+        borderRadius: "0.25rem",
+        backgroundColor: theme.palette.primary.dark,
+        display: "inline-block"
     },
     receivedMessage: {
-        width: "50%",
-        margin: "8px",
-        padding: "12px 8px",
-        borderRadius: "4px",
-        backgroundColor: "#3f4042",
-        marginRight: "auto",
+        borderRadius: "0.25rem",
+        backgroundColor: theme.palette.background.paper,
+        display: "inline-block"
     },
     message: {
-        marginTop: "1rem",
-        padding: "1rem 1rem 1rem 1rem",
-        backgroundColor: theme.palette.background.paper,
-        borderRadius: "0.5rem",
-    },
-    messageText: {
+        padding: "0.5rem",
         fontSize: "1.5rem",
-        color: theme.palette.text.primary
     },
-    messageTS: {
-        fontsize: "0.5rem",
-        color: theme.palette.text.disabled
-    },
-    sendMsgComponent: {
-        width: "100%",
-        height: "5vh",
-        marginBottom: "5rem"
-    },
-    enterMessageField: {
-        marginLeft: "-1.5rem",
-        width: "115%",
-        height: "4vh"
-    },
-    sendMsgIcon: {
-        width: "100%",
-        height: "5vh"
-    },
-    sendMessageButton: {
-        width: "80%",
-        height: "100%",
-        marginLeft: "3.5rem",
-        marginTop: "1.5rem"
+    messageTime: {
+        fontSize: "0.5rem",
     }
 }))
 
@@ -72,13 +52,19 @@ function ViewChat(props) {
     //(JSON.stringify(props.currentChat))
     //alert(props.currentChat._id)
     const classes = useStyles();
-    const [oldMessages, setOldMessages] = useState(props.currentChat.messages);
-    const { messages, sendMessage } = useChat(props.currentChat._id, props.user);
+    const [oldMessages, setOldMessages] = useState(props.currentChat ? props.currentChat.messages : []);
+    const textFieldRef = React.createRef();
+    const { messages, sendMessage } = useChat(props.currentChat ? props.currentChat._id : "", props.user);
     const [newMessage, setNewMessage] = useState("");
+    const [buttonHeight, setButtonHeight] = useState("100%");
 
     useEffect(() => {
-        setOldMessages(props.currentChat.messages)
-    }, [props.currentChat._id]);
+        setOldMessages(props.currentChat ? props.currentChat.messages : [])
+        //STYLE THE BUTTON SO THE SIZE WILL BE ADAPTIVE
+        if(textFieldRef.current){
+            setButtonHeight(textFieldRef.current.offsetHeight);
+        }
+    }, [props.currentChat ? props.currentChat._id : null, textFieldRef.current]);
 
     const handleNewMessageChange = (event) => {
         setNewMessage(event.target.value);
@@ -100,61 +86,80 @@ function ViewChat(props) {
     };
     return (
         <div>
+            {/*Sent Message portion*/}
+            <Box
+                className={classes.messageBoard}>
+                {props && props.user && props.match && props.currentChat ? 
+                oldMessages.map((message, i) => (
+                    message ?
+                    <div className={classes.card}>
+                        <div className={message.user === props.user._id ? classes.cardMyMessage : classes.cardReceivedMessage}>
+                            <div
+                                key={i}
+                                className={message.user === props.user._id ? classes.myMessage : classes.receivedMessage}
+                            >
+                            <Grid container direction="column" className={classes.message}>
+                                <Grid item>
+                                    {`${message.user !== props.user._id ? `${props.match.name}: ` : ""}${message.text}`}
+                                </Grid>  
+                                <Grid item className={classes.messageTime}> 
+                                    {message.date}
+                                </Grid>  
+                            </Grid>
+                            </div>
+                        </div>
+                    </div> : null
+                )) : null }
+                { props.user && props.match && props.currentChat ? 
+                messages.filter(message => message.chatID === props.currentChat ? props.currentChat._id : "").map((message, i) => (
+                    message ? 
+                    <div className={classes.card}>
+                        <div className={message.user === props.user._id ? classes.cardMyMessage : classes.cardReceivedMessage }>
+                            <div
+                                key={i}
+                                className={message.user === props.user._id ? classes.myMessage : classes.receivedMessage}
+                            >
+                                <Grid container direction="column" className={classes.message}>
+                                    <Grid item>
+                                        {`${message.user !== props.user._id ? `${props.match.name}: ` : ""}${message.text}`}
+                                    </Grid>  
+                                    <Grid item className={classes.messageTime}> 
+                                        {message.date}
+                                    </Grid>  
+                                </Grid>
+                            </div>
+                        </div>
+                    </div> : null
+                )) : null}
+            </Box>
+            {/*Sending message portion*/}
             <Grid
                 container
-                direction="column"
-                justify="space-evenly"
-                alignItems="center"
-                item xs={12} sm={12}
+                justify="space-between"
+                alignItems="flex-start"
+                fullWidth
+                className={classes.sendMsgComponent}
             >
-                {/*Sent Message portion*/}
-                <Box
-                    className={classes.messageBoard}>
-                    {oldMessages.map((message, i) => (
-                        <Grid
-                            key={i}
-                            className={message.user == props.user._id ? `${classes.myMessage}` : `${classes.receivedMessage}`}
-                        >
-                        {message.text}
-                        </Grid>
-                    ))}
-                    {messages.filter(message => message.chatID == props.currentChat._id).map((message, i) => (
-                        <Grid
-                            key={i}
-                            className={message.ownedByCurrentUser ? `${classes.myMessage}` : `${classes.receivedMessage}`}
-                        >
-                            {message.body}
-                        </Grid>
-                    ))}
-                </Box>
-                {/*Sending message portion*/}
-                <Grid
-                    container
-                    justify="space-between"
-                    alignItems="center"
-                    fullWidth
-                    className={classes.sendMsgComponent}
-                >
-                    <Grid item xs={12} sm={9}>
-                        <TextField
-                            variant="outlined"
-                            fullWidth
-                            name="send-message"
-                            label="Enter a message"
-                            value={newMessage}
-                            onChange={handleNewMessageChange}
-                            type="text"
-                            multiline={true}
-                            rows={2}
-                            id="send-message"
-                            className={classes.enterMessageField}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <Button variant="contained" onClick={handleSendMessage} className={classes.sendMessageButton}>
-                            <SendIcon className={classes.sendMsgIcon} />
-                        </Button>
-                    </Grid>
+                <Grid item xs={9} container
+                        className={classes.enterMessageField}>
+                    <TextField
+                        ref={textFieldRef}
+                        variant="outlined"
+                        fullWidth
+                        name="send-message"
+                        label="Enter a message"
+                        value={newMessage}
+                        onChange={handleNewMessageChange}
+                        type="text"
+                        multiline={true}
+                        rows={2}
+                        id="send-message"
+                    />
+                </Grid>
+                <Grid item xs={3} container style={{height: buttonHeight}}>
+                    <Button variant="contained" onClick={handleSendMessage} className={classes.sendMessageButton}>
+                        <SendIcon className={classes.sendMsgIcon} />
+                    </Button>
                 </Grid>
             </Grid>
         </div>

@@ -22,85 +22,30 @@ const useStyles = makeStyles((theme) => ({
 	modal: {
 	},
 	content: {
-		marginLeft: "1rem"
+		padding: "1rem"
 	},
 	modalTitle: {
 		fontSize: "2rem",
 		fontWeight: "bold"
 	},
 	dragBox: {
-		padding: "1rem 2rem 1rem 0rem",
+		padding: "0 2rem 0 0",
 		borderRadius: "0.25rem",
 		backgroundColor: theme.palette.background.default,
 		overflowY: "auto",
-		height: "60vh"
+		height: "63vh"
 	},
 	card: {
-		marginTop: "1rem",
+		marginTop: "1rem"
 	},
-	messageBoard: {
-		padding: "1rem 1rem 1rem 2rem",
-		backgroundColor: theme.palette.background.default,
-		overflowY: "auto",
-		height: "50vh",
-		borderRadius: "0.25rem",
-		width: "100%"
-	},
-	myMessage: {
-		width: "55%",
-		margin: "8px",
-		padding: "12px 8px",
-		borderRadius: "4px",
-		backgroundColor: "#0084ff",
-		marginLeft: "auto",
-	},
-	receivedMessage: {
-		width: "55%",
-		margin: "8px",
-		padding: "12px 8px",
-		borderRadius: "4px",
-		backgroundColor: "#3f4042",
-		marginRight: "auto",
-	},
-	message: {
-		marginTop: "1rem",
-		padding: "1rem 1rem 1rem 1rem",
-		backgroundColor: theme.palette.background.paper,
-		borderRadius: "0.5rem",
-	},
-	messageText: {
-		fontSize: "1.5rem",
-		color: theme.palette.text.primary
-	},
-	messageTS: {
-		fontsize: "0.5rem",
-		color: theme.palette.text.disabled
-	},
-	sendMsgComponent: {
-		width: "100%",
-		height: "5vh",
-		marginBottom: "5rem"
-	},
-	enterMessageField: {
-		marginLeft: "-1.5rem",
-		width: "115%",
-		height: "4vh"
-	},
-	sendMsgIcon: {
-		width: "100%",
-		height: "5vh"
-	},
-	sendMessageButton: {
-		width: "80%",
-		height: "100%",
-		marginLeft: "3.5rem",
-		marginTop: "1.5rem"
+	matchContainer: {
+		height:"100%",
+		padding: "0 1rem 0 0"
 	}
 }));
 
 const matchedPeople = matchData['people'];
 
-//const messageLog = matchData['messages'];
 
 // Should not be hardcoded in later implementations
 const roomId = "5fb5a9f39b71118664cd1c8e";
@@ -177,41 +122,43 @@ function ViewMatch(props) {
 					container
 					direction="row"
 					justify="flex-start"
-					spacing={2}
 					alignItems="center"
 					className={classes.content}
 				>
 					<Grid
-						item xs={12} sm={4}>
-						<DragDropContext onDragEnd={handleOnDragEnd}>
-							<div className={classes.dragBox}>
-								<Droppable droppableId="playlist" className={classes.dragContainer}>
-									{(provided) => (
-										<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-											{chats.map((chat, index) => {
-												return (
-													<Draggable key={chat._id} draggableId={chat._id} index={index} isDragDisabled={true}>
-														{(provided) => (
-															<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-																<MatchChatCard
-																	recipient={chat.recipient}
-																	id={chat._id}
-																	handleSelectedChat={handleSelectedChat}
-																	index={index}
-																></MatchChatCard>
-															</div>
-														)}
-													</Draggable>
-												);
-											})}
-											{provided.placeholder}
-										</ul>
-									)}
-								</Droppable>
-							</div>
-						</DragDropContext>
+						item xs={4} className={classes.matchContainer}>
+							<DragDropContext onDragEnd={handleOnDragEnd}>
+								<div className={classes.dragBox}>
+									<Droppable droppableId="playlist" className={classes.dragContainer}>
+										{(provided) => (
+											<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
+												{chats.map((chat, index) => {
+													return (
+														<Draggable key={chat._id} draggableId={chat._id} index={index} isDragDisabled={true}>
+															{(provided) => (
+																<div className={classes.card} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+																	<MatchChatCard
+																		recipient={chat.recipient}
+																		id={chat._id}
+																		handleSelectedChat={handleSelectedChat}
+																		index={index}
+																	></MatchChatCard>
+																</div>
+															)}
+														</Draggable>
+													);
+												})}
+												{provided.placeholder}
+											</ul>
+										)}
+									</Droppable>
+								</div>
+							</DragDropContext>
 					</Grid>
-					<ViewChat user={props.user} currentChat={chats[currentChat]}></ViewChat>
+					<Grid
+						item xs={8}>
+						<ViewChat user={props.user} currentChat={chats[currentChat]} match={matches[currentChat]}></ViewChat>
+					</Grid>
 				</Grid>
 			</Dialog>
 		</div>
