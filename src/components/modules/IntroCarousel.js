@@ -59,7 +59,7 @@ function IntroCarousel(props){
                 }
                 }>
             <Carousel
-            interval={5000}
+            interval={3000}
             animatiom="slide"
             timeout={750}
             className={classes.carousel}
