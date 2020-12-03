@@ -201,8 +201,8 @@ function MyPlaylists(props) {
 					My Playlists
 				</Typography>
 				
-				<Grid container direction="row" justify="space-between" alignItems="center">
-					<Grid item xs={12} sm={6}>
+				<Grid container direction="row" justify="center" alignItems="flex-end">
+					<Grid item xs={6}>
 						<div className={classes.search}>
 							<div className={classes.searchIcon}>
 								<SearchIcon />
@@ -220,7 +220,7 @@ function MyPlaylists(props) {
 						</div>
 					</Grid>
 					
-					<Grid item xs={3} sm={1} className={classes.importGrid}>
+					<Grid item xs={3} className={classes.importGrid} justify="flex-end" alignItems="center" container>
 						<Button
 						variant="contained"
 						color="secondary"
@@ -233,7 +233,7 @@ function MyPlaylists(props) {
 						</Button>
 					</Grid> 
 					
-					<Grid item xs={3} sm={1} className={classes.importGrid}>
+					<Grid item xs={3} className={classes.importGrid} justify="flex-end" alignItems="center" container>
 						<Button
 						variant="contained"
 						color="secondary"
