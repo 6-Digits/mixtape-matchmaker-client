@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	makeCommentSection: {
 		marginTop:"0.75rem",
-		marginLeft:"-3.5rem"
+		marginLeft:"-3.5rem",
 	},
 	enterComment: {
 		width:"102.5%",
@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
 	commentBox: {
 		width:'95%',
 		maxHeight: '40vh',
-		overflowY: 'auto',
+		overflowY: 'auto'
 	},
 	messageText: {
 		fontSize: '1.5rem'
@@ -159,6 +159,21 @@ const useStyles = makeStyles((theme) => ({
 	},
 	button: {
 		fontWeight: "bold"
+	},
+	indicator: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		fontWeight: 'bold',
+		padding: '0.5rem',
+		backgroundColor: theme.palette.background.paper,
+		opacity: 0.8
+	},
+	unsaved: {
+		color : theme.palette.error.main
+	},
+	saved: {
+		color : theme.palette.success.main
 	}
 }));
 
@@ -439,6 +454,8 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 							playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder
 						} 
 						onClick={handleOpen}/>
+						{editable ? <div className={[classes.indicator, changed ? classes.unsaved : classes.saved].join(' ')}>
+							{`•${changed ? 'Unsaved' : 'Saved'}`}</div> : null}
 						<div className={classes.playlistDuration}>{playlist['duration'] ? `${Math.floor(playlist['duration']/60)}:${playlist['duration']%60 > 9 ?
 						playlist['duration']%60 : '0' + playlist['duration']%60
 						}` : '0:00'}</div>
@@ -634,7 +651,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 								variant="outlined"
 								fullWidth
 								name="send-message"
-								label="Enter a message"
+								label="Send a Comment"
 								type="text"
 								value={comment}
 								multiline={true}
