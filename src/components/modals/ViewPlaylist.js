@@ -67,7 +67,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	description: {
 		padding: '0.5rem',
-		fontSize: '1.5rem'
+		fontSize: '1.5rem',
+		overflowY: "auto",
 	},
 	playlistAuthor: {
 		overflowX: "auto"
@@ -181,6 +182,7 @@ const api = 'http://localhost:42069/api';
 const errorDefault = "Sorry! We could not save to the playlist. You are either disconnected from the internet or the servers are down. Please save your work using external software and try again later. Click save again to close the playlist.";
 const errorTitle = "The playlist title you have entered is empty. Please enter a valid playlist title "
 const errorTitleLength = "The playlist title you have entered is too long (exceeds 255 characters). Please enter a valid playlist title.";
+const errorDescription = "The playlist description that you have entered is too long (exceeds 5000 characters)";
 
 function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists}) {
 	
@@ -316,6 +318,9 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			} else if (!playlistName || playlistName.length > 255) {
 				setError(true);
 				setErrorMsg(errorTitleLength);
+			} else if (description.length > 5000) {
+				setError(true);
+				setErrorMsg(errorDescription);
 			} else {
 				let playlistID = playlist['_id'];
 				let playlistData = {
@@ -627,7 +632,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 						onChange={descriptionChange}
 						/>
 						:
-						<div variant="h6" className={classes.description}>{description}</div>
+						<Typography variant="h6" className={classes.description}>{description}</Typography>
 						}
 					</Grid>
 				</Grid>
