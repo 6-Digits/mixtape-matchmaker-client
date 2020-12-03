@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
 		maxWidth: "100%"
 	},
 	page: {
-		height: "100%"
+		height: "100vh",
+		backgroundColor: theme.palette.background.paper
 	}
 }));
 
@@ -197,9 +198,9 @@ function MyPlaylists(props) {
 			<NavigationBar setUser={props.setUser} user={props.user} pageName='My Playlists'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>
-				<Typography variant="h2">
+				{/* <Typography variant="h2">
 					My Playlists
-				</Typography>
+				</Typography> */}
 				
 				<Grid container direction="row" justify="center" alignItems="flex-end">
 					<Grid item xs={6}>
