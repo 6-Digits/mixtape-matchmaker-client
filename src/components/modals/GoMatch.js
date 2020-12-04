@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Dialog, DialogActions, Button, DialogTitle, Typography, Grid } from '@material-ui/core';
+import { NavigateBefore as NavigateBeforeIcon, NavigateNext as NavigateNextIcon } from '@material-ui/icons';
 import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
 import PlayerControls from "./PlayerControls";
 import heart from "../../assets/heart.png";
 import heartBreak from "../../assets/heart_break.png";
-import playlistData from '../data/playlist.json';
 import placeholder from "../../assets/placeholder.png";
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
 const { keyboardControls } = utils;
-const importedSongs = playlistData['songs'];
 
 const useStyles = makeStyles((theme) => ({
 	container: {

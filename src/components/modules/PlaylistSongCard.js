@@ -55,7 +55,7 @@ function PlaylistSongCard({index, editable, song, author, genre, duration, img, 
 	const handleDelete = () => {
 		setAutoPlay(false);
 		deleteSong(uuid);
-		handleCurrentIndex(index);
+		handleCurrentIndex(currentIndex);
 	}
 	
 	return (

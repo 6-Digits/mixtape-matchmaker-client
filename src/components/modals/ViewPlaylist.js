@@ -227,9 +227,9 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	shareable = editable ? editable : null;
 	
 	useEffect(() => {
-		if(songs){
+		if (songs) {
 			setCurrentSong(songs[currentIndex]);
-			if(!playlistAuthor) {
+			if (!playlistAuthor) {
 				fetchAuthor();
 			}
 		}
@@ -545,12 +545,10 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 					className={classes.playlistArea}
 					>
 					<Grid container item xs={12}>
-						<Playlist 
-						editable={editable} draggable={editable}
-						songs={songs} setSongs={setSongs} currentIndex={currentIndex}
-						handleCurrentIndex={handleCurrentIndex} setChanged={setChanged}
-						setAutoPlay={setAutoPlay}
-						playlistID={playlist['_id']} />
+						<Playlist editable={editable} draggable={editable}
+							songs={songs} setSongs={setSongs} currentIndex={currentIndex}
+							handleCurrentIndex={handleCurrentIndex} setChanged={setChanged}
+							setAutoPlay={setAutoPlay} playlistID={playlist['_id']} />
 					</Grid>
 					
 					<Grid container item xs={12}>

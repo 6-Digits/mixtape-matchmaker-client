@@ -94,13 +94,14 @@ const api = 'http://localhost:42069/api';
 */
 
 function Playlist({title, editable, draggable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay, playlistID, notSharable}) {
+	const classes = useStyles();
+	const shareLink = `${window.location.origin}/share/${playlistID}`;
+	
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [search, setSearch] = useState("");
 	const [viewingSongs, setViewingSongs] = useState(songs);
 	const [undo, setUndo] = useState([]);
 	const [redo, setRedo] = useState([]);
-
-	const shareLink = `${window.location.origin}/share/${playlistID}`;
 
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
@@ -114,7 +115,7 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 	}, [songs]);
 
 
-	function handleOnDragEnd(result) {
+	const handleOnDragEnd = (result) => {
 		if (!result.destination) return;
 		if (result.destination.index === result.source.index) return;
 
@@ -127,9 +128,7 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 		setSongs(items);
 		createSwap(result.source.index, result.destination.index);
 	}
-
-	const classes = useStyles();
-
+	
 	const filterSongs = (event) => {
 		setSearch(event.target.value);
 		if(event.target.value.length > 2){
@@ -379,21 +378,7 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 						</Menu>
 					</Grid> 
 				}
-				{notSharable ? null : 
-					<ShareDropDown contentLink={shareLink}></ShareDropDown>
-				}
-				{
-					// importable ? 
-					// 	<Grid item xs={12} sm={1} className={classes.importGrid}>
-					// 		<Button
-					// 		variant="contained"
-					// 		color="primary"
-					// 		className={classes.button}>
-					// 			<LibraryAddIcon fontSize='large'></LibraryAddIcon>
-					// 			{" Import"}
-					// 		</Button>
-					// 	</Grid> : null
-				}
+				{ notSharable ? null : <ShareDropDown contentLink={shareLink}></ShareDropDown> }
 			</Grid>
 			<DragDropContext onDragEnd={handleOnDragEnd}>
 				<div className={classes.dragBox}>

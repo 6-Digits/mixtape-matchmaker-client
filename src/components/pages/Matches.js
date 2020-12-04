@@ -8,11 +8,9 @@ import Playlist from "../modules/Playlist";
 import MatchSettings from "../modals/MatchSettings";
 import GoMatch from "../modals/GoMatch";
 import ViewMatch from "../modals/ViewMatch";
-import playlistData from '../data/playlist.json';
 import placeholder from "../../assets/placeholder.png";
 
 const { keyboardControls } = utils;
-const importedSongs = playlistData['songs'];
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -67,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const matchPlaylistAPI = "http://localhost:42069/api/match/mixtape/uid/:uid";
 const errorDefault = "Could not save the playlist for some reason. You may be disconnected from the network or the server is down.";
 const errorPlaylist = "Your match playlist cannot be empty or exceed 30 songs!";
 const errorTitle = "The title is either too long (More than 255 Characters) or empty. Please enter a valid title!";
@@ -88,7 +85,7 @@ function Matches({user, setUser}) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [playlistID, setPlaylistID] = useState("");
-	const [timeout, setTO] = useState(null);
+	const [timeout, setTimeout] = useState(null);
 
 	useEffect(() => {
 		function updateWidth() {
@@ -102,7 +99,7 @@ function Matches({user, setUser}) {
 	}, []);
 	
 	useEffect(() => {
-		if(songs){
+		if (songs) {
 			setCurrentSong(songs[currentIndex]);
 		}
 	}, [currentIndex, songs, autoPlay]);
@@ -148,6 +145,7 @@ function Matches({user, setUser}) {
 			alert(`Failed to get match playlist with error: ${response.status}!`);
 		}
 	};
+	
 	const saveMatchPlaylist = async() => {
 		setError(false);
 		setSuccess(false);
@@ -194,10 +192,11 @@ function Matches({user, setUser}) {
 				className={classes.playlistContainer}
 				>
 				<Button variant="contained" color="secondary" className={classes.saveButton} onClick={saveMatchPlaylist}>Save Changes</Button>
-				<Playlist title="My Match Playlist" importable={true} editable={true} draggable={true}
-									songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
-									setChanged={setChanged} playlistID={playlistID}
-									setAutoPlay={setAutoPlay} />
+				<Playlist title="My Match Playlist" editable={true} draggable={true}
+					songs={songs} setSongs={setSongs} currentIndex={currentIndex} 
+					handleCurrentIndex={handleCurrentIndex}
+					setChanged={setChanged} playlistID={playlistID}
+					setAutoPlay={setAutoPlay} />
 				<Media>
 					{mediaProps => (
 					<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
