@@ -9,6 +9,7 @@ import MatchSettings from "../modals/MatchSettings";
 import GoMatch from "../modals/GoMatch";
 import ViewMatch from "../modals/ViewMatch";
 import placeholder from "../../assets/placeholder.png";
+import { v4 as uuidv4 } from 'uuid';
 
 const { keyboardControls } = utils;
 
@@ -136,7 +137,14 @@ function Matches({user, setUser}) {
 		let response = await fetch(`${api}/match/mixtape/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			setSongs(data['songList'] ? data['songList'] : []);
+			let updatedSongList = data['songList'].map((song, i) => {
+				song['uuid'] = uuidv4() + uuidv4();
+				// if(song['duration']){
+				// 	totalLength += song['duration'];
+				// }
+				return song;
+			});
+			setSongs(updatedSongList);
 			setCurrentSong(data['songList'] ? data['songList'][currentIndex] : null);
 			setDescription(data['description'] ? data['description'] : "");
 			setTitle(data['name'] ? data['name'] : "");
