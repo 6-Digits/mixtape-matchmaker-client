@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography, Card, Button, Avatar, useRadioGroup } from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { PlayCircleOutline as PlayCircleOutlineIcon, Delete as DeleteIcon } from '@material-ui/icons';
+import placeholder from "../../assets/placeholder.png";
 
 function PlaylistSongCard({index, editable, song, author, genre, duration, img, src, currentIndex, handleCurrentIndex, deleteSong, uuid, setAutoPlay}) {
 	const useStyles = makeStyles((theme) => ({
@@ -44,7 +45,7 @@ function PlaylistSongCard({index, editable, song, author, genre, duration, img, 
 	}));
 	const classes = useStyles();
 	duration = parseInt(duration);
-	img = img ? img : "https://compote.slate.com/images/fb3403a0-6ffc-471a-8568-b0f01fa3bd6b.jpg";
+	img = img ? img : placeholder;
 
 	const handlePlay = () => {
 		handleCurrentIndex(index);

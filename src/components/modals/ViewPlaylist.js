@@ -207,7 +207,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const [likeCount, setLikeCount] = useState(importedLikeCount);
 	const [liked, setLiked] = useState(false);
 	const [playlistName, setPlaylistName] = useState(importedName);
-	const [profileImage, setProfileImage] = useState("https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg");
+	const [profileImage, setProfileImage] = useState(placeholder);
 	const [playlistAuthor, setPlaylistAuthor] = useState(null);
 	const [songs, setSongs] = useState(importedSongs);
 	const [currentIndex, setCurrentIndex] = useState(0);
