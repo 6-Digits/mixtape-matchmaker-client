@@ -29,9 +29,9 @@ function Notifications({user, notifications, setNotifications}) {
 			headers: {'Content-Type': 'application/json' },
 			body: "{}"
 		};
-		let response = await fetch('http://localhost:42069/api/profile/notificatons/nid/'+ notificationID, requestOptions);
+		let response = await fetch('http://localhost:42069/api/profile/notifications/nid/'+ notificationID, requestOptions);
 		let data = await response.json();
-		alert(response.status);
+		//alert(response.status);
 		if (response.status === 200) {
 			setNotifications(notifications.filter(function(notification) { 
 				return notification['_id'] !== notificationID;
