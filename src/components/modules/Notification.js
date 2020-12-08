@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   message : {
     overflowX: 'auto',
-    width: '100%'
+    width: '17rem'
   }
 }));
 
@@ -42,7 +42,7 @@ export default function Notification(props) {
             </IconButton>
           }
         >
-          <Link component='a' href={props.link} className={classes.message}>{props.message}</Link>
+          <div className={classes.message}>{props.message}</div>
         </Alert>
       </Collapse>
     </div>
