@@ -128,6 +128,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardMedia: {
 		maxHeight: 125,
+		width: '100%',
 		padding: 0
 	},
 	cardContent: {
