@@ -3,7 +3,7 @@ import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Dialog, DialogActions, Button, DialogTitle, TextField, Typography, Grid, Box } from '@material-ui/core';
 import { Send as SendIcon } from '@material-ui/icons';
 
-import useChat from "./useChat";
+import useChat from "../frameworks/useChat";
 
 const useStyles = makeStyles((theme) => ({
 	messageBoard: {

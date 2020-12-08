@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Dialog, DialogActions, Button, DialogTitle, TextField, Typography, Grid, Box } from '@material-ui/core';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import MatchChatCard from "../modules/MatchChatCard";
-import ViewChat from "./ViewChat";
+import ViewChat from "../modules/ViewChat";
 
 // Need to adjust for mobile view in the future
 const useStyles = makeStyles((theme) => ({
