@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardMedia: {
 		maxHeight: 265,
+		width: "100%"
 	},
 	cardContent: {
 		textAlign: "left",
@@ -374,7 +375,7 @@ function Settings(props) {
 	return (
 		<div className={classes.root}>
 			<NavigationBar setUser={props.setUser} user={props.user} setNotifications={props.setNotifications}
-			notifications={props.notifications}pageName='My Settings'></NavigationBar>
+			notifications={props.notifications} pageName='My Settings'></NavigationBar>
 			
 			<Paper className={classes.paper}>
 				<Grid container spacing={3} className={classes.mainContainer}>
