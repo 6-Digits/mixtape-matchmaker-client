@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  message : {
+    overflowX: 'auto',
+    width: '100%'
+  }
 }));
 
 export default function Notification(props) {
@@ -31,14 +35,14 @@ export default function Notification(props) {
               color="inherit"
               size="large"
               onClick={() => {
-                setOpen(false);
+                props.onDelete();
               }}
             >
               <CloseIcon fontSize="inherit" />
             </IconButton>
           }
         >
-          <Link component='a' href={props.link}>{props.message}</Link>
+          <Link component='a' href={props.link} className={classes.message}>{props.message}</Link>
         </Alert>
       </Collapse>
     </div>

@@ -62,7 +62,7 @@ const NotificationSocket = (roomId, user) => {
 			senderId: socketRef.current.id,
 		});
 	};
-	return { notifications, sendNotification };
+	return { notifications, sendNotification, setNotifications};
 };
 
 export default NotificationSocket;

@@ -7,7 +7,7 @@ const api = 'http://localhost:42069/api';
 
 const ITEM_HEIGHT = 48;
 
-function Notifications({user, notifications}) {
+function Notifications({user, notifications, setNotifications}) {
 	const [anchorEl, setAnchorEl] = useState(null);
 	//const [oldNotifications, setOldNotifications] = useState(notificationList ? notificationList : []);
 	//const { notifications, sendNotification } = NotificationSocket(user ? user._id : "", user);
@@ -23,6 +23,23 @@ function Notifications({user, notifications}) {
 		setAnchorEl(null);
 	};
 
+	const handleDeleteNotification = async(notificationID) => {
+		let requestOptions = {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json' },
+			body: "{}"
+		};
+		let response = await fetch('http://localhost:42069/api/profile/notificatons/nid/'+ notificationID, requestOptions);
+		let data = await response.json();
+		alert(response.status);
+		if (response.status === 200) {
+			setNotifications(notifications.filter(function(notification) { 
+				return notification['_id'] !== notificationID;
+			}));
+		} else {
+		}
+	};
+
 	const StyledMenu = withStyles({
 		paper: {
 			border: '1px solid #d3d4d5',
@@ -36,7 +53,7 @@ function Notifications({user, notifications}) {
 			onClose={handleClose}
 			PaperProps={{
 				style: {
-					maxHeight: ITEM_HEIGHT * 4.5,
+					maxHeight: ITEM_HEIGHT * 3.5,
 					width: '25%',
 				},
 			}}
@@ -60,19 +77,22 @@ function Notifications({user, notifications}) {
 				aria-label="more"
 				aria-controls="long-menu"
 				aria-haspopup="true"
-				onClick={handleClick}
+				onClick={notifications.length > 0 ? handleClick : null}
 			>
 				<Badge badgeContent={notifications.length} color="secondary">
 					<NotificationsIcon fontSize='large' />
 				</Badge>
 			</IconButton>
+			{notifications.length > 0 ? 
 			<StyledMenu>
 				{notifications.map((option, i) => (
 					<MenuItem key={i}>
-						<Notification link={option.link} message={option.message}></Notification>
+						<Notification message={option.message} onDelete={()=>{
+							handleDeleteNotification(option._id)}}></Notification>
 					</MenuItem>
 				))}
-			</StyledMenu>
+			</StyledMenu> :
+ 			null }
 		</div>
 	);
 }

@@ -84,7 +84,8 @@ function Share(props) {
 
 	return (
 		<div className={classes.page}>
-            <NavigationBar setUser={props.setUser} user={props.user} pageName='Search'></NavigationBar>
+            <NavigationBar setUser={props.setUser} user={props.user} setNotifications={props.setNotifications}
+			notifications={props.notifications} pageName='Search'></NavigationBar>
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
 				<Grid container direction="column" justify="space-between" alignItems="flex-start">
 					<Grid item xs={12}>

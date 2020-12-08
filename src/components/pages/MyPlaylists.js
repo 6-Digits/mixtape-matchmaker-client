@@ -195,7 +195,8 @@ function MyPlaylists(props) {
 
 	return (
 		<div className={classes.page}>
-			<NavigationBar setUser={props.setUser} user={props.user} notifications={props.notifications}pageName='My Playlists'></NavigationBar>
+			<NavigationBar setUser={props.setUser} user={props.user} setNotifications={props.setNotifications}
+			notifications={props.notifications}pageName='My Playlists'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>
 				{/* <Typography variant="h2">

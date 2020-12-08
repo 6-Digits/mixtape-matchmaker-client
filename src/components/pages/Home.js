@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme)=>({
 
 const api = 'http://localhost:42069/api';
 
-function Home({user, setUser, sendNotification, notifications}) {
+function Home({user, setUser, sendNotification, notifications, setNotifications}) {
 	const classes = useStyles();
 	const [popularPlaylists, setPopularPlaylists] = useState([]);
 	const [likedPlaylists, setLikedPlaylists] = useState([]);
@@ -102,7 +102,8 @@ function Home({user, setUser, sendNotification, notifications}) {
 
 	return (
 		<div>
-			<NavigationBar setUser={setUser} user={user} notifications={notifications} pageName='Home'></NavigationBar>
+			<NavigationBar setUser={setUser} user={user} setNotifications={setNotifications}
+			notifications={notifications} pageName='Home'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.mainContainer}>
 				

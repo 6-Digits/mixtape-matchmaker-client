@@ -72,7 +72,7 @@ const errorTitle = "The title is either too long (More than 255 Characters) or e
 const errorDescription = "The description is too long (More than 5000 characters). Please enter a valid description!";
 const api = 'http://localhost:42069/api';
 
-function Matches({user, setUser, sendNotification, notifications}) {
+function Matches({user, setUser, sendNotification, notifications, setNotifications}) {
 	const classes = useStyles();
 	const [width, setWidth] = useState(0);
 	const [changed, setChanged] = useState(false);
@@ -191,7 +191,8 @@ function Matches({user, setUser, sendNotification, notifications}) {
 
 	return (
 		<div style={{height: width > 599 ? "100vh" : "100%"}}>
-			<NavigationBar setUser={setUser} user={user} notifications={notifications} pageName='My Matches'></NavigationBar>
+			<NavigationBar setUser={setUser} user={user} setNotifications={setNotifications}
+			notifications={notifications} pageName='My Matches'></NavigationBar>
 			<Grid
 				container
 				direction="column"

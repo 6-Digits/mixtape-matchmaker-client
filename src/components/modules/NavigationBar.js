@@ -190,7 +190,7 @@ function NavigationBar(props) {
 					</Button>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
-						<Notifications user={props.user} notifications={props.notifications}/>
+						<Notifications user={props.user} notifications={props.notifications} setNotifications={props.setNotifications}/>
 						<AccountDropDown setUser={props.setUser} user={props.user}/>
 					</div>
 				</Toolbar>

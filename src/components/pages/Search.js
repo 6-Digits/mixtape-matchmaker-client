@@ -108,7 +108,8 @@ function Search(props) {
 
 	return (
 		<div className={classes.page}>
-			<NavigationBar setUser={props.setUser} user={props.user} notifications={props.notifications} pageName='Search'></NavigationBar>
+			<NavigationBar setUser={props.setUser} user={props.user} setNotifications={props.setNotifications}
+			notifications={props.notifications} pageName='Search'></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
 				<Grid container direction="row" justify="space-between" alignItems="center">

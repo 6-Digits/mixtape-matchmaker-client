@@ -423,16 +423,16 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			fetch(`${api}/mixtape/like`, requestOptions).then((res) => {
 				setLiked(true);
 				setLikeCount(likeCount + 1);
+				// Basic Idea
+				// The message to send the other user and the userID of the other user who will recieve the notification
+				// Right now it is hardcoded to dummy1 for testing
+				// Need to implement checking code
+				if(user._id != importedAuthor){
+					sendNotification(`Someone liked your playlist: ${playlistName}`, importedAuthor);
+				}
 			}).catch((err) => {
 				alert(`Failed to like mixtape: ${err}`);
 			})
-			// Basic Idea
-			// The message to send the other user and the userID of the other user who will recieve the notification
-			// Right now it is hardcoded to dummy1 for testing
-			// Need to implement checking code
-			if(user._id != importedAuthor){
-				sendNotification("Someone liked your playlist", importedAuthor);
-			}
 		}
 	}
 	
@@ -451,7 +451,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				let newComments = [data, ...comments]
 				setComments(newComments);
 				if(user._id != importedAuthor){
-					sendNotification("Someone commented your playlist", importedAuthor);
+					sendNotification(`Someone commented on your playlist: ${playlistName}`, importedAuthor);
 				}
 			} else {
 				alert(`Failed to create comment: ${response.status}`);
