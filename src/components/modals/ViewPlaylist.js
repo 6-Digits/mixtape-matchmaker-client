@@ -428,11 +428,11 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			})
 			// Basic Idea
 			// The message to send the other user and the userID of the other user who will recieve the notification
-			// let reciever = importedAuthor
 			// Right now it is hardcoded to dummy1 for testing
 			// Need to implement checking code
-			let reciever = '5fc2f2f1af6ba41d1877a165'
-			sendNotification("Someone liked your playlist", reciever);
+			if(user._id != importedAuthor){
+				sendNotification("Someone liked your playlist", importedAuthor);
+			}
 		}
 	}
 	
@@ -450,6 +450,9 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				let data = await response.json();
 				let newComments = [data, ...comments]
 				setComments(newComments);
+				if(user._id != importedAuthor){
+					sendNotification("Someone commented your playlist", importedAuthor);
+				}
 			} else {
 				alert(`Failed to create comment: ${response.status}`);
 			}
