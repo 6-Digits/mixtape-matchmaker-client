@@ -51,7 +51,7 @@ const errorFetch = "We failed to get your match settings. This is likely because
 const errorDefault = "We could not saving your match settings likely because you are offline or our servers are down. Please try again later";
 const errorGender = "You do not have a valid gender preference, please select a valid gender preference!";
 const errorAge = "The age preference you have enter is either not in the valid (18 or older) range or unspecified. Please enter a valid age range!";
-const errorLocation = "The location you have enter could not be computed in our database. Please try again later!";
+const errorLocation = "The location you have enter could not be computed in our database. Please enter a valid location!";
 
 const api = 'http://localhost:42069/api';
 
@@ -107,39 +107,58 @@ function MatchSettings(props) {
 
 	const saveMatchSettings = async() => {
 		let userToken = localStorage.getItem('userToken', userToken);
-		if(!genderPreference) {
+		if (!genderPreference) {
 			setError(true);
 			setErrorMsg(errorGender);
-		} else if(ageLower < 18 || ageLower > ageUpper) {
+		} 
+		else if (ageLower < 18 || ageLower > ageUpper) {
 			setError(true);
 			setErrorMsg(errorAge);
-		} else if(ageUpper < 18 || ageUpper > 2147483647) {
+		} 
+		else if (ageUpper < 18 || ageUpper > 2147483647) {
 			setError(true);
 			setErrorMsg(errorAge);
-		} else if(!location) {
+		} 
+		else if (!location) {
 			setError(true);
 			setErrorMsg(errorLocation);
-		} else if(!error){
-			let userData = {
-				gender: genderPreference['title'],
-				ageUpper: ageUpper,
-				ageLower: ageLower,
-				location: location
-			};
-			let requestOptions = {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json', 'x-access-token': userToken },
-				body: JSON.stringify(userData)
-			};
-			let response = await fetch(api + '/match/id/' + props.user._id, requestOptions);
-			if (response.status === 200) {
-				let data = await response.json();
-				setError(false);
-				handleClose();
-			} else {
-				setError(true);
-				setErrorMsg(errorDefault);
+		} 
+		else if (!error){
+			let geocodeResponse = await fetch(`${api}/match/geocode/${location}`, {
+				method: 'GET',
+				headers: {'Content-Type': 'application/json'}
+			});
+			if (geocodeResponse.status === 200) {
+				let geocode = await geocodeResponse.json();
+				
+				let userData = {
+					gender: genderPreference['title'],
+					ageUpper: ageUpper,
+					ageLower: ageLower,
+					location: location,
+					...geocode
+				};
+				let requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json', 'x-access-token': userToken },
+					body: JSON.stringify(userData)
+				};
+				let response = await fetch(`${api}/match/id/${props.user._id}`, requestOptions);
+				if (response.status === 200) {
+					let data = await response.json();
+					setError(false);
+					handleClose();
+				} 
+				else {
+					setError(true);
+					setErrorMsg(errorDefault);
+				}
 			}
+			else {
+				setError(true);
+				setErrorMsg(errorLocation);
+			}
+			
 		}
 	};
 
