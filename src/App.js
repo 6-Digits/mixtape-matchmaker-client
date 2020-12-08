@@ -13,6 +13,7 @@ import Settings from "./components/pages/Settings";
 import Notifications from "./components/modals/Notifications";
 import Search from "./components/pages/Search";
 import Share from "./components/pages/Share";
+import NotificationSocket from './components/frameworks/NotificationSocket';
 // import { useCookies } from 'react-cookie';
 
 // const cookieName = 'mm_6digits_cookies';
@@ -22,6 +23,7 @@ function App(props) {
 	// const [cookies, setCookie, removeCookie] = useCookies([cookieName]);
 	const [darkMode, setDarkMode] = useState(false);
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+	const { notifications, sendNotification } = NotificationSocket(user ? user._id : "", user ? user : {_id : ""});
 	useEffect(() => {
 		// let userToken = JSON.parse(cookies.get('userToken'));
 		// let userToken = cookies['userToken'];
@@ -116,7 +118,7 @@ function App(props) {
 						<Route path="/home" name="Home" render={(props) => {
 								return (
 									user  ?
-									<Home user={user} setUser={setUser} /> :
+									<Home user={user} setUser={setUser} sendNotification={sendNotification} notifications={notifications} /> :
 									<Redirect to="/login" /> 
 								)
 							}}
@@ -125,7 +127,7 @@ function App(props) {
 						<Route path="/myplaylists" name="My Playlists" render={(props) => {
 								return (
 									user ?
-									<MyPlaylist user={user} setUser={setUser} />  :
+									<MyPlaylist user={user} setUser={setUser} sendNotification={sendNotification} notifications={notifications}/>  :
 									<Redirect to="/login" /> 
 								)
 							}}
@@ -133,7 +135,7 @@ function App(props) {
 						<Route path="/matches" name="My Matches" render={(props) => {
 								return (
 									user ?
-									<Matches user={user} setUser={setUser} /> :
+									<Matches user={user} setUser={setUser} sendNotification={sendNotification} notifications={notifications}/> :
 									<Redirect to="/login" /> 
 								)
 							}}
@@ -141,7 +143,7 @@ function App(props) {
 						<Route path="/settings" name="My Settings" render={(props) => {
 								return (
 									user ?
-									<Settings user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser}/> :
+									<Settings user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser} sendNotification={sendNotification} notifications={notifications}/> :
 									<Redirect to="/login" /> 
 								)
 							}}
@@ -149,7 +151,7 @@ function App(props) {
 						<Route path="/search" name="Search" render={(props) => {
 								return (
 									user ?
-									<Search user={user} setUser={setUser} /> :
+									<Search user={user} setUser={setUser} sendNotification={sendNotification} notifications={notifications}/> :
 									<Redirect to="/login" /> 
 								)
 							}}
@@ -165,7 +167,7 @@ function App(props) {
 						<Route path="/" render={(props) => {
 								return (
 									user  ?
-									<Redirect to="/home" user={user} setUser={setUser} /> :
+									<Redirect to="/home" user={user} setUser={setUser} sendNotification={sendNotification} notifications={notifications}/> :
 									<Redirect to="/login" /> 
 								)
 							}}

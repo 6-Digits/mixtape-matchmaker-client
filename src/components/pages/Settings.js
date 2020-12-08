@@ -373,7 +373,7 @@ function Settings(props) {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
-			<NavigationBar setUser={props.setUser} user={props.user} pageName='My Settings'></NavigationBar>
+			<NavigationBar setUser={props.setUser} user={props.user} notifications={props.notifications}pageName='My Settings'></NavigationBar>
 			
 			<Paper className={classes.paper}>
 				<Grid container spacing={3} className={classes.mainContainer}>

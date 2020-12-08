@@ -6,6 +6,7 @@ import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
 import PlayerControls from "./PlayerControls";
 import placeholder from "../../assets/placeholder.png";
+import NotificationSocket from '../frameworks/NotificationSocket';
 
 const { keyboardControls } = utils;
 
@@ -194,6 +195,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const importedAuthor = playlist ? playlist['owner'] : null;
 	const importedName = playlist ? playlist['name'] : "";
 	const importPublic = playlist ? playlist['public'] ? playlist['public'] : false : false;
+	
 
 	const classes = useStyles();
 
