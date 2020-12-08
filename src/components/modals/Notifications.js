@@ -1,39 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconButton, Badge, Menu, MenuItem, withStyles } from '@material-ui/core';
 import { Notifications as NotificationsIcon } from '@material-ui/icons';
 import Notification from '../modules/Notification';
+import NotificationSocket from '../frameworks/NotificationSocket';
 
 const api = 'http://localhost:42069/api';
 
-const options = [
-	<Notification link='http://localhost:8080/matches' message='JSON has sent you a message!'></Notification>,
-	<Notification link='http://localhost:8080/settings' message='FARHAN has matched with you!'></Notification>,
-	<Notification link='http://localhost:8080/myplaylists' message='DARREN has commented on your playlist!'></Notification>
-];
-
 const ITEM_HEIGHT = 48;
 
-function Notifications() {
-	/*
+function Notifications({user}) {
+	const notificationList = []
+;	const [anchorEl, setAnchorEl] = useState(null);
+	const [oldNotifications, setOldNotifications] = useState(notificationList ? notificationList : []);
+	const { notifications, sendNotification } = NotificationSocket(user ? user._id : "", user);
+	const open = Boolean(anchorEl);
+	
 	const fetchNotifications = async () => {
 		let requestOptions = {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
 		};
-		//let response = await fetch(`${api}/profile/notifications/uid/${user._id}`, requestOptions);
+		let response = await fetch(`${api}/profile/notifications/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-		} else {
-			
+			setOldNotifications(data);
+		}else {
+			setOldNotifications([]);
 		}
 	};
-	*/
 
-	const [anchorEl, setAnchorEl] = useState(null);
-	const open = Boolean(anchorEl);
+	useEffect(() => {
+		fetchNotifications();
+	}, []);
+	
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
+		sendNotification("HI")
 	};
 
 	const handleClose = () => {
@@ -79,14 +82,14 @@ function Notifications() {
 				aria-haspopup="true"
 				onClick={handleClick}
 			>
-				<Badge badgeContent={3} color="secondary">
+				<Badge badgeContent={oldNotifications.length} color="secondary">
 					<NotificationsIcon fontSize='large' />
 				</Badge>
 			</IconButton>
 			<StyledMenu>
-				{options.map((option) => (
-					<MenuItem key={option}>
-						{option}
+				{oldNotifications.map((option, i) => (
+					<MenuItem key={i}>
+						<Notification link={option.link} message={option.message}></Notification>
 					</MenuItem>
 				))}
 			</StyledMenu>

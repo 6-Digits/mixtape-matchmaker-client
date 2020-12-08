@@ -1,47 +1,46 @@
 import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
-const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
+const NEW_NOTIFICATION_EVENT = "newNotificationEvent";
 const SOCKET_SERVER_URL = "http://localhost:5000";
 
-const NotifcationSocket = (roomId, user) => {
+const NotificationSocket = (roomId, user) => {
 	const [notifications, setNotifications] = useState([]);
 	const socketRef = useRef();
 
 	useEffect(() => {
 		socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
-			query: { roomId: user['_id'] },
+			query: { roomId },
 		});
-
-		setNotifications([]);
-
-		socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
+		//setNotifications([]);
+		socketRef.current.on(NEW_NOTIFICATION_EVENT, (notification) => {
 			//alert(JSON.stringify(message))
-			const incomingMessage = {
-				...message,
-				ownedByCurrentUser: message.senderId === socketRef.current.id,
+			const incomingNotification = {
+				...notification,
+				ownedByCurrentUser: notification.senderId === socketRef.current.id,
 				chatID : roomId,
 			};
-			setMessages((messages) => [...messages, incomingMessage]);
+			setNotifications((notifications) => [...notifications, incomingNotification]);
 			//setMessages([incomingMessage])
 		});
 
 		return () => {
 			socketRef.current.disconnect();
 		};
-	}, [roomId]);
+	}, []);
 	
 	// The function below notifies the server of a new message
-	const sendMessage = (messageBody) => {
-		socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
-			user: user,
-			body: messageBody,
+	const sendNotification = (messageBody) => {
+		socketRef.current.emit(NEW_NOTIFICATION_EVENT, {
+			creator: user,
+			message: messageBody,
 			date: new Date().toISOString(),
+			reciever: '5fc2f2f1af6ba41d1877a165',
 			senderId: socketRef.current.id,
 		});
 	};
 
-	return { messages, sendMessage };
+	return { notifications, sendNotification };
 };
 
-export default NotifcationSocket;
+export default NotificationSocket;
