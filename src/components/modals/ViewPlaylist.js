@@ -185,7 +185,7 @@ const errorTitle = "The playlist title you have entered is empty. Please enter a
 const errorTitleLength = "The playlist title you have entered is too long (exceeds 255 characters). Please enter a valid playlist title.";
 const errorDescription = "The playlist description that you have entered is too long (exceeds 5000 characters)";
 
-function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists}) {
+function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists, sendNotification}) {
 	
 	const importedSongs = playlist ? playlist['songList'] : [];
 	const importedDesc = playlist ? playlist['description'] : "";
@@ -426,6 +426,13 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			}).catch((err) => {
 				alert(`Failed to like mixtape: ${err}`);
 			})
+			// Basic Idea
+			// The message to send the other user and the userID of the other user who will recieve the notification
+			// let reciever = importedAuthor
+			// Right now it is hardcoded to dummy1 for testing
+			// Need to implement checking code
+			let reciever = '5fc2f2f1af6ba41d1877a165'
+			sendNotification("Someone liked your playlist", reciever);
 		}
 	}
 	

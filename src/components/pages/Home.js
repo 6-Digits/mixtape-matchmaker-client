@@ -110,13 +110,13 @@ function Home({user, setUser, sendNotification, notifications}) {
 					Popular Playlists
 				</Typography>
 				
-				<PlaylistsContainer height={800} playlists={popularPlaylists} user={user} fetchPlaylists={fetchPopularPlaylists} />
+				<PlaylistsContainer height={800} playlists={popularPlaylists} user={user} fetchPlaylists={fetchPopularPlaylists} sendNotification={sendNotification}/>
 				
 				<Typography variant="h3" className={classes.likedTitle}>
 					Liked Playlists
 				</Typography>
 				
-				<PlaylistsContainer height={800} playlists={likedPlaylists} user={user} fetchPlaylists={fetchLikedPlaylists}/>
+				<PlaylistsContainer height={800} playlists={likedPlaylists} user={user} fetchPlaylists={fetchLikedPlaylists} sendNotification={sendNotification}/>
 				
 			</Grid>
 		</div>
