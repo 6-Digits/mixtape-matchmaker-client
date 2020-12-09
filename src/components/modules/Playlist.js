@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	controlSongs: {
 		marginBottom: "0.5rem"
-	}
+	},
 }));
 
 const api = 'http://localhost:42069/api';

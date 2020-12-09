@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	profileImg: {
 		marginTop: '1rem',
-		width: '30vh',
-		height: '30vh',
+		width: '15vh',
+		height: '15vh',
 		margin: 'auto'
 	},
 	modal: {
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	player: {
 		display: 'none'
-	},
+	}
 }));
   
 const dummyMatches = [
@@ -135,6 +135,40 @@ const dummyMatches = [
 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
 				duration:213,
 				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
+			},
+			{
+				_id: "cool Story broo",
+				title: "3",
+				author: "RickAstleyVEVO",
+				apiType: "YouTube", 
+				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				videoId:"dQw4w9WgXcQ",
+				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+				duration:213,
+				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+			},
+			{
+				_id: "cool Story broo",
+				title: "3",
+				author: "RickAstleyVEVO",
+				apiType: "YouTube", 
+				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				videoId:"dQw4w9WgXcQ",
+				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+				duration:213,
+				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+			},
+			
+			{
+				_id: "cool Story broo",
+				title: "3",
+				author: "RickAstleyVEVO",
+				apiType: "YouTube", 
+				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				videoId:"dQw4w9WgXcQ",
+				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+				duration:213,
+				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
 			},
 			{
 				_id: "cool Story broo",
@@ -313,7 +347,7 @@ function GoMatch(props) {
 					<Grid container 
 						direction="column" item xs={8}
 						className={classes.rightCard}>
-						<Grid item container>
+						<Grid item container className={classes.playlist}>
 							<Playlist title="" importable={false} editable={false} draggable={false} notSharable={true}
 									songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
 									setAutoPlay={setAutoPlay} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
