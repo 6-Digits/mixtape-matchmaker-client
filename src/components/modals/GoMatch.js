@@ -82,9 +82,111 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
   
+const dummyMatches = [
+	{ 
+		_id: "123456",
+		gender: 'male',
+		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
+		name: "Adam Smith",
+		userName: "Meme Lord 9000",
+		playlistName: "1st playlist",
+		playlistDescription: "playlist description is this ... HAHAH",
+		songList: [
+			{
+				_id: "cool Story broo",
+				title: "Rick Astley - Never Gonna Give You Up (Video)",
+				author: "RickAstleyVEVO",
+				apiType: "YouTube", 
+				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				videoId:"dQw4w9WgXcQ",
+				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+				duration:213,
+				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
+			},
+			{
+				_id: "cool Story broo",
+				title: "Rick Astley - Never Gonna Give You Up (Video)",
+				author: "RickAstleyVEVO",
+				apiType: "YouTube", 
+				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				videoId:"dQw4w9WgXcQ",
+				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+				duration:213,
+				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+			}
+		]
+	},
+	{ 
+		_id: "123456",
+		gender: 'male',
+		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
+		name: "Basic Person 2",
+		userName: "Meme Lord 9000 lvl 2",
+		playlistName: "2nd Playlist",
+		playlistDescription: "playlist description is this ... ",
+		songList: [
+			{
+				_id: "cool Story broo",
+				title: "t1",
+				author: "RickAstleyVEVO",
+				apiType: "YouTube", 
+				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				videoId:"dQw4w9WgXcQ",
+				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+				duration:213,
+				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
+			},
+			{
+				_id: "cool Story broo",
+				title: "3",
+				author: "RickAstleyVEVO",
+				apiType: "YouTube", 
+				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				videoId:"dQw4w9WgXcQ",
+				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+				duration:213,
+				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+			}
+		]
+	},
+	{ 
+		_id: "123456",
+		gender: 'male',
+		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
+		name: "Yes man number 3",
+		userName: "Meme Lord 9000",
+		playlistName: "3rd Playlist",
+		playlistDescription: "playlist description is this ... 3",
+		songList: [
+			{
+				_id: "cool Story broo",
+				title: "t2",
+				author: "RickAstleyVEVO",
+				apiType: "YouTube", 
+				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				videoId:"dQw4w9WgXcQ",
+				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+				duration:213,
+				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
+			},
+			{
+				_id: "cool Story broo",
+				title: "4",
+				author: "RickAstleyVEVO",
+				apiType: "YouTube", 
+				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				videoId:"dQw4w9WgXcQ",
+				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+				duration:213,
+				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+			}
+		]
+	}
+];
+
 function GoMatch(props) {
 	const classes = useStyles();
-	const [matchIndex, setMatchIndex] = useState(false);
+	const [matchIndex, setMatchIndex] = useState(0);
 	const [open, setOpen] = useState(false);
 	const [changed, setChanged] = useState(false);
 	const [songs, setSongs] = useState([]);
@@ -93,7 +195,7 @@ function GoMatch(props) {
 	const [autoPlay, setAutoPlay] = useState(false);
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const [matchAvailable, setMatchAvailable] = useState(true);
+	const [matches, setMatches] = useState(dummyMatches);
   
 	const handleOpen = () => {
 		setOpen(true);
@@ -104,9 +206,31 @@ function GoMatch(props) {
 	};
 	
 	useEffect(() => {
-		setCurrentSong(songs[currentIndex]);
-	}, [currentIndex]);
+		if(currentIndex >= 0 && currentIndex < songs.length ){
+			setCurrentSong(songs[currentIndex]);
+		}
+	}, [currentIndex, songs]);
 	
+	
+	useEffect(() => {
+		if(matches.length > 0) {
+			if(matchIndex < 0) {
+				setMatchIndex(matches.length - 1);
+			} else if(matchIndex >= matches.length) {
+				setMatchIndex(0);
+			} else {
+				setSongs(matches[matchIndex]['songList']);
+				setCurrentIndex(0);
+			}
+		}
+	}, [matchIndex, matches]);
+	
+	useEffect(() => {
+		if(open){
+
+		}
+	}, [open]);
+
 	const handleCurrentIndex = (value) => {
 		if (value >= songs.length) {
 			setCurrentIndex(0);
@@ -118,7 +242,30 @@ function GoMatch(props) {
 			setCurrentIndex(value);
 		}
 	}
+
+	const handleNext = () => {
+		setMatchIndex(matchIndex + 1);
+	};
 	
+	const handlePrev = () => {
+		setMatchIndex(matchIndex - 1);
+	};
+	
+	const handleLike = () => {
+		let indexToDelete = matchIndex;
+		setMatches(matches.filter(function(match, index) { 
+			return index !== indexToDelete;
+		}));
+	};
+	
+	
+	const handleDislike = () => {
+		let indexToDelete = matchIndex;
+		setMatches(matches.filter(function(match, index) { 
+			return index !== indexToDelete;
+		}));
+	};
+
 	return (
 		<div className={classes.container}>
 			<Button className={classes.button} onClick={handleOpen}  variant="contained" fullWidth color="secondary">{"Go Match"}</Button>
@@ -138,7 +285,7 @@ function GoMatch(props) {
 						</DialogActions>
 					</Grid> 
 				</Grid>
-				{ matchAvailable ? 
+				{ matches.length > 0 && matches[matchIndex] ? 
 				<Grid
 				container
 				direction="row"
@@ -150,28 +297,28 @@ function GoMatch(props) {
 						direction="column" item xs={4}
 						className={classes.leftCard}>
 						<Grid item>
-							<Typography variant="h3">History of Meme Songs</Typography> 
+							<Typography variant="h3">{matches[matchIndex]['playlistName']}</Typography> 
 						</Grid>
 						
 						<Grid item className={classes.description}>
-							<Typography variant="h6">I hope my classicist friends will forgive me if I abbreviate ‘mimeme’ to ‘meme.’" (The suitable Greek root was mim-, meaning "mime" or "mimic." The English suffix -eme indicates a distinctive unit of language structure, as in "grapheme," "lexeme," and "phoneme.") "Meme" itself, like any good meme, caught on fairly quickly, spreading from person to person as it established itself in the language.</Typography>
+						<Typography variant="h6">{matches[matchIndex]['playlistDescription']}</Typography>
 						</Grid>
 						<Grid item>
-							<Avatar variant="rounded" className={classes.profileImg} src={"https://i.kym-cdn.com/entries/icons/original/000/029/079/hellothere.jpg"}></Avatar>
+							<Avatar variant="rounded" className={classes.profileImg} src={matches[matchIndex]['imgSrc'] ? matches[matchIndex]['imgSrc'] : placeholder}></Avatar>
 						</Grid>
 						<Grid item>
-							<Typography variant="h3" className={classes.profileName}>Obi Wan Kenobi</Typography>
+							<Typography variant="h3" className={classes.profileName}>{matches[matchIndex]['name']}</Typography>
 						</Grid>
 					</Grid>
 					<Grid container 
 						direction="column" item xs={8}
 						className={classes.rightCard}>
-						<Grid item>
+						<Grid item container>
 							<Playlist title="" importable={false} editable={false} draggable={false} notSharable={true}
 									songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
 									playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
 						</Grid>
-						<Grid item>
+						<Grid item container>
 							<Media>
 								{mediaProps => (
 								<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
@@ -185,10 +332,14 @@ function GoMatch(props) {
 							</Media>
 						</Grid>
 						<Grid container direction="row" justify="space-evenly" alignItems="center">
-							<Button variant="contained" className={classes.likeButton}><NavigateBeforeIcon color="primary" className={classes.likeImg}></NavigateBeforeIcon></Button>
-							<Button variant="contained" className={classes.likeButton}><Avatar className={classes.likeImg} src={heart} variant="rounded"></Avatar></Button> 
-							<Button variant="contained" className={classes.likeButton}><Avatar className={classes.likeImg} src={heartBreak} variant="rounded"></Avatar></Button>
-							<Button variant="contained" className={classes.likeButton}><NavigateNextIcon color="primary" className={classes.likeImg}></NavigateNextIcon></Button>
+							<Button variant="contained" onClick={handlePrev}
+							className={classes.likeButton}><NavigateBeforeIcon color="primary" className={classes.likeImg}></NavigateBeforeIcon></Button>
+							<Button variant="contained" onClick={handleLike}
+							className={classes.likeButton}><Avatar className={classes.likeImg} src={heart} variant="rounded"></Avatar></Button> 
+							<Button variant="contained" onClick={handleDislike}
+							className={classes.likeButton}><Avatar className={classes.likeImg} src={heartBreak} variant="rounded"></Avatar></Button>
+							<Button variant="contained" onClick={handleNext}
+							className={classes.likeButton}><NavigateNextIcon color="primary" className={classes.likeImg}></NavigateNextIcon></Button>
 
 						</Grid>
 					</Grid>
@@ -200,7 +351,7 @@ function GoMatch(props) {
 				justify="space-between"
 				alignItems="center"
 				className={classes.content}>
-
+					<Typography variant="h6">{"There are no matches available at this time. Please check in later."}</Typography>
 				</Grid>	}
 			</Dialog>
 		</div>

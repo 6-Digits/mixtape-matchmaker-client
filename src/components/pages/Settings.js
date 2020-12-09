@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardMedia: {
 		maxHeight: 265,
-		width: "100%"
+		width: 300
 	},
 	cardContent: {
 		textAlign: "left",
@@ -382,7 +382,7 @@ function Settings(props) {
 					<Grid item xs={12}>
 						<Typography gutterBottom variant="h4">Public Profile</Typography>
 					</Grid>
-					<Grid item xs={12} sm={3} alignItems="center">
+					<Grid item xs={2} alignItems="center">
 						<Card className={classes.card}>
 							<input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={imgChange}/>
 							<ButtonBase className={classes.cardAction}>
@@ -392,7 +392,7 @@ function Settings(props) {
 							</ButtonBase>
 						</Card>
 					</Grid>
-					<Grid item xs={12} sm={9} alignItems="center">
+					<Grid item xs={10} alignItems="center">
 						<Paper className={classes.paperCard}>
 							<TextField
 								variant="outlined"

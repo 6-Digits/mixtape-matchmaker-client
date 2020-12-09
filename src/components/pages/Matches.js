@@ -70,6 +70,8 @@ const errorDefault = "Could not save the playlist for some reason. You may be di
 const errorPlaylist = "Your match playlist cannot be empty or exceed 30 songs!";
 const errorTitle = "The title is either too long (More than 255 Characters) or empty. Please enter a valid title!";
 const errorDescription = "The description is too long (More than 5000 characters). Please enter a valid description!";
+const errorChanges = "You have not made any changes!";
+
 const api = 'http://localhost:42069/api';
 
 function Matches({user, setUser, sendNotification, notifications, setNotifications}) {
@@ -86,7 +88,7 @@ function Matches({user, setUser, sendNotification, notifications, setNotificatio
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [playlistID, setPlaylistID] = useState("");
-	const [timeout, setTimeout] = useState(null);
+	const [timeOut, setTimeOut] = useState(null);
 
 	useEffect(() => {
 		function updateWidth() {
@@ -104,6 +106,17 @@ function Matches({user, setUser, sendNotification, notifications, setNotificatio
 			setCurrentSong(songs[currentIndex]);
 		}
 	}, [currentIndex, songs, autoPlay]);
+
+	useEffect(() => {
+		if(success || error) {
+			clearTimeout(timeOut);
+			setTimeOut(setTimeout(()=>{
+				setError(false);
+				setSuccess(false);
+			}, 5000));
+		}
+	}, [error, success]);
+	
 	
 	const handleCurrentIndex = (value) => {
 		if (value >= songs.length) {
@@ -155,37 +168,42 @@ function Matches({user, setUser, sendNotification, notifications, setNotificatio
 	};
 	
 	const saveMatchPlaylist = async() => {
-		setError(false);
-		setSuccess(false);
-		if(title.length < 1 || title.length > 255)  {
-			setErrorMsg(errorTitle);
-			setError(true);
-		} else if(description.length > 5000) {
-			setErrorMsg(errorDescription);
-			setError(true);
-		} else if(songs.length < 1 || songs.length > 30) {
-			setError(true);
-			setErrorMsg(errorPlaylist);
-		} else {
-			let userToken = localStorage.getItem('userToken', userToken);
-			let playlistData = {
-				name: title,
-				description: description,
-				songList: songs.map((song) => song['_id']),
-			};
-			let requestOptions = {
-				method: 'POST',
-				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
-				body: JSON.stringify(playlistData)
-			};
-			let response = await fetch(`${api}/match/mixtape/mid/${playlistID}`, requestOptions);
-			if(response.status === 200) {
-				let data = await response.json();
-				setSuccess(true);
-			} else {
-				setErrorMsg(errorDefault);
+		if(changed) {
+			setError(false);
+			setSuccess(false);
+			if(title.length < 1 || title.length > 255)  {
+				setErrorMsg(errorTitle);
 				setError(true);
+			} else if(description.length > 5000) {
+				setErrorMsg(errorDescription);
+				setError(true);
+			} else if(songs.length < 1 || songs.length > 30) {
+				setError(true);
+				setErrorMsg(errorPlaylist);
+			} else {
+				let userToken = localStorage.getItem('userToken', userToken);
+				let playlistData = {
+					name: title,
+					description: description,
+					songList: songs.map((song) => song['_id']),
+				};
+				let requestOptions = {
+					method: 'POST',
+					headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
+					body: JSON.stringify(playlistData)
+				};
+				let response = await fetch(`${api}/match/mixtape/mid/${playlistID}`, requestOptions);
+				if(response.status === 200) {
+					let data = await response.json();
+					setSuccess(true);
+				} else {
+					setErrorMsg(errorDefault);
+					setError(true);
+				}
 			}
+		} else {
+			setErrorMsg(errorChanges);
+			setError(true);
 		}
 	};
 

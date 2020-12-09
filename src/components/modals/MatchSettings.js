@@ -51,7 +51,7 @@ const errorFetch = "We failed to get your match settings. This is likely because
 const errorDefault = "We could not saving your match settings likely because you are offline or our servers are down. Please try again later";
 const errorGender = "You do not have a valid gender preference, please select a valid gender preference!";
 const errorAge = "The age preference you have enter is either not in the valid (18 or older) range or unspecified. Please enter a valid age range!";
-const errorLocation = "The location you have enter could not be computed in our database. Please enter a valid location!";
+const errorLocation = "The location you have enter is too long (128 character limit) or blank!";
 
 const api = 'http://localhost:42069/api';
 
@@ -77,6 +77,7 @@ function MatchSettings(props) {
 	useEffect(() => {
 		if(open){
 			fetchPreferences();
+			setError(false);
 		}
 	}, [open]);
 
@@ -119,7 +120,7 @@ function MatchSettings(props) {
 			setError(true);
 			setErrorMsg(errorAge);
 		} 
-		else if (!location) {
+		else if (location.length < 1 || location.length > 128) {
 			setError(true);
 			setErrorMsg(errorLocation);
 		} 
