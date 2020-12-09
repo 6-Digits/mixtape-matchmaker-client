@@ -218,7 +218,7 @@ const dummyMatches = [
 	}
 ];
 
-const api = 'http://localhost:42069/api/match';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 function GoMatch(props) {
 	const classes = useStyles();

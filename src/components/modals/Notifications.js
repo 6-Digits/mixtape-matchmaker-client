@@ -3,7 +3,7 @@ import { IconButton, Badge, Menu, MenuItem, withStyles } from '@material-ui/core
 import { Notifications as NotificationsIcon } from '@material-ui/icons';
 import Notification from '../modules/Notification';
 
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 const ITEM_HEIGHT = 48;
 
@@ -29,7 +29,7 @@ function Notifications({user, notifications, setNotifications}) {
 			headers: {'Content-Type': 'application/json' },
 			body: "{}"
 		};
-		let response = await fetch('http://localhost:42069/api/profile/notifications/nid/'+ notificationID, requestOptions);
+		let response = await fetch(api + '/profile/notifications/nid/'+ notificationID, requestOptions);
 		let data = await response.json();
 		//alert(response.status);
 		if (response.status === 200) {

@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 function Login({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 	const classes = useStyles();

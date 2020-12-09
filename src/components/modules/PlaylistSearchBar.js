@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 		overflowX: "auto"
 	}
 }));
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 function PlaylistSearchBar({search, setSearch, local, filterSongs, addSong}) {
 	const [loading, setLoading] = useState(true);

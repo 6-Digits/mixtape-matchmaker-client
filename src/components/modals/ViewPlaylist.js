@@ -180,7 +180,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 const errorDefault = "Sorry! We could not save to the playlist. You are either disconnected from the internet or the servers are down. Please save your work using external software and try again later. Click save again to close the playlist.";
 const errorTitle = "The playlist title you have entered is empty. Please enter a valid playlist title "
 const errorTitleLength = "The playlist title you have entered is too long (exceeds 255 characters). Please enter a valid playlist title.";

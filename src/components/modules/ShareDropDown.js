@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
         width: "30%"
     }
 }));
-
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 function ShareDropDown({contentLink}) {
 	const classes = useStyles();

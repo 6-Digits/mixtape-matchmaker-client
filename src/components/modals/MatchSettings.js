@@ -53,13 +53,13 @@ const errorGender = "You do not have a valid gender preference, please select a 
 const errorAge = "The age preference you have enter is either not in the valid (18 or older) range or unspecified. Please enter a valid age range!";
 const errorLocation = "The location you have enter is too long (128 character limit) or blank!";
 
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 const genderOptions = [
 	{title: "Male"},
 	{title: "Female"},
 	{title: "Other" },
-	{title: "No Preference" },
+	{title: "No Preference"},
 ];
 
 function MatchSettings(props) {

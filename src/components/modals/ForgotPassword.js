@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 	// }
 }));
   
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 const success = "A reset email has been sent to the designated email!";
 const failure = "Failed to send an email either likely because the email does not exist in our database";
 

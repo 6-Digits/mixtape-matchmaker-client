@@ -72,7 +72,7 @@ const errorTitle = "The title is either too long (More than 255 Characters) or e
 const errorDescription = "The description is too long (More than 5000 characters). Please enter a valid description!";
 const errorChanges = "You have not made any changes!";
 
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 function Matches({user, setUser, sendNotification, notifications, setNotifications}) {
 	const classes = useStyles();

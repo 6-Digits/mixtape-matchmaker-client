@@ -17,7 +17,7 @@ import NotificationSocket from './components/frameworks/NotificationSocket';
 // import { useCookies } from 'react-cookie';
 
 // const cookieName = 'mm_6digits_cookies';
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 function App(props) {
 	// const [cookies, setCookie, removeCookie] = useCookies([cookieName]);
@@ -165,7 +165,7 @@ function App(props) {
 								return (
 									user ?
 									<Share user={user} setUser={setUser} setNotifications={setNotifications} 
-									sendNotification={sendNotification} {...props}/>:
+									sendNotification={sendNotification} notifications={notifications} {...props}/>:
 									<Redirect to="/login" /> 
 								)
 							}}

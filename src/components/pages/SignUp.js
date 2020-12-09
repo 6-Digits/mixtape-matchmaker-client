@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import Footer from "../modules/Footer";
 import IntroCarousel from "../modules/IntroCarousel";
 
-const api = 'http://localhost:42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 const useStyles = makeStyles((theme) => ({
 	hook:{
