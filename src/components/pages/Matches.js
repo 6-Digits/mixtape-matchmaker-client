@@ -259,7 +259,7 @@ function Matches({user, setUser, sendNotification, notifications, setNotificatio
 						<MatchSettings user={user}></MatchSettings>
 					</Grid>
 					<Grid container item xs={12}>
-						<GoMatch></GoMatch>
+						<GoMatch user={user}></GoMatch>
 					</Grid>
 					<Grid container item xs={12}>
 						<ViewMatch user={user}></ViewMatch>

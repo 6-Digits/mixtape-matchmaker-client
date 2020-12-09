@@ -218,6 +218,8 @@ const dummyMatches = [
 	}
 ];
 
+const api = 'http://localhost:42069/api/match';
+
 function GoMatch(props) {
 	const classes = useStyles();
 	const [matchIndex, setMatchIndex] = useState(0);
@@ -261,9 +263,26 @@ function GoMatch(props) {
 	
 	useEffect(() => {
 		if(open){
-			setMatches(dummyMatches); // FETCH HERE
+			fetchMatches();
 		}
 	}, [open]);
+
+	const fetchMatches = async() => {
+		let userToken = localStorage.getItem('userToken');
+		if(userToken) {
+			let requestOptions = {
+				method: 'GET',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
+			};
+			let response = await fetch(api + `/matches/uid/${props.user._id}`, requestOptions);
+			if(response.status === 200) {
+				let data = await response.json();
+				setMatches(data);
+			} else {
+				setMatches([]);
+			}
+		}
+	};
 
 	const handleCurrentIndex = (value) => {
 		if (value >= songs.length) {
