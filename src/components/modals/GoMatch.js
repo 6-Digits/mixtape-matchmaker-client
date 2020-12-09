@@ -195,7 +195,7 @@ function GoMatch(props) {
 	const [autoPlay, setAutoPlay] = useState(false);
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const [matches, setMatches] = useState(dummyMatches);
+	const [matches, setMatches] = useState(dummyMatches);	
   
 	const handleOpen = () => {
 		setOpen(true);
@@ -209,7 +209,7 @@ function GoMatch(props) {
 		if(currentIndex >= 0 && currentIndex < songs.length ){
 			setCurrentSong(songs[currentIndex]);
 		}
-	}, [currentIndex, songs]);
+	}, [currentIndex, songs, autoPlay]);
 	
 	
 	useEffect(() => {
@@ -227,7 +227,7 @@ function GoMatch(props) {
 	
 	useEffect(() => {
 		if(open){
-
+			setMatches(dummyMatches); // FETCH HERE
 		}
 	}, [open]);
 
@@ -316,7 +316,7 @@ function GoMatch(props) {
 						<Grid item container>
 							<Playlist title="" importable={false} editable={false} draggable={false} notSharable={true}
 									songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
-									playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
+									setAutoPlay={setAutoPlay} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
 						</Grid>
 						<Grid item container>
 							<Media>
