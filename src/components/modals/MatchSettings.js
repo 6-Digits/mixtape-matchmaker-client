@@ -58,7 +58,8 @@ const api = 'http://localhost:42069/api';
 const genderOptions = [
 	{title: "Male"},
 	{title: "Female"},
-	{title: "Other" }
+	{title: "Other" },
+	{title: "No Preference" },
 ];
 
 function MatchSettings(props) {
