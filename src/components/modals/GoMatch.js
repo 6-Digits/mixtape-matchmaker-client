@@ -308,6 +308,9 @@ function GoMatch(props) {
 		let indexToDelete = matchIndex;
 		let userToken = localStorage.getItem('userToken', userToken);
 		if(props.user && matches[matchIndex] && userToken) {
+			setMatches(matches.filter(function(match, index) { 
+				return index !== indexToDelete;
+			}));
 			let matchedID = matches[matchIndex]._id;
 			let likeData = {
 				user: props.user._id,
@@ -320,9 +323,6 @@ function GoMatch(props) {
 			};
 			let response = await fetch(`${api}/match/like`, requestOptions);
 			if (response.status === 200) {
-				setMatches(matches.filter(function(match, index) { 
-					return index !== indexToDelete;
-				}));
 			}
 		}
 	};
@@ -332,6 +332,9 @@ function GoMatch(props) {
 		let indexToDelete = matchIndex;
 		let userToken = localStorage.getItem('userToken', userToken);
 		if(props.user && matches[matchIndex] && userToken) {
+			setMatches(matches.filter(function(match, index) { 
+				return index !== indexToDelete;
+			}));
 			let matchedID = matches[matchIndex]._id;
 			let likeData = {
 				user: props.user._id,
@@ -344,9 +347,6 @@ function GoMatch(props) {
 			};
 			let response = await fetch(`${api}/match/dislike`, requestOptions);
 			if (response.status === 200) {
-				setMatches(matches.filter(function(match, index) { 
-					return index !== indexToDelete;
-				}));
 			} 
 		}
 	};
