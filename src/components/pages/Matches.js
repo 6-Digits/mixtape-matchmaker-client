@@ -44,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 	},
 	player: {
+		height: 0,
+		width: 0,
 		display: 'none'
 	},
 	playlistContainer: {

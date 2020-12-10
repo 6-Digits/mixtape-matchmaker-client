@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 	},
 	player: {
-		width: '100%',
-		height: '100%',
+		width: 0,
+		height: 0,
 		display: 'none'
 	},
 	playlistTitle: {
