@@ -23,7 +23,9 @@ const NotificationSocket = (roomId, user) => {
 	};
 
 	useEffect(()=>{
-		fetchNotifications();
+		if(user){
+			fetchNotifications();
+		}
 	}, [user]);
 
 	useEffect(() => {
