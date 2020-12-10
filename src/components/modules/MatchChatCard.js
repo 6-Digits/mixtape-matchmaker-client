@@ -3,7 +3,7 @@ import { Grid, Typography, Card, Button, Avatar, CardActionArea } from '@materia
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import heartBreak from "../../assets/heart_break.png";
 
-function MatchChatCard({id, recipient, index, currentIndex, handleCurrentIndex}) {
+function MatchChatCard({id, recipient, index, currentIndex, handleCurrentIndex, unMatch}) {
 	const useStyles = makeStyles((theme) => ({
 		card: {
 			backgroundColor: index === currentIndex ? theme.palette.primary.dark : theme.palette.background.paper,
@@ -59,7 +59,7 @@ function MatchChatCard({id, recipient, index, currentIndex, handleCurrentIndex})
 					</CardActionArea>
 				</Grid>
 				<Grid item xs={12} sm={3}>
-					<Button variant="contained" className={classes.dislikeButton}>
+					<Button variant="contained" className={classes.dislikeButton} onClick={unMatch}>
 						<Avatar className={classes.dislikeImg} src={heartBreak} variant="rounded" />
 					</Button>
 				</Grid>

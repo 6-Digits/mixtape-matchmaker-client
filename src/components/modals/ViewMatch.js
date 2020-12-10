@@ -69,6 +69,13 @@ function ViewMatch({user}) {
 		fetchMyChats(user);
 	}, [currentIndex]);
 
+	useEffect(() => {
+		if(open){
+			fetchMyChats(user);
+			setCurrentIndex(-1);
+		}
+	}, [open]);
+
 	function handleOnDragEnd(result) {
 		// if (!result.destination) {
 		// 	return;
@@ -86,6 +93,31 @@ function ViewMatch({user}) {
 	};
 	const handleClose = () => {
 		setOpen(false);
+	};
+
+	const unMatch = async() => {
+		let indexToDelete = currentIndex;
+		let userToken = localStorage.getItem('userToken', userToken);
+		if(user && chats[currentIndex] && userToken) {
+			let chatID = chats[currentIndex]._id;
+			let unMatchData = {
+				user: user._id,
+				reciever: chats[currentIndex].user1 === user._id ? chats[currentIndex].user2 : chats[currentIndex].user1,
+				chatID: chatID
+			};
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
+				body: JSON.stringify(unMatchData)
+			};
+			let response = await fetch(`${api}/match/removeMatch`, requestOptions);
+			if (response.status === 200) {
+				setChats(chats.filter(function(chat, index) { 
+					return index !== indexToDelete;
+				}));
+				setCurrentIndex(-1);
+			}
+		}
 	};
 
 	return (
@@ -124,6 +156,7 @@ function ViewMatch({user}) {
 																	handleCurrentIndex={handleCurrentIndex}
 																	index={index}
 																	currentIndex={currentIndex}
+																	unMatch={unMatch}
 																></MatchChatCard>
 															</div>
 														)}

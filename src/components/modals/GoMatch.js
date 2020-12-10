@@ -82,141 +82,141 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
   
-const dummyMatches = [
-	{ 
-		_id: "123456",
-		gender: 'male',
-		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
-		name: "Adam Smith",
-		userName: "Meme Lord 9000",
-		playlistName: "1st playlist",
-		playlistDescription: "playlist description is this ... HAHAH",
-		songList: [
-			{
-				_id: "cool Story broo",
-				title: "Rick Astley - Never Gonna Give You Up (Video)",
-				author: "RickAstleyVEVO",
-				apiType: "YouTube", 
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-				videoId:"dQw4w9WgXcQ",
-				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-				duration:213,
-				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
-			},
-			{
-				_id: "cool Story broo",
-				title: "Rick Astley - Never Gonna Give You Up (Video)",
-				author: "RickAstleyVEVO",
-				apiType: "YouTube", 
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-				videoId:"dQw4w9WgXcQ",
-				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-				duration:213,
-				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-			}
-		]
-	},
-	{ 
-		_id: "123456",
-		gender: 'male',
-		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
-		name: "Basic Person 2",
-		userName: "Meme Lord 9000 lvl 2",
-		playlistName: "2nd Playlist",
-		playlistDescription: "playlist description is this ... ",
-		songList: [
-			{
-				_id: "cool Story broo",
-				title: "t1",
-				author: "RickAstleyVEVO",
-				apiType: "YouTube", 
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-				videoId:"dQw4w9WgXcQ",
-				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-				duration:213,
-				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
-			},
-			{
-				_id: "cool Story broo",
-				title: "3",
-				author: "RickAstleyVEVO",
-				apiType: "YouTube", 
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-				videoId:"dQw4w9WgXcQ",
-				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-				duration:213,
-				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-			},
-			{
-				_id: "cool Story broo",
-				title: "3",
-				author: "RickAstleyVEVO",
-				apiType: "YouTube", 
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-				videoId:"dQw4w9WgXcQ",
-				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-				duration:213,
-				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-			},
+// const dummyMatches = [
+// 	{ 
+// 		_id: "123456",
+// 		gender: 'male',
+// 		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
+// 		name: "Adam Smith",
+// 		userName: "Meme Lord 9000",
+// 		playlistName: "1st playlist",
+// 		playlistDescription: "playlist description is this ... HAHAH",
+// 		songList: [
+// 			{
+// 				_id: "cool Story broo",
+// 				title: "Rick Astley - Never Gonna Give You Up (Video)",
+// 				author: "RickAstleyVEVO",
+// 				apiType: "YouTube", 
+// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+// 				videoId:"dQw4w9WgXcQ",
+// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+// 				duration:213,
+// 				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
+// 			},
+// 			{
+// 				_id: "cool Story broo",
+// 				title: "Rick Astley - Never Gonna Give You Up (Video)",
+// 				author: "RickAstleyVEVO",
+// 				apiType: "YouTube", 
+// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+// 				videoId:"dQw4w9WgXcQ",
+// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+// 				duration:213,
+// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+// 			}
+// 		]
+// 	},
+// 	{ 
+// 		_id: "123456",
+// 		gender: 'male',
+// 		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
+// 		name: "Basic Person 2",
+// 		userName: "Meme Lord 9000 lvl 2",
+// 		playlistName: "2nd Playlist",
+// 		playlistDescription: "playlist description is this ... ",
+// 		songList: [
+// 			{
+// 				_id: "cool Story broo",
+// 				title: "t1",
+// 				author: "RickAstleyVEVO",
+// 				apiType: "YouTube", 
+// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+// 				videoId:"dQw4w9WgXcQ",
+// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+// 				duration:213,
+// 				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
+// 			},
+// 			{
+// 				_id: "cool Story broo",
+// 				title: "3",
+// 				author: "RickAstleyVEVO",
+// 				apiType: "YouTube", 
+// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+// 				videoId:"dQw4w9WgXcQ",
+// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+// 				duration:213,
+// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+// 			},
+// 			{
+// 				_id: "cool Story broo",
+// 				title: "3",
+// 				author: "RickAstleyVEVO",
+// 				apiType: "YouTube", 
+// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+// 				videoId:"dQw4w9WgXcQ",
+// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+// 				duration:213,
+// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+// 			},
 			
-			{
-				_id: "cool Story broo",
-				title: "3",
-				author: "RickAstleyVEVO",
-				apiType: "YouTube", 
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-				videoId:"dQw4w9WgXcQ",
-				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-				duration:213,
-				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-			},
-			{
-				_id: "cool Story broo",
-				title: "3",
-				author: "RickAstleyVEVO",
-				apiType: "YouTube", 
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-				videoId:"dQw4w9WgXcQ",
-				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-				duration:213,
-				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-			}
-		]
-	},
-	{ 
-		_id: "123456",
-		gender: 'male',
-		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
-		name: "Yes man number 3",
-		userName: "Meme Lord 9000",
-		playlistName: "3rd Playlist",
-		playlistDescription: "playlist description is this ... 3",
-		songList: [
-			{
-				_id: "cool Story broo",
-				title: "t2",
-				author: "RickAstleyVEVO",
-				apiType: "YouTube", 
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-				videoId:"dQw4w9WgXcQ",
-				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-				duration:213,
-				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
-			},
-			{
-				_id: "cool Story broo",
-				title: "4",
-				author: "RickAstleyVEVO",
-				apiType: "YouTube", 
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-				videoId:"dQw4w9WgXcQ",
-				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-				duration:213,
-				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-			}
-		]
-	}
-];
+// 			{
+// 				_id: "cool Story broo",
+// 				title: "3",
+// 				author: "RickAstleyVEVO",
+// 				apiType: "YouTube", 
+// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+// 				videoId:"dQw4w9WgXcQ",
+// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+// 				duration:213,
+// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+// 			},
+// 			{
+// 				_id: "cool Story broo",
+// 				title: "3",
+// 				author: "RickAstleyVEVO",
+// 				apiType: "YouTube", 
+// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+// 				videoId:"dQw4w9WgXcQ",
+// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+// 				duration:213,
+// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+// 			}
+// 		]
+// 	},
+// 	{ 
+// 		_id: "123456",
+// 		gender: 'male',
+// 		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
+// 		name: "Yes man number 3",
+// 		userName: "Meme Lord 9000",
+// 		playlistName: "3rd Playlist",
+// 		playlistDescription: "playlist description is this ... 3",
+// 		songList: [
+// 			{
+// 				_id: "cool Story broo",
+// 				title: "t2",
+// 				author: "RickAstleyVEVO",
+// 				apiType: "YouTube", 
+// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+// 				videoId:"dQw4w9WgXcQ",
+// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+// 				duration:213,
+// 				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
+// 			},
+// 			{
+// 				_id: "cool Story broo",
+// 				title: "4",
+// 				author: "RickAstleyVEVO",
+// 				apiType: "YouTube", 
+// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+// 				videoId:"dQw4w9WgXcQ",
+// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+// 				duration:213,
+// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
+// 			}
+// 		]
+// 	}
+// ];
 
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
@@ -231,7 +231,7 @@ function GoMatch(props) {
 	const [autoPlay, setAutoPlay] = useState(false);
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const [matches, setMatches] = useState(dummyMatches);	
+	const [matches, setMatches] = useState([]);	
   
 	const handleOpen = () => {
 		setOpen(true);
@@ -242,7 +242,7 @@ function GoMatch(props) {
 	};
 	
 	useEffect(() => {
-		if(currentIndex >= 0 && currentIndex < songs.length ){
+		if(currentIndex >= 0 && currentIndex < songs.length){
 			setCurrentSong(songs[currentIndex]);
 		}
 	}, [currentIndex, songs, autoPlay]);
@@ -304,19 +304,51 @@ function GoMatch(props) {
 		setMatchIndex(matchIndex - 1);
 	};
 	
-	const handleLike = () => {
+	const handleLike = async() => {
 		let indexToDelete = matchIndex;
-		setMatches(matches.filter(function(match, index) { 
-			return index !== indexToDelete;
-		}));
+		let userToken = localStorage.getItem('userToken', userToken);
+		if(props.user && matches[matchIndex] && userToken) {
+			let matchedID = matches[matchIndex]._id;
+			let likeData = {
+				user: props.user._id,
+				reciever: matchedID
+			};
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
+				body: JSON.stringify(likeData)
+			};
+			let response = await fetch(`${api}/match/like`, requestOptions);
+			if (response.status === 200) {
+				setMatches(matches.filter(function(match, index) { 
+					return index !== indexToDelete;
+				}));
+			}
+		}
 	};
 	
 	
-	const handleDislike = () => {
+	const handleDislike = async() => {
 		let indexToDelete = matchIndex;
-		setMatches(matches.filter(function(match, index) { 
-			return index !== indexToDelete;
-		}));
+		let userToken = localStorage.getItem('userToken', userToken);
+		if(props.user && matches[matchIndex] && userToken) {
+			let matchedID = matches[matchIndex]._id;
+			let likeData = {
+				user: props.user._id,
+				reciever: matchedID
+			};
+			let requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
+				body: JSON.stringify(likeData)
+			};
+			let response = await fetch(`${api}/match/dislike`, requestOptions);
+			if (response.status === 200) {
+				setMatches(matches.filter(function(match, index) { 
+					return index !== indexToDelete;
+				}));
+			} 
+		}
 	};
 
 	return (
