@@ -3,7 +3,7 @@ import socketIOClient from "socket.io-client";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const SOCKET_SERVER_URL = window.location.protocol+'//'+window.location.hostname+":4000";
-const useChat = ({roomId, user}) => {
+const useChat = (roomId, user) => {
 	const [messages, setMessages] = useState([]);
 	const socketRef = useRef();
 
