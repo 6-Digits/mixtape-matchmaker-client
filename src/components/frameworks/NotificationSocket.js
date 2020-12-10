@@ -5,7 +5,7 @@ const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 const NEW_NOTIFICATION_EVENT = "newNotificationEvent";
 const SOCKET_SERVER_URL = window.location.protocol+'//'+window.location.hostname+":5000";
 
-const NotificationSocket = (roomId, user) => {
+const NotificationSocket = ({roomId, user}) => {
 	const [notifications, setNotifications] = useState([]);
 	const socketRef = useRef();
 	const fetchNotifications = async () => {
