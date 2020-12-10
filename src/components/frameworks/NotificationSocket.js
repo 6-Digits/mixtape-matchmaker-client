@@ -9,16 +9,18 @@ const NotificationSocket = (roomId, user) => {
 	const [notifications, setNotifications] = useState([]);
 	const socketRef = useRef();
 	const fetchNotifications = async () => {
-		let requestOptions = {
-			method: 'GET',
-			headers: {'Content-Type': 'application/json'}
-		};
-		let response = await fetch(`${api}/profile/notifications/uid/${user._id}`, requestOptions);
-		if(response.status === 200) {
-			let data = await response.json();
-			setNotifications(data);
-		}else {
-			setNotifications([]);
+		if(user._id){
+			let requestOptions = {
+				method: 'GET',
+				headers: {'Content-Type': 'application/json'}
+			};
+			let response = await fetch(`${api}/profile/notifications/uid/${user._id}`, requestOptions);
+			if(response.status === 200) {
+				let data = await response.json();
+				setNotifications(data);
+			}else {
+				setNotifications([]);
+			}
 		}
 	};
 
