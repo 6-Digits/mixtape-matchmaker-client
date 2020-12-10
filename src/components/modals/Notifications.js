@@ -24,6 +24,9 @@ function Notifications({user, notifications, setNotifications}) {
 	};
 
 	const handleDeleteNotification = async(notificationID) => {
+		setNotifications(notifications.filter(function(notification) { 
+			return notification['_id'] !== notificationID;
+		}));
 		let requestOptions = {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json' },
@@ -33,9 +36,6 @@ function Notifications({user, notifications, setNotifications}) {
 		let data = await response.json();
 		//alert(response.status);
 		if (response.status === 200) {
-			setNotifications(notifications.filter(function(notification) { 
-				return notification['_id'] !== notificationID;
-			}));
 		} else {
 		}
 	};
