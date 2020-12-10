@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
 		color: theme.palette.error.main,
 		marginBottom: '1rem'
 	},
+	save: {
+		fontWeight: 'bold'
+	}
 }));
   
 const defaultImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUnnWZ_Dh48jrrZJ1hDbUrU-WzKKkCX1rQzQ&usqp=CAU";
