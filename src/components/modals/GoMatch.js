@@ -269,7 +269,7 @@ function GoMatch(props) {
 						<Grid item container className={classes.playlist}>
 							<Playlist title="" importable={false} editable={false} draggable={false} notSharable={true}
 								songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
-								setAutoPlay={setAutoPlay} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
+								setAutoPlay={setAutoPlay} playlistID={""}/>
 						</Grid>
 						<Grid item container>
 							<Media>
@@ -280,7 +280,7 @@ function GoMatch(props) {
 									<PlayerControls currentIndex={currentIndex} 
 										name={currentSong ? `${currentSong['title']} - ${currentSong['author']}` : null} 
 										handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
-										setAutoPlay={setAutoPlay}  />
+										autoPlay={autoPlay} setAutoPlay={setAutoPlay}  />
 								</div>
 								)}
 							</Media>

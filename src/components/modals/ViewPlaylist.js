@@ -232,7 +232,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 				fetchAuthor();
 			}
 		}
-	}, [currentIndex, songs, liked]);
+	}, [currentIndex, songs, liked, autoPlay]);
 
 	const fetchAuthor = async() => {
 		let userID = importedAuthor;

@@ -237,7 +237,7 @@ function Matches({user, setUser, sendNotification, notifications, setNotificatio
 						<PlayerControls currentIndex={currentIndex} 
 							name={currentSong ? `${currentSong['title']} - ${currentSong['author']}` : null} 
 							handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
-							setAutoPlay={setAutoPlay}  />
+							autoPlay={autoPlay} setAutoPlay={setAutoPlay}  />
 					</div>
 					)}
 				</Media>
