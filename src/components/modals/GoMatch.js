@@ -4,7 +4,7 @@ import { Avatar, Dialog, DialogActions, Button, DialogTitle, Typography, Grid } 
 import { NavigateBefore as NavigateBeforeIcon, NavigateNext as NavigateNextIcon } from '@material-ui/icons';
 import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
-import PlayerControls from "./PlayerControls";
+import PlayerControls from "../modules/PlayerControls";
 import heart from "../../assets/heart.png";
 import heartBreak from "../../assets/heart_break.png";
 import placeholder from "../../assets/placeholder.png";
@@ -81,142 +81,6 @@ const useStyles = makeStyles((theme) => ({
 		display: 'none'
 	}
 }));
-  
-// const dummyMatches = [
-// 	{ 
-// 		_id: "123456",
-// 		gender: 'male',
-// 		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
-// 		name: "Adam Smith",
-// 		userName: "Meme Lord 9000",
-// 		playlistName: "1st playlist",
-// 		playlistDescription: "playlist description is this ... HAHAH",
-// 		songList: [
-// 			{
-// 				_id: "cool Story broo",
-// 				title: "Rick Astley - Never Gonna Give You Up (Video)",
-// 				author: "RickAstleyVEVO",
-// 				apiType: "YouTube", 
-// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-// 				videoId:"dQw4w9WgXcQ",
-// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-// 				duration:213,
-// 				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
-// 			},
-// 			{
-// 				_id: "cool Story broo",
-// 				title: "Rick Astley - Never Gonna Give You Up (Video)",
-// 				author: "RickAstleyVEVO",
-// 				apiType: "YouTube", 
-// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-// 				videoId:"dQw4w9WgXcQ",
-// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-// 				duration:213,
-// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-// 			}
-// 		]
-// 	},
-// 	{ 
-// 		_id: "123456",
-// 		gender: 'male',
-// 		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
-// 		name: "Basic Person 2",
-// 		userName: "Meme Lord 9000 lvl 2",
-// 		playlistName: "2nd Playlist",
-// 		playlistDescription: "playlist description is this ... ",
-// 		songList: [
-// 			{
-// 				_id: "cool Story broo",
-// 				title: "t1",
-// 				author: "RickAstleyVEVO",
-// 				apiType: "YouTube", 
-// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-// 				videoId:"dQw4w9WgXcQ",
-// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-// 				duration:213,
-// 				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
-// 			},
-// 			{
-// 				_id: "cool Story broo",
-// 				title: "3",
-// 				author: "RickAstleyVEVO",
-// 				apiType: "YouTube", 
-// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-// 				videoId:"dQw4w9WgXcQ",
-// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-// 				duration:213,
-// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-// 			},
-// 			{
-// 				_id: "cool Story broo",
-// 				title: "3",
-// 				author: "RickAstleyVEVO",
-// 				apiType: "YouTube", 
-// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-// 				videoId:"dQw4w9WgXcQ",
-// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-// 				duration:213,
-// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-// 			},
-			
-// 			{
-// 				_id: "cool Story broo",
-// 				title: "3",
-// 				author: "RickAstleyVEVO",
-// 				apiType: "YouTube", 
-// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-// 				videoId:"dQw4w9WgXcQ",
-// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-// 				duration:213,
-// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-// 			},
-// 			{
-// 				_id: "cool Story broo",
-// 				title: "3",
-// 				author: "RickAstleyVEVO",
-// 				apiType: "YouTube", 
-// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-// 				videoId:"dQw4w9WgXcQ",
-// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-// 				duration:213,
-// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-// 			}
-// 		]
-// 	},
-// 	{ 
-// 		_id: "123456",
-// 		gender: 'male',
-// 		imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mixtape-matchmaker.appspot.com/o/5fc2ee3de3281f26881e1915%2Fimages?alt=media&token=6cf3142e-5c99-40cf-99e0-855f623b690e',
-// 		name: "Yes man number 3",
-// 		userName: "Meme Lord 9000",
-// 		playlistName: "3rd Playlist",
-// 		playlistDescription: "playlist description is this ... 3",
-// 		songList: [
-// 			{
-// 				_id: "cool Story broo",
-// 				title: "t2",
-// 				author: "RickAstleyVEVO",
-// 				apiType: "YouTube", 
-// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-// 				videoId:"dQw4w9WgXcQ",
-// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-// 				duration:213,
-// 				uuid: "1234bjkzxchjkbasbdaksjbdiquwgbeq"
-// 			},
-// 			{
-// 				_id: "cool Story broo",
-// 				title: "4",
-// 				author: "RickAstleyVEVO",
-// 				apiType: "YouTube", 
-// 				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-// 				videoId:"dQw4w9WgXcQ",
-// 				imgUrl:"https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
-// 				duration:213,
-// 				uuid: "12yuhj3i1h23ih123jhkbjsbadjd"
-// 			}
-// 		]
-// 	}
-// ];
 
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
@@ -327,7 +191,6 @@ function GoMatch(props) {
 		}
 	};
 	
-	
 	const handleDislike = async() => {
 		let indexToDelete = matchIndex;
 		let userToken = localStorage.getItem('userToken', userToken);
@@ -349,6 +212,11 @@ function GoMatch(props) {
 			if (response.status === 200) {
 			} 
 		}
+	};
+	
+	const handleNextSong = () => {
+		setAutoPlay(true);
+		handleCurrentIndex(currentIndex + 1);
 	};
 
 	return (
@@ -400,14 +268,15 @@ function GoMatch(props) {
 						className={classes.rightCard}>
 						<Grid item container className={classes.playlist}>
 							<Playlist title="" importable={false} editable={false} draggable={false} notSharable={true}
-									songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
-									setAutoPlay={setAutoPlay} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
+								songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
+								setAutoPlay={setAutoPlay} playlistID={"OOOOGGGBOOOGGGAAAAOOOOOOGGGGAAAA"}/>
 						</Grid>
 						<Grid item container>
 							<Media>
 								{mediaProps => (
 								<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-									<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} defaultVolume={0.25}/>
+									<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} 
+										defaultVolume={0.25} onEnded={handleNextSong} />
 									<PlayerControls currentIndex={currentIndex} 
 										name={currentSong ? `${currentSong['title']} - ${currentSong['author']}` : null} 
 										handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 

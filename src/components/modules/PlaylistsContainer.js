@@ -28,7 +28,7 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 		if(userToken && user){
 			fetchPlaylists(userToken, user);
 		} 
-	  }, []);
+	}, []);
 	
 	return (
 		<div>
@@ -38,11 +38,8 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 						<Grid item xs={3}>
 							<ViewPlaylist 
 								playlist={playlist} editable={editable} fetchPlaylists={fetchPlaylists} 
-								index={index} user={user} removePlaylist={removePlaylist}
-								setPlaylists={setPlaylists}
-								playlists={playlists}
-								key={playlist['_id']}
-								sendNotification={sendNotification}></ViewPlaylist>
+								user={user} removePlaylist={removePlaylist} setPlaylists={setPlaylists} 
+								playlists={playlists} sendNotification={sendNotification} />
 						</Grid>
 					))}
 				</Grid>
