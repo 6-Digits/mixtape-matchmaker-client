@@ -48,8 +48,8 @@ function PlaylistSongCard({index, editable, song, author, genre, duration, img, 
 	img = img ? img : placeholder;
 
 	const handlePlay = () => {
-		handleCurrentIndex(index);
 		setAutoPlay(true);
+		handleCurrentIndex(index);
 	}
 	
 	const handleDelete = () => {

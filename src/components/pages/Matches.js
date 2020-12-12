@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Grid, TextField, Button} from '@material-ui/core';
 import { Media, Player, utils } from 'react-media-player'
-import PlayerControls from "../modals/PlayerControls";
+import PlayerControls from "../modules/PlayerControls";
 import NavigationBar from '../modules/NavigationBar';
 import Playlist from "../modules/Playlist";
 import MatchSettings from "../modals/MatchSettings";
@@ -208,6 +208,11 @@ function Matches({user, setUser, sendNotification, notifications, setNotificatio
 			setError(true);
 		}
 	};
+	
+	const handleNextSong = () => {
+		setAutoPlay(true);
+		handleCurrentIndex(currentIndex + 1);
+	};
 
 	return (
 		<div style={{height: width > 599 ? "100vh" : "100%"}}>
@@ -222,18 +227,17 @@ function Matches({user, setUser, sendNotification, notifications, setNotificatio
 				>
 				<Button variant="contained" color="secondary" className={classes.saveButton} onClick={saveMatchPlaylist}>Save Changes</Button>
 				<Playlist title="My Match Playlist" editable={true} draggable={true}
-					songs={songs} setSongs={setSongs} currentIndex={currentIndex} 
-					handleCurrentIndex={handleCurrentIndex}
-					setChanged={setChanged} playlistID={playlistID}
-					setAutoPlay={setAutoPlay} />
+					songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
+					setChanged={setChanged} playlistID={playlistID} setAutoPlay={setAutoPlay} />
 				<Media>
 					{mediaProps => (
 					<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-						<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} defaultVolume={0.25}/>
+						<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} 
+							defaultVolume={0.25} onEnded={handleNextSong} />
 						<PlayerControls currentIndex={currentIndex} 
 							name={currentSong ? `${currentSong['title']} - ${currentSong['author']}` : null} 
 							handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
-							setAutoPlay={setAutoPlay}  />
+							autoPlay={autoPlay} setAutoPlay={setAutoPlay}  />
 					</div>
 					)}
 				</Media>

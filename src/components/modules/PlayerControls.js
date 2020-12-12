@@ -22,12 +22,19 @@ const useStyles = makeStyles((theme)=>({
 	
 }));
 
-function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAutoPlay, name}) {
+function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, autoPlay, setAutoPlay, name}) {
 	const classes = useStyles();
 	const { volume, duration, currentTime } = media;
 	
+	useEffect(() => {
+		if (autoPlay) {
+			media.play();
+		}
+	}, [autoPlay]);
+	
 	const handlePlayPause = () => {
 		media.playPause();
+		setAutoPlay(true);
 	}
 	
 	const handleMuteUnmute = () => {
@@ -40,6 +47,7 @@ function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, setAut
 	
 	const handleSeek = (event, value) => {
 		media.seekTo(value.toFixed(4));
+		setAutoPlay(true);
 	}
 	
 	const handleFullscreen = () => {

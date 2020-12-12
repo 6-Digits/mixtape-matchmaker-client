@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Dialog, DialogActions, Button, DialogTitle, DialogContent, DialogContentText, Typography, Grid, Container, TextField, Box, Link, Card, ButtonBase, CardMedia, CardContent, FormControlLabel, Switch } from '@material-ui/core';
+import { Avatar, Dialog, DialogActions, Button, DialogTitle, DialogContent, DialogContentText, Typography, Grid, TextField, Box, Link, Card, CardMedia, CardContent, FormControlLabel, Switch } from '@material-ui/core';
 import { FavoriteBorder as FavoriteBorderIcon, Favorite as FavoriteIcon, Visibility as VisibilityIcon, Send as SendIcon, Delete as DeleteIcon} from '@material-ui/icons';
 import { Media, Player, utils } from 'react-media-player'
 import Playlist from "../modules/Playlist";
-import PlayerControls from "./PlayerControls";
+import PlayerControls from "../modules/PlayerControls";
 import placeholder from "../../assets/placeholder.png";
-import NotificationSocket from '../frameworks/NotificationSocket';
 
 const { keyboardControls } = utils;
 
@@ -186,7 +185,8 @@ const errorTitle = "The playlist title you have entered is empty. Please enter a
 const errorTitleLength = "The playlist title you have entered is too long (exceeds 255 characters). Please enter a valid playlist title.";
 const errorDescription = "The playlist description that you have entered is too long (exceeds 5000 characters)";
 
-function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists, sendNotification}) {
+function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists, sendNotification}) {
+	const classes = useStyles();
 	
 	const importedSongs = playlist ? playlist['songList'] : [];
 	const importedDesc = playlist ? playlist['description'] : "";
@@ -196,9 +196,6 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const importedAuthor = playlist ? playlist['owner'] : null;
 	const importedName = playlist ? playlist['name'] : "";
 	const importPublic = playlist ? playlist['public'] ? playlist['public'] : false : false;
-	
-
-	const classes = useStyles();
 
 	const [error, setError] = useState(false);
 	const [changed, setChanged] = useState(false);
@@ -219,15 +216,14 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 	const [comments, setComments] = useState(importedComments);
 	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [autoPlay, setAutoPlay] = useState(false);
-		
+	
 	const handleOpenDeleteDialog = () => {
 		setDeleteOpen(true);
 	};
+	
 	const handleCloseDeleteDialog = () => {
 		setDeleteOpen(false);
 	};
-	
-	shareable = editable ? editable : null;
 	
 	useEffect(() => {
 		if (songs) {
@@ -308,7 +304,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 		else {
 			setCurrentIndex(value);
 		}
-	}
+	};
 
 	const savePlaylist = async() => {
 		if (error){
@@ -425,7 +421,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				setLiked(true);
 				setLikeCount(likeCount + 1);
 				// Basic Idea
-				// The message to send the other user and the userID of the other user who will recieve the notification
+				// The message to send the other user and the userID of the other user who will receive the notification
 				// Right now it is hardcoded to dummy1 for testing
 				// Need to implement checking code
 				if(user._id != importedAuthor){
@@ -435,7 +431,7 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 				alert(`Failed to like mixtape: ${err}`);
 			})
 		}
-	}
+	};
 	
 	const handleComment = async () => {
 		let userToken = localStorage.getItem('userToken');
@@ -459,8 +455,12 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 			}
 		}
 		setComment('');
-	}
-
+	};
+	
+	const handleNextSong = () => {
+		setAutoPlay(true);
+		handleCurrentIndex(currentIndex + 1);
+	};
 	
 	return (
 		<div className={classes.container}>
@@ -568,11 +568,12 @@ function ViewPlaylist({editable, shareable, playlist, fetchPlaylists, user, remo
 						<Media>
 							{mediaProps => (
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
-								<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} defaultVolume={0.25} />
+								<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} 
+									defaultVolume={0.25} onEnded={handleNextSong} />
 								<PlayerControls currentIndex={currentIndex} 
 									name={currentSong ? currentSong['title'] : null} author={currentSong ? currentSong['author'] : null}
 									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
-									setAutoPlay={setAutoPlay} />
+									autoPlay={autoPlay} setAutoPlay={setAutoPlay} />
 							</div>
 							)}
 						</Media>
