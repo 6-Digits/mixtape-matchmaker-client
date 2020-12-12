@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import {Dialog, DialogActions, Button, Link, DialogContent, DialogContentText, DialogTitle, TextField} from '@material-ui/core';
+import {Dialog, DialogActions, Button, Link, DialogContent, DialogContentText, DialogTitle, TextField, ServerStyleSheets} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	// modal: {
@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
 	// },
 	// link: {
 	// }
+	dialog: {
+		zIndex: 9999
+	}
 }));
   
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
@@ -62,7 +65,7 @@ function ForgotPassword(props) {
 			<Link href="#" color="primary" onClick={handleOpen}>
 				Forgot your password?
 			</Link>
-			<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+			<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" className={classes.dialog}>
 				<DialogTitle id="form-dialog-title" >Enter an email address</DialogTitle>
 				<DialogContent>
 				<DialogContentText>

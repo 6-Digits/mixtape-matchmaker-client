@@ -12,7 +12,7 @@ import logo from "../../assets/logo.png";
 const useStyles = makeStyles((theme)=>({
     carousel: {
         width: "100%",
-        zIndex: 9999
+        zIndex: 500
     },
     item: {
         height: "100vh",
