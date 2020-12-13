@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
   
-const defaultImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUnnWZ_Dh48jrrZJ1hDbUrU-WzKKkCX1rQzQ&usqp=CAU";
+//const defaultImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUnnWZ_Dh48jrrZJ1hDbUrU-WzKKkCX1rQzQ&usqp=CAU";
 const errorFetch = "We failed to get your match settings. This is likely because either the server is down or you are disconnected from the internet.";
 const errorDefault = "We could not saving your match settings likely because you are offline or our servers are down. Please try again later";
 const errorGender = "You do not have a valid gender preference, please select a valid gender preference!";

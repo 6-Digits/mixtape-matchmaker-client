@@ -87,8 +87,8 @@ const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 function Settings(props) {
 	const [prevImg, setPrevImg] = useState(null);
 	const [success, setSuccess] = useState(null);
-	const [] = useState(null);
-	const [] = useState(0);
+	//const [] = useState(null);
+	//const [] = useState(0);
 	const [imgFile, setImgFile] = useState(0);
 	const [displayName, setDisplayName] = useState(" ");
 	const [name, setName] = useState("Adam");
