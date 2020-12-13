@@ -90,7 +90,7 @@ function MatchChatCard({id, recipient, index, currentIndex, handleCurrentIndex, 
 				variant="contained">
 						Cancel
 					</Button>
-					<Button onClick={unMatch} color="primary" className={classes.button}
+					<Button onClick={() => {unMatch(index)}} color="primary" className={classes.button}
 				variant="contained">
 						Yes, please delete this playlist
 					</Button>

@@ -95,14 +95,13 @@ function ViewMatch({user}) {
 		setOpen(false);
 	};
 
-	const unMatch = async() => {
-		let indexToDelete = currentIndex;
+	const unMatch = async(indexToDelete) => {
 		let userToken = localStorage.getItem('userToken', userToken);
-		if(user && chats[currentIndex] && userToken) {
-			let chatID = chats[currentIndex]._id;
+		if(user && chats[indexToDelete] && userToken) {
+			let chatID = chats[indexToDelete]._id;
 			let unMatchData = {
 				user: user._id,
-				reciever: chats[currentIndex].user1 === user._id ? chats[currentIndex].user2 : chats[currentIndex].user1,
+				reciever: chats[indexToDelete].user1 === user._id ? chats[indexToDelete].user2 : chats[indexToDelete].user1,
 				chatID: chatID
 			};
 			let requestOptions = {
