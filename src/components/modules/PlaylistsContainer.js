@@ -5,20 +5,18 @@ import ViewPlaylist from "../modals/ViewPlaylist";
 
 const useStyles = makeStyles((theme) => ({
 	sectionContainer: {
-		padding: theme.spacing(1, 0, 1, 0),
-		margin: theme.spacing(3, 0, 3, 0),
+		marginTop: '1rem',
 		borderRadius: "0.25rem",
 		backgroundColor: theme.palette.background.default,
 		overflowY: "auto",
 		width: '100%',
-		height: '60vh'
+		padding: '1rem'
 	},
 	playlistsContainer: {
-		padding: theme.spacing(2, 0, 2, 3),
 	},
 }));
 
-function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, removePlaylist, setPlaylists, sendNotification}) {
+function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, removePlaylist, setPlaylists, sendNotification, notHome}) {
 	const classes = useStyles();
 	
 	height = height ? height : 800;
@@ -32,8 +30,8 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 	
 	return (
 		<div>
-			<Paper style={{maxHeight: height}} className={classes.sectionContainer}>
-				<Grid container spacing={3} className={classes.playlistsContainer}>
+			<Paper style={{maxHeight: height}} className={classes.sectionContainer} style={{height: notHome ? '73vh' : '37vh'}}>
+				<Grid container spacing={2} className={classes.playlistsContainer}>
 					{playlists.map((playlist, index) => (
 						<Grid item xs={3}>
 							<ViewPlaylist 

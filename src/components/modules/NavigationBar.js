@@ -9,6 +9,7 @@ import logo from "../../assets/logo.png";
 import HomeIcon from '@material-ui/icons/Home';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import { AccountCircle, Settings as SettingsIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
 import InfoIcon from '@material-ui/icons/Info';
 
 const drawerWidth = 240;
@@ -129,10 +130,20 @@ const useStyles = makeStyles((theme) => ({
 
 function NavigationBar(props) {
 	const classes = useStyles();
+	const [width, setWidth] = useState(0);
 	const theme = useTheme();
 	const history = useHistory();
 	const [open, setOpen] = useState(false);
 	const [value, setValue] = useState('');
+
+	useEffect(() => {
+		function updateWidth() {
+			setWidth(window.innerWidth);
+		}
+		window.addEventListener('resize', updateWidth);
+		updateWidth();
+		return () => window.removeEventListener('resize', updateWidth);
+	}, []);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -149,6 +160,10 @@ function NavigationBar(props) {
 		});
 	};
 
+	const logout = () => {
+		localStorage.clear();
+		props.setUser(null);
+	}
 	return (
 		<div className={classes.grow}>
 			<AppBar position="static" className={classes.appBar}>
@@ -226,6 +241,18 @@ function NavigationBar(props) {
 						<ListItemIcon><LoyaltyIcon></LoyaltyIcon></ListItemIcon>
 						<ListItemText primary='Matches' />
 					</ListItem>
+					{width < 960 ? 
+					<ListItem button key='Settings' component='a' href='/settings'>
+						<ListItemIcon><SettingsIcon></SettingsIcon></ListItemIcon>
+						<ListItemText primary='Settings' />
+					</ListItem>: 
+					null}
+					{width < 960 ? 
+					<ListItem button key='Logout' component='a' onClick={logout}>
+						<ListItemIcon><ExitToAppIcon></ExitToAppIcon></ListItemIcon>
+						<ListItemText primary='Logout' />
+					</ListItem>: 
+					null}
 				</List>
 
 				<Divider />

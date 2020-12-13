@@ -9,10 +9,11 @@ import Fuse from 'fuse.js'
 
 const useStyles = makeStyles((theme) => ({
 	container: {
-		padding: '5vh 20vh 10vh 20vh',
+		padding: '1rem',
 		display: "block",
 		justifyContent: "center",
 		width: "100%",
+		backgroundColor: theme.palette.background.paper
 	},
 	search: {
 		position: 'relative',
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 		maxWidth: "100%"
 	},
 	page: {
-		height: "100vh",
+		height: "100%",
 		backgroundColor: theme.palette.background.paper
 	}
 }));
@@ -260,7 +261,7 @@ function MyPlaylists(props) {
 				</Grid>
 				
 				<PlaylistsContainer height={800} playlists={myPlaylists} setPlaylists={setMyPlaylists} editable={true} fetchPlaylists={fetchMyPlaylists} user={props.user}
-				removePlaylist={removePlaylist}/>
+				removePlaylist={removePlaylist} notHome={true}/>
 			</Grid>
 		</div>
 	);

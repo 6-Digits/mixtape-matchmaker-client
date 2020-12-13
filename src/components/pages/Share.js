@@ -8,10 +8,11 @@ import PlaylistsContainer from "../modules/PlaylistsContainer";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
-		padding: '5vh 20vh 10vh 20vh',
+		padding: '1rem',
 		display: "block",
 		justifyContent: "center",
 		width: "100%",
+		backgroundColor: theme.palette.background.paper
 	},
 	button: {
 		fontWeight: "bold",
@@ -100,7 +101,7 @@ function Share(props) {
 					</Grid>
 				</Grid>
 				
-				<PlaylistsContainer height={800} playlists={playlists} fetchPlaylists={getPlaylistFromID} user={props.user}/>
+				<PlaylistsContainer height={800} playlists={playlists} fetchPlaylists={getPlaylistFromID} user={props.user} notHome={true}/>
 					
 			</Grid>
 		</div>

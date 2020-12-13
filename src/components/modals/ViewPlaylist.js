@@ -122,26 +122,29 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: '0.5rem'
 	},
 	root: {
-		maxWidth: 300,
-		maxHeight: 250,
+		width: '100%',
+		height: '20vh'
 	},
 	cardMedia: {
-		maxHeight: 125,
+		height: '12.5vh',
 		width: '100%',
 		padding: 0
 	},
 	cardContent: {
-		padding: "0.1rem"
+		padding: "0.1rem",
+		height: '7.5vh',
+		width: '100%'
 	},
 	cardAction: {
 		display: 'block',
-		maxWidth: 300,
-		maxHeight: 200,
-		height: 200,
+		width: '100%',
+		height: '10vh'
 	},
 	cardTitle: {
 		textAlign: "center",
-		overflowX: "auto"
+		overflowX: "auto",
+		justifyContent: 'center',
+		width: '100%'
 	},
 	loginError: {
 		color: theme.palette.error.main,
@@ -150,14 +153,20 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: '1rem'
 	},
 	deleteButton: {
-		borderRadius: 0
+		borderRadius: 0,
+		height: '7.5vh',
+		width: '100%'
 	},
 	deleteIcon: {
+		padding: '0.75rem',
 		height: '100%',
 		width: '100%'
 	},
 	viewingTitle: {
-		marginTop: "1rem"
+		textAlign: 'center',
+		width: '100%',
+		height: '7.5vh',
+		overflowX: 'auto',
 	},
 	button: {
 		fontWeight: "bold"

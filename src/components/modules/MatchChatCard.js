@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography, Card, Button, Avatar, CardActionArea } from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import {Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText} from '@material-ui/core';
+
 import heartBreak from "../../assets/heart_break.png";
 
 function MatchChatCard({id, recipient, index, currentIndex, handleCurrentIndex, unMatch}) {
@@ -35,9 +37,21 @@ function MatchChatCard({id, recipient, index, currentIndex, handleCurrentIndex, 
 		clickArea: {
 			width: "100%",
 			height: "100%"
+		},
+		button: {
+			fontWeight: 'bold'
 		}
 	}));
 	const classes = useStyles();
+	const [deleteOpen, setDeleteOpen] = useState(false);
+	
+	const handleOpenDeleteDialog = () => {
+		setDeleteOpen(true);
+	};
+	
+	const handleCloseDeleteDialog = () => {
+		setDeleteOpen(false);
+	};
 	
 	const handleClick = () => {
 		handleCurrentIndex(index)
@@ -59,11 +73,29 @@ function MatchChatCard({id, recipient, index, currentIndex, handleCurrentIndex, 
 					</CardActionArea>
 				</Grid>
 				<Grid item xs={12} sm={3}>
-					<Button variant="contained" className={classes.dislikeButton} onClick={unMatch}>
+					<Button variant="contained" className={classes.dislikeButton} onClick={handleOpenDeleteDialog}>
 						<Avatar className={classes.dislikeImg} src={heartBreak} variant="rounded" />
 					</Button>
 				</Grid>
 			</Grid>
+			<Dialog open={deleteOpen} onClose={handleCloseDeleteDialog} aria-labelledby="form-dialog-title">
+					<DialogTitle id="form-dialog-title" >Confirm Delete Match</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							{`Are you sure about unmatching with '${recipient.userName}'?`}
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+					<Button onClick={handleCloseDeleteDialog} color="secondary" className={classes.button}
+				variant="contained">
+						Cancel
+					</Button>
+					<Button onClick={unMatch} color="primary" className={classes.button}
+				variant="contained">
+						Yes, please delete this playlist
+					</Button>
+					</DialogActions>
+				</Dialog>
 		</Card>
 	);
 }

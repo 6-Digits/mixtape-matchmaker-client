@@ -6,27 +6,19 @@ import PlaylistsContainer from "../modules/PlaylistsContainer";
 
 const useStyles = makeStyles((theme)=>({
 	mainContainer: {
-		padding: '5vh 20vh 10vh 20vh',
+		padding: '1rem',
 		display: "block",
 		justifyContent: "center",
 		width: "100%",
+		height: "100%",
+		backgroundColor: theme.palette.background.paper
 	},
 	popularTitle: {
 		fontSize: '28pt',
 	},
 	likedTitle: {
 		fontSize: '28pt',
-		marginTop: '7vh',
-	},
-	sectionContainer: {
-		paddingTop: '3vh',
-		margin: '5vh 0 10vh 0',
-		width: '100%',
-		padding: '3vh',
-		backgroundColor: '#999999',
-	},
-	playlistsContainer: {
-		padding: "20px 20px 20px 20px",
+		marginTop: '1rem'
 	},
 	cardMedia: {
 		margin: "auto",
