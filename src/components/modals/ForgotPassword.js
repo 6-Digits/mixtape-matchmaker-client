@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import {Dialog, DialogActions, Button, Link, DialogContent, DialogContentText, DialogTitle, TextField, ServerStyleSheets} from '@material-ui/core';
+import {Dialog, DialogActions, Button, Link, DialogContent, DialogContentText, DialogTitle, TextField} from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	// modal: {
 	// 	position: 'absolute',
 	// 	width: '25%',
@@ -28,7 +28,7 @@ const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 const success = "A reset email has been sent to the designated email!";
 const failure = "Failed to send an email either likely because the email does not exist in our database";
 
-function ForgotPassword(props) {
+function ForgotPassword() {
 	const [email, setEmail] = useState(null);
 	const [open, setOpen] = useState(false);
 	

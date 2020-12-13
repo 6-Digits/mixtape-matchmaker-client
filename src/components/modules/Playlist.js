@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, InputBase, Button, Menu, MenuItem } from '@material-ui/core';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { Grid, Typography, Button, Menu, MenuItem } from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Sort as SortIcon, Undo as UndoIcon, Redo as RedoIcon } from '@material-ui/icons';
 import PlaylistSongCard from './PlaylistSongCard';
@@ -385,7 +385,7 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 					<Droppable droppableId="playlist" className={classes.dragContainer}>
 						{(provided) => (
 							<ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-								{viewingSongs.map(({id, title, author, genre, duration, imgUrl, url, uuid}, index) => {
+								{viewingSongs.map(({title, author, genre, duration, imgUrl, url, uuid}, index) => {
 									return (
 										<Draggable key={uuid} draggableId={uuid} index={index} isDragDisabled={!draggable}>
 											{(provided) => (

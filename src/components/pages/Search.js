@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Grid, Typography, Button, Menu, MenuItem } from '@material-ui/core';
-import { Search as SearchIcon, Sort as SortIcon } from '@material-ui/icons';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { Sort as SortIcon } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';
 import PlaylistsContainer from "../modules/PlaylistsContainer";
 
@@ -69,9 +69,9 @@ function Search(props) {
 			let response = await fetch(`${api}/mixtape/search/${location.query}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
-				data = data.map((dict, index) => {
+				data = data.map((dict) => {
 					let totalLength = 0;
-					dict['songList'] = dict['songList'].map((song, i) => {
+					dict['songList'] = dict['songList'].map((song) => {
 						if(song['duration']){
 							totalLength += song['duration'];
 						}

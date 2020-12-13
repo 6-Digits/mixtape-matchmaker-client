@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid, TextField, Button} from '@material-ui/core';
 import { Media, Player, utils } from 'react-media-player'
 import PlayerControls from "../modules/PlayerControls";
@@ -76,7 +76,7 @@ const errorChanges = "You have not made any changes!";
 
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
-function Matches({user, setUser, sendNotification, notifications, setNotifications}) {
+function Matches({user, setUser, notifications, setNotifications}) {
 	const classes = useStyles();
 	const [width, setWidth] = useState(0);
 	const [changed, setChanged] = useState(false);
@@ -152,7 +152,7 @@ function Matches({user, setUser, sendNotification, notifications, setNotificatio
 		let response = await fetch(`${api}/match/mixtape/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			let updatedSongList = data['songList'].map((song, i) => {
+			let updatedSongList = data['songList'].map((song) => {
 				song['uuid'] = uuidv4() + uuidv4();
 				// if(song['duration']){
 				// 	totalLength += song['duration'];
@@ -196,7 +196,6 @@ function Matches({user, setUser, sendNotification, notifications, setNotificatio
 				};
 				let response = await fetch(`${api}/match/mixtape/mid/${playlistID}`, requestOptions);
 				if(response.status === 200) {
-					let data = await response.json();
 					setSuccess(true);
 				} else {
 					setErrorMsg(errorDefault);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IconButton, Badge, Menu, MenuItem, withStyles } from '@material-ui/core';
 import { Notifications as NotificationsIcon } from '@material-ui/icons';
 import Notification from '../modules/Notification';

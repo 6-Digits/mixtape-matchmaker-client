@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, Container, Typography } from '@material-ui/core';
+import React, { useState } from "react";
+import { Button, TextField, Link, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";
 import ForgotPassword from "../modals/ForgotPassword";
-import Footer from "../modules/Footer"
-import { Palette } from "@material-ui/icons";
 import IntroCarousel from "../modules/IntroCarousel";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,13 +48,13 @@ const useStyles = makeStyles((theme) => ({
 
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
-function Login({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
+function Login({storeUser, fetchUser}) {
 	const classes = useStyles();
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
-	const [remember, setRemember] = useState(null);
+	//const [, setRemember] = useState(null);
 	const [error, setError] = useState(false);
-	const [errorMsg, setErrorMsg] = useState("We could not find your account with the given email/password.");
+	const [errorMsg] = useState("We could not find your account with the given email/password.");
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
@@ -87,9 +85,6 @@ function Login({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 		setError(false);
 	};
 
-	const changeRemember = (event) => {
-		setRemember(event.target.value);
-	}
 	
 	return (
 		<Grid container className={classes.container} fullWidth>

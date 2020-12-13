@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, InputBase, Button, Menu, MenuItem } from '@material-ui/core';
+import { Grid, InputBase, Button, Menu, MenuItem } from '@material-ui/core';
 import { Search as SearchIcon, Sort as SortIcon, Add as AddIcon} from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';
@@ -74,11 +74,8 @@ function MyPlaylists(props) {
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [myPlaylists, setMyPlaylists] = useState([]);
 	const [playlistCache, setPlaylistCache] = useState([]);
-	const [searchTimeout, setSearchTimeout] = useState(null);
 	const [search, setSearch] = useState("");
 	const [loading, setLoading] = useState(false);
-
-	const [reverse, setReverse] = useState(false);
 
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
@@ -96,9 +93,9 @@ function MyPlaylists(props) {
 		let response = await fetch(`${api}/mixtape/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			data = data.map((dict, index) => {
+			data = data.map((dict) => {
 				let totalLength = 0;
-				dict['songList'] = dict['songList'].map((song, i) => {
+				dict['songList'] = dict['songList'].map((song) => {
 					song['uuid'] = uuidv4() + uuidv4();
 					if(song['duration']){
 						totalLength += song['duration'];

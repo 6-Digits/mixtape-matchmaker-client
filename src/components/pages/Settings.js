@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Typography, ButtonBase, TextField, List, ListItem, ListItemText, Menu, MenuItem, Switch, Button, FormControlLabel, Card, CardMedia } from '@material-ui/core';
+import { Grid, Paper, Typography, ButtonBase, TextField, Switch, Button, FormControlLabel, Card, CardMedia } from '@material-ui/core';
 import NavigationBar from '../modules/NavigationBar';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import placeholder from "../../assets/placeholder.png";
 import {storage} from "../frameworks/Firebase";
 
 const options = [
@@ -79,7 +78,6 @@ const errorInvalidEmail = "The email that you have entered is not valid or too l
 const errorName = "The names you have entered is too long (100 characters)!";
 const errorDisplayName = "The display name you have entered is too long (100 characters)!";
 const errorShortPass = "The password that you have entered should be at least 8 characters long or too long (100 characters)!";
-const errorNoChange = "No fields were changed!";
 const errorMissing = "One or more of the fields above are empty!";
 const errorAge = "You have to be at least 18 years of age or older to register";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -87,14 +85,10 @@ const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 function Settings(props) {
-	let prevDisplayName = null;
-	let prevName = null;
-	let prevBirthDate = null;
-	let prevGender = null;
 	const [prevImg, setPrevImg] = useState(null);
 	const [success, setSuccess] = useState(null);
-	const [anchorEl, setAnchorEl] = useState(null);
-	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [] = useState(null);
+	const [] = useState(0);
 	const [imgFile, setImgFile] = useState(0);
 	const [displayName, setDisplayName] = useState(" ");
 	const [name, setName] = useState("Adam");
@@ -108,7 +102,7 @@ function Settings(props) {
 	const [imgSrc, setImgSrc] = useState(null);
 	const [allowNotifications, setAllowNotifications] = useState(null);
 	const [oldPassword, setOldPassword] = useState(null);
-	const [state, setState] = useState({
+	const [state] = useState({
 		checkedNotifications: true,
 	});
 
@@ -122,21 +116,17 @@ function Settings(props) {
 		if(response.status === 200) {
 			let data = await response.json();
 			setName(data['name']); 
-			prevName = data['name'];
 			setDisplayName(data['userName']);
-			prevDisplayName = data['userName'];
 			setBirthdate(data['dob'].substring(0, 10));
-			prevBirthDate = data['dob'].substring(0,10);
 			setEmail(props.user.email);
 			setImgSrc(data['imgSrc']);
 			setPrevImg(data['imgSrc']);
 			setAllowNotifications(user.allowNotifications);
-			options.forEach((genderOption, index) => {
+			options.forEach((genderOption) => {
 				if(data['gender'].toLowerCase() === genderOption['title'].toLowerCase()) {
 					setGender(genderOption);
 				}
 			});
-			prevGender = data['gender'];
 		} else {
 			setError(true);
 			setErrorMsg(errorCannotFetchData);
@@ -212,7 +202,6 @@ function Settings(props) {
 					body: JSON.stringify(userData)
 				};
 				let response = await fetch(api + '/profile/uid/' + props.user._id, requestOptions);
-				let data = await response.json();
 				if (response.status === 200) {
 					setSuccess(true);
 				} else {
@@ -226,7 +215,7 @@ function Settings(props) {
 						file.delete();
 					});
 					let uploadTask = userImageRef.put(imgFile);
-					uploadTask.on('state_changed', function(snapshot){
+					uploadTask.on('state_changed', function(){
 						// Observe state change events such as progress, pause, and resume
 						// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
 						// var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -264,7 +253,6 @@ function Settings(props) {
 								body: JSON.stringify(userData)
 							};
 							let response = await fetch(api + '/profile/uid/' + props.user._id, requestOptions);
-							let data = await response.json();
 							if (response.status === 200) {
 								setSuccess(true);
 							} else {
@@ -376,7 +364,7 @@ function Settings(props) {
 		reader.readAsDataURL(selectedFile);
 	};
 
-	const handleChange = (event) => {
+	const handleChange = () => {
 		setAllowNotifications(!allowNotifications);
 		setError(false);
 		setSuccess(false);

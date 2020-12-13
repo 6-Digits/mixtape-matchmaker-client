@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Grid, Typography, InputBase, Button, Menu, MenuItem, MenuList, Grow, Paper, Popper, Fade, ClickAwayListener, Avatar} from '@material-ui/core';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { Grid, InputBase, MenuItem, MenuList, Paper, Popper, Fade, ClickAwayListener, Avatar} from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import { Search as SearchIcon } from '@material-ui/icons';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import YouTubeIcon from '@material-ui/icons/YouTube';
@@ -54,12 +54,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
-function PlaylistSearchBar({search, setSearch, local, filterSongs, addSong}) {
+function PlaylistSearchBar({search, setSearch, addSong}) {
 	const [loading, setLoading] = useState(true);
 	const [typed, setTyped] = useState("");
 	const [open, setOpen] = useState(false);
 	const [options, setOptions] = useState([]);
-	const [canceled, setCanceled] = useState(false);
+	const [] = useState(false);
 	const [timeout, setTimeOut] = useState(null);
 
 	const id = 'search-popper';
@@ -135,7 +135,7 @@ function PlaylistSearchBar({search, setSearch, local, filterSongs, addSong}) {
 						<Paper>
 						<ClickAwayListener onClickAway={handleClose}>
 							<MenuList autoFocusItem={open} id="popper-menu-list">
-								{options.map((value, index) => {
+								{options.map((value) => {
 									let duration = value['duration'];
 									return <MenuItem 
 										className={classes.searchItem}

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import React, { useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from "@material-ui/core"
 import NavigationBar from '../modules/NavigationBar';
 import PlaylistsContainer from "../modules/PlaylistsContainer";
@@ -50,9 +50,9 @@ function Home({user, setUser, sendNotification, notifications, setNotifications}
 		let response = await fetch(`${api}/mixtape/popular`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			data = data.map((dict, index) => {
+			data = data.map((dict) => {
 				let totalLength = 0;
-				dict['songList'] = dict['songList'].map((song, i) => {
+				dict['songList'] = dict['songList'].map((song) => {
 					if(song['duration']){
 						totalLength += song['duration'];
 					}
@@ -75,9 +75,9 @@ function Home({user, setUser, sendNotification, notifications, setNotifications}
 		let response = await fetch(`${api}/mixtape/liked/uid/${user._id}`, requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
-			data = data.map((dict, index) => {
+			data = data.map((dict) => {
 				let totalLength = 0;
-				dict['songList'] = dict['songList'].map((song, i) => {
+				dict['songList'] = dict['songList'].map((song) => {
 					if(song['duration']){
 						totalLength += song['duration'];
 					}

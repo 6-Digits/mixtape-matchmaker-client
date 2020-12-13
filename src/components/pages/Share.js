@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { Grid, Typography, Button, Menu, MenuItem } from '@material-ui/core';
-import { Search as SearchIcon, Sort as SortIcon } from '@material-ui/icons';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import React, { useState } from "react";
+import { Grid, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';
 import PlaylistsContainer from "../modules/PlaylistsContainer";
 
@@ -64,7 +62,7 @@ function Share(props) {
 			if(response.status === 200) {
 				let data = await response.json();
 				let totalLength = 0;
-				data['songList'] = data['songList'].map((song, i) => {
+				data['songList'] = data['songList'].map((song) => {
 					if(song['duration']){
 						totalLength += song['duration'];
 					}

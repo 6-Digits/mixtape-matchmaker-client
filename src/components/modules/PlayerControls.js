@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { withMediaProps, utils } from 'react-media-player'
 import { Grid, IconButton, Slider, makeStyles, Avatar } from '@material-ui/core';
-import { PauseCircleFilled, PlayCircleFilled, SkipPrevious, SkipNext, VolumeUp, VolumeDown, VolumeOff, Fullscreen, FullscreenExit } from '@material-ui/icons';
+import { PauseCircleFilled, PlayCircleFilled, SkipPrevious, SkipNext, VolumeUp, VolumeDown, VolumeOff } from '@material-ui/icons';
 import Marquee from 'react-double-marquee';
 
 const { formatTime } = utils;
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles(()=>({
 	videoSlider: {
 	},
 	volumeSlider: {
@@ -50,9 +50,6 @@ function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, autoPl
 		setAutoPlay(true);
 	}
 	
-	const handleFullscreen = () => {
-		media.fullscreen();
-	}
 	
 	const handleNext = () => {
 		handleCurrentIndex(currentIndex + 1);

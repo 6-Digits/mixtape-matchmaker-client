@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Divider, ListItem, ListItemText, Button, ListItemIcon } from '@material-ui/core';
@@ -9,7 +9,7 @@ import logo from "../../assets/logo.png";
 import HomeIcon from '@material-ui/icons/Home';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
-import { AccountCircle, Settings as SettingsIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
+import { Settings as SettingsIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
 import InfoIcon from '@material-ui/icons/Info';
 
 const drawerWidth = 240;
@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 	},
 	appBar: {
+		backgroundColor: theme.palette.background.default,
 		transition: theme.transitions.create(['margin', 'width'], {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen,
@@ -121,9 +122,6 @@ const useStyles = makeStyles((theme) => ({
 		display: "block",
 		margin: '0 3vh 0 2vh',
 		height: "5vh",
-	},
-	appBar: {
-		backgroundColor: theme.palette.background.default
 	}
 }));
 

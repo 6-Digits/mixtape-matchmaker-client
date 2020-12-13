@@ -88,13 +88,13 @@ function GoMatch(props) {
 	const classes = useStyles();
 	const [matchIndex, setMatchIndex] = useState(0);
 	const [open, setOpen] = useState(false);
-	const [changed, setChanged] = useState(false);
+	//const [changed, setChanged] = useState(false);
 	const [songs, setSongs] = useState([]);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [currentSong, setCurrentSong] = useState(songs ? songs[currentIndex] : null);
 	const [autoPlay, setAutoPlay] = useState(false);
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
+	//const [title, setTitle] = useState("");
+	//const [description, setDescription] = useState("");
 	const [matches, setMatches] = useState([]);	
   
 	const handleOpen = () => {

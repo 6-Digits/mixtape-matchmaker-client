@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Dialog, DialogActions, Button, DialogContent, DialogTitle, TextField, Typography, Grid } from '@material-ui/core';
+import { Dialog, DialogActions, Button, DialogContent, DialogTitle, TextField, Typography, Grid } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
@@ -71,8 +71,8 @@ function MatchSettings(props) {
 	const [ageLower, setAgeLower] = useState(18);
 	const [ageUpper, setAgeUpper] = useState(100);
 	const [location, setLocation] = useState("New York City");
-	const [description, setDescription] = useState("This is the default profile description");
-	const [profilePicture, setProfilePicture] = useState(defaultImg);
+	//const [, setDescription] = useState("This is the default profile description");
+	//const [, setProfilePicture] = useState(defaultImg);
 	const [error, setError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState();
 
@@ -95,7 +95,7 @@ function MatchSettings(props) {
 			let response = await fetch(api + `/match/id/${props.user._id}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
-				genderOptions.forEach((genderOption, index) => {
+				genderOptions.forEach((genderOption) => {
 					if(data['gender'].toLowerCase() === genderOption['title'].toLowerCase()) {
 						setGenderPreference(genderOption);
 					}
@@ -150,7 +150,6 @@ function MatchSettings(props) {
 				};
 				let response = await fetch(`${api}/match/id/${props.user._id}`, requestOptions);
 				if (response.status === 200) {
-					let data = await response.json();
 					setError(false);
 					handleClose();
 				} 
@@ -192,16 +191,6 @@ function MatchSettings(props) {
 
 	const changeLocation = (event) => {
 		setLocation(event.target.value);
-		setError(false);
-	}
-
-	const changeDescription = (event) => {
-		setDescription(event.target.value);
-		setError(false);
-	}
-
-	const changeProfilePicture = (event) => {
-		setProfilePicture(event.target.value);
 		setError(false);
 	}
 

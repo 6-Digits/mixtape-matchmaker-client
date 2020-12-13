@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import React, { useEffect } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid } from "@material-ui/core"
 import ViewPlaylist from "../modals/ViewPlaylist";
 
@@ -32,7 +32,7 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 		<div>
 			<Paper style={{maxHeight: height}} className={classes.sectionContainer} style={{height: notHome ? '73vh' : '37vh'}}>
 				<Grid container spacing={2} className={classes.playlistsContainer}>
-					{playlists.map((playlist, index) => (
+					{playlists.map((playlist) => (
 						<Grid item xs={3}>
 							<ViewPlaylist 
 								playlist={playlist} editable={editable} fetchPlaylists={fetchPlaylists} 

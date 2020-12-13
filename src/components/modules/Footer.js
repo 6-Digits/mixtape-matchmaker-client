@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Redirect } from "react";
+import React, {  } from "react";
 import { Box, Link, Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme)=>({
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme)=>({
 	}
 }));
 
-function Footer(props) {
+function Footer() {
 	const classes = useStyles();
 	return (
 		<Box bgcolor="text.disabled" className={classes.footer}>

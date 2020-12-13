@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import {Button, TextField, Link, Grid, Container} from "@material-ui/core";
+import React, { useState } from "react";
+import {Button, TextField, Link, Grid} from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";
-import { Redirect } from 'react-router-dom'
-import Footer from "../modules/Footer";
 import IntroCarousel from "../modules/IntroCarousel";
 
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
@@ -68,7 +66,7 @@ const errorAge = "You have to be at least 18 years of age or older to register";
 const errorName = "The names you have entered is either blank or too long (100 characters)!";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
+function SignUp({storeUser, fetchUser}) {
 	const [firstName, setFirstName] = useState(null);
 	const [lastName, setLastName] = useState(null);
 	const [birthdate, setBirthdate] = useState("2000-01-01");

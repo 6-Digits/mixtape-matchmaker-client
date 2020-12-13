@@ -1,6 +1,6 @@
 import React, { useState} from "react";
 import Carousel from 'react-material-ui-carousel';
-import {Paper, makeStyles, Button, Grid, Avatar, Typography} from '@material-ui/core';
+import {makeStyles, Button, Grid, Avatar, Typography} from '@material-ui/core';
 //Images all taken from Unsplash. License Free
 import headphones from "../../assets/headphones.jpg";
 import share from "../../assets/share.jpg";
@@ -66,10 +66,10 @@ const useStyles = makeStyles((theme)=>({
         backgroundColor: theme.palette.background.paper
     }
 }));    
-function IntroCarousel(props){
+function IntroCarousel(){
     const [carouselIndex, setCarouselIndex] = useState(0);
 
-    const onAnimate = (index, active) => {
+    const onAnimate = (index) => {
         setCarouselIndex(index);
     }
 

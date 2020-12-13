@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef} from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, MenuItem, Button, TextField, Popper, Fade, ClickAwayListener, Paper, Grid } from '@material-ui/core';
+import React, { useState, useRef} from 'react';
+import { Button, TextField, Popper, Fade, ClickAwayListener, Paper, Grid } from '@material-ui/core';
 import { makeStyles} from '@material-ui/core/styles';
 import {Share as ShareIcon } from '@material-ui/icons';
 import {writeText} from "clipboard-polyfill/text";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	popper: {
         width: "30%",
         zIndex: "9999!important"
@@ -22,12 +21,10 @@ const useStyles = makeStyles((theme) => ({
         width: "30%"
     }
 }));
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 function ShareDropDown({contentLink}) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
-    const textFieldRef = useRef(null);
     const anchorRef = useRef(null);
     const [copyText, setCopyText] = useState("Copy");
     const [copied, setCopied] = useState(false);
@@ -41,7 +38,7 @@ function ShareDropDown({contentLink}) {
     };
     
     
-  const copyToClipboard = (e) => {
+  const copyToClipboard = () => {
     setCopied(true);
     writeText(contentLink).then(()=> {
         setCopyText('Copied!');

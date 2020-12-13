@@ -1,6 +1,6 @@
 import { Container, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, {  } from "react";
 import { Box, makeStyles, Button } from "@material-ui/core"
 import logo from "../../assets/logo.png";
 
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme)=>({
 	}
 }));
 
-function About(props) {
+function About() {
 	const classes = useStyles();
 	const history = useHistory();
 	

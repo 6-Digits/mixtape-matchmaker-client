@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Grid, Typography, Card, Button, Avatar, useRadioGroup } from '@material-ui/core';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import React, {  } from "react";
+import { Grid, Typography, Card, Button, Avatar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { PlayCircleOutline as PlayCircleOutlineIcon, Delete as DeleteIcon } from '@material-ui/icons';
 import placeholder from "../../assets/placeholder.png";
 
-function PlaylistSongCard({index, editable, song, author, genre, duration, img, src, currentIndex, handleCurrentIndex, deleteSong, uuid, setAutoPlay}) {
+function PlaylistSongCard({index, editable, song, author, duration, img, currentIndex, handleCurrentIndex, deleteSong, uuid, setAutoPlay}) {
 	const useStyles = makeStyles((theme) => ({
 		card: {
 			backgroundColor: index === currentIndex ? theme.palette.primary.dark : theme.palette.background.paper,

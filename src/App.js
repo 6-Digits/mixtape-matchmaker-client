@@ -10,7 +10,6 @@ import SignUp from "./components/pages/SignUp";
 import MyPlaylist from "./components/pages/MyPlaylists";
 import Matches from "./components/pages/Matches";
 import Settings from "./components/pages/Settings";
-import Notifications from "./components/modals/Notifications";
 import Search from "./components/pages/Search";
 import Share from "./components/pages/Share";
 import NotificationSocket from './components/frameworks/NotificationSocket';
@@ -19,9 +18,9 @@ import NotificationSocket from './components/frameworks/NotificationSocket';
 // const cookieName = 'mm_6digits_cookies';
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
-function App(props) {
+function App() {
 	// const [cookies, setCookie, removeCookie] = useCookies([cookieName]);
-	const [darkMode, setDarkMode] = useState(false);
+	const [darkMode] = useState(false);
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 	const { notifications, sendNotification, setNotifications } = NotificationSocket(user ? user._id : "", user ? user : {_id : ""});
 	useEffect(() => {
@@ -99,7 +98,7 @@ function App(props) {
 			<Paper className={classes.fullScreen}>
 				<BrowserRouter className={classes}>
 					<Switch>
-						<Route path="/login" name="Login" render={(props) => {
+						<Route path="/login" name="Login" render={() => {
 								return (
 									user ?
 									<Redirect to="/home" /> :
@@ -107,7 +106,7 @@ function App(props) {
 								)
 							}}
 						/>
-						<Route path="/signup" name="SignUp" render={(props) => {
+						<Route path="/signup" name="SignUp" render={() => {
 								return (
 									user  ?
 									<Redirect to="/home" /> :
@@ -115,7 +114,7 @@ function App(props) {
 								)
 							}}
 						/>
-						<Route path="/home" name="Home" render={(props) => {
+						<Route path="/home" name="Home" render={() => {
 								return (
 									user  ?
 									<Home user={user} setUser={setUser} setNotifications={setNotifications}
@@ -124,8 +123,8 @@ function App(props) {
 								)
 							}}
 						/>
-						<Route path="/about" name="About" render={(props) => <About />} />
-						<Route path="/myplaylists" name="My Playlists" render={(props) => {
+						<Route path="/about" name="About" render={() => <About />} />
+						<Route path="/myplaylists" name="My Playlists" render={() => {
 								return (
 									user ?
 									<MyPlaylist user={user} setUser={setUser} setNotifications={setNotifications}
@@ -134,7 +133,7 @@ function App(props) {
 								)
 							}}
 						/>
-						<Route path="/matches" name="My Matches" render={(props) => {
+						<Route path="/matches" name="My Matches" render={() => {
 								return (
 									user ?
 									<Matches user={user} setUser={setUser} setNotifications={setNotifications}
@@ -143,7 +142,7 @@ function App(props) {
 								)
 							}}
 						/>
-						<Route path="/settings" name="My Settings" render={(props) => {
+						<Route path="/settings" name="My Settings" render={() => {
 								return (
 									user ?
 									<Settings user={user} setUser={setUser} storeUser={storeUser} fetchUser={fetchUser} 
@@ -152,7 +151,7 @@ function App(props) {
 								)
 							}}
 						/>
-						<Route path="/search" name="Search" render={(props) => {
+						<Route path="/search" name="Search" render={() => {
 								return (
 									user ?
 									<Search user={user} setUser={setUser} setNotifications={setNotifications}
@@ -170,7 +169,7 @@ function App(props) {
 								)
 							}}
 						/>
-						<Route path="/" render={(props) => {
+						<Route path="/" render={() => {
 								return (
 									user  ?
 									<Redirect to="/home" user={user} setUser={setUser} setNotifications={setNotifications}

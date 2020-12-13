@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
-import { IconButton, Collapse, Link } from '@material-ui/core';
+import { IconButton, Collapse } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Notification(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open] = React.useState(true);
 
   // const handleClick = (event) => {
   //   setAnchorEl(event.currentTarget);

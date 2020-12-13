@@ -1,13 +1,12 @@
 import React, { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Avatar } from '@material-ui/core';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { AccountCircle, Settings as SettingsIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+import { Settings as SettingsIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
 import placeholder from '../../assets/placeholder.png';
-import { useHistory } from 'react-router-dom';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	paper: {
 		border: '1px solid #d3d4d5',
 	},

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createRef } from "react";
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Dialog, DialogActions, Button, DialogTitle, TextField, Typography, Grid, Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, TextField, Grid, Box } from '@material-ui/core';
 import { Send as SendIcon } from '@material-ui/icons';
 
 import useChat from "../frameworks/useChat";

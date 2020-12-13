@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Grid, Typography, Card, Button, Avatar, CardActionArea } from '@material-ui/core';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText} from '@material-ui/core';
 
 import heartBreak from "../../assets/heart_break.png";
 
-function MatchChatCard({id, recipient, index, currentIndex, handleCurrentIndex, unMatch}) {
+function MatchChatCard({recipient, index, currentIndex, handleCurrentIndex, unMatch}) {
 	const useStyles = makeStyles((theme) => ({
 		card: {
 			backgroundColor: index === currentIndex ? theme.palette.primary.dark : theme.palette.background.paper,
