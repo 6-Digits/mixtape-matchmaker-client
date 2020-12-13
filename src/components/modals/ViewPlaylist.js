@@ -193,6 +193,7 @@ const errorDefault = "Sorry! We could not save to the playlist. You are either d
 const errorTitle = "The playlist title you have entered is empty. Please enter a valid playlist title "
 const errorTitleLength = "The playlist title you have entered is too long (exceeds 255 characters). Please enter a valid playlist title.";
 const errorDescription = "The playlist description that you have entered is too long (exceeds 5000 characters)";
+const errorComment = "The comment that you have entered is too long (exceeds 500 characters) or is blank!";
 
 function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists, sendNotification}) {
 	const classes = useStyles();
@@ -242,6 +243,11 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 			}
 		}
 	}, [currentIndex, songs, liked, autoPlay]);
+	useEffect(() => {
+		if(open){
+			setError(false);
+		}
+	}, [open, comment]);
 
 	const fetchAuthor = async() => {
 		let userID = importedAuthor;
@@ -444,8 +450,10 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 	
 	const handleComment = async () => {
 		let userToken = localStorage.getItem('userToken');
-		
-		if (comment && comment.trim() && userToken) {
+		if(comment.length < 1 || comment.length > 500) {
+			setError(true);
+			setErrorMsg(errorComment)
+		} else if (comment && comment.trim() && userToken) {
 			let requestOptions = {
 				method: 'POST',
 				headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
@@ -462,8 +470,8 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 			} else {
 				alert(`Failed to create comment: ${response.status}`);
 			}
+			setComment('');
 		}
-		setComment('');
 	};
 	
 	const handleNextSong = () => {

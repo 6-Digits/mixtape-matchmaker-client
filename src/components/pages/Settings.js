@@ -75,8 +75,10 @@ const useStyles = makeStyles((theme) => ({
 const errorNoPassMatch = "The passwords that you have enter do not match!";
 const errorCannotFetchData = "We cannot fetch the data from our database likely because you are not connected to the internet!";
 const errorSignUp = "We could not update your account settings. Either the password is incorrect or the server is down. Please try again or contact support!";
-const errorInvalidEmail = "The email that you have entered is not valid!";
-const errorShortPass = "The password that you have entered should be at least 8 characters long!";
+const errorInvalidEmail = "The email that you have entered is not valid or too long (320 characters)!";
+const errorName = "The names you have entered is too long (100 characters)!";
+const errorDisplayName = "The display name you have entered is too long (100 characters)!";
+const errorShortPass = "The password that you have entered should be at least 8 characters long or too long (100 characters)!";
 const errorNoChange = "No fields were changed!";
 const errorMissing = "One or more of the fields above are empty!";
 const errorAge = "You have to be at least 18 years of age or older to register";
@@ -160,12 +162,12 @@ function Settings(props) {
 		}
 		let validEmail = emailRegex.test(String(email).toLowerCase());
 		let valid = true;
-		if(!validEmail) {
+		if(!validEmail || email.length > 320) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorInvalidEmail);
 		} else if(password) {
-			if(password.length < 8){
+			if(password.length < 8 || password.length > 100){
 				valid=false;
 				setError(true);
 				setErrorMsg(errorShortPass);
@@ -178,6 +180,14 @@ function Settings(props) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorMissing);
+		} else if(name.length > 100) {
+			valid=false;
+			setError(true);
+			setErrorMsg(errorName);
+		} else if(displayName.length > 100) {
+			valid=false;
+			setError(true);
+			setErrorMsg(errorDisplayName);
 		} else if(getAge(birthdate) < 18) {
 			valid = false
 			setError(true);

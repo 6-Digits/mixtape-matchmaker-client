@@ -61,10 +61,11 @@ const useStyles = makeStyles((theme) => ({
 
 const errorNoPassMatch = "The passwords that you have enter do not match!";
 const errorSignUp = "We could not sign up your account with the given email/password. Please use a different email or contact support!";
-const errorInvalidEmail = "The email that you have entered is not valid!";
-const errorShortPass = "The password that you have entered should be at least 8 characters long!";
+const errorInvalidEmail = "The email that you have entered is not valid or is too long (320 characters)!";
+const errorShortPass = "The password that you have entered should be at least 8 characters long or is too long (100 characters)!";
 const errorMissing = "One or more of the fields above are empty!";
 const errorAge = "You have to be at least 18 years of age or older to register";
+const errorName = "The names you have entered is either blank or too long (100 characters)!";
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
@@ -93,11 +94,11 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 		event.preventDefault();
 		let validEmail = emailRegex.test(String(email).toLowerCase());
 		let valid = true;
-		if(!validEmail) {
+		if(!validEmail || email.length > 320) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorInvalidEmail);
-		} else if(password.length < 8) {
+		} else if(password.length < 8 || password.length > 100) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorShortPass);
@@ -109,6 +110,10 @@ function SignUp({user, setUser, storeUser, fetchUser, fetchUserProfile}) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorMissing);
+		} else if(firstName.length > 100 || lastName.length > 100) {
+			valid=false;
+			setError(true);
+			setErrorMsg(errorName);
 		} else if(getAge(birthdate) < 18) {
 			valid = false
 			setError(true);
