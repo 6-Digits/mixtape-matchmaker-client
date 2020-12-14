@@ -104,7 +104,7 @@ function ViewChat({user, chat}) {
 									{message.text}
 								</Grid>  
 								<Grid item className={classes.messageTime}> 
-									{message.date}
+									{`${new Date(message.date).toLocaleDateString()} ${new Date(message.date).toLocaleTimeString()}`}
 								</Grid>  
 							</Grid>
 							</div>
@@ -125,7 +125,7 @@ function ViewChat({user, chat}) {
 										{message.body}
 									</Grid>  
 									<Grid item className={classes.messageTime}> 
-										{`${new Date(message.date).toDateString()} ${new Date(message.date).toTimeString()}`}
+										{`${new Date(message.date).toLocaleDateString()} ${new Date(message.date).toLocaleTimeString()}`}
 									</Grid>  
 								</Grid>
 							</div>

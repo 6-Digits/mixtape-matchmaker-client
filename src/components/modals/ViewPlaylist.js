@@ -724,7 +724,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 										<Link>{comment.name}</Link>{`: ${comment.text}`}</Typography>
 									</Grid>
 									<Grid item xs={12}>
-										<Typography disableTypography className={classes.messageTS}>{`${new Date(comment.date).toDateString()} ${new Date(comment.date).toTimeString()}`}</Typography>
+										<Typography disableTypography className={classes.messageTS}>{`${new Date(comment.date).toLocaleDateString()} ${new Date(comment.date).toLocaleTimeString()}`}</Typography>
 									</Grid>
 								</Grid>
 								);
