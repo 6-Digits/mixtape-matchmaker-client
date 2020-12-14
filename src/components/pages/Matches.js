@@ -227,7 +227,7 @@ function Matches({user, setUser, notifications, setNotifications}) {
 				<Button variant="contained" color="secondary" className={classes.saveButton} onClick={saveMatchPlaylist}>Save Changes</Button>
 				<Playlist title="My Match Playlist" editable={true} draggable={true}
 					songs={songs} setSongs={setSongs} currentIndex={currentIndex} handleCurrentIndex={handleCurrentIndex}
-					setChanged={setChanged} playlistID={playlistID} setAutoPlay={setAutoPlay} />
+					setChanged={setChanged} playlistID={playlistID} setAutoPlay={setAutoPlay} notSharable={true}/>
 				<Media>
 					{mediaProps => (
 					<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>

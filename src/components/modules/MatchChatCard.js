@@ -92,7 +92,7 @@ function MatchChatCard({recipient, index, currentIndex, handleCurrentIndex, unMa
 					</Button>
 					<Button onClick={() => {unMatch(index)}} color="primary" className={classes.button}
 				variant="contained">
-						Yes, please delete this playlist
+						Yes, please delete this match
 					</Button>
 					</DialogActions>
 				</Dialog>

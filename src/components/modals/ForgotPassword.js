@@ -21,6 +21,9 @@ const useStyles = makeStyles(() => ({
 	// }
 	dialog: {
 		zIndex: 9999
+	},
+	button: {
+		fontWeight: "bold"
 	}
 }));
   
