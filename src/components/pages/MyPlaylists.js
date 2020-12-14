@@ -258,7 +258,7 @@ function MyPlaylists(props) {
 				</Grid>
 				
 				<PlaylistsContainer height={800} playlists={myPlaylists} setPlaylists={setMyPlaylists} editable={true} fetchPlaylists={fetchMyPlaylists} user={props.user}
-				removePlaylist={removePlaylist} notHome={true}/>
+				removePlaylist={removePlaylist} notHome={true} sendNotification={sendNotification}/>
 			</Grid>
 		</div>
 	);
