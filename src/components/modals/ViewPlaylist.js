@@ -236,7 +236,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 	};
 	
 	useEffect(() => {
-		if (songs) {
+		if (songs.length > 0) {
 			setCurrentSong(songs[currentIndex]);
 			if (!playlistAuthor) {
 				fetchAuthor();

@@ -104,7 +104,7 @@ function Matches({user, setUser, notifications, setNotifications}) {
 	}, []);
 	
 	useEffect(() => {
-		if (songs) {
+		if (songs.length > 0) {
 			setCurrentSong(songs[currentIndex]);
 		}
 	}, [currentIndex, songs, autoPlay]);
