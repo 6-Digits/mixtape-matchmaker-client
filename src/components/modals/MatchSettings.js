@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
 const errorFetch = "We failed to get your match settings. This is likely because either the server is down or you are disconnected from the internet.";
 const errorDefault = "We could not saving your match settings likely because you are offline or our servers are down. Please try again later";
 const errorGender = "You do not have a valid gender preference, please select a valid gender preference!";
-const errorAge = "The age preference you have enter is either not in the valid (18 or older) range or unspecified. Please enter a valid age range!";
-const errorLocation = "The location you have enter is too long (128 character limit) or blank!";
+const errorAge = "The age preference you have entered is either not in the valid (18 or older) range or unspecified. Please enter a valid age range!";
+const errorLocation = "The location you have entered is too long (128 character limit) or does not exist!";
 
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 

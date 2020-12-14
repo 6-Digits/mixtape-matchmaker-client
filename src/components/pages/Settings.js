@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const errorNoPassMatch = "The passwords that you have enter do not match!";
+const errorNoPassMatch = "The passwords that you have entered do not match!";
 const errorCannotFetchData = "We cannot fetch the data from our database likely because you are not connected to the internet!";
 const errorSignUp = "We could not update your account settings. Either the password is incorrect or the server is down. Please try again or contact support!";
 const errorInvalidEmail = "The email that you have entered is not valid or too long (320 characters)!";
