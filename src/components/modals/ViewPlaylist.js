@@ -238,12 +238,15 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 	useEffect(() => {
 		if (songs.length > 0) {
 			setCurrentSong(songs[currentIndex]);
-			if (!playlistAuthor) {
-				fetchAuthor();
-			}
 		}
 	}, [currentIndex, songs, liked, autoPlay]);
 	
+	useEffect(() => {
+		if (!playlistAuthor) {
+			fetchAuthor();
+		}
+	}, []);
+
 	useEffect(() => {
 		if(open){
 			setError(false);
