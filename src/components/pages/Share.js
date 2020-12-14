@@ -99,7 +99,7 @@ function Share(props) {
 					</Grid>
 				</Grid>
 				
-				<PlaylistsContainer height={800} playlists={playlists} fetchPlaylists={getPlaylistFromID} user={props.user} notHome={true}/>
+				<PlaylistsContainer height={800} playlists={playlists} fetchPlaylists={getPlaylistFromID} user={props.user} notHome={true} sendNotification={props.sendNotification}/>
 					
 			</Grid>
 		</div>
