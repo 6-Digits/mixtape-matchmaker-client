@@ -127,6 +127,7 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 		setViewingSongs(items);
 		setSongs(items);
 		createSwap(result.source.index, result.destination.index);
+		setRedo([]);
 	}
 	
 	const filterSongs = (event) => {
@@ -282,6 +283,7 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 				setViewingSongs(newSongList);
 				setSongs(newSongList);	
 				setChanged(true);
+				setRedo([]);
 			}
 		}
 	};
@@ -303,6 +305,7 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 		setViewingSongs(newSongList);
 		setSongs(newSongList);
 		setChanged(true);
+		setRedo([]);
 	};
 	
 	return (
