@@ -17,3 +17,6 @@ iframe {
     height: 100%;
     width: 100%;
 }
+.MuiList-padding {
+    padding: 0 !important; 
+}

@@ -2,11 +2,19 @@ import React, { useState } from 'react';
 import { IconButton, Badge, Menu, MenuItem, withStyles } from '@material-ui/core';
 import { Notifications as NotificationsIcon } from '@material-ui/icons';
 import Notification from '../modules/Notification';
+import { makeStyles } from '@material-ui/core/styles';
 
 const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 
 const ITEM_HEIGHT = 48;
 
+const useStyles = makeStyles((theme) => ({
+	notification: {
+		backgroundColor: theme.palette.background.default,
+	}
+  }));
+
+  
 function Notifications({user, notifications, setNotifications}) {
 	const [anchorEl, setAnchorEl] = useState(null);
 	//const [oldNotifications, setOldNotifications] = useState(notificationList ? notificationList : []);
@@ -22,6 +30,8 @@ function Notifications({user, notifications, setNotifications}) {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	const classes = useStyles();
 
 	const handleDeleteNotification = async(notificationID) => {
 		setNotifications(notifications.filter(function(notification) { 
@@ -86,7 +96,7 @@ function Notifications({user, notifications, setNotifications}) {
 			{notifications.length > 0 ? 
 			<StyledMenu>
 				{notifications.map((option, i) => (
-					<MenuItem key={i}>
+					<MenuItem key={i} className={classes.notification}>
 						<Notification message={option.message} onDelete={()=>{
 							handleDeleteNotification(option._id)}}></Notification>
 					</MenuItem>
