@@ -243,6 +243,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 			}
 		}
 	}, [currentIndex, songs, liked, autoPlay]);
+	
 	useEffect(() => {
 		if(open){
 			setError(false);
