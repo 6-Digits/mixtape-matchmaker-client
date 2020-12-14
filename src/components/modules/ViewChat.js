@@ -125,7 +125,7 @@ function ViewChat({user, chat}) {
 										{message.body}
 									</Grid>  
 									<Grid item className={classes.messageTime}> 
-										{message.date}
+										{`${new Date(message.date).toDateString()} ${new Date(message.date).toTimeString()}`}
 									</Grid>  
 								</Grid>
 							</div>
