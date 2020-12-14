@@ -26,11 +26,11 @@ function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, autoPl
 	const classes = useStyles();
 	const { volume, duration, currentTime } = media;
 	
-	useEffect(() => {
-		if (autoPlay) {
-			media.play();
-		}
-	}, [autoPlay]);
+	// useEffect(() => {
+	// 	if (autoPlay) {
+	// 		media.play();
+	// 	}
+	// }, [autoPlay]);
 	
 	const handlePlayPause = () => {
 		media.playPause();
