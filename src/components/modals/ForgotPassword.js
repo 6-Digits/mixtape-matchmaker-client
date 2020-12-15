@@ -42,6 +42,7 @@ function ForgotPassword() {
 			body: JSON.stringify({"email":email})
 		};
 		let response = await fetch(api + '/auth/resetPassword', requestOptions);
+		alert(response.status);
 		if (response.status == 200) {
 			alert(success);
 			handleClose();
