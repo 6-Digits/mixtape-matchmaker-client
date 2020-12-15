@@ -133,7 +133,7 @@ function MatchSettings(props) {
 				method: 'GET',
 				headers: {'Content-Type': 'application/json'}
 			});
-			if (geocodeResponse.status === 200) {
+			if (geocodeResponse.status === 200 || geocodeResponse.status === 400) {
 				let geocode = await geocodeResponse.json();
 				
 				let userData = {
@@ -152,8 +152,7 @@ function MatchSettings(props) {
 				if (response.status === 200) {
 					setError(false);
 					handleClose();
-				} 
-				else {
+				} else {
 					setError(true);
 					setErrorMsg(errorDefault);
 				}
