@@ -111,7 +111,7 @@ function MyPlaylists(props) {
 			alert(`failed to fetch data with error status ${response.status}`);
 		}
 	};
-
+	
 	useEffect(() => {
 		if(search.length < 2) {
 			setPlaylistCache(myPlaylists);
@@ -158,12 +158,12 @@ function MyPlaylists(props) {
 				includeScore: false,
 				keys: [
 					{
-					name: 'name',
-					weight: 0.7
+						name: 'name',
+						weight: 0.7
 					},
 					{
-					name: 'description',
-					weight: 0.3
+						name: 'description',
+						weight: 0.3
 					}
 				]
 				};
@@ -176,17 +176,17 @@ function MyPlaylists(props) {
 	}
 
 	const sortPlaylistTitle = (ascending) => {
-		let playlists = myPlaylists.map(element => {
-			return element;
+		const playlists = [...myPlaylists].sort((a, b) => { 
+			return ascending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
 		});
-		playlists.sort((a, b) => ascending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
 		setMyPlaylists(playlists);
 		handleSortClose();
 	};
 
 	const sortPlaylistDuration = (ascending) => {
-		let playlists = Array.from(myPlaylists);
-		playlists.sort((a, b) => ascending ? parseFloat(a.duration) - parseFloat(b.duration) : parseFloat(b.duration) - parseFloat(a.duration));
+		const playlists = [...myPlaylists].sort((a, b) => {
+			return ascending ? parseFloat(a.duration) - parseFloat(b.duration) : parseFloat(b.duration) - parseFloat(a.duration)
+		});
 		setMyPlaylists(playlists);
 		handleSortClose();
 	};
@@ -257,8 +257,8 @@ function MyPlaylists(props) {
 					</Grid> 
 				</Grid>
 				
-				<PlaylistsContainer height={800} playlists={myPlaylists} setPlaylists={setMyPlaylists} editable={true} fetchPlaylists={fetchMyPlaylists} user={props.user}
-				removePlaylist={removePlaylist} notHome={true} sendNotification={props.sendNotification}/>
+				<PlaylistsContainer height={800} playlists={myPlaylists} setPlaylists={setMyPlaylists} editable={true} fetchPlaylists={fetchMyPlaylists} 
+					user={props.user} removePlaylist={removePlaylist} notHome={true} sendNotification={props.sendNotification}/>
 			</Grid>
 		</div>
 	);

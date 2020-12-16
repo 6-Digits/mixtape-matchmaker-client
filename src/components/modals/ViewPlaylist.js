@@ -198,34 +198,43 @@ const errorComment = "The comment that you have entered is too long (exceeds 500
 function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists, sendNotification}) {
 	const classes = useStyles();
 	
-	const importedSongs = playlist ? playlist['songList'] : [];
-	const importedDesc = playlist ? playlist['description'] : "";
-	const importedLikeCount = playlist ? playlist['hearts'] : 0;
-	const importedComments = playlist ? playlist['comments'] : [];
-	const importedViewCount = playlist ? playlist['views'] ? playlist['views'] : 0 : 0;
-	const importedAuthor = playlist ? playlist['owner'] : null;
-	const importedName = playlist ? playlist['name'] : "";
-	const importPublic = playlist ? playlist['public'] ? playlist['public'] : false : false;
-
 	const [error, setError] = useState(false);
 	const [changed, setChanged] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(errorDefault);
 	const [open, setOpen] = useState(false);
-	const [checkedPublic, setCheckedPublic] = useState(importPublic);
-	const [description, setDescription] = useState(importedDesc);
-	const [viewCount, setViewCount] = useState(importedViewCount);
-	const [likeCount, setLikeCount] = useState(importedLikeCount);
+	const [checkedPublic, setCheckedPublic] = useState(playlist ? playlist['public'] ? playlist['public'] : false : false);
+	const [description, setDescription] = useState(playlist ? playlist['description'] : "");
+	const [viewCount, setViewCount] = useState(playlist ? playlist['views'] ? playlist['views'] : 0 : 0);
+	const [likeCount, setLikeCount] = useState(playlist ? playlist['hearts'] : 0);
 	const [liked, setLiked] = useState(false);
-	const [playlistName, setPlaylistName] = useState(importedName);
+	const [playlistName, setPlaylistName] = useState(playlist ? playlist['name'] : "");
+	const [authorID, setAuthorID] = useState(playlist ? playlist['owner'] : null);
 	const [profileImage, setProfileImage] = useState(placeholder);
 	const [playlistAuthor, setPlaylistAuthor] = useState(null);
-	const [songs, setSongs] = useState(importedSongs);
+	const [songs, setSongs] = useState(playlist ? playlist['songList'] : []);
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [currentSong, setCurrentSong] = useState(songs ? songs[currentIndex] : null);
+	const [currentSong, setCurrentSong] = useState(playlist ? playlist['songList'] ? playlist['songList'][0] : null : null);
+	const [thumbnail, setThumbnail] = useState(playlist ? playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder);
 	const [comment, setComment] = useState('');
-	const [comments, setComments] = useState(importedComments);
+	const [comments, setComments] = useState(playlist ? playlist['comments'] : []);
 	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [autoPlay, setAutoPlay] = useState(false);
+	
+	useEffect(() => {
+		setCheckedPublic(playlist ? playlist['public'] ? playlist['public'] : false : false);
+		setDescription(playlist ? playlist['description'] : "");
+		setViewCount(playlist ? playlist['views'] ? playlist['views'] : 0 : 0);
+		setLikeCount(playlist ? playlist['hearts'] : 0);
+		setPlaylistName(playlist ? playlist['name'] : "");
+		setAuthorID(playlist ? playlist['owner'] : null);
+		setSongs(playlist ? playlist['songList'] : []);
+		setCurrentIndex(0);
+		setCurrentSong(playlist ? playlist['songList'] ? playlist['songList'][0] : null : null);
+		setThumbnail(playlist ? playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder);
+		setComment('');
+		setComments(playlist ? playlist['comments'] : []);
+		fetchAuthor();
+	}, [playlist]);
 	
 	const handleOpenDeleteDialog = () => {
 		setDeleteOpen(true);
@@ -246,21 +255,20 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 			fetchAuthor();
 		}
 	}, []);
-
+	
 	useEffect(() => {
 		if(open){
 			setError(false);
 		}
 	}, [open, comment]);
-
+	
 	const fetchAuthor = async() => {
-		let userID = importedAuthor;
-		if(userID){
+		if (authorID) {
 			let requestOptions = {
 				method: 'GET',
 				headers: {'Content-Type': 'application/json'}
 			};
-			let response = await fetch(`${api}/profile/id/${userID}`, requestOptions);
+			let response = await fetch(`${api}/profile/id/${authorID}`, requestOptions);
 			if(response.status === 200) {
 				let data = await response.json();
 				setPlaylistAuthor(data['userName']);
@@ -273,7 +281,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 		}
 	};
 	
-	const handleOpen = () => {		
+	const handleOpen = () => {
 		fetch(`${api}/mixtape/likedIDs/uid/${user['_id']}`, {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'},
@@ -439,12 +447,9 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 			fetch(`${api}/mixtape/like`, requestOptions).then((res) => {
 				setLiked(true);
 				setLikeCount(likeCount + 1);
-				// Basic Idea
 				// The message to send the other user and the userID of the other user who will receive the notification
-				// Right now it is hardcoded to dummy1 for testing
-				// Need to implement checking code
-				if(user._id != importedAuthor){
-					sendNotification(`Someone liked your playlist: ${playlistName}`, importedAuthor);
+				if(user._id != authorID){
+					sendNotification(`Someone liked your playlist: ${playlistName}`, authorID);
 				}
 			}).catch((err) => {
 				alert(`Failed to like mixtape: ${err}`);
@@ -468,8 +473,8 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 				let data = await response.json();
 				let newComments = [data, ...comments]
 				setComments(newComments);
-				if(user._id != importedAuthor){
-					sendNotification(`Someone commented on your playlist: ${playlistName}`, importedAuthor);
+				if(user._id != authorID){
+					sendNotification(`Someone commented on your playlist: ${playlistName}`, authorID);
 				}
 			} else {
 				alert(`Failed to create comment: ${response.status}`);
@@ -489,9 +494,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 				<div className={classes.cardAction}>
 					<Button className={classes.cardMedia}>
 						<CardMedia component='img' className={classes.cardMedia} 
-						image={
-							playlist ?  playlist['songList'] ? playlist['songList'][0] ? playlist['songList'][0]['imgUrl'] : placeholder : placeholder : placeholder
-						} 
+						image={thumbnail} 
 						onClick={handleOpen}/>
 						{editable ? <div className={[classes.indicator, changed ? classes.unsaved : classes.saved].join(' ')}>
 							{`•${changed ? 'Unsaved' : 'Saved'}`}</div> : null}
