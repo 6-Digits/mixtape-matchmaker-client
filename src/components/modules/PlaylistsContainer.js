@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, removePlaylist, setPlaylists, sendNotification, notHome}) {
 	const classes = useStyles();
+
 	
 	height = height ? height : 800;
 	
