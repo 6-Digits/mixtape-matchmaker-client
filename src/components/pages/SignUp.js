@@ -180,7 +180,7 @@ function SignUp({storeUser, fetchUser}) {
 				<IntroCarousel/>
 			</Grid>
 			<Grid item xs={4} container className={classes.signup}>
-				<img src={logo} className={classes.logo}/>
+				<img src={logo} className={classes.logo} alt="" />
 				<form className={classes.form} onSubmit={handleSignUp} noValidate>
 				<Grid container spacing={2}>
 					<Grid item xs={12} sm={6}>

@@ -52,7 +52,6 @@ function Login({storeUser, fetchUser}) {
 	const classes = useStyles();
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
-	//const [, setRemember] = useState(null);
 	const [error, setError] = useState(false);
 	const [errorMsg] = useState("We could not find your account with the given email/password.");
 
@@ -66,9 +65,7 @@ function Login({storeUser, fetchUser}) {
 		let response = await fetch(api + '/auth/login', requestOptions);
 		if (response.status === 200) {
 			let data = await response.json();
-			// if(remember){
-				storeUser(data['token']);
-			// }
+			storeUser(data['token']);
 			fetchUser(data['token']);
 		} else {
 			setError(true);
@@ -84,7 +81,6 @@ function Login({storeUser, fetchUser}) {
 		setPassword(event.target.value);
 		setError(false);
 	};
-
 	
 	return (
 		<Grid container className={classes.container} fullWidth>
@@ -93,7 +89,7 @@ function Login({storeUser, fetchUser}) {
 				<IntroCarousel/>
 			</Grid>
 			<Grid item xs={4} container className={classes.login}>
-				<img src={logo} className={classes.logo}/>
+				<img src={logo} className={classes.logo} alt="logo" />
 				<form className={classes.form} onSubmit={handleLogin} noValidate>
 				<TextField
 				variant="outlined"

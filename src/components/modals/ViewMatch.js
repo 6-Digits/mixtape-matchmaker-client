@@ -76,7 +76,7 @@ function ViewMatch({user}) {
 		}
 	}, [open]);
 
-	function handleOnDragEnd() {
+	const handleOnDragEnd = () => {
 		// if (!result.destination) {
 		// 	return;
 		// }
@@ -84,10 +84,10 @@ function ViewMatch({user}) {
 		// const [reorderedItem] = items.splice(result.source.index, 1);
 		// items.splice(result.destination.index, 0, reorderedItem);
 		// setMatches(items);
-	}
+	};
 	const handleCurrentIndex = (index) => {
 		setCurrentIndex(index)
-	}
+	};
 	const handleOpen = () => {
 		setOpen(true);
 	};
@@ -96,12 +96,12 @@ function ViewMatch({user}) {
 	};
 
 	const unMatch = async(indexToDelete) => {
-		let userToken = localStorage.getItem('userToken', userToken);
+		let userToken = localStorage.getItem('userToken');
 		if(user && chats[indexToDelete] && userToken) {
 			let chatID = chats[indexToDelete]._id;
 			let unMatchData = {
 				user: user._id,
-				reciever: chats[indexToDelete].user1 === user._id ? chats[indexToDelete].user2 : chats[indexToDelete].user1,
+				receiver: chats[indexToDelete].user1 === user._id ? chats[indexToDelete].user2 : chats[indexToDelete].user1,
 				chatID: chatID
 			};
 			let requestOptions = {

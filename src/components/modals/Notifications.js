@@ -23,8 +23,8 @@ function Notifications({user, notifications, setNotifications}) {
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
-		//let reciever = '5fc2f2f1af6ba41d1877a165'
-		//sendNotification("HI", reciever)
+		//let receiver = '5fc2f2f1af6ba41d1877a165'
+		//sendNotification("HI", receiver)
 	};
 
 	const handleClose = () => {

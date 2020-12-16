@@ -170,7 +170,7 @@ function GoMatch(props) {
 	
 	const handleLike = async() => {
 		let indexToDelete = matchIndex;
-		let userToken = localStorage.getItem('userToken', userToken);
+		let userToken = localStorage.getItem('userToken');
 		if(props.user && matches[matchIndex] && userToken) {
 			setMatches(matches.filter(function(match, index) { 
 				return index !== indexToDelete;
@@ -178,7 +178,7 @@ function GoMatch(props) {
 			let matchedID = matches[matchIndex]._id;
 			let likeData = {
 				user: props.user._id,
-				reciever: matchedID
+				receiver: matchedID
 			};
 			let requestOptions = {
 				method: 'POST',
@@ -193,7 +193,7 @@ function GoMatch(props) {
 	
 	const handleDislike = async() => {
 		let indexToDelete = matchIndex;
-		let userToken = localStorage.getItem('userToken', userToken);
+		let userToken = localStorage.getItem('userToken');
 		if(props.user && matches[matchIndex] && userToken) {
 			setMatches(matches.filter(function(match, index) { 
 				return index !== indexToDelete;
@@ -201,7 +201,7 @@ function GoMatch(props) {
 			let matchedID = matches[matchIndex]._id;
 			let likeData = {
 				user: props.user._id,
-				reciever: matchedID
+				receiver: matchedID
 			};
 			let requestOptions = {
 				method: 'POST',

@@ -44,7 +44,7 @@ function PlaylistSongCard({index, editable, song, author, duration, img, current
 		}
 	}));
 	const classes = useStyles();
-	duration = parseInt(duration);
+	duration = parseInt(duration, 10);
 	img = img ? img : placeholder;
 
 	const handlePlay = () => {

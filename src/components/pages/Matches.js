@@ -98,7 +98,7 @@ function Matches({user, setUser, notifications, setNotifications}) {
 		}
 		window.addEventListener('resize', updateWidth);
 		updateWidth();
-		let userToken = localStorage.getItem('userToken', userToken);
+		let userToken = localStorage.getItem('userToken');
 		fetchMatchPlaylist(userToken, user);
 		return () => window.removeEventListener('resize', updateWidth);
 	}, []);
@@ -183,7 +183,7 @@ function Matches({user, setUser, notifications, setNotifications}) {
 				setError(true);
 				setErrorMsg(errorPlaylist);
 			} else {
-				let userToken = localStorage.getItem('userToken', userToken);
+				let userToken = localStorage.getItem('userToken');
 				let playlistData = {
 					name: title,
 					description: description,
@@ -246,7 +246,6 @@ function Matches({user, setUser, notifications, setNotifications}) {
 			<Grid
 				container
 				direction={width > 599 ? "row" : "column"}
-				justify="center"
 				alignItems="center"
 				justify="space-between"
 				className={classes.content}

@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
 
 function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, removePlaylist, setPlaylists, sendNotification, notHome}) {
 	const classes = useStyles();
-
 	
 	height = height ? height : 800;
 	
@@ -31,7 +30,7 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 	
 	return (
 		<div>
-			<Paper style={{maxHeight: height}} className={classes.sectionContainer} style={{height: notHome ? '73vh' : '37vh'}}>
+			<Paper className={classes.sectionContainer} style={{height: notHome ? '73vh' : '37vh'}}>
 				<Grid container spacing={2} className={classes.playlistsContainer}>
 					{playlists.map((playlist) => (
 						<Grid item xs={3}>

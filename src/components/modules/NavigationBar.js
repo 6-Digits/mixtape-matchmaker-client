@@ -177,7 +177,7 @@ function NavigationBar(props) {
 					</IconButton>
 
 					<a href='/home'>
-						<img src={logo} className={classes.home} />
+						<img src={logo} className={classes.home} alt="logo" />
 					</a>
 
 					<Typography className={classes.title} variant="h5" noWrap>
@@ -219,7 +219,7 @@ function NavigationBar(props) {
 				ModalProps={{ onBackdropClick: handleDrawerClose }}
 			>
 				<div className={classes.drawerHeader}>
-					<img src={logo} className={classes.logo} />
+					<img src={logo} className={classes.logo} alt="logo" />
 					<IconButton onClick={handleDrawerClose}>
 						{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
 					</IconButton>

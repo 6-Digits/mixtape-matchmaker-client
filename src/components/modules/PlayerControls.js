@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { withMediaProps, utils } from 'react-media-player'
 import { Grid, IconButton, Slider, makeStyles, Avatar } from '@material-ui/core';
 import { PauseCircleFilled, PlayCircleFilled, SkipPrevious, SkipNext, VolumeUp, VolumeDown, VolumeOff } from '@material-ui/icons';
@@ -25,12 +25,6 @@ const useStyles = makeStyles(()=>({
 function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, autoPlay, setAutoPlay, name}) {
 	const classes = useStyles();
 	const { volume, duration, currentTime } = media;
-	
-	// useEffect(() => {
-	// 	if (autoPlay) {
-	// 		media.play();
-	// 	}
-	// }, [autoPlay]);
 	
 	const handlePlayPause = () => {
 		media.playPause();

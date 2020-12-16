@@ -59,7 +59,6 @@ function PlaylistSearchBar({search, setSearch, addSong}) {
 	const [typed, setTyped] = useState("");
 	const [open, setOpen] = useState(false);
 	const [options, setOptions] = useState([]);
-	const [] = useState(false);
 	const [timeout, setTimeOut] = useState(null);
 
 	const id = 'search-popper';

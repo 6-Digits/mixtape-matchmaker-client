@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography, ButtonBase, TextField, Switch, Button, FormControlLabel, Card, CardMedia } from '@material-ui/core';
 import NavigationBar from '../modules/NavigationBar';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import {storage} from "../frameworks/Firebase";
+import { storage } from "../frameworks/Firebase";
 
 const options = [
 	{title: "Male"}, 
@@ -87,8 +87,6 @@ const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
 function Settings(props) {
 	const [prevImg, setPrevImg] = useState(null);
 	const [success, setSuccess] = useState(null);
-	//const [] = useState(null);
-	//const [] = useState(0);
 	const [imgFile, setImgFile] = useState(0);
 	const [displayName, setDisplayName] = useState(" ");
 	const [name, setName] = useState("Adam");
@@ -102,10 +100,6 @@ function Settings(props) {
 	const [imgSrc, setImgSrc] = useState(null);
 	const [allowNotifications, setAllowNotifications] = useState(null);
 	const [oldPassword, setOldPassword] = useState(null);
-	const [state] = useState({
-		checkedNotifications: true,
-	});
-
 
 	const fetchUserProfile = async (userToken, user) => {
 		let requestOptions = {
@@ -215,93 +209,52 @@ function Settings(props) {
 						file.delete();
 					});
 					let uploadTask = userImageRef.put(imgFile);
-					uploadTask.on('state_changed', function(){
-						// Observe state change events such as progress, pause, and resume
-						// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-						// var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-						// console.log('Upload is ' + progress + '% done');
-						// switch (snapshot.state) {
-						//   case firebase.storage.TaskState.PAUSED: // or 'paused'
-						// 	console.log('Upload is paused');
-						// 	break;
-						//   case firebase.storage.TaskState.RUNNING: // or 'running'
-						// 	console.log('Upload is running');
-						// 	break;
-						// }
+					uploadTask.on('state_changed', function() {
+							// Observe state change events such as progress, pause, and resume
+							// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
 						}, function(error) {
-						// Handle unsuccessful uploads
-						setError(true);
-						setErrorMsg(error);
+							// Handle unsuccessful uploads
+							setError(true);
+							setErrorMsg(error);
 						}, function() {
-						// Handle successful uploads on complete
-						// For instance, get the download URL: https://firebasestorage.googleapis.com/...
-						uploadTask.snapshot.ref.getDownloadURL().then(async function(downloadURL) {
-							let userData = {
-								name:name,
-								userName: displayName,
-								dob: birthdate,
-								gender: gender['title'],
-								email: email,
-								allowNotifications: allowNotifications,
-								oldPassword: oldPassword,
-								newPassword: password,
-								imgSrc: downloadURL
-							};
-							let requestOptions = {
-								method: 'POST',
-								headers: {'Content-Type': 'application/json' },
-								body: JSON.stringify(userData)
-							};
-							let response = await fetch(api + '/profile/uid/' + props.user._id, requestOptions);
-							if (response.status === 200) {
-								setSuccess(true);
-							} else {
-								setError(true);
-								setErrorMsg(errorSignUp);
-							}
-						});
-					});
+							// Handle successful uploads on complete
+							// For instance, get the download URL: https://firebasestorage.googleapis.com/...
+							uploadTask.snapshot.ref.getDownloadURL().then(async function(downloadURL) {
+								let userData = {
+									name:name,
+									userName: displayName,
+									dob: birthdate,
+									gender: gender['title'],
+									email: email,
+									allowNotifications: allowNotifications,
+									oldPassword: oldPassword,
+									newPassword: password,
+									imgSrc: downloadURL
+								};
+								let requestOptions = {
+									method: 'POST',
+									headers: {'Content-Type': 'application/json' },
+									body: JSON.stringify(userData)
+								};
+								let response = await fetch(api + '/profile/uid/' + props.user._id, requestOptions);
+								if (response.status === 200) {
+									setSuccess(true);
+								} else {
+									setError(true);
+									setErrorMsg(errorSignUp);
+								}
+							});
+						}
+					);
 				}).catch(err => {
 					setError(true);
 					setErrorMsg(err);
 				});
 			}
-			// if(email != props.user.email || allowNotifications != props.user.allowNotifications || password) {
-				// valid =true;
-				// let userToken = localStorage.getItem('userToken');
-				// let accountData = {
-				// 	email: email,
-				// 	allowNotifications: allowNotifications,
-				// 	oldPassword: oldPassword,
-				// }
-				// if (password) {
-				// 	alert('Password is changed')
-				// 	accountData['password'] = password;
-				// }
-				// let requestOptions = {
-				// 	method: 'POST',
-				// 	headers: {'Content-Type': 'application/json', 'x-access-token': userToken},
-				// 	body: JSON.stringify(accountData)
-				// };
-				// let response = await fetch(api + `/account/id/${props.user._id}`, requestOptions);
-				// let data = await response.json();
-				// if (response.status === 200) {
-				// 	setSuccess(true);
-				// 	props.storeUser(data['token']);
-				// 	props.setUser(data);
-				// 	localStorage.setItem('user', JSON.stringify(data));		
-				// } else {
-				// 	setError(true);
-				// 	setErrorMsg(errorSignUp);
-				// }
-			//}
-			
 		}
 	}
 
 	useEffect(() => {
-		// let userToken = JSON.parse(cookies.get('userToken'));
-		// let userToken = cookies['userToken'];
 		let userToken = localStorage.getItem('userToken');
 		if(userToken && props.user){
 			fetchUserProfile(userToken, props.user);
@@ -501,11 +454,10 @@ function Settings(props) {
 						<FormControlLabel
 							control={
 								<Switch 
-									checked={state.checkedNotifications} 
-									onChange={handleChange} 
-									name="checkedNotifications" 
-									checked={allowNotifications}
-									/>
+								onChange={handleChange} 
+								name="checkedNotifications" 
+								checked={allowNotifications}
+								/>
 							}
 							label="Allow Notifications" labelPlacement="start"
 						/>

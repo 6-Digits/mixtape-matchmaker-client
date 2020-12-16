@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
   
-//const defaultImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUnnWZ_Dh48jrrZJ1hDbUrU-WzKKkCX1rQzQ&usqp=CAU";
 const errorFetch = "We failed to get your match settings. This is likely because either the server is down or you are disconnected from the internet.";
 const errorDefault = "We could not saving your match settings likely because you are offline or Google's servers are down. Please try again later";
 const errorGender = "You do not have a valid gender preference, please select a valid gender preference!";
@@ -71,8 +70,6 @@ function MatchSettings(props) {
 	const [ageLower, setAgeLower] = useState(18);
 	const [ageUpper, setAgeUpper] = useState(100);
 	const [location, setLocation] = useState("New York City");
-	//const [, setDescription] = useState("This is the default profile description");
-	//const [, setProfilePicture] = useState(defaultImg);
 	const [error, setError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState();
 
@@ -86,8 +83,8 @@ function MatchSettings(props) {
 	}, [open]);
 
 	const fetchPreferences = async() => {
-		let userToken = localStorage.getItem('userToken', userToken);
-		if(userToken) {
+		let userToken = localStorage.getItem('userToken');
+		if (userToken) {
 			let requestOptions = {
 				method: 'GET',
 				headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
@@ -96,7 +93,7 @@ function MatchSettings(props) {
 			if(response.status === 200) {
 				let data = await response.json();
 				genderOptions.forEach((genderOption) => {
-					if(data['gender'].toLowerCase() === genderOption['title'].toLowerCase()) {
+					if (data['gender'].toLowerCase() === genderOption['title'].toLowerCase()) {
 						setGenderPreference(genderOption);
 					}
 				});
@@ -111,7 +108,7 @@ function MatchSettings(props) {
 	};
 
 	const saveMatchSettings = async() => {
-		let userToken = localStorage.getItem('userToken', userToken);
+		let userToken = localStorage.getItem('userToken');
 		if (!genderPreference) {
 			setError(true);
 			setErrorMsg(errorGender);

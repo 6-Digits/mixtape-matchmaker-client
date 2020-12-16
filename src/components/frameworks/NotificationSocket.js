@@ -8,6 +8,7 @@ const SOCKET_SERVER_URL = window.location.protocol+'//'+window.location.hostname
 const NotificationSocket = (roomId, user) => {
 	const [notifications, setNotifications] = useState([]);
 	const socketRef = useRef();
+	
 	const fetchNotifications = async () => {
 		if(user._id){
 			let requestOptions = {
@@ -15,10 +16,10 @@ const NotificationSocket = (roomId, user) => {
 				headers: {'Content-Type': 'application/json'}
 			};
 			let response = await fetch(`${api}/profile/notifications/uid/${user._id}`, requestOptions);
-			if(response.status === 200) {
+			if (response.status === 200) {
 				let data = await response.json();
 				setNotifications(data);
-			}else {
+			} else {
 				setNotifications([]);
 			}
 		}
@@ -31,21 +32,14 @@ const NotificationSocket = (roomId, user) => {
 	}, [user]);
 
 	useEffect(() => {
-		if (roomId == ""){
-			return
+		if (roomId == "") {
+			return;
 		}
 		socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
 			query: { roomId },
 		});
-		//setNotifications([]);
 		// Basically listens to a response from the server
 		socketRef.current.on(NEW_NOTIFICATION_EVENT, (notification) => {
-			//alert(JSON.stringify(notification))
-			//const incomingNotification = {
-			//	...notification,
-			//};
-			//setNotifications((notifications) => [...notifications, incomingNotification]);
-			//setMessages([incomingMessage])
 			// Fetch directly from the database to avoid errors
 			fetchNotifications()
 		});
@@ -56,13 +50,13 @@ const NotificationSocket = (roomId, user) => {
 	}, []);
 	
 	// The function below notifies the server of a new message
-	const sendNotification = (messageBody, reciever) => {
+	const sendNotification = (messageBody, receiver) => {
 		socketRef.current.emit(NEW_NOTIFICATION_EVENT, {
 			creator: user,
 			message: messageBody,
 			date: new Date().toISOString(),
-			// Reciever is hard-coded right now but should be dynamic
-			reciever: reciever,
+			// Receiver is hard-coded right now but should be dynamic
+			receiver: receiver,
 			senderId: socketRef.current.id,
 		});
 	};

@@ -1,6 +1,6 @@
 import { Container, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import React, {  } from "react";
+import React from "react";
 import { Box, makeStyles, Button } from "@material-ui/core"
 import logo from "../../assets/logo.png";
 
@@ -66,7 +66,7 @@ function About() {
 								>Back to Previous Page</Button>
 						</div>
 					</div>
-					<img src={logo} className={classes.logo}/>
+					<img src={logo} className={classes.logo} alt="" />
 				</Box>
 			</Container>
 		</div>
