@@ -131,7 +131,7 @@ function MatchSettings(props) {
 				headers: {'Content-Type': 'application/json'}
 			});
 			if (geocodeResponse.status === 200 || geocodeResponse.status === 400) {
-				let geocode = await geocodeResponse.json();
+				let geocode = geocodeResponse.status === 200 ? await geocodeResponse.json() : {geocode:[0.0,0.0]};
 				
 				let userData = {
 					gender: genderPreference['title'],
