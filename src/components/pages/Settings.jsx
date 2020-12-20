@@ -150,7 +150,7 @@ function Settings(props) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorInvalidEmail);
-		} else if(password) {
+		} else if(password.length > 0) {
 			if(password.length < 8 || password.length > 100){
 				valid=false;
 				setError(true);
@@ -160,7 +160,7 @@ function Settings(props) {
 				setError(true);
 				setErrorMsg(errorNoPassMatch);
 			}
-		} else if(!name || !birthdate || !gender || !oldPassword || !displayName || !imgSrc) {
+		} else if(name.length === 0 || birthdate.length === 0 || gender.length === 0 || oldPassword.length === 0 || displayName.length === 0 || imgSrc.length === 0) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorMissing);
