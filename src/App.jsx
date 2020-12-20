@@ -14,7 +14,7 @@ import Search from "./components/pages/Search";
 import Share from "./components/pages/Share";
 import NotificationSocket from './components/frameworks/NotificationSocket';
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069';
+const api = process.env.REACT_APP_API_SERVER;
 
 function App() {
 	const [darkMode] = useState(false);

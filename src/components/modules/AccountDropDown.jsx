@@ -5,14 +5,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Settings as SettingsIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
 import placeholder from '../../assets/placeholder.png';
 
-
 const useStyles = makeStyles(() => ({
 	paper: {
 		border: '1px solid #d3d4d5',
 	},
 }));
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069';
+const api = process.env.REACT_APP_API_SERVER;
 
 function AccountDropDown({setUser, user}) {
 	const classes = useStyles();

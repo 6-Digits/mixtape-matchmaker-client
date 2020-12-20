@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069';
+const api = process.env.REACT_APP_API_SERVER;
 const NEW_NOTIFICATION_EVENT = "newNotificationEvent";
-const SOCKET_SERVER_URL = window.location.protocol+'//'+window.location.hostname+":5000";
+const SOCKET_SERVER_URL = process.env.REACT_APP_NOTIFICATION_SERVER;
 
 const NotificationSocket = (roomId, user) => {
 	const [notifications, setNotifications] = useState([]);

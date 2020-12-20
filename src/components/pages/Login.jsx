@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069';
+const api = process.env.REACT_APP_API_SERVER;
 
 function Login({storeUser, fetchUser}) {
 	const classes = useStyles();

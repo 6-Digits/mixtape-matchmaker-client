@@ -74,7 +74,7 @@ const errorTitle = "The title is either too long (More than 255 Characters) or e
 const errorDescription = "The description is too long (More than 5000 characters). Please enter a valid description!";
 const errorChanges = "You have not made any changes!";
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069';
+const api = process.env.REACT_APP_API_SERVER;
 
 function Matches({user, setUser, notifications, setNotifications}) {
 	const classes = useStyles();
@@ -154,9 +154,6 @@ function Matches({user, setUser, notifications, setNotifications}) {
 			let data = await response.json();
 			let updatedSongList = data['songList'].map((song) => {
 				song['uuid'] = uuidv4() + uuidv4();
-				// if(song['duration']){
-				// 	totalLength += song['duration'];
-				// }
 				return song;
 			});
 			setSongs(updatedSongList);

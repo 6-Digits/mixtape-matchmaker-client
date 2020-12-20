@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";
 import IntroCarousel from "../modules/IntroCarousel";
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069';
+const api = process.env.REACT_APP_API_SERVER;
 
 const useStyles = makeStyles((theme) => ({
 	hook:{

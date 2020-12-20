@@ -108,7 +108,6 @@ const useStyles = makeStyles((theme) => ({
 		padding: "1rem 1rem 1rem 1rem",
 		borderRadius: '0.5rem',
 		backgroundColor: theme.palette.background.paper,
-		// color: theme.palette.background.default
 	},
 	commentBox: {
 		width:'95%',
@@ -188,12 +187,13 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069';
 const errorDefault = "Sorry! We could not save to the playlist. You are either disconnected from the internet or the servers are down. Please save your work using external software and try again later. Click save again to close the playlist.";
 const errorTitle = "The playlist title you have entered is empty. Please enter a valid playlist title "
 const errorTitleLength = "The playlist title you have entered is too long (exceeds 255 characters). Please enter a valid playlist title.";
 const errorDescription = "The playlist description that you have entered is too long (exceeds 5000 characters)";
 const errorComment = "The comment that you have entered is too long (exceeds 500 characters) or is blank!";
+
+const api = process.env.REACT_APP_API_SERVER;
 
 function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists, sendNotification}) {
 	const classes = useStyles();
@@ -545,24 +545,6 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 					<Grid item xs={6}>
 						<DialogTitle disableTypography id="form-dialog-title" className={classes.modalTitle}>View Playlist</DialogTitle>
 					</Grid>
-
-					{/* <Grid item xs={3} direction="row" justify="flex-end" 
-						className={classes.importGrid} alignItems="center" container>
-						{
-							editable ? 
-							<Grid item xs={6} container>
-								<Button variant="contained" onClick={savePlaylist} color="primary" className={classes.button}>
-								{"Save"}
-								</Button>
-							</Grid> : null
-						}
-						<Grid item xs={6} container>
-							<Button variant="contained" onClick={handleClose} color="secondary" className={classes.button}>
-								{ "exit"}
-							</Button>
-						</Grid>
-					</Grid>  */}
-
 					<Grid item xs={12} sm={1} className={classes.importGrid}>
 						<DialogActions>
 							<Button variant="contained" onClick={editable ? savePlaylist : handleClose } color="secondary" className={classes.cancel}>
