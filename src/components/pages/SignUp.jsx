@@ -100,7 +100,7 @@ function SignUp({storeUser, fetchUser}) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorShortPass);
-		} else if(confirmPass != password) {
+		} else if(confirmPass !== password) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorNoPassMatch);

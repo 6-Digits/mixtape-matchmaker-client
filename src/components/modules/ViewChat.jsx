@@ -112,7 +112,7 @@ function ViewChat({user, chat}) {
 					</div> : null
 				)) : null }
 				{ user && chat ? 
-				messages.filter(message => message.chatID == chat._id).map((message, i) => (
+				messages.filter(message => message.chatID === chat._id).map((message, i) => (
 					message ? 
 					<div className={classes.card}>
 						<div className={message.ownedByCurrentUser ? classes.cardMyMessage : classes.cardReceivedMessage }>

@@ -195,7 +195,7 @@ function NavigationBar(props) {
 							}}
 							inputProps={{ 'aria-label': 'search' }}
 							onChange={event => setValue(event.target.value)}
-							onKeyDown={event => { if (event.key == 'Enter') handleSearch(); }}
+							onKeyDown={event => { if (event.key === 'Enter') handleSearch(); }}
 						/>
 					</div>
 					<Button variant="contained" className={classes.searchButton} aria-label='search' onClick={handleSearch}>

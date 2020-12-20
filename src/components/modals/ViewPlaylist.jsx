@@ -365,7 +365,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 				if(response.status === 200) {
 					let data = await response.json();
 					setPlaylists(playlists.map(element=> {
-						if(element['_id'] == playlistID) {
+						if(element['_id'] === playlistID) {
 							playlistData['songList'] = songs;
 							let totalLength = 0;
 							playlistData['songList'].forEach((song, i) => {
@@ -448,7 +448,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 				setLiked(true);
 				setLikeCount(likeCount + 1);
 				// The message to send the other user and the userID of the other user who will receive the notification
-				if(user._id != authorID){
+				if(user._id !== authorID){
 					sendNotification(`Someone liked your playlist: ${playlistName}`, authorID);
 				}
 			}).catch((err) => {
@@ -473,7 +473,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 				let data = await response.json();
 				let newComments = [data, ...comments]
 				setComments(newComments);
-				if(user._id != authorID){
+				if(user._id !== authorID){
 					sendNotification(`Someone commented on your playlist: ${playlistName}`, authorID);
 				}
 			} else {

@@ -32,7 +32,7 @@ const NotificationSocket = (roomId, user) => {
 	}, [user]);
 
 	useEffect(() => {
-		if (roomId == "") {
+		if (roomId === "") {
 			return;
 		}
 		socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
