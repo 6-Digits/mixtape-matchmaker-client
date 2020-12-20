@@ -363,7 +363,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 				};
 				let response = await fetch(`${api}/mixtape/updateMixtape/id/${playlistID}`, requestOptions);
 				if(response.status === 200) {
-					let data = await response.json();
+					//let data = await response.json();
 					setPlaylists(playlists.map(element=> {
 						if(element['_id'] === playlistID) {
 							playlistData['songList'] = songs;
@@ -413,7 +413,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 			};
 			let response = await fetch(`${api}/mixtape/deleteMixtape/id/${playlistID}`, requestOptions);
 			if(response.status === 200) {
-				let data = await response.json();
+				//let data = await response.json();
 				handleCloseDeleteDialog();
 				removePlaylist(playlistID);
 			} else {

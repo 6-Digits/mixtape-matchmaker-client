@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Notification(props) {
 	const classes = useStyles();
-	const [open, setOpen] = useState(true);
-
+	//const [open, setOpen] = useState(true);
+	const [open] = useState(true);
 	return (
 		<div className={classes.root}>
 			<Collapse in={open}>
