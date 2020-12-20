@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 const NEW_NOTIFICATION_EVENT = "newNotificationEvent";
 const SOCKET_SERVER_URL = window.location.protocol+'//'+window.location.hostname+":5000";
 

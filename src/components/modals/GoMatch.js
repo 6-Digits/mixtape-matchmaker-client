@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 
 function GoMatch(props) {
 	const classes = useStyles();
@@ -276,7 +276,7 @@ function GoMatch(props) {
 								{mediaProps => (
 								<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
 									<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} 
-										defaultVolume={0.25} onEnded={handleNextSong} />
+										defaultVolume={0.5} onEnded={handleNextSong} />
 									<PlayerControls currentIndex={currentIndex} 
 										name={currentSong ? `${currentSong['title']} - ${currentSong['author']}` : null} 
 										handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 

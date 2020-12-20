@@ -4,7 +4,7 @@ import { Notifications as NotificationsIcon } from '@material-ui/icons';
 import Notification from '../modules/Notification';
 import { makeStyles } from '@material-ui/core/styles';
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 
 const ITEM_HEIGHT = 48;
 

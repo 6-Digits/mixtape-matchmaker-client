@@ -74,7 +74,7 @@ const errorTitle = "The title is either too long (More than 255 Characters) or e
 const errorDescription = "The description is too long (More than 5000 characters). Please enter a valid description!";
 const errorChanges = "You have not made any changes!";
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 
 function Matches({user, setUser, notifications, setNotifications}) {
 	const classes = useStyles();
@@ -232,7 +232,7 @@ function Matches({user, setUser, notifications, setNotifications}) {
 					{mediaProps => (
 					<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
 						<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} 
-							defaultVolume={0.25} onEnded={handleNextSong} />
+							defaultVolume={0.5} onEnded={handleNextSong} />
 						<PlayerControls currentIndex={currentIndex} 
 							name={currentSong ? `${currentSong['title']} - ${currentSong['author']}` : null} 
 							handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 

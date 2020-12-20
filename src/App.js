@@ -13,40 +13,37 @@ import Settings from "./components/pages/Settings";
 import Search from "./components/pages/Search";
 import Share from "./components/pages/Share";
 import NotificationSocket from './components/frameworks/NotificationSocket';
-// import { useCookies } from 'react-cookie';
 
-// const cookieName = 'mm_6digits_cookies';
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 
 function App() {
-	// const [cookies, setCookie, removeCookie] = useCookies([cookieName]);
 	const [darkMode] = useState(false);
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 	const { notifications, sendNotification, setNotifications } = NotificationSocket(user ? user._id : "", user ? user : {_id : ""});
+	
 	useEffect(() => {
-		// let userToken = JSON.parse(cookies.get('userToken'));
-		// let userToken = cookies['userToken'];
 		let userToken = localStorage.getItem('userToken');
 		if(userToken){
 			fetchUser(userToken);
 		} 
-	  }, []);
+	}, []);
+	
 	const fetchUser = async (userToken) => {
 		let requestOptions = {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 		};
-		let response = await fetch(api + '/auth/me', requestOptions);
+		let response = await fetch(api + '/account/me', requestOptions);
 		if(response.status === 200) {
 			let data = await response.json();
 			setUser(data);
 			localStorage.setItem('user', JSON.stringify(data));		
 		}
 	};
+	
 	const storeUser = (userToken) => {
 		let tomorrow = new Date();
 		tomorrow.setDate(tomorrow.getDate() + 1);
-		// setCookie('userToken', userToken, {path:'/', expires: tomorrow });
 		localStorage.setItem('userToken', userToken);
 	};
 
@@ -61,12 +58,10 @@ function App() {
 			type: darkMode ? "light" : "dark"
 		}
 	});
+	
 	theme = responsiveFontSizes(theme);
 	const useStyles = makeStyles((theme) => ({
 		'@global': {
-			// '*': {
-			//   'scrollbar-width': 'thin',
-			// },
 			'*::-webkit-scrollbar': {
 			  width: '8px',
 			  height: '4px'

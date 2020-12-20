@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 	}
 }));
   
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 const success = "A reset email has been sent to the designated email!";
 const failure = "Failed to send an email either likely because the email does not exist in our database";
 const googleDown = "Sorry! Our emailing service is currently down for some unknown reason. Please try again in 10 minutes.";
@@ -42,7 +42,7 @@ function ForgotPassword() {
 			headers: {'Content-Type': 'application/json' },
 			body: JSON.stringify({"email":email})
 		};
-		let response = await fetch(api + '/auth/resetPassword', requestOptions);
+		let response = await fetch(api + '/account/resetPassword', requestOptions);
 		if (response.status === 200) {
 			alert(success);
 			handleClose();

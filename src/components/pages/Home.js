@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme)=>({
 	}
 }));
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 
 function Home({user, setUser, sendNotification, notifications, setNotifications}) {
 	const classes = useStyles();

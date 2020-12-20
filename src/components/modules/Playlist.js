@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api'; //(location.port ? ':'+location.port: '');
+const api = window.location.protocol+'//'+window.location.hostname+':42069'; //(location.port ? ':'+location.port: '');
 // Change Stack Syntax
 /*
 	{

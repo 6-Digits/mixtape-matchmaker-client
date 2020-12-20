@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 
 function Login({storeUser, fetchUser}) {
 	const classes = useStyles();
@@ -62,7 +62,7 @@ function Login({storeUser, fetchUser}) {
 			headers: {'Content-Type': 'application/json' },
 			body: JSON.stringify({"email":email, "password":password})
 		};
-		let response = await fetch(api + '/auth/login', requestOptions);
+		let response = await fetch(api + '/account/login', requestOptions);
 		if (response.status === 200) {
 			let data = await response.json();
 			storeUser(data['token']);

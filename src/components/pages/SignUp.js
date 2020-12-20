@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";
 import IntroCarousel from "../modules/IntroCarousel";
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 
 const useStyles = makeStyles((theme) => ({
 	hook:{
@@ -131,7 +131,7 @@ function SignUp({storeUser, fetchUser}) {
 				headers: {'Content-Type': 'application/json' },
 				body: JSON.stringify(userData)
 			};
-			let response = await fetch(api + '/auth/register', requestOptions);
+			let response = await fetch(api + '/account/register', requestOptions);
 			if (response.status === 200) {
 				let data = await response.json();
 				storeUser(data['token']);

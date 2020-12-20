@@ -188,7 +188,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const api = window.location.protocol+'//'+window.location.hostname+':42069/api';
+const api = window.location.protocol+'//'+window.location.hostname+':42069';
 const errorDefault = "Sorry! We could not save to the playlist. You are either disconnected from the internet or the servers are down. Please save your work using external software and try again later. Click save again to close the playlist.";
 const errorTitle = "The playlist title you have entered is empty. Please enter a valid playlist title "
 const errorTitleLength = "The playlist title you have entered is too long (exceeds 255 characters). Please enter a valid playlist title.";
@@ -593,7 +593,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 							{mediaProps => (
 							<div className={classes.media} onKeyDown={keyboardControls.bind(null, mediaProps)}>
 								<Player src={currentSong ? currentSong.url : null} autoPlay={autoPlay} className={classes.player} 
-									defaultVolume={0.25} onEnded={handleNextSong} />
+									defaultVolume={0.5} onEnded={handleNextSong} />
 								<PlayerControls currentIndex={currentIndex} 
 									name={currentSong ? currentSong['title'] : null} author={currentSong ? currentSong['author'] : null}
 									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
