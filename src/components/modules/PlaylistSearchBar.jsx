@@ -125,7 +125,7 @@ function PlaylistSearchBar({search, setSearch, addSong}) {
 					input: classes.inputInput,
 				}}
 				inputProps={{ 'aria-label': 'search'}}
-				onKeyDown={event => { if (event.key == 'Enter') onSearchNow(event); }}
+				onKeyDown={event => { if (event.key === 'Enter') onSearchNow(event); }}
 			/>
 			<Popper className={classes.popper} id={id} open={open} 
 				anchorEl={anchorRef.current} transition placement="bottom-start">

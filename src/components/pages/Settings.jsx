@@ -155,7 +155,7 @@ function Settings(props) {
 				valid=false;
 				setError(true);
 				setErrorMsg(errorShortPass);
-			} else if(password != confirmPass) {
+			} else if(password !== confirmPass) {
 				valid=false;
 				setError(true);
 				setErrorMsg(errorNoPassMatch);

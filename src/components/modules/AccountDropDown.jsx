@@ -36,7 +36,7 @@ function AccountDropDown({setUser, user}) {
 			headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 		};
 		let response = await fetch(api + `/profile/id/${user._id}`, requestOptions);
-		if(response.status == 200) {
+		if(response.status === 200) {
 			let data = await response.json();
 			setProfileImg(data['imgSrc']);
 		} else {
