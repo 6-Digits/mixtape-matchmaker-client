@@ -91,15 +91,15 @@ function Settings(props) {
 	const [displayName, setDisplayName] = useState(" ");
 	const [name, setName] = useState("Adam");
 	const [birthdate, setBirthdate] = useState("");
-	const [gender, setGender] = useState(null);
-	const [email, setEmail] = useState(null);
-	const [password, setPassword] = useState(null);
-	const [confirmPass, setConfirmPass] = useState(null);
+	const [gender, setGender] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPass, setConfirmPass] = useState("");
 	const [error, setError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(null);
 	const [imgSrc, setImgSrc] = useState(null);
 	const [allowNotifications, setAllowNotifications] = useState(null);
-	const [oldPassword, setOldPassword] = useState(null);
+	const [oldPassword, setOldPassword] = useState("");
 
 	const fetchUserProfile = async (userToken, user) => {
 		let requestOptions = {
@@ -160,7 +160,7 @@ function Settings(props) {
 				setError(true);
 				setErrorMsg(errorNoPassMatch);
 			}
-		} else if(name.length === 0 || birthdate.length === 0 || gender.length === 0 || oldPassword.length === 0 || displayName.length === 0 || imgSrc.length === 0) {
+		} else if(name.length === 0 || birthdate.length === 0 || gender.length === 0 || oldPassword.length === 0 || displayName.length === 0 || !imgSrc || imgSrc.length === 0) {
 			valid=false;
 			setError(true);
 			setErrorMsg(errorMissing);
@@ -251,6 +251,9 @@ function Settings(props) {
 					setErrorMsg(err);
 				});
 			}
+		} else {
+			
+			alert("Validation failed");
 		}
 	}
 
