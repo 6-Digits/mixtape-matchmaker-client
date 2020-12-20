@@ -274,8 +274,8 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 				method: 'POST',
 				headers: {'Content-Type': 'application/json', 'x-access-token': userToken}
 			}
-			let response = await fetch(`${api}/mixtape/createSong/${song.videoId}`, requestOptions);
-			if(response.status === 200) {
+			let response = await fetch(`${api}/youtube/createSong/${song.videoId}`, requestOptions);
+			if (response.status === 200) {
 				let data = await response.json();
 				data['uuid'] = uuidv4() + uuidv4();
 				let newSongList = [...songs, data];

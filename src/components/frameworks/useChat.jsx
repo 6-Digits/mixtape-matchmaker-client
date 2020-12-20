@@ -3,6 +3,7 @@ import socketIOClient from "socket.io-client";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const SOCKET_SERVER_URL = window.location.protocol+'//'+window.location.hostname+":4000";
+
 const useChat = (roomId, user) => {
 	const [messages, setMessages] = useState([]);
 	const socketRef = useRef();
@@ -15,14 +16,12 @@ const useChat = (roomId, user) => {
 		setMessages([]);
 
 		socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
-			//alert(JSON.stringify(message))
 			const incomingMessage = {
 				...message,
 				ownedByCurrentUser: message.senderId === socketRef.current.id,
 				chatID : roomId,
 			};
 			setMessages((messages) => [...messages, incomingMessage]);
-			//setMessages([incomingMessage])
 		});
 
 		return () => {
