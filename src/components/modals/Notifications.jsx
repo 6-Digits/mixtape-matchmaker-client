@@ -43,7 +43,7 @@ function Notifications({user, notifications, setNotifications}) {
 			body: "{}"
 		};
 		let response = await fetch(api + '/profile/notifications/nid/'+ notificationID, requestOptions);
-		let data = await response.json();
+		// let data = await response.json();
 		//alert(response.status);
 		if (response.status === 200) {
 		} else {

@@ -80,7 +80,7 @@ const errorDisplayName = "The display name you have entered is too long (100 cha
 const errorShortPass = "The password that you have entered should be at least 8 characters long or too long (100 characters)!";
 const errorMissing = "One or more of the fields above are empty!";
 const errorAge = "You have to be at least 18 years of age or older to register";
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const api = process.env.REACT_APP_API_SERVER;
 
