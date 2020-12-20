@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
-const SOCKET_SERVER_URL = process.env.REACT_APP_CHAT_SERVER;
+const SOCKET_SERVER_URL = process.env.REACT_APP_API_SERVER;
 
 const useChat = (roomId, user) => {
 	const [messages, setMessages] = useState([]);

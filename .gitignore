@@ -3,6 +3,7 @@ build/
 bin/
 .vscode/
 *.log
+*.cache
 .DS_Store
 .env.local
 .env.development.local
@@ -11,5 +12,4 @@ bin/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
 
