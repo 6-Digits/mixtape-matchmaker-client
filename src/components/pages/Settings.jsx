@@ -187,7 +187,7 @@ function Settings(props) {
 					email: email,
 					allowNotifications: allowNotifications,
 					oldPassword: oldPassword,
-					newPassword: password,
+					newPassword: password && password.length > 0 ? password : null,
 					imgSrc: prevImg
 				};
 				let requestOptions = {
@@ -228,7 +228,7 @@ function Settings(props) {
 									email: email,
 									allowNotifications: allowNotifications,
 									oldPassword: oldPassword,
-									newPassword: password,
+									newPassword: password && password.length > 0 ? password : null,
 									imgSrc: downloadURL
 								};
 								let requestOptions = {
