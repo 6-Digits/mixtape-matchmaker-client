@@ -4,6 +4,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Sort as SortIcon, Undo as UndoIcon, Redo as RedoIcon } from '@material-ui/icons';
 import PlaylistSongCard from './PlaylistSongCard';
+import ReactPlayer from 'react-player/youtube'
 import PlaylistSearchBar from './PlaylistSearchBar';
 import Fuse from 'fuse.js'
 import { v4 as uuidv4 } from 'uuid';
@@ -277,6 +278,9 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 			let response = await fetch(`${api}/youtube/createSong/${song.videoId}`, requestOptions);
 			if (response.status === 200) {
 				let data = await response.json();
+				if(!ReactPlayer.canPlay(data['url'])){
+					data['url'] = 'https://www.youtube.com/watch?v=g8K21P8CoeI';
+				}
 				data['uuid'] = uuidv4() + uuidv4();
 				let newSongList = [...songs, data];
 				createRemove(data, songs.length);
