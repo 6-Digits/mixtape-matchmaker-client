@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextField, Link, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from "../../assets/logo.png";
@@ -19,13 +19,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	content: {
 		width: "100%",
-		height: "100%"
-	},
-	logo: {
-		display: "flex",
-		margin: "auto",
-		height: "25vh",
-		width: "25vh"
+		height: "100%", 
+		backgroundColor: theme.palette.background.paper,
 	},
 	container: {
 		height: "100vh"
@@ -53,7 +48,17 @@ function Login({storeUser, fetchUser}) {
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
 	const [error, setError] = useState(false);
+	const [width, setWidth] = useState(0);
 	const [errorMsg] = useState("We could not find your account with the given email/password.");
+
+	useEffect(() => {
+		function updateWidth() {
+			setWidth(window.innerWidth);
+		}
+		window.addEventListener('resize', updateWidth);
+		updateWidth();
+		return () => window.removeEventListener('resize', updateWidth);
+	}, []);
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
@@ -85,11 +90,19 @@ function Login({storeUser, fetchUser}) {
 	return (
 		<Grid container className={classes.container} fullWidth>
 		<Grid xs={12} direction="row" justify="space-between" className={classes.content} container>
-			<Grid item xs={8} className={classes.hook} container>
-				<IntroCarousel/>
+			<Grid item xs={width > 900 ? 8 : 6} className={classes.hook} container>
+				<IntroCarousel screenWidth={width}/>
 			</Grid>
-			<Grid item xs={4} container className={classes.login}>
-				<img src={logo} className={classes.logo} alt="logo" />
+			<Grid item xs={width > 900 ? 4 : 6} container className={classes.login}>
+				<Grid item xs={12} container className={classes.logoContainer}>
+					<img src={logo} className={classes.logo} alt="logo" style={
+						{
+							margin: 'auto', 
+							width: width > 900 ? '15rem' : width > 600 ? '10rem' : '5rem', 
+							height: width > 900 ? '22.5rem' : width > 600 ? '15rem' : '7.5rem'
+						}
+						}/>
+				</Grid>
 				<form className={classes.form} onSubmit={handleLogin} noValidate>
 				<TextField
 				variant="outlined"
