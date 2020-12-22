@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 		height:"100%"
 	},
 	modal: {
-		maxWidth: '95%',
 		margin: 'auto',
 	},
 	modalTitle: {
@@ -195,7 +194,7 @@ const errorComment = "The comment that you have entered is too long (exceeds 500
 
 const api = process.env.REACT_APP_API_SERVER;
 
-function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists, sendNotification}) {
+function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist, setPlaylists, playlists, sendNotification, screenWidth}) {
 	const classes = useStyles();
 	
 	const [error, setError] = useState(false);
@@ -567,7 +566,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 						<Playlist editable={editable} draggable={editable}
 							songs={songs} setSongs={setSongs} currentIndex={currentIndex}
 							handleCurrentIndex={handleCurrentIndex} setChanged={setChanged}
-							setAutoPlay={setAutoPlay} playlistID={playlist['_id']} />
+							setAutoPlay={setAutoPlay} playlistID={playlist['_id']} screenWidth={screenWidth}/>
 					</Grid>
 					
 					<Grid container item xs={12}>
@@ -579,7 +578,7 @@ function ViewPlaylist({editable, playlist, fetchPlaylists, user, removePlaylist,
 								<PlayerControls currentIndex={currentIndex} 
 									name={currentSong ? currentSong['title'] : null} author={currentSong ? currentSong['author'] : null}
 									handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
-									autoPlay={autoPlay} setAutoPlay={setAutoPlay} />
+									autoPlay={autoPlay} setAutoPlay={setAutoPlay} screenWidth={screenWidth}/>
 							</div>
 							)}
 						</Media>

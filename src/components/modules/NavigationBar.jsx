@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { useHistory } from 'react-router-dom';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Drawer, List, Divider, ListItem, ListItemText, Button, ListItemIcon } from '@material-ui/core';
@@ -128,20 +128,11 @@ const useStyles = makeStyles((theme) => ({
 
 function NavigationBar(props) {
 	const classes = useStyles();
-	const [width, setWidth] = useState(0);
 	const theme = useTheme();
 	const history = useHistory();
 	const [open, setOpen] = useState(false);
 	const [value, setValue] = useState('');
 
-	useEffect(() => {
-		function updateWidth() {
-			setWidth(window.innerWidth);
-		}
-		window.addEventListener('resize', updateWidth);
-		updateWidth();
-		return () => window.removeEventListener('resize', updateWidth);
-	}, []);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -239,13 +230,13 @@ function NavigationBar(props) {
 						<ListItemIcon><LoyaltyIcon></LoyaltyIcon></ListItemIcon>
 						<ListItemText primary='Matches' />
 					</ListItem>
-					{width < 960 ? 
+					{props.screenWidth < 960 ? 
 					<ListItem button key='Settings' component='a' href='/settings'>
 						<ListItemIcon><SettingsIcon></SettingsIcon></ListItemIcon>
 						<ListItemText primary='Settings' />
 					</ListItem>: 
 					null}
-					{width < 960 ? 
+					{props.screenWidth < 960 ? 
 					<ListItem button key='Logout' component='a' onClick={logout}>
 						<ListItemIcon><ExitToAppIcon></ExitToAppIcon></ListItemIcon>
 						<ListItemText primary='Logout' />

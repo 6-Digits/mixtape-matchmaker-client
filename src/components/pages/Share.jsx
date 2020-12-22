@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import NavigationBar from '../modules/NavigationBar';
@@ -46,6 +46,16 @@ function Share(props) {
     const [query, setQuery] = useState(null);
     const id = props.match.params.id;
 	const [playlists, setPlaylists] = useState([]);
+	const [width, setWidth] = useState(0);
+
+	useEffect(() => {
+		function updateWidth() {
+			setWidth(window.innerWidth);
+		}
+		window.addEventListener('resize', updateWidth);
+		updateWidth();
+		return () => window.removeEventListener('resize', updateWidth);
+	}, []);
     
     
 	// useEffect(() => {
@@ -84,7 +94,7 @@ function Share(props) {
 	return (
 		<div className={classes.page}>
             <NavigationBar setUser={props.setUser} user={props.user} setNotifications={props.setNotifications}
-			notifications={props.notifications} pageName='Search'></NavigationBar>
+			notifications={props.notifications} pageName='Search' screenWidth={width}></NavigationBar>
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
 				<Grid container direction="column" justify="space-between" alignItems="flex-start">
 					<Grid item xs={12}>

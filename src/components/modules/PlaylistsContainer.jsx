@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, removePlaylist, setPlaylists, sendNotification, notHome}) {
+function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, removePlaylist, setPlaylists, sendNotification, notHome, screenWidth}) {
 	const classes = useStyles();
 	
 	height = height ? height : 800;
@@ -37,7 +37,7 @@ function PlaylistsContainer({height, editable, playlists, fetchPlaylists, user, 
 							<ViewPlaylist 
 								playlist={playlist} editable={editable} fetchPlaylists={fetchPlaylists} 
 								user={user} removePlaylist={removePlaylist} setPlaylists={setPlaylists} 
-								playlists={playlists} sendNotification={sendNotification} />
+								playlists={playlists} sendNotification={sendNotification} screenWidth={screenWidth} />
 						</Grid>
 					))}
 				</Grid>

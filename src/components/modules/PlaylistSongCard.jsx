@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { PlayCircleOutline as PlayCircleOutlineIcon, Delete as DeleteIcon } from '@material-ui/icons';
 import placeholder from "../../assets/placeholder.png";
 
-function PlaylistSongCard({index, editable, song, author, duration, img, currentIndex, handleCurrentIndex, deleteSong, uuid, setAutoPlay}) {
+function PlaylistSongCard({index, editable, song, author, duration, img, currentIndex, handleCurrentIndex, deleteSong, uuid, setAutoPlay, screenWidth}) {
 	const useStyles = makeStyles((theme) => ({
 		card: {
 			backgroundColor: index === currentIndex ? theme.palette.primary.dark : theme.palette.background.paper,
@@ -17,30 +17,24 @@ function PlaylistSongCard({index, editable, song, author, duration, img, current
 			width: '100%'
 		},
 		playSongButton: {
-			height: '10vh',
+			height: '6.5rem',
 			width: '100%'
 		},
 		songImg: {
-			height: '10vh',
-			width: '80%'
+			height: '6.5rem',
+			width: '90%'
 		},
 		songDetails: {
 			textAlign: "left",
 			height:"100%",
 		},
 		playIcon: {
-			height: '5vh',
-			width: '5vh'
+			height: '5rem',
+			width: '100%'
 		},
 		deleteIcon: {
-			height: '5vh',
-			width: '5vh'
-		},
-		duration: {
-	
-		},
-		order: {
-	
+			height: '6.5rem',
+			width: '100%'
 		}
 	}));
 	const classes = useStyles();
@@ -61,31 +55,31 @@ function PlaylistSongCard({index, editable, song, author, duration, img, current
 	return (
 		<Card className={classes.card}>
 			<Grid container direction="row" justify="space-between" alignItems="center">
-				<Grid item xs={6} sm={2}>
+				<Grid item xs={2} container>
 					<Button variant="text" className={classes.playSongButton} onClick={handlePlay}>
 						<PlayCircleOutlineIcon className={classes.playIcon} />
 					</Button>
 				</Grid>
-				<Grid item xs={6} sm={2}>
+				<Grid item xs={2} container>
 					<Avatar variant="square" src={img} className={classes.songImg} />
 				</Grid>
 				
-				<Grid item xs={12} sm={5} className={classes.songDetails}>
-					<Typography variant="h4">{ song }</Typography>
+				<Grid item xs={4} className={classes.songDetails} direction="column" container>
+					<Typography variant={screenWidth > 900 ? 'h4' : screenWidth > 600 ? 'h5' : 'h6'}>{ song }</Typography>
 					<Typography>{ author }</Typography>
 					{/* <Typography>{ genre.slice(0, 3).join(', ') }</Typography> */}
 				</Grid>
 				
 				{ editable ?
-				<Grid item xs={6} sm={1}>
+				<Grid item xs={2} container>
 					<Button onClick={handleDelete} variant="text" className={classes.deleteSongButton}>
 						<DeleteIcon className={classes.deleteIcon} />
 					</Button>
 				</Grid> : null
 				}
 				
-				<Grid item xs={6} sm={2} className={classes.duration}>
-					<Typography variant="h4">{ `${Math.floor(duration / 60)}:${ duration % 60 > 10 ? duration % 60 : '0' + duration % 60}` }</Typography>
+				<Grid item xs={2} className={classes.duration} container>
+					<Typography variant={screenWidth > 900 ? 'h4' : screenWidth > 600 ? 'h5' : 'h6'}>{ `${Math.floor(duration / 60)}:${ duration % 60 > 10 ? duration % 60 : '0' + duration % 60}` }</Typography>
 				</Grid>
 			</Grid>
 		</Card>

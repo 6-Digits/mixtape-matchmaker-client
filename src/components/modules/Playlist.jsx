@@ -94,7 +94,7 @@ const api = process.env.REACT_APP_API_SERVER; //(location.port ? ':'+location.po
 	}
 */
 
-function Playlist({title, editable, draggable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay, playlistID, notSharable}) {
+function Playlist({title, editable, draggable, songs, setSongs, currentIndex, handleCurrentIndex, setChanged, setAutoPlay, playlistID, notSharable, screenWidth}) {
 	const classes = useStyles();
 	const shareLink = `${window.location.origin}/share/${playlistID}`;
 	
@@ -411,6 +411,7 @@ function Playlist({title, editable, draggable, songs, setSongs, currentIndex, ha
 													uuid={uuid}
 													deleteSong={deleteSong}
 													setAutoPlay={setAutoPlay}
+													screenWidth={screenWidth}
 													/>
 												</div>
 											)}

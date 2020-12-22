@@ -71,7 +71,7 @@ function ViewChat({user, chat}) {
 			setButtonHeight(textFieldRef.current.offsetHeight);
 		}
 
-	}, [textFieldRef.current])
+	})
 	
 	const handleNewMessageChange = (event) => {
 		setNewMessage(event.target.value);

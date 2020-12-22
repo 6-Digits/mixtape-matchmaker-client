@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {Button, TextField, Link, Grid} from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		display: "flex",
 		justifyContent: "center",
-		alignItems: "center"
+		alignItems: "center",
+		backgroundColor: theme.palette.background.paper,
 	},
 	avatar: {
 	  margin: theme.spacing(1),
@@ -35,19 +36,13 @@ const useStyles = makeStyles((theme) => ({
 	  width: '100%', // Fix IE 11 issue.
 	  marginTop: theme.spacing(3),
 	},
-	logo: {
-		display: "flex",
-		margin: "auto",
-		height: "25vh",
-		width: "25vh"
-	},
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 		fontWeight: "bold",
 		fontFamily: "Arial Black"
 	},
 	container: {
-		height: "100vh"
+		height: "100%"
 	},
 	loginError: {
 		color: theme.palette.error.main,
@@ -76,6 +71,18 @@ function SignUp({storeUser, fetchUser}) {
 	const [confirmPass, setConfirmPass] = useState(null);
 	const [error, setError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(errorSignUp);
+	const [width, setWidth] = useState(0);
+
+	
+	useEffect(() => {
+		function updateWidth() {
+			setWidth(window.innerWidth);
+		}
+		window.addEventListener('resize', updateWidth);
+		updateWidth();
+		return () => window.removeEventListener('resize', updateWidth);
+	}, []);
+
 
 	function getAge(dateString) {
 		let today = new Date();
@@ -176,11 +183,19 @@ function SignUp({storeUser, fetchUser}) {
 	return (
 		<Grid container className={classes.container} fullWidth>
 		<Grid xs={12} direction="row" justify="space-between" className={classes.content} container>
-			<Grid item xs={8} className={classes.hook} container>
-				<IntroCarousel/>
+			<Grid item xs={width > 900 ? 8 : 6} className={classes.hook} container>
+				<IntroCarousel screenWidth={width}/>
 			</Grid>
-			<Grid item xs={4} container className={classes.signup}>
-				<img src={logo} className={classes.logo} alt="" />
+			<Grid item xs={width > 900 ? 4 : 6} container className={classes.signup}>
+				<Grid item xs={12} container className={classes.logoContainer}>
+					<img src={logo} className={classes.logo} alt="logo" style={
+						{
+							margin: 'auto', 
+							width: width > 900 ? '15rem' : width > 600 ? '10rem' : '5rem', 
+							height: width > 900 ? '22.5rem' : width > 600 ? '15rem' : '7.5rem'
+						}
+						}/>
+				</Grid>
 				<form className={classes.form} onSubmit={handleSignUp} noValidate>
 				<Grid container spacing={2}>
 					<Grid item xs={12} sm={6}>

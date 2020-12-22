@@ -213,7 +213,7 @@ function Matches({user, setUser, notifications, setNotifications}) {
 	return (
 		<div style={{height: width > 599 ? "100vh" : "100%"}}>
 			<NavigationBar setUser={setUser} user={user} setNotifications={setNotifications}
-			notifications={notifications} pageName='My Matches'></NavigationBar>
+			notifications={notifications} pageName='My Matches' screenWidth={width}></NavigationBar>
 			<Grid
 				container
 				direction="column"
@@ -233,7 +233,7 @@ function Matches({user, setUser, notifications, setNotifications}) {
 						<PlayerControls currentIndex={currentIndex} 
 							name={currentSong ? `${currentSong['title']} - ${currentSong['author']}` : null} 
 							handleCurrentIndex={handleCurrentIndex} imgUrl={currentSong ? currentSong.imgUrl : placeholder} 
-							autoPlay={autoPlay} setAutoPlay={setAutoPlay}  />
+							autoPlay={autoPlay} setAutoPlay={setAutoPlay} screenWidth={width} />
 					</div>
 					)}
 				</Media>

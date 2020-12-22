@@ -10,9 +10,13 @@ const useStyles = makeStyles(()=>({
 	},
 	volumeSlider: {
 	},
-	imgSrc: {
+	playerIMG: {
 		height: "4rem",
-		width: "7rem"
+		width: "100%"
+	},
+	imgSrc: {
+		height: "100%",
+		width: "100%"
 	},
 	marquee: {
 		whiteSpace: 'nowrap',
@@ -22,7 +26,7 @@ const useStyles = makeStyles(()=>({
 	
 }));
 
-function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, autoPlay, setAutoPlay, name}) {
+function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, autoPlay, setAutoPlay, name, screenWidth}) {
 	const classes = useStyles();
 	const { volume, duration, currentTime } = media;
 	
@@ -63,27 +67,27 @@ function PlayerControls({media, currentIndex, handleCurrentIndex, imgUrl, autoPl
 					</IconButton>
 				</Grid> */}
 				<Grid item xs={1}>
-					<Avatar variant="square" className={classes.imgSrc} src={imgUrl}></Avatar>
+					<Avatar variant="square" className={classes.playerIMG} src={imgUrl}></Avatar>
 				</Grid>
-				<Grid item xs={1} container variant='outlined'>
-					<IconButton onClick={handlePrevious}>
+				<Grid item xs={screenWidth > 900 ? 1 : screenWidth > 600 ? 1 : 2} container variant='outlined'>
+					<IconButton className={classes.imgSrc} onClick={handlePrevious}>
 						<SkipPrevious fontSize="large" />
 					</IconButton>
 				</Grid>
 				
-				<Grid item xs={1} container>
-					<IconButton onClick={handlePlayPause}>
+				<Grid item xs={screenWidth > 900 ? 1 : screenWidth > 600 ? 2 : 2} container>
+					<IconButton className={classes.imgSrc} onClick={handlePlayPause}>
 						{media.isPlaying ? <PauseCircleFilled fontSize="large" /> : <PlayCircleFilled fontSize="large" />}
 					</IconButton>
 				</Grid>
 				
-				<Grid item xs={1} container>
-					<IconButton onClick={handleNext}>
+				<Grid item xs={screenWidth > 900 ? 1 : screenWidth > 600 ? 1 : 2} container>
+					<IconButton className={classes.imgSrc} onClick={handleNext}>
 						<SkipNext fontSize="large" />
 					</IconButton>
 				</Grid>
 
-				<Grid item xs={6} container direction="row" justify="space-between" >
+				<Grid item xs={screenWidth > 900 ? 6 : screenWidth > 600 ? 4 : 3} container direction="row" justify="space-between" >
 					{ name ?  
 						<Grid item xs={12} container justify="center" className={classes.marquee}>
 							{ name.length > 48 ? 
