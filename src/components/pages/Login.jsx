@@ -48,8 +48,8 @@ function Login({storeUser, fetchUser}) {
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
 	const [error, setError] = useState(false);
-	const [width, setWidth] = useState(0);
 	const [errorMsg] = useState("We could not find your account with the given email/password.");
+	const [width, setWidth] = useState(0);
 
 	useEffect(() => {
 		function updateWidth() {

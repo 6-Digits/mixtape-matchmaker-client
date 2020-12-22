@@ -76,6 +76,16 @@ function MyPlaylists(props) {
 	const [playlistCache, setPlaylistCache] = useState([]);
 	const [search, setSearch] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [width, setWidth] = useState(0);
+
+	useEffect(() => {
+		function updateWidth() {
+			setWidth(window.innerWidth);
+		}
+		window.addEventListener('resize', updateWidth);
+		updateWidth();
+		return () => window.removeEventListener('resize', updateWidth);
+	}, []);
 
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
@@ -194,7 +204,7 @@ function MyPlaylists(props) {
 	return (
 		<div className={classes.page}>
 			<NavigationBar setUser={props.setUser} user={props.user} setNotifications={props.setNotifications}
-			notifications={props.notifications}pageName='My Playlists'></NavigationBar>
+			notifications={props.notifications}pageName='My Playlists' screenWidth={width}></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>
 				{/* <Typography variant="h2">
@@ -258,7 +268,7 @@ function MyPlaylists(props) {
 				</Grid>
 				
 				<PlaylistsContainer height={800} playlists={myPlaylists} setPlaylists={setMyPlaylists} editable={true} fetchPlaylists={fetchMyPlaylists} 
-					user={props.user} removePlaylist={removePlaylist} notHome={true} sendNotification={props.sendNotification}/>
+					user={props.user} removePlaylist={removePlaylist} notHome={true} sendNotification={props.sendNotification} screenWidth={width}/>
 			</Grid>
 		</div>
 	);

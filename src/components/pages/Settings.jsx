@@ -100,6 +100,16 @@ function Settings(props) {
 	const [imgSrc, setImgSrc] = useState(null);
 	const [allowNotifications, setAllowNotifications] = useState(null);
 	const [oldPassword, setOldPassword] = useState("");
+	const [width, setWidth] = useState(0);
+
+	useEffect(() => {
+		function updateWidth() {
+			setWidth(window.innerWidth);
+		}
+		window.addEventListener('resize', updateWidth);
+		updateWidth();
+		return () => window.removeEventListener('resize', updateWidth);
+	}, []);
 
 	const fetchUserProfile = async (userToken, user) => {
 		let requestOptions = {
@@ -329,14 +339,14 @@ function Settings(props) {
 	return (
 		<div className={classes.root}>
 			<NavigationBar setUser={props.setUser} user={props.user} setNotifications={props.setNotifications}
-			notifications={props.notifications} pageName='My Settings'></NavigationBar>
+			notifications={props.notifications} pageName='My Settings' screenWidth={width}></NavigationBar>
 			
 			<Paper className={classes.paper}>
 				<Grid container spacing={3} className={classes.mainContainer}>
 					<Grid item xs={12}>
 						<Typography gutterBottom variant="h4">Public Profile</Typography>
 					</Grid>
-					<Grid item xs={2} alignItems="center">
+					<Grid item xs={width > 900 ? 2 : width > 600 ? 4 : 6} alignItems="center">
 						<Card className={classes.card}>
 							<input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={imgChange}/>
 							<ButtonBase className={classes.cardAction}>
@@ -346,7 +356,7 @@ function Settings(props) {
 							</ButtonBase>
 						</Card>
 					</Grid>
-					<Grid item xs={10} alignItems="center">
+					<Grid item xs={width > 900 ? 10 : width > 600 ? 8 : 6} alignItems="center">
 						<Paper className={classes.paperCard}>
 							<TextField
 								variant="outlined"
@@ -375,8 +385,9 @@ function Settings(props) {
 							<Grid item xs={12} 
 								direction="row" 
 								justify="space-between" container alignItems="center"
-								className={classes.genderDate}>
-								<Grid item xs ={5}>
+								className={classes.genderDate}
+								spacing={2}>
+								<Grid item xs ={width > 600 ? 5 : 12}>
 									<Typography gutterBottom variant="subtitle1">
 										<form className={classes.container} noValidate>
 											<TextField
@@ -395,7 +406,7 @@ function Settings(props) {
 										</form>
 									</Typography>
 								</Grid>
-								<Grid item xs={6}>
+								<Grid item xs={width > 600 ? 6 : 12}>
 									<Autocomplete
 									required
 									id="combo-box-demo"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from "@material-ui/core"
 import NavigationBar from '../modules/NavigationBar';
@@ -41,6 +41,16 @@ function Home({user, setUser, sendNotification, notifications, setNotifications}
 	const classes = useStyles();
 	const [popularPlaylists, setPopularPlaylists] = useState([]);
 	const [likedPlaylists, setLikedPlaylists] = useState([]);
+	const [width, setWidth] = useState(0);
+
+	useEffect(() => {
+		function updateWidth() {
+			setWidth(window.innerWidth);
+		}
+		window.addEventListener('resize', updateWidth);
+		updateWidth();
+		return () => window.removeEventListener('resize', updateWidth);
+	}, []);
 	
 	const fetchPopularPlaylists = async () => {
 		let requestOptions = {
@@ -95,7 +105,7 @@ function Home({user, setUser, sendNotification, notifications, setNotifications}
 	return (
 		<div>
 			<NavigationBar setUser={setUser} user={user} setNotifications={setNotifications}
-			notifications={notifications} pageName='Home'></NavigationBar>
+			notifications={notifications} pageName='Home' screenWidth={width}></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.mainContainer}>
 				
@@ -103,13 +113,15 @@ function Home({user, setUser, sendNotification, notifications, setNotifications}
 					Popular Playlists
 				</Typography>
 				
-				<PlaylistsContainer height={800} playlists={popularPlaylists} user={user} fetchPlaylists={fetchPopularPlaylists} sendNotification={sendNotification}/>
+				<PlaylistsContainer height={800} playlists={popularPlaylists} user={user} fetchPlaylists={fetchPopularPlaylists} sendNotification={sendNotification} 
+					screenWidth={width}/>
 				
 				<Typography variant="h3" className={classes.likedTitle}>
 					Liked Playlists
 				</Typography>
 				
-				<PlaylistsContainer height={800} playlists={likedPlaylists} user={user} fetchPlaylists={fetchLikedPlaylists} sendNotification={sendNotification}/>
+				<PlaylistsContainer height={800} playlists={likedPlaylists} user={user} fetchPlaylists={fetchLikedPlaylists} sendNotification={sendNotification}
+					screenWidth={width}/>
 				
 			</Grid>
 		</div>

@@ -47,6 +47,16 @@ function Search(props) {
 	const location = useLocation();
 	const [sortAnchor, setSortAnchor] = useState(null);
 	const [playlists, setPlaylists] = useState([]);
+	const [width, setWidth] = useState(0);
+
+	useEffect(() => {
+		function updateWidth() {
+			setWidth(window.innerWidth);
+		}
+		window.addEventListener('resize', updateWidth);
+		updateWidth();
+		return () => window.removeEventListener('resize', updateWidth);
+	}, []);
 	
 	const handleSortClick = (event) => {
 		setSortAnchor(event.currentTarget);
@@ -110,7 +120,7 @@ function Search(props) {
 	return (
 		<div className={classes.page}>
 			<NavigationBar setUser={props.setUser} user={props.user} setNotifications={props.setNotifications}
-			notifications={props.notifications} pageName='Search'></NavigationBar>
+			notifications={props.notifications} pageName='Search' screenWidth={width}></NavigationBar>
 			
 			<Grid container direction="row" justify="center" alignItems="center" fullWidth className={classes.container}>					
 				<Grid container direction="row" justify="space-between" alignItems="center">
