@@ -58,6 +58,9 @@ function About() {
 						<div style={{fontSize: width > 900 ? '2rem' : width > 300 ? '1rem' : '0.75rem'}}>
 							You are a normal human-being trying to either make some new friends or get yourself known to the world. You want to meet that special person that shares the same musical interest as you, but you have no way of doing that other than to go on SoundCloud / Youtube / Spotify / Pandora, find a playlist and try to go through the arduous process of finding out the person’s social media profiles so you could contact them privately. This process is tedious and time consuming, thus, our Mixtape Matchmaker provides a platform that allows people to connect with each other in this exact way. 
 						</div>
+						<div style={{fontSize: width > 900 ? '1rem' : width > 300 ? '0.75rem' : '0.5rem'}}>
+							Copyright © 2020 - Developed by Farhan Ahmed, Jason Huang, and Darren Kong. 
+						</div>
 						<div className={classes.center}>
 							<Button 
 								onClick={history.goBack} 
