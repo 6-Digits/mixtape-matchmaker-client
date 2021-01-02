@@ -225,7 +225,7 @@ function About() {
 			</Grid>
 			<Grid container justify="center" alignItems="center" xs={12} className={classes.footer}>
 				<div style={{fontSize: width > 900 ? '1rem' : width > 300 ? '0.75rem' : '0.5rem'}}>
-								Copyright © 2020 - Developed by Farhan Ahmed, Jason Huang, and Darren Kong. 
+								Copyright © 2021 - Developed by Farhan Ahmed, Jason Huang, and Darren Kong. 
 							</div>
 			</Grid>
 		</div>
