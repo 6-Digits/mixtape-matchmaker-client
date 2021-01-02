@@ -21,7 +21,7 @@ function Footer() {
 		<Box bgcolor="text.disabled" className={classes.footer}>
 			<Grid container direction="row" justify="space-evenly" alignItems="center">
 				<div>
-					© 2020 6 Digits, Inc.
+					© 2021 6 Digits, Inc.
 				</div>
 				<Link href="/about" color="text.primary" className={classes.bold}>About</Link>
 			</Grid>
