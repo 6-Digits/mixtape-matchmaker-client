@@ -80,7 +80,7 @@ function IntroCarousel({screenWidth}){
 	return (
 		<Grid container className={classes.container} alignItems="center" ref={containerRef}>
 			<Carousel
-			interval={333000}
+			interval={5000}
 			animatiom="slide"
 			timeout={750}
 			className={classes.carousel}
