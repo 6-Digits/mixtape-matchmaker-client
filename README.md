@@ -30,34 +30,14 @@ However, the main function of the website is the ability to match with other use
 
 Clone the repository
 ```bash
-$ git clone https://github.com/6-Digits/mixtape-matchmaker.git
+$ git clone https://github.com/6-Digits/mixtape-matchmaker-client.git
 ```
 Change directories into the folder
 ```bash
-$ cd mixtape-matchmaker
+$ cd mixtape-matchmaker-client
 ```
-You will need two terminals, one for the server and one for the client.
-
-### Starting the server
-Using of the terminals change directories to the `server` folder
-```bash
-$ cd server
-```
-Install the dependencies using npm
-```bash
-$ npm install
-```
-Start the server
-```bash
-$ npm start
-```
-The server will be started on port http://localhost:42069. The server will need to be running in order for the client to work. 
 
 ### Starting the client
-Using the other terminal change directories to the `client` folder
-```bash
-$ cd client
-```
 Install the dependencies using npm
 ```bash
 $ npm install
@@ -86,12 +66,3 @@ When liking another user's profile after matching with them, the other user must
 ### Google API
 
 The website heavily utilizes many of Google's APIs such as YouTube, Maps, and Gmail. There have recently been many disruptions on Google's servers which may cause some of the services on the site to fail. If you encounter a problem, please first visit https://downdetector.com/status/google/ to check if it is a problem with Google and not the website. 
-
-### Preloaded Accounts
-
-TAs are able to access some preloaded accounts if they want. 
-```
-username: dummy[n]@test.com
-password: 123456789
-```
-for n = 0, 1, 2, ...,10. Ex: dummy0@test.com, dummy1@test.com, etc.
