@@ -1,6 +1,6 @@
 # Mixtape Matchmaker
 
-<img src="client/src/assets/logo.png" width="200">
+<img src="src/assets/logo.png" width="200">
 
 ## Description
 
