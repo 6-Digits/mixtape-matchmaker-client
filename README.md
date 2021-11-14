@@ -23,7 +23,7 @@ However, the main function of the website is the ability to match with other use
 	$ brew install node
 	```
 	- On Windows, go to https://nodejs.org/en/download/
-* Ports 4000, 5000, 8080, and 42069 allowed on firewall
+* Port 8080 allowed on firewall
 * A web browser, Chrome-based preferred
 
 ## Installation
